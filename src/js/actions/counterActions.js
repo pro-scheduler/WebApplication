@@ -1,15 +1,15 @@
 const increment = () => {
-    return {
-        type: "INCREMENT"
-    }
-}
+  return {
+    type: 'INCREMENT',
+  };
+};
 
 const decrement = () => {
-    return {
-        type: "DECREMENT"
-    }
-}
+  return {
+    type: 'DECREMENT',
+  };
+};
 
-const actions = {increment, decrement}
+const actions = { increment, decrement };
 
 export default actions;
