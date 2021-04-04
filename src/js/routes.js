@@ -6,19 +6,19 @@ import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 
 const Routes = () => {
-    return (
-      <Router>
-        <Navbar/>
-        <Switch>
-          <Route path="/example">
-            <Example/>
-          </Route>
-          <Route path="/">
-            <LandingPage />
-          </Route>
-        </Switch>
-      </Router>
-    );
-  };
-  
-  export default Routes;
+  return (
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route path="/example">
+          <Example />
+        </Route>
+        <Route path="/">
+          <LandingPage />
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
+
+export default Routes;

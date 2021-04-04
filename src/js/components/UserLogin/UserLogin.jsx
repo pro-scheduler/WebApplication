@@ -10,7 +10,7 @@ const UserLogin = () => {
 
   useEffect(() => {
     dispatch(allActions.userActions.setUser(user));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
