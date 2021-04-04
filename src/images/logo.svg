@@ -1,0 +1,21 @@
+<svg id="logo" data-name="logo" xmlns="http://www.w3.org/2000/svg" width="26" height="32" viewBox="0 0 26 32">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        opacity: 0.5;
+      }
+    </style>
+  </defs>
+  <g id="Logo" transform="translate(-464.785 520.904)">
+    <g id="Group_125" data-name="Group 125" transform="translate(2 -51)">
+      <rect id="Rectangle_82" data-name="Rectangle 82" class="cls-1" width="5" height="24" rx="2.5" transform="translate(462.785 -466.904)"/>
+      <rect id="Rectangle_83" data-name="Rectangle 83" class="cls-2" width="5" height="26" rx="2.5" transform="translate(469.785 -463.904)"/>
+      <rect id="Rectangle_85" data-name="Rectangle 85" class="cls-2" width="5" height="27" rx="2.5" transform="translate(476.785 -469.904)"/>
+      <rect id="Rectangle_86" data-name="Rectangle 86" class="cls-1" width="5" height="25" rx="2.5" transform="translate(483.785 -462.904)"/>
+    </g>
+  </g>
+</svg>
