@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Dispatch, useEffect } from 'react';
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import allActions from '../../actions';
 
 const UserLogin = () => {
-  const currentUser = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
+  const currentUser: any = useSelector((state: RootStateOrAny) => state.userReducer);
+  const dispatch: Dispatch<any> = useDispatch();
 
   const user = { name: 'Admin' };
 

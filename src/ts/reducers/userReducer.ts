@@ -1,4 +1,4 @@
-const userReducer = (state = {}, action) => {
+const userReducer = (state = {}, action: { type: string; payload: any }) => {
   switch (action.type) {
     case 'SET_USER':
       return {

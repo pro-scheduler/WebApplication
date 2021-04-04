@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Dispatch } from 'react';
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import allActions from '../../actions';
 
 const Counter = () => {
-  const counter = useSelector((state) => state.counterReducer);
-  const dispatch = useDispatch();
+  const counter: number = useSelector((state: RootStateOrAny) => state.counterReducer);
+  const dispatch: Dispatch<any> = useDispatch();
 
   return (
     <div>
