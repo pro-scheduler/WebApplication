@@ -1,0 +1,56 @@
+#navbar {
+  position: fixed;
+  height: 100%;
+}
+
+#navbar .closemenu {
+  position: absolute;
+  bottom: 12%;
+}
+
+#navbar .pro-sidebar {
+  width: 100%;
+  min-width: 100%;
+}
+
+#navbar .pro-sidebar.collapsed {
+  width: 80px;
+  min-width: 80px;
+}
+  
+#navbar .pro-sidebar-inner {
+  background-color: #7067CF;
+  box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
+}
+
+#navbar .pro-sidebar-inner .pro-sidebar-layout {
+  overflow-y: hidden;
+}
+  
+#navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
+  font-size: 22px;
+}
+  
+#navbar .pro-sidebar-inner .pro-sidebar-layout ul {
+  padding: 0 5px;
+}
+  
+#navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
+  color: white;
+  margin: 10px 0px;
+}
+  
+#navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
+  background-color: #7067CF;
+  font-size: large;
+}
+  
+#navbar .pro-sidebar-inner .pro-sidebar-layout .active {
+  opacity: 50%;
+}
+  
+@media only screen and (max-width: 720px) {
+  html {
+    overflow: hidden;
+  }
+}
