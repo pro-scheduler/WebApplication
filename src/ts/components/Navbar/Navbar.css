@@ -46,11 +46,7 @@
 }
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout .active {
-  opacity: 50%;
-}
-  
-@media only screen and (max-width: 720px) {
-  html {
-    overflow: hidden;
-  }
+  background-color: none;
+  font-weight: bold;
+  z-index: 3;
 }
