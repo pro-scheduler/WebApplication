@@ -1,0 +1,14 @@
+:root {
+    --purple: #7067CF;
+    --light-purple: rgba(112, 103, 207, 0.7);
+    --bright-green: #4FE379;
+    --pale-green: #598882;
+    --dark-grey: #2E3738;
+
+    --background-color: #F5F5F5;
+
+    --light-yellow: #E3DE4F;
+    --light-red: #E35E4F;
+    --light-grey: #B1B1B1;
+    /* above colors use with opacity: 36%; */
+  }
