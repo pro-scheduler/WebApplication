@@ -9,6 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display:flex;
   flex-direction: column;
+  background-color: var(--background-color);
 }
 
 code {
