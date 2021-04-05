@@ -28,7 +28,7 @@
 }
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
-  font-size: 22px;
+  font-size: var(--s-font-size);
 }
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul {
@@ -42,7 +42,7 @@
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
   background-color: var(--purple);
-  font-size: large;
+  font-size: var(--xs-font-size);
 }
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout .active {
