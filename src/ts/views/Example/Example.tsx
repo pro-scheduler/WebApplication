@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import ArrowButton from '../../components/common/ArrowButton/ArrowButton';
+import PlusButton from '../../components/common/PlusButton/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import Counter from '../../components/Counter/Counter';
 import UserLogin from '../../components/UserLogin/UserLogin';
@@ -20,7 +21,9 @@ const Example = () => {
         title={'Example switch'}
       />
       {showText ? <p>Switch on</p> : <p>Switch off</p>}
-      <ArrowButton onclick={() => console.log('Clicked')} className="" />
+      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
+      <p />
+      <PlusButton onclick={() => console.log('Plus clicked')} className="" />
     </div>
   );
 };
