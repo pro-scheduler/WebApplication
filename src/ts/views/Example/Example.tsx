@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import MultiDropdownButton from '../../components/common/Dropdown/MultiDropdownButton';
+import SingleDropdownButton from '../../components/common/Dropdown/SingleDropdownButton';
 import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 import LocationIcon from '../../components/common/Icons/LocationIcon';
 import PencilIcon from '../../components/common/Icons/PencilIcon';
@@ -16,6 +18,26 @@ import styles from './Example.module.css';
 
 const Example = () => {
   const [showText, setShowText] = useState(true);
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  const handleMultiChoice = (option: any) => {
+    setSelectedValues(option);
+  };
+
+  const handleSingleChoice = ({ value, label }: any) => {
+    setSelectedValue(value);
+  };
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
+  const values = selectedValues.map((option: any) => {
+    return <p key={option.value}>{option.value}</p>;
+  });
 
   return (
     <div className={styles.example}>
@@ -39,6 +61,18 @@ const Example = () => {
       <LocationIcon />
       <WorldIcon />
       <SurveyIcon />
+
+      <p>Multichoice</p>
+      <MultiDropdownButton onchange={handleMultiChoice} options={options} defaultValue={null} />
+      {values}
+
+      <p>Singlechoice</p>
+      <SingleDropdownButton
+        onchange={handleSingleChoice}
+        options={options}
+        defaultValue={options[0]}
+      />
+      {selectedValue}
       <p />
     </div>
   );
