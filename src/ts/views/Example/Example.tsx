@@ -1,5 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import CalendarIcon from '../../components/common/Icons/CalendarIcon';
+import LocationIcon from '../../components/common/Icons/LocationIcon';
+import PencilIcon from '../../components/common/Icons/PencilIcon';
+import SurveyIcon from '../../components/common/Icons/SurveyIcon';
+import WorldIcon from '../../components/common/Icons/WorldIcon';
 import ArrowButton from '../../components/common/RoundButtons/ArrowButton';
 import CalendarButton from '../../components/common/RoundButtons/CalendarButton';
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
@@ -27,6 +32,13 @@ const Example = () => {
       <PlusButton onclick={() => console.log('Plus clicked')} className={styles.plus} />
       <p />
       <CalendarButton onclick={() => console.log('Calendar clicked')} className={styles.calendar} />
+      <p />
+
+      <PencilIcon />
+      <CalendarIcon />
+      <LocationIcon />
+      <WorldIcon />
+      <SurveyIcon />
       <p />
     </div>
   );
