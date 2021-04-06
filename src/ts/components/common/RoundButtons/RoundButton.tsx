@@ -1,22 +1,22 @@
 import { MouseEventHandler } from 'react';
 
 import cx from 'classnames';
-import styles from './ArrowButton.module.css';
-import { BsArrowUpRight } from 'react-icons/bs';
+import styles from './RoundButton.module.css';
 
 interface Button {
   onclick: MouseEventHandler;
   className: any;
+  icon: any;
 }
 
-const ArrowButton = ({ onclick, className }: Button) => {
+const RoundButton = ({ onclick, className, icon }: Button) => {
   const buttonStyles = cx(styles.button, className);
 
   return (
     <button className={buttonStyles} type="submit" onClick={onclick}>
-      <BsArrowUpRight />
+      {icon}
     </button>
   );
 };
 
-export default ArrowButton;
+export default RoundButton;

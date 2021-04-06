@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import ArrowButton from '../../components/common/ArrowButton/ArrowButton';
-import PlusButton from '../../components/common/PlusButton/PlusButton';
+import ArrowButton from '../../components/common/RoundButtons/ArrowButton';
+import CalendarButton from '../../components/common/RoundButtons/CalendarButton';
+import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import Counter from '../../components/Counter/Counter';
 import UserLogin from '../../components/UserLogin/UserLogin';
@@ -23,7 +24,10 @@ const Example = () => {
       {showText ? <p>Switch on</p> : <p>Switch off</p>}
       <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
       <p />
-      <PlusButton onclick={() => console.log('Plus clicked')} className="" />
+      <PlusButton onclick={() => console.log('Plus clicked')} className={styles.plus} />
+      <p />
+      <CalendarButton onclick={() => console.log('Calendar clicked')} className={styles.calendar} />
+      <p />
     </div>
   );
 };

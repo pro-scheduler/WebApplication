@@ -6,3 +6,11 @@
 .switchButton{
     margin-top: 40px;
 }
+
+.plus{
+    background-color: var(--bright-green);
+}
+
+.calendar{
+    background-color: var(--pale-green);
+}
