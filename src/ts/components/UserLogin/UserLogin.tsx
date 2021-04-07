@@ -1,6 +1,7 @@
 import React, { Dispatch, useEffect } from 'react';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import allActions from '../../actions';
+import SubmitButton from '../common/SubmitButton/SubmitButton';
 
 const UserLogin = () => {
   const currentUser: any = useSelector((state: RootStateOrAny) => state.userReducer);
@@ -18,14 +19,20 @@ const UserLogin = () => {
       {currentUser.loggedIn ? (
         <>
           <h1>Hello, {currentUser.user.name}</h1>
-          <button onClick={() => dispatch(allActions.userActions.logOut())}>Logout</button>
+          <SubmitButton
+            text="Logout"
+            onclick={() => dispatch(allActions.userActions.logOut())}
+            className=""
+          />
         </>
       ) : (
         <>
           <h1>Login</h1>
-          <button onClick={() => dispatch(allActions.userActions.setUser(user))}>
-            Login as Admin
-          </button>
+          <SubmitButton
+            text="Login as Admin"
+            onclick={() => dispatch(allActions.userActions.setUser(user))}
+            className=""
+          />
         </>
       )}
     </div>
