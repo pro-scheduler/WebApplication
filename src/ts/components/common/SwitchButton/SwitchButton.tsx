@@ -5,13 +5,13 @@ import { useState } from 'react';
 import cx from 'classnames';
 import styles from './SwitchButton.module.css';
 
-interface Button {
+interface IButton {
   onChange: Function;
   title: String;
   className: any;
 }
 
-const SwitchButton = ({ onChange, title, className }: Button) => {
+const SwitchButton = ({ onChange, title, className }: IButton) => {
   const [checked, setChecked] = useState(true);
 
   const buttonOnChange = () => {

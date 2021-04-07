@@ -3,13 +3,13 @@ import { MouseEventHandler } from 'react';
 import cx from 'classnames';
 import styles from './RoundButton.module.css';
 
-interface Button {
+interface IButton {
   onclick: MouseEventHandler;
   className: any;
   icon: any;
 }
 
-const RoundButton = ({ onclick, className, icon }: Button) => {
+const RoundButton = ({ onclick, className, icon }: IButton) => {
   const buttonStyles = cx(styles.button, className);
 
   return (

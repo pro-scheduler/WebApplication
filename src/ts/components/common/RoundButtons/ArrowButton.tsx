@@ -3,12 +3,12 @@ import { MouseEventHandler } from 'react';
 import { BsArrowUpRight } from 'react-icons/bs';
 import RoundButton from './RoundButton';
 
-interface Button {
+interface IButton {
   onclick: MouseEventHandler;
   className: any;
 }
 
-const ArrowButton = ({ onclick, className }: Button) => {
+const ArrowButton = ({ onclick, className }: IButton) => {
   return <RoundButton onclick={onclick} className={className} icon={<BsArrowUpRight />} />;
 };
 

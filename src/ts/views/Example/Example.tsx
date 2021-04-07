@@ -56,11 +56,11 @@ const Example = () => {
       <CalendarButton onclick={() => console.log('Calendar clicked')} className={styles.calendar} />
       <p />
 
-      <PencilIcon />
+      <PencilIcon className={styles.icon} />
       <CalendarIcon />
-      <LocationIcon />
+      <LocationIcon className={styles.icon} />
       <WorldIcon />
-      <SurveyIcon />
+      <SurveyIcon className={styles.icon} />
 
       <p>Multichoice</p>
       <MultiDropdownButton onchange={handleMultiChoice} options={options} defaultValue={null} />

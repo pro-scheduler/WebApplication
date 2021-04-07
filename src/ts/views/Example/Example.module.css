@@ -14,3 +14,7 @@
 .calendar{
     background-color: var(--pale-green);
 }
+
+.icon{
+    margin: 20px;
+}
