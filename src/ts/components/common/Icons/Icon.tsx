@@ -9,7 +9,7 @@ interface IMeetingIcon {
 const Icon = ({ className, icon }: IMeetingIcon) => {
   const iconStyles = cx(styles.icon, className);
 
-  return <button className={iconStyles}>{icon}</button>;
+  return <div className={iconStyles}>{icon}</div>;
 };
 
 export default Icon;
