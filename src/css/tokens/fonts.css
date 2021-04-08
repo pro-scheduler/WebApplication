@@ -11,4 +11,5 @@
 
     --bold-font-weight: 700;
     --normal-font-weight: 500; 
+    --shadow: 4px 4px 8px -2px rgba(90,70,69,0.5);
 }

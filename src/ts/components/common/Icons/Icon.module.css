@@ -8,7 +8,7 @@
     background-color: white;
     font-size: var(--l-font-size);
     border-radius: 50%;
-    box-shadow: 4px 4px 8px -2px rgba(90,70,69,0.5);
+    box-shadow: var(--shadow);
 }
   
 .icon:focus {

@@ -1,14 +1,15 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 
-import './LandingPage.css';
-import Footer from '../../components/LandingPage/Footer/Footer';
 import Header from '../../components/LandingPage/Header/Header';
+import Content from '../../components/LandingPage/Content/Content';
+import Footer from '../../components/LandingPage/Footer/Footer';
 
 const LandingPage = () => {
   return (
-    <Container fluid className="mx-0 px-0 my-0 py-0">
+    <Container fluid className="m-0 p-0">
       <Header />
+      <Content />
       <Footer />
     </Container>
   );

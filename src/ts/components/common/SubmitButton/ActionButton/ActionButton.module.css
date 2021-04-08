@@ -8,7 +8,7 @@
     font-size: var(--button-font-size);
     cursor: pointer;
     border-radius: 10px;
-    box-shadow: 4px 4px 8px -2px rgba(90,70,69,0.5);
+    box-shadow: var(--shadow);
 }
   
 .button:focus {

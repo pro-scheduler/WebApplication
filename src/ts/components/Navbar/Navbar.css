@@ -29,11 +29,8 @@
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
   font-size: var(--s-font-size);
-}
-  
-#navbar .pro-sidebar-inner .pro-sidebar-layout ul {
-  padding: 0 5px;
-}
+  padding: 0 8px;
+} 
   
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
   color: white;
