@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import SignIn from './views/Auth/Login/SignIn';
 import SignUp from './views/Auth/Register/Signup';
-
+import CreateMeeting from './views/CreateMeeting/CreateMeeting';
 import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 
@@ -22,6 +22,9 @@ const Routes = () => {
         <Route path="/signup">
           <Navbar showDetails={false} />
           <SignUp />
+        </Route>
+        <Route path="/create">
+          <CreateMeeting />
         </Route>
         <Route path="/">
           <LandingPage />
