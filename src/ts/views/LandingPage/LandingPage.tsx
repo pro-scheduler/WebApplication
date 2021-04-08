@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import purpleLogo from '../../../images/purpleLogo.svg';
 
 import './LandingPage.css';
-import SubmitButton from '../../components/common/SubmitButton/SubmitButton';
+import RedirectButton from '../../components/common/SubmitButton/RedirectButton/RedirectButton';
 
 const LandingPage = () => {
   return (
@@ -20,10 +20,10 @@ const LandingPage = () => {
           <h2>Schedule meetings like a pro</h2>
           <Row className="row text-center">
             <Col md={12} lg={6} className="mt-5 pt-5 px-0">
-              <SubmitButton text="Sign In" onclick={() => console.log('Sign In')} className="m-4" />
+              <RedirectButton text="Sign In" redirectTO="/signin" className="m-4" />
             </Col>
             <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0">
-              <SubmitButton text="Sign Up" onclick={() => console.log('Sign Up')} className="m-4" />
+              <RedirectButton text="Sign Up" redirectTO="/signup" className="m-4" />
             </Col>
           </Row>
         </Container>

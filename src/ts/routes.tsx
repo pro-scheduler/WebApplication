@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import SignIn from './views/Auth/SignIn';
+import SignIn from './views/Auth/Login/SignIn';
+import SignUp from './views/Auth/Register/Signup';
 
 import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
@@ -16,6 +17,9 @@ const Routes = () => {
         </Route>
         <Route path="/signin">
           <SignIn />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
         </Route>
         <Route path="/">
           <LandingPage />

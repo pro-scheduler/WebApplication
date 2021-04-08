@@ -1,15 +1,15 @@
 import { MouseEventHandler } from 'react';
 
 import cx from 'classnames';
-import styles from './SubmitButton.module.css';
+import styles from './ActionButton.module.css';
 
 interface IButton {
   onclick: MouseEventHandler;
-  text: String;
+  text: any;
   className: any;
 }
 
-const SubmitButton = ({ onclick, text, className }: IButton) => {
+const ActionButton = ({ onclick, text, className }: IButton) => {
   const buttonStyles = cx(styles.button, className);
 
   return (
@@ -19,4 +19,4 @@ const SubmitButton = ({ onclick, text, className }: IButton) => {
   );
 };
 
-export default SubmitButton;
+export default ActionButton;
