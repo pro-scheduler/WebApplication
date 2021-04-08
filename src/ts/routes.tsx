@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
+import SignIn from './views/Auth/Login/SignIn';
+import SignUp from './views/Auth/Register/Signup';
 
 import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
@@ -8,10 +10,18 @@ import LandingPage from './views/LandingPage/LandingPage';
 const Routes = () => {
   return (
     <Router>
-      <Navbar />
       <Switch>
         <Route path="/example">
+          <Navbar />
           <Example />
+        </Route>
+        <Route path="/signin">
+          <Navbar showDetails={false} />
+          <SignIn />
+        </Route>
+        <Route path="/signup">
+          <Navbar showDetails={false} />
+          <SignUp />
         </Route>
         <Route path="/">
           <LandingPage />

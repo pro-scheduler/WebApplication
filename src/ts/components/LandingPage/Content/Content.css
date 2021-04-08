@@ -1,0 +1,7 @@
+.content{
+    color: var(--purple);
+}
+
+.photo{
+    box-shadow: var(--shadow);
+}

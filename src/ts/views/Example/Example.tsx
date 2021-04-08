@@ -42,6 +42,7 @@ const Example = () => {
   return (
     <div className={styles.example}>
       <UserLogin />
+      <p />
       <Counter />
       <SwitchButton
         className={styles.switchButton}
@@ -66,7 +67,7 @@ const Example = () => {
       <MultiDropdownButton onchange={handleMultiChoice} options={options} defaultValue={null} />
       {values}
 
-      <p>Singlechoice</p>
+      <p className="mt-5">Singlechoice</p>
       <SingleDropdownButton
         onchange={handleSingleChoice}
         options={options}

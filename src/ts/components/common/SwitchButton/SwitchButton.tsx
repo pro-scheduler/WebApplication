@@ -7,7 +7,7 @@ import styles from './SwitchButton.module.css';
 
 interface IButton {
   onChange: Function;
-  title: String;
+  title: string;
   className: any;
 }
 
