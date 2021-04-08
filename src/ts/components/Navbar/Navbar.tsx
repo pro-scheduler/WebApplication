@@ -18,7 +18,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
 
-const Navbar = () => {
+const Navbar = ({ showDetails = true }: any) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
   const [activeIcon, setActiveIcon] = useState('');
 
@@ -34,66 +34,74 @@ const Navbar = () => {
           </Menu>
         </SidebarHeader>
 
-        <SidebarContent>
-          <Menu iconShape="circle">
-            <MenuItem
-              icon={<VscHome />}
-              active={activeIcon === 'Home'}
-              onClick={() => setActiveIcon('Home')}
-            >
-              Home
-              <Link to="/" />
-            </MenuItem>
+        {showDetails ? (
+          <SidebarContent>
+            <Menu iconShape="circle">
+              <MenuItem
+                icon={<VscHome />}
+                active={activeIcon === 'Home'}
+                onClick={() => setActiveIcon('Home')}
+              >
+                Home
+                <Link to="/" />
+              </MenuItem>
 
-            <MenuItem
-              icon={<FiMonitor />}
-              active={activeIcon === 'Dashboard'}
-              onClick={() => setActiveIcon('Dashboard')}
-            >
-              Dashboard
-              <Link to="/example" />
-            </MenuItem>
+              <MenuItem
+                icon={<FiMonitor />}
+                active={activeIcon === 'Dashboard'}
+                onClick={() => setActiveIcon('Dashboard')}
+              >
+                Dashboard
+                <Link to="/example" />
+              </MenuItem>
 
-            <MenuItem
-              icon={<FiFolder />}
-              active={activeIcon === 'Meetings'}
-              onClick={() => setActiveIcon('Meetings')}
-            >
-              Meetings
-              <Link to="/" />
-            </MenuItem>
+              <MenuItem
+                icon={<FiFolder />}
+                active={activeIcon === 'Meetings'}
+                onClick={() => setActiveIcon('Meetings')}
+              >
+                Meetings
+                <Link to="/" />
+              </MenuItem>
 
-            <MenuItem
-              icon={<BsPencil />}
-              active={activeIcon === 'Schedule'}
-              onClick={() => setActiveIcon('Schedule')}
-            >
-              Schedule a meeting
-              <Link to="/" />
-            </MenuItem>
+              <MenuItem
+                icon={<BsPencil />}
+                active={activeIcon === 'Schedule'}
+                onClick={() => setActiveIcon('Schedule')}
+              >
+                Schedule a meeting
+                <Link to="/" />
+              </MenuItem>
 
-            <MenuItem
-              icon={<FiSettings />}
-              active={activeIcon === 'Settings'}
-              onClick={() => setActiveIcon('Settings')}
-            >
-              Settings
-              <Link to="/" />
-            </MenuItem>
+              <MenuItem
+                icon={<FiSettings />}
+                active={activeIcon === 'Settings'}
+                onClick={() => setActiveIcon('Settings')}
+              >
+                Settings
+                <Link to="/" />
+              </MenuItem>
 
-            <MenuItem
-              icon={<FaList />}
-              className="closemenu"
-              onClick={() => setMenuCollapse(!menuCollapse)}
-            />
-          </Menu>
-        </SidebarContent>
+              <MenuItem
+                icon={<FaList />}
+                className="closemenu"
+                onClick={() => setMenuCollapse(!menuCollapse)}
+              />
+            </Menu>
+          </SidebarContent>
+        ) : (
+          <div />
+        )}
 
-        <SidebarFooter>
-          <Menu iconShape="circle">
-            <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
-          </Menu>
-        </SidebarFooter>
+        {showDetails ? (
+          <SidebarFooter>
+            <Menu iconShape="circle">
+              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+            </Menu>
+          </SidebarFooter>
+        ) : (
+          <div />
+        )}
       </ProSidebar>
     </div>
   );
