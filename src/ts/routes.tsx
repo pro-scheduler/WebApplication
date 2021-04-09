@@ -24,6 +24,7 @@ const Routes = () => {
           <SignUp />
         </Route>
         <Route path="/create">
+          <Navbar showDetails={true} />
           <CreateMeeting />
         </Route>
         <Route path="/">

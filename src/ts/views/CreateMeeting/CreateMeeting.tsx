@@ -10,7 +10,6 @@ interface RootState {
 const CreateMeeting = () => {
   const dispatch = useDispatch();
   const meetings = useSelector((state: RootState) => {
-    console.log('refresh:');
     console.log(state);
     return state.meetingReducer;
   });
