@@ -5,16 +5,16 @@
     ],
     "plugins": ["prettier"],
     "rules": {
-      "prettier/prettier":  0,
-      // [
-      //   "error",
-      //   {
-      //     "singleQuote": true,
-      //     "semi": true,
-      //     "printWidth": 100,
-      //     "endOfLine": "auto"
-      //   }
-      // ]
+      "prettier/prettier":
+      [
+        "error",
+        {
+          "singleQuote": true,
+          "semi": true,
+          "printWidth": 100,
+          "endOfLine": "auto"
+        }
+      ],
       "no-unused-expressions": "off",
       "@typescript-eslint/no-unused-expressions": 2
     } 
