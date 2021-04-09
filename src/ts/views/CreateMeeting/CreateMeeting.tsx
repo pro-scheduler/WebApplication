@@ -2,16 +2,15 @@ import { useEffect } from 'react';
 import actions from '../../actions/meetingActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Meeting from '../../model/Meeting';
-
 interface RootState {
-  meetingReducer: Meeting[];
+  meetings: Meeting[];
 }
 
 const CreateMeeting = () => {
-  const dispatch = useDispatch();
-  const meetings = useSelector((state: RootState) => {
+  const dispatch: Function = useDispatch();
+  const meetings: Meeting[] = useSelector((state: RootState) => {
     console.log(state);
-    return state.meetingReducer;
+    return state.meetings;
   });
 
   useEffect(() => {

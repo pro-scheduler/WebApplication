@@ -6,7 +6,7 @@ import meetingReducer from './meetingReducer';
 const rootReducer = combineReducers({
   userReducer,
   counterReducer,
-  meetingReducer,
+  meetings: meetingReducer,
 });
 
 export default rootReducer;

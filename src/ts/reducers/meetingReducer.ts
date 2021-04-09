@@ -4,7 +4,7 @@ const meetingReducer = (state: Meeting[] = [], action: { type: string; payload: 
   switch (action.type) {
     case 'LOAD_ALL':
       console.log(action);
-      return { ...action.payload };
+      return action.payload;
     default:
       return state;
   }
