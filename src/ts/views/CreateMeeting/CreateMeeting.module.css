@@ -1,20 +1,14 @@
-.example{
-    margin: auto;
-    text-align: center;
+.pComment{
+    color: #707070;
+    font-size: small;    
 }
 
-.switchButton{
-    margin-top: 40px;
+.messageSuccess{
+    color: #07e66b;
+    font-size: medium;  
 }
 
-.plus{
-    background-color: var(--bright-green);
-}
-
-.calendar{
-    background-color: var(--pale-green);
-}
-
-.icon{
-    margin: 20px;
+.messageFailed{
+    color: #e60707;
+    font-size: medium;  
 }

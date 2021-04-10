@@ -9,6 +9,7 @@ import PencilIcon from '../../components/common/Icons/PencilIcon';
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
 import SingleValueInput from '../../components/common/forms/Input/SingleValueInput';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
+import style from './CreateMeeting.module.css';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
 type messageState = { createMeetingMessageStatus: string; createMeetingMessage: string };
@@ -29,7 +30,14 @@ const CreateMeeting = () => {
     return state.messages.createMeetingMessage;
   });
   const saveMeeting = () => {
-    dispatch(actions.saveMeeting({ name: 'MeetingName', description: 'desc', meetingId: 0 }));
+    dispatch(
+      actions.saveMeeting({
+        name: 'MeetingName',
+        description: 'desc',
+        meetingId: 0,
+        availableTimeRanges: [],
+      })
+    );
   };
 
   useEffect(() => {
@@ -50,6 +58,7 @@ const CreateMeeting = () => {
         <Col md="auto">
           <SingleValueInput label="Name" />
           <TextArea label="Description" />
+          <p className={style.pComment}>You always can change your preferences later</p>
         </Col>
         <Col />
       </Row>
@@ -60,7 +69,11 @@ const CreateMeeting = () => {
       </Row>
       <Row className="justify-content-md-center mt-5">
         <Col md="auto">
-          {message} {messageStatus}
+          {messageStatus === 'NO_DISPLAY' ? null : (
+            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
+              {message}
+            </p>
+          )}
         </Col>
       </Row>
     </Container>
