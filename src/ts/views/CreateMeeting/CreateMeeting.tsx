@@ -9,16 +9,28 @@ import PencilIcon from '../../components/common/Icons/PencilIcon';
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
 import SingleValueInput from '../../components/common/forms/Input/SingleValueInput';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
+
+type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
+type messageState = { createMeetingMessageStatus: string; createMeetingMessage: string };
 interface RootState {
-  meetings: Meeting[];
+  meetings: meetingState;
+  messages: messageState;
 }
 
 const CreateMeeting = () => {
   const dispatch: Function = useDispatch();
-  const meetings: Meeting[] = useSelector((state: RootState) => {
-    console.log(state);
-    return state.meetings;
+  // const meetings: Meeting[] = useSelector((state: RootState) => {
+  //   return state.meetings.meetings;
+  // });
+  const messageStatus = useSelector((state: RootState) => {
+    return state.messages.createMeetingMessageStatus;
   });
+  const message = useSelector((state: RootState) => {
+    return state.messages.createMeetingMessage;
+  });
+  const saveMeeting = () => {
+    dispatch(actions.saveMeeting({ name: 'MeetingName', description: 'desc', meetingId: 0 }));
+  };
 
   useEffect(() => {
     dispatch(actions.fetchAllMeetings());
@@ -43,7 +55,12 @@ const CreateMeeting = () => {
       </Row>
       <Row className="justify-content-md-center mt-5">
         <Col md="auto">
-          <ActionButton text="Submit" onclick={() => console.log('click')} className="button" />
+          <ActionButton text="Submit" onclick={saveMeeting} className="button" />
+        </Col>
+      </Row>
+      <Row className="justify-content-md-center mt-5">
+        <Col md="auto">
+          {message} {messageStatus}
         </Col>
       </Row>
     </Container>

@@ -1,8 +1,8 @@
-import TimeRange from './TimeRange'
+import TimeRange from './TimeRange';
 
-export default interface Meeting{
-    meetingId: number,
-    name: string,
-    description: string,
-    availableTimeRanges: TimeRange[]
+export default interface Meeting {
+  meetingId: number;
+  name: string;
+  description: string;
+  // availableTimeRanges: TimeRange[]
 }

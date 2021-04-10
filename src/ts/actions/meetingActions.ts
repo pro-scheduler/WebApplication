@@ -1,29 +1,40 @@
 import Meeting from '../model/Meeting';
 import { Dispatch } from 'redux';
+import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch('http://localhost:8080/api/meetings')
     .then((response) => response.json())
-    .then(
-      (meetings) => {
-        console.log(meetings);
-        return dispatch({ type: 'LOAD_ALL', payload: meetings });
-      }
-      //   (error) => dispatch(apologize('The Sandwich Shop', forPerson, error)),
-    );
+    .then((meetings) => {
+      console.log(meetings);
+      return dispatch({ type: 'LOAD_ALL', payload: meetings });
+    });
+};
+
+const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
+  dispatch(crateMeetingReset());
+
+  fetch('http://localhost:8080/api/meetings', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(meeting),
+  }).then((response) => {
+    console.log(response);
+    if (response.status === 201) {
+      return dispatch(crateMeetingSuccess('Meeting has been created sucessfully :)'));
+    } else {
+      return dispatch(crateMeetingFailed('Meeting has not been created ;/'));
+    }
+  });
 };
 
 const loadMeeting = (id: number) => {
   return {
     type: 'LOAD_ONE',
     payload: id,
-  };
-};
-
-const addMeeting = (meeting: Meeting) => {
-  return {
-    type: 'ADD_MEETING',
-    payload: meeting,
   };
 };
 
@@ -42,11 +53,11 @@ const updateMeeting = (meeting: Meeting) => {
 };
 
 const actions = {
-  addMeeting,
   deleteMeeting,
   updateMeeting,
   fetchAllMeetings,
   loadMeeting,
+  saveMeeting,
 };
 
 export default actions;
