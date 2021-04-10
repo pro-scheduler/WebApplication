@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TextArea.module.css';
 
-type TextAreaProps = { label: string };
+type TextAreaProps = { label: string; valueHandler: Function };
 type TextAreaState = { value: string };
 
 class TextArea extends React.Component<TextAreaProps, TextAreaState> {
@@ -13,6 +13,7 @@ class TextArea extends React.Component<TextAreaProps, TextAreaState> {
 
   handleChange(event: any) {
     this.setState({ value: event.target.value });
+    this.props.valueHandler(event.target.value);
   }
 
   render() {

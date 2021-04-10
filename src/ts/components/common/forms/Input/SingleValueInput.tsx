@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './SingleValueInput.module.css';
 
 type SingleValueInputState = { value: string };
-type SingleValueInputProps = { label: string };
+type SingleValueInputProps = { label: string; valueHandler: Function };
 class SingleValueInput extends React.Component<SingleValueInputProps, SingleValueInputState> {
   constructor(props: any) {
     super(props);
@@ -12,6 +12,7 @@ class SingleValueInput extends React.Component<SingleValueInputProps, SingleValu
 
   handleChange(event: any) {
     this.setState({ value: event.target.value });
+    this.props.valueHandler(event.target.value);
   }
 
   render() {

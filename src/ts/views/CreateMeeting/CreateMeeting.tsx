@@ -20,26 +20,33 @@ interface RootState {
 
 const CreateMeeting = () => {
   const dispatch: Function = useDispatch();
-  // const meetings: Meeting[] = useSelector((state: RootState) => {
-  //   return state.meetings.meetings;
-  // });
   const messageStatus = useSelector((state: RootState) => {
     return state.messages.createMeetingMessageStatus;
   });
   const message = useSelector((state: RootState) => {
     return state.messages.createMeetingMessage;
   });
+
+  var name = '';
+  var description = '';
+
   const saveMeeting = () => {
     dispatch(
       actions.saveMeeting({
-        name: 'MeetingName',
-        description: 'desc',
+        name: name,
+        description: description,
         meetingId: 0,
         availableTimeRanges: [],
       })
     );
   };
 
+  const setName = (n: string) => {
+    name = n;
+  };
+  const setDescription = (desc: string) => {
+    description = desc;
+  };
   useEffect(() => {
     dispatch(actions.fetchAllMeetings());
     // eslint-disable-next-line
@@ -56,8 +63,8 @@ const CreateMeeting = () => {
       <Row className="justify-content-md-left mt-4">
         <Col />
         <Col md="auto">
-          <SingleValueInput label="Name" />
-          <TextArea label="Description" />
+          <SingleValueInput label="Name" valueHandler={setName} />
+          <TextArea label="Description" valueHandler={setDescription} />
           <p className={style.pComment}>You always can change your preferences later</p>
         </Col>
         <Col />
