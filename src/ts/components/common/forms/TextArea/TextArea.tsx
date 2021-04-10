@@ -1,9 +1,10 @@
 import React from 'react';
-import styles from './SingleValueInput.module.css';
+import styles from './TextArea.module.css';
 
-type SingleValueInputState = { value: string };
-type SingleValueInputProps = { label: string };
-class SingleValueInput extends React.Component<SingleValueInputProps, SingleValueInputState> {
+type TextAreaProps = { label: string };
+type TextAreaState = { value: string };
+
+class TextArea extends React.Component<TextAreaProps, TextAreaState> {
   constructor(props: any) {
     super(props);
     this.state = { value: '' };
@@ -18,9 +19,8 @@ class SingleValueInput extends React.Component<SingleValueInputProps, SingleValu
     return (
       <div>
         <div className={styles.label_classic}>{this.props.label}</div>
-        <input
-          className={styles.input_classic}
-          type="text"
+        <textarea
+          className={styles.text_area_classic}
           value={this.state.value}
           onChange={this.handleChange}
         />
@@ -29,4 +29,4 @@ class SingleValueInput extends React.Component<SingleValueInputProps, SingleValu
   }
 }
 
-export default SingleValueInput;
+export default TextArea;
