@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import PencilIcon from '../../components/common/Icons/PencilIcon';
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
 import SingleValueInput from '../../components/common/forms/Input/SingleValueInput';
+import TextArea from '../../components/common/forms/TextArea/TextArea';
 interface RootState {
   meetings: Meeting[];
 }
@@ -32,8 +33,13 @@ const CreateMeeting = () => {
         </Col>
       </Row>
       <Row className="justify-content-md-center mt-4">Describe Meeting</Row>
-      <Row className="justify-content-md-center mt-4">
-        <SingleValueInput />
+      <Row className="justify-content-md-left mt-4">
+        <Col />
+        <Col md="auto">
+          <SingleValueInput label="Name" />
+          <TextArea label="Description" />
+        </Col>
+        <Col />
       </Row>
       <Row className="justify-content-md-center mt-5">
         <Col md="auto">
