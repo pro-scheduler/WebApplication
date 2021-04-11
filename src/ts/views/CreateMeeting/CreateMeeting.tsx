@@ -48,29 +48,29 @@ const CreateMeeting = () => {
   }, []);
   // empty [] allows to treat useEffect() as componentDidMount in class components, https://stackoverflow.com/questions/56249151/react-useeffect-hook-componentdidmount-to-useeffect
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-5">
-        <Col md="auto">
+    <Container className="ml-5 ml-sm-auto">
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
           <PencilIcon />
         </Col>
       </Row>
-      <Row className="justify-content-md-center mt-4">Describe Meeting</Row>
-      <Row className="justify-content-md-left mt-4">
+      <Row className="justify-content-center mt-4">Describe Meeting</Row>
+      <Row className="justify-content-center mt-4">
         <Col />
-        <Col md="auto">
+        <Col xs="auto">
           <SingleValueInput label="Name" valueHandler={setName} />
           <TextArea label="Description" valueHandler={setDescription} />
           <p className={style.pComment}>You always can change your preferences later</p>
         </Col>
         <Col />
       </Row>
-      <Row className="justify-content-md-center mt-5">
-        <Col md="auto">
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
           <ActionButton text="Submit" onclick={saveMeeting} className="button" />
         </Col>
       </Row>
-      <Row className="justify-content-md-center mt-5">
-        <Col md="auto">
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
           {messageStatus === 'NO_DISPLAY' ? null : (
             <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
               {message}
