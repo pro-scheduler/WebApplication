@@ -1,33 +1,27 @@
-import React from 'react';
 import styles from './SingleValueInput.module.css';
+import cx from 'classnames';
+import { useState } from 'react';
 
-type SingleValueInputState = { value: string };
-type SingleValueInputProps = { label: string; valueHandler: Function };
-class SingleValueInput extends React.Component<SingleValueInputProps, SingleValueInputState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { value: '' };
-    this.handleChange = this.handleChange.bind(this);
-  }
+// interface SingleValueInputProps {
+//   label: string;
+//   valueHandler: Function;
+//   className: any;
+// }
 
-  handleChange(event: any) {
-    this.setState({ value: event.target.value });
-    this.props.valueHandler(event.target.value);
-  }
+const SingleValueInput = ({ label, valueHandler, className }: any) => {
+  const [state, setState] = useState('');
+  const inputStyles = cx(styles.input_classic, className);
 
-  render() {
-    return (
-      <div>
-        <div className={styles.label_classic}>{this.props.label}</div>
-        <input
-          className={styles.input_classic}
-          type="text"
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-      </div>
-    );
-  }
-}
+  const handleChange = (event: any) => {
+    setState(event.target.value);
+    valueHandler(event.target.value);
+  };
+  return (
+    <div>
+      <div className={styles.label_classic}>{label}</div>
+      <input className={inputStyles} type="text" value={state} onChange={handleChange} />
+    </div>
+  );
+};
 
 export default SingleValueInput;

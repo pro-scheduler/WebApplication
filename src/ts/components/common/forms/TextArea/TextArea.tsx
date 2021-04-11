@@ -1,33 +1,22 @@
-import React from 'react';
 import styles from './TextArea.module.css';
+import cx from 'classnames';
+import { useState } from 'react';
 
-type TextAreaProps = { label: string; valueHandler: Function };
-type TextAreaState = { value: string };
+// type TextAreaProps = { label: string; valueHandler: Function };
+const TextArea = ({ label, valueHandler, className }: any) => {
+  const [state, setState] = useState('');
+  const textAreStyles = cx(styles.text_area_classic, className);
 
-class TextArea extends React.Component<TextAreaProps, TextAreaState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { value: '' };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event: any) {
-    this.setState({ value: event.target.value });
-    this.props.valueHandler(event.target.value);
-  }
-
-  render() {
-    return (
-      <div>
-        <div className={styles.label_classic}>{this.props.label}</div>
-        <textarea
-          className={styles.text_area_classic}
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-      </div>
-    );
-  }
-}
+  const handleChange = (event: any) => {
+    setState(event.target.value);
+    valueHandler(event.target.value);
+  };
+  return (
+    <div>
+      <div className={styles.label_classic}>{label}</div>
+      <textarea className={textAreStyles} value={state} onChange={handleChange} />
+    </div>
+  );
+};
 
 export default TextArea;
