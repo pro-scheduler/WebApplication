@@ -8,7 +8,7 @@ export const crateMeetingSuccess = (message: string) => {
 };
 export const crateMeetingFailed = (message: string) => {
   return {
-    type: 'CREATE_MESSAGE_FAILD',
+    type: 'CREATE_MESSAGE_FAILED',
     payload: message,
   };
 };

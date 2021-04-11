@@ -21,7 +21,7 @@ const messagesReducer = (
         createMeetingMessageStatus: 'SUCCESS',
         createMeetingMessage: action.payload,
       };
-    case 'CREATE_MESSAGE_FAILD':
+    case 'CREATE_MESSAGE_FAILED':
       return {
         ...state,
         createMeetingMessageStatus: 'FAILED',
