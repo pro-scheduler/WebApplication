@@ -10,6 +10,7 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import SingleValueInput from '../../components/common/forms/Input/SingleValueInput';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
 import style from './CreateMeeting.module.css';
+import { useState } from 'react';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
 type messageState = { createMeetingMessageStatus: string; createMeetingMessage: string };
@@ -27,8 +28,8 @@ const CreateMeeting = () => {
     return state.messages.createMeetingMessage;
   });
 
-  var name = '';
-  var description = '';
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   const saveMeeting = () => {
     dispatch(
@@ -41,12 +42,6 @@ const CreateMeeting = () => {
     );
   };
 
-  const setName = (n: string) => {
-    name = n;
-  };
-  const setDescription = (desc: string) => {
-    description = desc;
-  };
   useEffect(() => {
     dispatch(actions.fetchAllMeetings());
     // eslint-disable-next-line
