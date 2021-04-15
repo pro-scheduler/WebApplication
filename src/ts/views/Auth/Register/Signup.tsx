@@ -1,7 +1,23 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import AuthView from '../AuthView';
+import GoogleButton from '../../../components/common/SubmitButton/IconButton/GoogleButton';
+import FacebookButton from '../../../components/common/SubmitButton/IconButton/FacebookButton';
 
 const SignUp = () => {
-  return <div className="text-center">Sign Up</div>;
+  return (
+    <Container className="ml-5 ml-sm-auto">
+      <AuthView
+        title="Create an account"
+        question="Already have an account?"
+        redirectText="Sign in"
+        redirectTo="/signin"
+      >
+        <GoogleButton redirectTo="/signin" text="Sign up with Google" className="my-2" />
+        <FacebookButton redirectTo="/signin" text="Sign up with Facebook" className="mt-4" />
+      </AuthView>
+    </Container>
+  );
 };
 
 export default SignUp;

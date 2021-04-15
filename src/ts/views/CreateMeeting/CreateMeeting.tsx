@@ -59,8 +59,10 @@ const CreateMeeting = () => {
         <Col />
         <Col xs="auto">
           <SingleValueInput label="Name" valueHandler={setName} />
-          <TextArea label="Description" valueHandler={setDescription} />
-          <p className={style.pComment}>You always can change your preferences later</p>
+          <div className="mt-4">
+            <TextArea label="Description" valueHandler={setDescription} />
+            <p className={style.pComment}>You always can change your preferences later</p>
+          </div>
         </Col>
         <Col />
       </Row>
