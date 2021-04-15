@@ -18,7 +18,7 @@ const FacebookButton = ({ redirectTo, text, className }: IButton) => {
         text={text}
         icon={<SiFacebook className="mr-4 fbIcon" />}
         className="fbButton"
-      ></IconButton>
+      />
     </div>
   );
 };

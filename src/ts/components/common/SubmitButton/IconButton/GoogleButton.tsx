@@ -18,7 +18,7 @@ const GoogleButton = ({ redirectTo, text, className }: IButton) => {
         text={text}
         icon={<FcGoogle className="mr-4 googleIcon" />}
         className=""
-      ></IconButton>
+      />
     </div>
   );
 };
