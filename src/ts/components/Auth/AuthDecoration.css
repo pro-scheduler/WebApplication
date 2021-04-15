@@ -1,0 +1,26 @@
+.personIcon {
+    width: 45px;
+    height: 45px;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    font-size: var(--m-font-size);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+}
+  
+.personIcon:focus {
+    outline: none;
+}
+
+.personIcon1{
+    background-color: var(--light-purple);
+}
+
+.personIcon2{
+    background-color: #FFD05A;
+}
+
+.personIcon3{
+    background-color: var(--purple);
+}

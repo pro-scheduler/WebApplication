@@ -1,0 +1,12 @@
+.redirect{
+    font-size: 14px;
+}
+
+.link{
+    color: var(--purple);
+}
+
+.link:hover{
+    text-decoration: none;
+    color: var(--purple);
+}
