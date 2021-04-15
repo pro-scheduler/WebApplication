@@ -17,9 +17,7 @@ const IconButton = ({ redirectTO, text, className, icon }: IButton) => {
   return (
     <Link to={redirectTO}>
       <button className={buttonStyles} type="submit">
-        <div className={styles.content}>
-          {icon} {text}
-        </div>
+        {icon} {text}
       </button>
     </Link>
   );
