@@ -70,7 +70,7 @@ const Navbar = ({ showDetails = true }: any) => {
                 onClick={() => setActiveIcon('Schedule')}
               >
                 Schedule a meeting
-                <Link to="/" />
+                <Link to="/create" />
               </MenuItem>
 
               <MenuItem
