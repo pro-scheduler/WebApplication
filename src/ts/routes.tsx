@@ -7,6 +7,7 @@ import CreateMeeting from './views/CreateMeeting/CreateMeeting';
 import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
+import Meeting from './views/MeetingDetails/Meeting';
 
 const Routes = () => {
   return (
@@ -27,6 +28,10 @@ const Routes = () => {
         <Route path="/create">
           <Navbar />
           <CreateMeeting />
+        </Route>
+        <Route path="/meetings/:id">
+          <Navbar />
+          <Meeting />
         </Route>
         <Route path="/meetings">
           <Navbar />
