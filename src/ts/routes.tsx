@@ -6,6 +6,7 @@ import SignUp from './views/Auth/Register/Signup';
 import CreateMeeting from './views/CreateMeeting/CreateMeeting';
 import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
+import Meetings from './views/Meetings/Meetings';
 
 const Routes = () => {
   return (
@@ -26,6 +27,10 @@ const Routes = () => {
         <Route path="/create">
           <Navbar />
           <CreateMeeting />
+        </Route>
+        <Route path="/meetings">
+          <Navbar />
+          <Meetings />
         </Route>
         <Route path="/">
           <LandingPage />
