@@ -12,7 +12,6 @@ import CalendarButton from '../../components/common/RoundButtons/CalendarButton'
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import Counter from '../../components/Counter/Counter';
-import UserLogin from '../../components/UserLogin/UserLogin';
 
 import styles from './Example.module.css';
 
@@ -41,8 +40,6 @@ const Example = () => {
 
   return (
     <div className={styles.example}>
-      <UserLogin />
-      <p />
       <Counter />
       <SwitchButton
         className={styles.switchButton}

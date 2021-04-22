@@ -1,46 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Header from '../../components/Meetings/Header';
 import MeetingCard from '../../components/Meetings/MeetingCard';
 import Meeting from '../../model/Meeting';
-
-const meetings: Meeting[] = [];
-meetings.push({
-  name: 'Meet Joe',
-  description: 'Learn with Joe on math test',
-  meetingId: 0,
-  availableTimeRanges: [],
-});
-meetings.push({
-  name: 'Standup',
-  description: 'Very interesting Standup',
-  meetingId: 1,
-  availableTimeRanges: [],
-});
-meetings.push({
-  name: 'Meet Martin',
-  description: 'Party at restaurant with Martin',
-  meetingId: 2,
-  availableTimeRanges: [],
-});
-meetings.push({
-  name: 'Onboarding',
-  description: 'Onboarding to my new job',
-  meetingId: 3,
-  availableTimeRanges: [],
-});
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import allActions from '../../actions';
+import ProUser from '../../model/ProUser';
 
 const Meetings = () => {
-  const meetingsCard = meetings.map((meeting: Meeting) => {
-    return <MeetingCard {...meeting} />;
+  const user: ProUser = useSelector((state: RootStateOrAny) => {
+    return state.userReducer;
+  });
+  const dispatch: Function = useDispatch();
+
+  useEffect(() => {
+    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.userId));
+    dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.userId));
+    // eslint-disable-next-line
+  }, []);
+
+  const organizedMeetingsCard = user.organizedMeetings.map((meeting: Meeting) => {
+    return <MeetingCard key={meeting.name} {...meeting} />;
+  });
+
+  const participatedMeetingsCard = user.participatedMeetings.map((meeting: Meeting) => {
+    return <MeetingCard key={meeting.name} {...meeting} />;
   });
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
       <Header />
-      <Row className="justify-content-center mt-4">{meetingsCard}</Row>
+      <Row className="justify-content-center mt-4">{organizedMeetingsCard}</Row>
+      <Row className="justify-content-center mt-4">{participatedMeetingsCard}</Row>
     </Container>
   );
 };
