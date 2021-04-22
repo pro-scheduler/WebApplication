@@ -12,3 +12,12 @@
     height: 30px;
     font-size: var(--button-font-size);
 }
+
+.meetingTitle{
+    font-size: 20px;
+    font-weight: var(--bold-font-weight);
+}
+
+.date{
+    font-size: 16px;
+}

@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Header from '../../components/Meetings/Header';
 import MeetingCard from '../../components/Meetings/MeetingCard';
 import Meeting from '../../model/Meeting';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import ProUser from '../../model/ProUser';
+import './Meetings.css';
+import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -31,17 +32,24 @@ const Meetings = () => {
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      <Header />
-      <Row className="justify-content-center mt-4">
-        <Col lg={12} className="text-center">
+      <Row className="justify-content-center mt-4 mx-auto">
+        <Col lg={12} className="text-center mt-5">
+          <CalendarIcon className="meetingsIcon" />
+        </Col>
+        <Col lg={12} className="text-center mt-3 meetingHeader">
           Meetings you organize
         </Col>
-        {organizedMeetingsCard}
       </Row>
-      <Col lg={12} className="text-center">
-        Meetings you participate
-      </Col>
-      <Row className="justify-content-center mt-4">{participatedMeetingsCard}</Row>
+      <Row className="justify-content-center mt-4 row">{organizedMeetingsCard}</Row>
+      <Row className="justify-content-center mt-4 mx-auto">
+        <Col lg={12} className="text-center mt-5">
+          <CalendarIcon className="meetingsIcon" />
+        </Col>
+        <Col lg={12} className="text-center mt-3 meetingHeader">
+          Meetings you participate in
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4 mr-5 row">{participatedMeetingsCard}</Row>
     </Container>
   );
 };
