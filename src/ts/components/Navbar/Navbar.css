@@ -1,6 +1,7 @@
 #navbar {
   position: fixed;
   height: 100%;
+  z-index: 2;
 }
 
 #navbar .closemenu {
