@@ -36,8 +36,10 @@ const CreateMeeting = () => {
       actions.saveMeeting({
         name: name,
         description: description,
-        meetingId: 0,
+        id: 0,
         availableTimeRanges: [],
+        attendees: [],
+        organizers: [],
       })
     );
   };

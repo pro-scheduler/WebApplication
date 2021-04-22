@@ -1,7 +1,7 @@
 import ProUser from '../model/ProUser';
 
 const defaultState: ProUser = {
-  userId: 2,
+  id: 2,
   organizedMeetings: [],
   participatedMeetings: [],
 };

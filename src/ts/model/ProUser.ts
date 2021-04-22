@@ -1,7 +1,7 @@
 import Meeting from './Meeting';
 
 export default interface ProUser {
-  userId: number;
+  id: number;
   organizedMeetings: Meeting[];
   participatedMeetings: Meeting[];
 }

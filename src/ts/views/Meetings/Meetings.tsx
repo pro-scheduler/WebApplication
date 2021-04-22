@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Header from '../../components/Meetings/Header';
 import MeetingCard from '../../components/Meetings/MeetingCard';
 import Meeting from '../../model/Meeting';
@@ -15,8 +16,8 @@ const Meetings = () => {
   const dispatch: Function = useDispatch();
 
   useEffect(() => {
-    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.userId));
-    dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.userId));
+    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
+    dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
     // eslint-disable-next-line
   }, []);
 
@@ -31,7 +32,15 @@ const Meetings = () => {
   return (
     <Container fluid className="ml-5 ml-sm-auto">
       <Header />
-      <Row className="justify-content-center mt-4">{organizedMeetingsCard}</Row>
+      <Row className="justify-content-center mt-4">
+        <Col lg={12} className="text-center">
+          Meetings you organize
+        </Col>
+        {organizedMeetingsCard}
+      </Row>
+      <Col lg={12} className="text-center">
+        Meetings you participate
+      </Col>
       <Row className="justify-content-center mt-4">{participatedMeetingsCard}</Row>
     </Container>
   );
