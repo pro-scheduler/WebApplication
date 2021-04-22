@@ -9,3 +9,5 @@ RUN npm run build
 
 FROM nginx:1.19-alpine
 COPY --from=build-step /app/build /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
