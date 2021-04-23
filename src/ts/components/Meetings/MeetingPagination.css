@@ -1,5 +1,5 @@
 .paginationCurrentItem{
-    color: var(--light-purple);
+    color: var(--purple);
     font-weight: var(--bold-font-weight);
     width: 20px;
     height: 20px;
@@ -8,7 +8,7 @@
 }
 
 .paginationItem{
-    color: var(--purple);
+    color: #8B85D0C6;
     font-weight: var(--bold-font-weight);
     width: 20px;
     height: 20px;

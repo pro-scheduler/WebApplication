@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 
-const Meeting = () => {
+const MeetingDetails = () => {
   const { id }: any = useParams();
 
   return (
@@ -13,4 +13,4 @@ const Meeting = () => {
   );
 };
 
-export default Meeting;
+export default MeetingDetails;
