@@ -9,6 +9,7 @@ import allActions from '../../actions';
 import ProUser from '../../model/ProUser';
 import './Meetings.css';
 import CalendarIcon from '../../components/common/Icons/CalendarIcon';
+import RedirectButton from '../../components/common/SubmitButton/RedirectButton/RedirectButton';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -32,24 +33,39 @@ const Meetings = () => {
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      <Row className="justify-content-center mt-4 mx-auto">
+      <Row className="justify-content-center mt-4 mr-5 row">
         <Col lg={12} className="text-center mt-5">
           <CalendarIcon className="meetingsIcon" />
         </Col>
-        <Col lg={12} className="text-center mt-3 meetingHeader">
+        <Col lg={12} className="text-center my-3 meetingHeader">
           Meetings you organize
         </Col>
+        {user.organizedMeetings.length > 0 ? (
+          <>{organizedMeetingsCard}</>
+        ) : (
+          <div className="text-center mt-5">
+            <div>You don't organize any meeting</div>
+            <RedirectButton className="mt-4" redirectTO="/create" text="Add new meeting" />
+          </div>
+        )}
       </Row>
-      <Row className="justify-content-center mt-4 row">{organizedMeetingsCard}</Row>
-      <Row className="justify-content-center mt-4 mx-auto">
+
+      <Row className="justify-content-center mt-4 mr-5 row">
         <Col lg={12} className="text-center mt-5">
           <CalendarIcon className="meetingsIcon" />
         </Col>
-        <Col lg={12} className="text-center mt-3 meetingHeader">
+        <Col lg={12} className="text-center my-3 meetingHeader">
           Meetings you participate in
         </Col>
+        {user.participatedMeetings.length > 0 ? (
+          <>{participatedMeetingsCard}</>
+        ) : (
+          <div className="text-center mt-5">
+            <div>You don't participate in any meeting</div>
+            <RedirectButton className="mt-4" redirectTO="/create" text="Add new meeting" />
+          </div>
+        )}
       </Row>
-      <Row className="justify-content-center mt-4 mr-5 row">{participatedMeetingsCard}</Row>
     </Container>
   );
 };
