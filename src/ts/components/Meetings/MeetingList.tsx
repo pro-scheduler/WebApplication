@@ -17,12 +17,20 @@ interface IMeetingList {
 const MeetingList = (iMeetingList: IMeetingList) => {
   const [currentPage, setCurrentPage] = useState(1);
 
+  const onFirstPageClick = () => {
+    setCurrentPage(1);
+  };
+
   const onNextPageClick = () => {
     if (currentPage < Math.ceil(iMeetingList.meetings.length / 4)) setCurrentPage(currentPage + 1);
   };
 
   const onPrevPageClick = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const onLastPageClick = () => {
+    setCurrentPage(Math.ceil(iMeetingList.meetings.length / 4));
   };
 
   const getClassName = (number: number) => {
@@ -56,6 +64,8 @@ const MeetingList = (iMeetingList: IMeetingList) => {
                 paginate={(number: number) => setCurrentPage(number)}
                 nextPage={onNextPageClick}
                 prevPage={onPrevPageClick}
+                firstPage={onFirstPageClick}
+                lastPage={onLastPageClick}
                 className={(number: number) => getClassName(number)}
               />
             </div>

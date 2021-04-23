@@ -1,4 +1,4 @@
-.paginationItem{
+.paginationCurrentItem{
     color: var(--light-purple);
     font-weight: var(--bold-font-weight);
     width: 20px;
@@ -7,7 +7,7 @@
     margin: 10px;
 }
 
-.paginationCurrentItem{
+.paginationItem{
     color: var(--purple);
     font-weight: var(--bold-font-weight);
     width: 20px;
