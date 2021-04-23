@@ -15,6 +15,7 @@ const MeetingCard = (meeting: Meeting) => {
         <div className={styles.meetingTitle}>{meeting.name}</div>
         <Container className="container-fluid pt-0 mt-0 pl-0">
           <Row className="mt-0 mx-0 pl-0">
+            {/* TODO - get data from meeting */}
             <Col lg={12} className="text-left pl-0 ml-0">
               <div className={styles.date}>2PM - 3PM</div>
             </Col>

@@ -1,0 +1,29 @@
+.paginationItem{
+    color: var(--light-purple);
+    font-weight: var(--bold-font-weight);
+    width: 20px;
+    height: 20px;
+    position: center;
+    margin: 10px;
+}
+
+.paginationCurrentItem{
+    color: var(--purple);
+    font-weight: var(--bold-font-weight);
+    width: 20px;
+    height: 20px;
+    position: center;
+    margin: 10px;
+}
+
+.paginationItem:hover{
+    cursor: pointer;
+}
+
+.paginationCurrentItem:hover{
+    cursor: pointer;
+}
+
+.paginationItem:after{
+    color: var(--purple);
+}
