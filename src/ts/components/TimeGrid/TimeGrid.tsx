@@ -1,21 +1,20 @@
 import { Resizable } from 're-resizable';
 import styles from './TimeGrid.module.scss';
 import classcat from 'classcat';
-import { useState } from 'react';
-import Row from 'react-bootstrap/Row';
+import { useState, useMemo } from 'react';
+import Draggable, { DraggableEventHandler } from 'react-draggable';
 
 const TimeGrid = () => {
-  const [top, setTop] = useState(100);
-  const [height, setHeight] = useState(30);
+  const [top, setTop] = useState(0);
+  const [height, setHeight] = useState(100);
 
   const [changeDirection, setChangeDirection] = useState('top');
   const [topDelta, setTopDelta] = useState(0);
   const [delta, setDelta] = useState(0);
+  const [isResizing, setIsResizing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
-    // if (!isResizable || disabled) {
-    //   return;
-    // }
     event.preventDefault();
     event.stopPropagation();
 
@@ -29,14 +28,12 @@ const TimeGrid = () => {
     if (direction.includes('top')) {
       setTopDelta(-delta.height);
     }
-
-    console.log('delta ' + delta.height);
-    console.log('direction ' + direction);
   };
 
   const handleStop = () => {
     setHeight(height + delta);
     setDelta(0);
+    setIsResizing(false);
 
     if (changeDirection.includes('top')) {
       setTop(top + topDelta);
@@ -44,14 +41,40 @@ const TimeGrid = () => {
     }
   };
 
+  const handleDrag: DraggableEventHandler = (event: any, position: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // setTopDelta(position.y);
+  };
+
+  const cancelClasses = styles.handle
+    .split(' ')
+    .map((className) => `.${className}`)
+    .join(', ');
+
   const handleStart = () => {
     setDelta(0);
+    setIsResizing(true);
   };
 
   return (
     <div>
-      {/* <div className={styles.cell} style={{ height: height + delta, top: top + topDelta }}></div> */}
-      <Row>
+      <Draggable
+        axis={'y'}
+        bounds={{
+          top: 0,
+          bottom: 200,
+          left: 0,
+          right: 0,
+        }}
+        // position={{ x: left, y: top }}
+        onDrag={handleDrag}
+        onStop={() => setIsDragging(false)}
+        onStart={() => setIsDragging(true)}
+        cancel={cancelClasses}
+        // disabled={disabled}
+      >
         <Resizable
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
@@ -67,14 +90,19 @@ const TimeGrid = () => {
             topLeft: styles.handle,
             topRight: styles.handle,
           }}
-          minWidth={'100px'}
-          maxWidth={'100px'}
-          minHeight={'30px'}
+          minWidth={'150px'}
+          maxWidth={'150px'}
+          minHeight={'100px'}
+          maxHeight={'500px'}
           onResize={handleResize}
           onResizeStop={handleStop}
           onResizeStart={handleStart}
-        ></Resizable>
-      </Row>
+        >
+          <span className={styles.hourLabel}>
+            {height + delta} - {top + topDelta}
+          </span>
+        </Resizable>
+      </Draggable>
     </div>
   );
 };

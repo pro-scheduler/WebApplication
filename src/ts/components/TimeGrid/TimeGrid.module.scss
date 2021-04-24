@@ -1,6 +1,5 @@
 .cell{
     background-color: red;
-    width: 100px;
     height: 30px;
     box-shadow: var(--shadow);
     border-width: 5px;
@@ -13,10 +12,12 @@
     width: 100px;
     height: 30px;
     box-shadow: var(--shadow);
-    border-width: 5px;
-    border-color: black;
+    color: white;
 }
 
+.hourLabel {
+  font-size: small;
+}
 .handle-wrapper {
     z-index: var(--z-index-handle-wrapper);
     position: absolute;
@@ -31,7 +32,7 @@
     box-sizing: border-box;
     color: var(--color-handle-wrapper-text);
     vertical-align: middle;
-  
+    cursor: grabbing;
     .handle.top {
       top: -5px !important;
       cursor: n-resize !important;
