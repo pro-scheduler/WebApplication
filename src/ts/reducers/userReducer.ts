@@ -1,16 +1,24 @@
-const userReducer = (state = {}, action: { type: string; payload: any }) => {
+import ProUser from '../model/ProUser';
+
+const defaultState: ProUser = {
+  id: 2,
+  organizedMeetings: [],
+  participatedMeetings: [],
+};
+
+const userReducer = (state: ProUser = defaultState, action: { type: string; payload: any }) => {
   switch (action.type) {
-    case 'SET_USER':
+    case 'LOAD_ORGANIZED_MEETINGS':
+      console.log(action);
       return {
         ...state,
-        user: action.payload,
-        loggedIn: true,
+        organizedMeetings: action.payload,
       };
-    case 'LOG_OUT':
+    case 'LOAD_PARTICIPATED_MEETINGS':
+      console.log(action);
       return {
         ...state,
-        user: {},
-        loggedIn: false,
+        participatedMeetings: action.payload,
       };
     default:
       return state;

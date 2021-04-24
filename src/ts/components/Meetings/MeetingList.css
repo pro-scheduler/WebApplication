@@ -1,0 +1,11 @@
+.row{
+    margin-left: 6%;
+}
+
+.meetingHeader{
+    font-size: var(--s-font-size);
+}
+
+.meetingsIcon{
+    color: var(--purple);
+}

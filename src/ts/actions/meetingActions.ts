@@ -1,9 +1,10 @@
 import Meeting from '../model/Meeting';
 import { Dispatch } from 'redux';
 import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
+import { getMeetingsUrl } from '../API/meeting/urls';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
-  fetch('http://localhost:8080/api/meetings')
+  fetch(getMeetingsUrl())
     .then((response) => response.json())
     .then((meetings) => {
       console.log(meetings);
@@ -14,7 +15,7 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
 const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
   dispatch(crateMeetingReset());
 
-  fetch('http://localhost:8080/api/meetings', {
+  fetch(getMeetingsUrl(), {
     method: 'POST',
     headers: {
       Accept: 'application/json',

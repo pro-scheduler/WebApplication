@@ -1,5 +1,5 @@
-export default interface TimeRange{
-    id: number,
-    startDateTime: string,
-    endDateTime: string
+export default interface TimeRange {
+  id: number;
+  startDateTime: string;
+  endDateTime: string;
 }

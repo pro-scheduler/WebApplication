@@ -12,8 +12,8 @@ const Footer = () => {
   return (
     <Jumbotron fluid className="footer m-0 p-0">
       <Container fluid>
-        <Row className="mt-5 mb-0 pt-2 pb-0">
-          <Col lg={12}>
+        <Row className="mt-5 mb-0 pt-2 pb-0 ml-0">
+          <Col lg={12} className="my-0 py-0">
             <hr />
           </Col>
           <Col lg={6} className="my-0 py-0">

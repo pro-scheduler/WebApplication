@@ -61,7 +61,7 @@ const Navbar = ({ showDetails = true }: any) => {
                 onClick={() => setActiveIcon('Meetings')}
               >
                 Meetings
-                <Link to="/" />
+                <Link to="/meetings" />
               </MenuItem>
 
               <MenuItem

@@ -36,8 +36,10 @@ const CreateMeeting = () => {
       actions.saveMeeting({
         name: name,
         description: description,
-        meetingId: 0,
+        id: 0,
         availableTimeRanges: [],
+        attendees: [],
+        organizers: [],
       })
     );
   };
@@ -54,7 +56,9 @@ const CreateMeeting = () => {
           <PencilIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4">Describe Meeting</Row>
+      <Row className="justify-content-center mt-4">
+        <div className={style.createHeader}>Describe Meeting</div>
+      </Row>
       <Row className="justify-content-center mt-4">
         <Col />
         <Col xs="auto">
