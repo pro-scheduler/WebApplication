@@ -8,7 +8,7 @@ import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
 import MeetingDetails from './views/MeetingDetails/MeetingDetails';
-
+import Test from './views/Test/Test';
 const Routes = () => {
   return (
     <Router>
@@ -36,6 +36,9 @@ const Routes = () => {
         <Route path="/meetings">
           <Navbar />
           <Meetings />
+        </Route>
+        <Route path="/test">
+          <Test />
         </Route>
         <Route path="/">
           <LandingPage />

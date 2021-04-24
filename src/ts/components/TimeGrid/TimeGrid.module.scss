@@ -1,0 +1,53 @@
+.cell{
+    background-color: red;
+    width: 100px;
+    height: 30px;
+    box-shadow: var(--shadow);
+    border-width: 5px;
+    border-color: black;
+    position: absolute;
+}
+
+.rangeBox{
+    background-color:#4FE379;
+    width: 100px;
+    height: 30px;
+    box-shadow: var(--shadow);
+    border-width: 5px;
+    border-color: black;
+}
+
+.handle-wrapper {
+    z-index: var(--z-index-handle-wrapper);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    background-position: center;
+    padding: 0 3px 3px 0;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    box-sizing: border-box;
+    color: var(--color-handle-wrapper-text);
+    vertical-align: middle;
+  
+    .handle.top {
+      top: -5px !important;
+      cursor: n-resize !important;
+    }
+  
+    .handle.bottom {
+      bottom: 8px !important;
+      cursor: s-resize !important;
+    }
+  
+    .handle.top,
+    .handle.bottom {
+      &::after {
+        display: block;
+        text-align: center;
+        content: '═';
+      }
+    }
+  }
