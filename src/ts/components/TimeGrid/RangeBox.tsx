@@ -1,13 +1,22 @@
 import { Resizable } from 're-resizable';
 import styles from './TimeGrid.module.scss';
 import classcat from 'classcat';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
-const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) => {
-  const [top, setTop] = useState(defaultTop);
-  const [height, setHeight] = useState(min);
-
+const RangeBox = ({
+  step,
+  defaultHeight,
+  max,
+  boxSize,
+  defaultTop,
+  rangesParams,
+  setRangesParams,
+  id,
+  getParams,
+}: any) => {
+  const [top, setTop] = useState(0);
+  const [height, setHeight] = useState(defaultHeight);
   const [changeDirection, setChangeDirection] = useState('top');
   const [topDelta, setTopDelta] = useState(0);
   const [delta, setDelta] = useState(0);
@@ -16,6 +25,10 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
   const [isResizing, setIsResizing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
+  const changeParams = (id: number, top: number, height: number) => {
+    // setRangesParams({ ...getParams() });
+    console.log('inside', getParams());
+  };
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
     event.preventDefault();
     event.stopPropagation();
@@ -33,28 +46,34 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
   };
 
   const handleStop = () => {
-    if (top + topDelta + draggingDelta + height + delta > boxSize) {
-      setHeight(boxSize - top - topDelta - draggingDelta);
-    } else if (top + topDelta + draggingDelta < 0) {
-      setHeight(height + top);
-      setTop(0);
+    let toChangeHeight = height;
+    let toChangeTop = top + defaultTop;
+
+    if (top + topDelta + draggingDelta + height + delta + defaultTop > boxSize) {
+      setHeight(boxSize - top - topDelta - draggingDelta - defaultTop);
+      toChangeHeight = boxSize - top - topDelta - draggingDelta - defaultTop;
+    } else if (top + topDelta + defaultTop + draggingDelta < 0) {
+      setHeight(height + top + defaultTop);
+      toChangeHeight = height + top + defaultTop;
+      setTop(-defaultTop);
+      toChangeTop = 0;
       setTopDelta(0);
       setDraggingDelta(0);
-      console.log('elo');
     } else {
       setHeight(height + delta);
+      toChangeHeight = height + delta;
     }
     setDelta(0);
     setIsResizing(false);
 
     if (changeDirection.includes('top')) {
-      if (top + topDelta + draggingDelta >= 0) {
+      if (top + topDelta + defaultTop + draggingDelta >= 0) {
         setTop(top + topDelta);
+        toChangeTop = top + topDelta;
         setTopDelta(0);
       }
     }
-
-    mergeCallback();
+    changeParams(id, toChangeTop, toChangeHeight);
   };
 
   const handleDrag: DraggableEventHandler = (event: any, position: any) => {
@@ -69,7 +88,7 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
     setTop(top + draggingDelta);
     setDraggingDelta(0);
     setIsDragging(false);
-    mergeCallback();
+    changeParams(id, top + draggingDelta, height);
   };
   const cancelClasses = styles.handle
     .split(' ')
@@ -82,12 +101,12 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
   };
 
   return (
-    <div className={styles.rangeBoxContainer} style={{ top: top + topDelta }}>
+    <div className={styles.rangeBoxContainer} style={{ top: top + topDelta + defaultTop }}>
       <Draggable
         axis={'y'}
         bounds={{
-          top: -top,
-          bottom: boxSize - top - height,
+          top: -top - defaultTop,
+          bottom: boxSize - top - height - defaultTop,
           left: 0,
           right: 0,
         }}
@@ -100,7 +119,8 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
         // disabled={disabled}
       >
         <Resizable
-          size={{ width: '130px', height: height + delta }}
+          // resposive here later to do
+          size={{ width: '150px', height: height + delta }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
           // style={{ height: height + delta, top: top + topDelta }}
@@ -115,9 +135,9 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
             topLeft: styles.handle,
             topRight: styles.handle,
           }}
-          minWidth={'150px'}
-          maxWidth={'150px'}
-          minHeight={min}
+          // minWidth={'150px'}
+          // maxWidth={'150px'}
+          minHeight={3}
           maxHeight={max}
           onResize={handleResize}
           onResizeStop={handleStop}
@@ -125,7 +145,7 @@ const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) =
           grid={[step, step]}
         >
           <span className={styles.hourLabel}>
-            {height + delta} - {top + topDelta + draggingDelta}
+            {height + delta} - {top + topDelta + draggingDelta + defaultTop}
           </span>
         </Resizable>
       </Draggable>

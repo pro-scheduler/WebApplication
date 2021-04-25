@@ -61,13 +61,14 @@
 
 .rangeBoxContainer{
   position: absolute;
+  width: 100%;
 }
 .rangeBox {
   background-color: #4fe379;
-  width: 130px;
   height: 36px;
   box-shadow: var(--shadow);
   color: white;
+  width: 100%;
 }
 
 .hourLabel {
