@@ -4,7 +4,7 @@ import classcat from 'classcat';
 import { useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
-const RangeBox = ({ step, min, max, defaultTop }: any) => {
+const RangeBox = ({ step, min, max, boxSize, defaultTop, mergeCallback }: any) => {
   const [top, setTop] = useState(defaultTop);
   const [height, setHeight] = useState(min);
 
@@ -33,8 +33,8 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
   };
 
   const handleStop = () => {
-    if (top + topDelta + draggingDelta + height + delta > 480) {
-      setHeight(480 - top - topDelta - draggingDelta);
+    if (top + topDelta + draggingDelta + height + delta > boxSize) {
+      setHeight(boxSize - top - topDelta - draggingDelta);
     } else if (top + topDelta + draggingDelta < 0) {
       setHeight(height + top);
       setTop(0);
@@ -53,6 +53,8 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
         setTopDelta(0);
       }
     }
+
+    mergeCallback();
   };
 
   const handleDrag: DraggableEventHandler = (event: any, position: any) => {
@@ -67,6 +69,7 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
     setTop(top + draggingDelta);
     setDraggingDelta(0);
     setIsDragging(false);
+    mergeCallback();
   };
   const cancelClasses = styles.handle
     .split(' ')
@@ -84,7 +87,7 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
         axis={'y'}
         bounds={{
           top: -top,
-          bottom: 480 - top - height,
+          bottom: boxSize - top - height,
           left: 0,
           right: 0,
         }}

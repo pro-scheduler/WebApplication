@@ -4,12 +4,24 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import RangeBox from './RangeBox';
 
-const TimeGrid = ({ primaryLabel, secondaryLabel }: any) => {
+const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
   const [ranges, setRanges] = useState<JSX.Element[]>([]);
   const onClick = (y: number) => {
     console.log(y);
-    setRanges([...ranges, <RangeBox min={40} step={10} max={480} defaultTop={y} />]);
+    setRanges([
+      ...ranges,
+      <RangeBox
+        min={26}
+        step={3}
+        max={432}
+        boxSize={432}
+        defaultTop={y}
+        mergeCallback={mergeCallback}
+      />,
+    ]);
   };
+
+  const mergeCallback = () => {};
 
   const hourButtonsGrid = () => {
     let buttons = [];
@@ -18,7 +30,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel }: any) => {
         <div>
           <div
             role="button"
-            onClick={(evnet) => onClick(40 * i)}
+            onClick={(evnet) => onClick(boxSizes * i)}
             className={
               styles.button_cell +
               ' ' +
