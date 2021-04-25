@@ -1,0 +1,20 @@
+.userIcon {
+    width: 34px;
+    height: 34px;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    font-size: var(--s-font-size);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    background-color: var(--purple);
+}
+
+.userName {
+    font-size: var(--xs-font-size);
+    display: inline;
+}
+
+.organizerName {
+    font-weight: var(--bold-font-weight);
+}

@@ -1,0 +1,8 @@
+.meetingName{
+    font-size: var(--motto-font-size);
+}
+
+.organizerTitle{
+    font-size: var(--xs-font-size);
+    display: inline;
+}
