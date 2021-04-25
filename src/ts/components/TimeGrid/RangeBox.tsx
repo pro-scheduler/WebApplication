@@ -33,13 +33,25 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
   };
 
   const handleStop = () => {
-    setHeight(height + delta);
+    if (top + topDelta + draggingDelta + height + delta > 480) {
+      setHeight(480 - top - topDelta - draggingDelta);
+    } else if (top + topDelta + draggingDelta < 0) {
+      setHeight(height + top);
+      setTop(0);
+      setTopDelta(0);
+      setDraggingDelta(0);
+      console.log('elo');
+    } else {
+      setHeight(height + delta);
+    }
     setDelta(0);
     setIsResizing(false);
 
     if (changeDirection.includes('top')) {
-      setTop(top + topDelta);
-      setTopDelta(0);
+      if (top + topDelta + draggingDelta >= 0) {
+        setTop(top + topDelta);
+        setTopDelta(0);
+      }
     }
   };
 
@@ -85,6 +97,7 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
         // disabled={disabled}
       >
         <Resizable
+          size={{ width: '130px', height: height + delta }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
           // style={{ height: height + delta, top: top + topDelta }}
@@ -99,8 +112,8 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
             topLeft: styles.handle,
             topRight: styles.handle,
           }}
-          minWidth={'180px'}
-          maxWidth={'180px'}
+          minWidth={'150px'}
+          maxWidth={'150px'}
           minHeight={min}
           maxHeight={max}
           onResize={handleResize}
