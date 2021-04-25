@@ -10,6 +10,14 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
 
   const getParams = () => rangesParams;
 
+  const changeParams = (id: number, top: number, height: number) => {
+    console.log('Change', id, top, height, rangesParams);
+    let tmp = { ...rangesParams };
+    tmp[id.toString()] = { top, height, id };
+    setRangesParams({ ...tmp });
+    console.log('Changed', id, top, height, { ...tmp });
+  };
+
   const calculateRanges = () => {
     let ranges: any = [];
     for (const key in rangesParams) {
@@ -23,7 +31,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
             boxSize={432}
             defaultTop={rangesParams[key].top}
             id={rangesParams[key].id}
-            //   changeParams={changeParams}
+            changeParams={changeParams}
             setRangesParams={setRangesParams}
             rangesParams={rangesParams}
             getParams={getParams}
@@ -31,80 +39,58 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
         );
       }
     }
+    console.log('RANGES', ranges);
     return ranges;
   };
   const onClick = (y: number, height: number) => {
-    //   const changeParams = (id: number, top: number, height: number) => {
-    //     console.log('Change', id, top, height, rangesParams);
-    //     rangesParams[id.toString()] = { top, height };
-    //     setRangesParams({ ...rangesParams });
-    //     console.log('Changed', id, top, height, rangesParams);
-    //   };
-
     let randId = Math.floor(Math.random() * 10000);
-    //   setRanges([
-    //     ...ranges,
-    //     <RangeBox
-    //       min={height}
-    //       step={3}
-    //       max={432}
-    //       boxSize={432}
-    //       defaultTop={y}
-    //       id={randId}
-    //       //   changeParams={changeParams}
-    //       setRangesParams={setRangesParams}
-    //       rangesParams={rangesParams}
-    //       getParams={getParams}
-    //     />,
-    //   ]);
-    console.log(y, height);
     rangesParams[randId.toString()] = { top: y, height: height, id: randId };
     setRangesParams({ ...rangesParams });
   };
 
-  //   useEffect(() => {
-  //     const mergeCallback = () => {
-  //       let r1 = null;
-  //       let r2 = null;
-  //       //   console.log('MERGE3 ', rangesParams);
+  useEffect(() => {
+    const mergeCallback = () => {
+      let r1 = null;
+      let r2 = null;
+      console.log('MERGE3 ', rangesParams);
 
-  //       //   for (const key1 in rangesParams) {
-  //       //     for (const key2 in rangesParams) {
-  //       //       if (key1 !== key2 && rangesParams[key1] != null && rangesParams[key2] != null) {
-  //       //         let x1 = rangesParams[key1].top;
-  //       //         let x2 = rangesParams[key1].top + rangesParams[key1].height;
-  //       //         let y1 = rangesParams[key2].top;
-  //       //         let y2 = rangesParams[key2].top + rangesParams[key1].height;
-  //       //         if (x1 <= y2 && y1 <= x2) {
-  //       //           r1 = key1;
-  //       //           r2 = key2;
-  //       //           console.log('Keys ', r1, r2);
-  //       //         }
-  //       //       }
-  //       //     }
-  //       //   }
-  //       console.log('MERGE4 ', rangesParams);
+      for (const key1 in rangesParams) {
+        for (const key2 in rangesParams) {
+          if (key1 !== key2 && rangesParams[key1] != null && rangesParams[key2] != null) {
+            let x1 = rangesParams[key1].top;
+            let x2 = rangesParams[key1].top + rangesParams[key1].height;
+            let y1 = rangesParams[key2].top;
+            let y2 = rangesParams[key2].top + rangesParams[key1].height;
+            if (x1 <= y2 && y1 <= x2) {
+              r1 = key1;
+              r2 = key2;
+              console.log('Keys ', r1, r2);
+            }
+          }
+        }
+      }
+      console.log('MERGE4 ', rangesParams);
 
-  //       //   if (r1 !== null && r2 != null) {
-  //       //     console.log('r1,r2', r1, r2);
-  //       //     let top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
-  //       //     let bottom = Math.max(
-  //       //       rangesParams[r1].top + rangesParams[r1].height,
-  //       //       rangesParams[r2].top + rangesParams[r2].height
-  //       //     );
-  //       //     console.log('Here', top, bottom, rangesParams);
-  //       //     //   delete rangesParams[r1];
-  //       //     //   delete rangesParams[r2];
-  //       //     rangesParams[r1] = null;
-  //       //     rangesParams[r2] = null;
-  //       //     setRangesParams({ ...rangesParams });
-  //       //     onClick(top, bottom - top);
-  //       //   }
+      //   if (r1 !== null && r2 != null) {
+      //     console.log('r1,r2', r1, r2);
+      //     let top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
+      //     let bottom = Math.max(
+      //       rangesParams[r1].top + rangesParams[r1].height,
+      //       rangesParams[r2].top + rangesParams[r2].height
+      //     );
+      //     console.log('Here', top, bottom, rangesParams);
+      //     //   delete rangesParams[r1];
+      //     //   delete rangesParams[r2];
+      //     rangesParams[r1] = null;
+      //     rangesParams[r2] = null;
+      //     setRangesParams({ ...rangesParams });
+      //     onClick(top, bottom - top);
+      //   }
 
-  //       console.log('MERGE5 ', rangesParams);
-  //     };
-  //     mergeCallback();
-  //   }, [onClick, rangesParams]);
+      console.log('MERGE5 ', rangesParams);
+    };
+    mergeCallback();
+  }, [rangesParams]);
 
   const hourButtonsGrid = () => {
     let buttons = [];

@@ -4,17 +4,7 @@ import classcat from 'classcat';
 import { useState, useEffect } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
-const RangeBox = ({
-  step,
-  defaultHeight,
-  max,
-  boxSize,
-  defaultTop,
-  rangesParams,
-  setRangesParams,
-  id,
-  getParams,
-}: any) => {
+const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changeParams }: any) => {
   const [top, setTop] = useState(0);
   const [height, setHeight] = useState(defaultHeight);
   const [changeDirection, setChangeDirection] = useState('top');
@@ -24,11 +14,7 @@ const RangeBox = ({
 
   const [isResizing, setIsResizing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-
-  const changeParams = (id: number, top: number, height: number) => {
-    // setRangesParams({ ...getParams() });
-    console.log('inside', getParams());
-  };
+  console.log('Init', defaultTop, top, topDelta, draggingDelta);
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
     event.preventDefault();
     event.stopPropagation();
@@ -55,7 +41,6 @@ const RangeBox = ({
     } else if (top + topDelta + defaultTop + draggingDelta < 0) {
       setHeight(height + top + defaultTop);
       toChangeHeight = height + top + defaultTop;
-      setTop(-defaultTop);
       toChangeTop = 0;
       setTopDelta(0);
       setDraggingDelta(0);
@@ -69,10 +54,11 @@ const RangeBox = ({
     if (changeDirection.includes('top')) {
       if (top + topDelta + defaultTop + draggingDelta >= 0) {
         setTop(top + topDelta);
-        toChangeTop = top + topDelta;
+        toChangeTop = top + topDelta + defaultTop + draggingDelta;
         setTopDelta(0);
       }
     }
+    setTop(0);
     changeParams(id, toChangeTop, toChangeHeight);
   };
 
@@ -88,7 +74,8 @@ const RangeBox = ({
     setTop(top + draggingDelta);
     setDraggingDelta(0);
     setIsDragging(false);
-    changeParams(id, top + draggingDelta, height);
+    setTop(0);
+    changeParams(id, top + draggingDelta + defaultTop, height);
   };
   const cancelClasses = styles.handle
     .split(' ')
