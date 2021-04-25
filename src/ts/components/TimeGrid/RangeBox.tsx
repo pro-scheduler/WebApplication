@@ -46,13 +46,14 @@ const RangeBox = ({ step, min, max, defaultTop }: any) => {
   const handleDrag: DraggableEventHandler = (event: any, position: any) => {
     event.preventDefault();
     event.stopPropagation();
-    // setDraggingDelta(position.y);
+    setDraggingDelta(position.y);
   };
 
   const handleDragStop: DraggableEventHandler = (event: any, position: any) => {
     event.preventDefault();
     event.stopPropagation();
-    // setTop(top + position.y);
+    setTop(top + draggingDelta);
+    setDraggingDelta(0);
     setIsDragging(false);
   };
   const cancelClasses = styles.handle
