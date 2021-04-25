@@ -1,108 +1,55 @@
-import { Resizable } from 're-resizable';
 import styles from './TimeGrid.module.scss';
-import classcat from 'classcat';
-import { useState, useMemo } from 'react';
-import Draggable, { DraggableEventHandler } from 'react-draggable';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useState } from 'react';
+import RangeBox from './RangeBox';
 
-const TimeGrid = () => {
-  const [top, setTop] = useState(0);
-  const [height, setHeight] = useState(100);
+const TimeGrid = ({ primaryLabel, secondaryLabel }: any) => {
+  const [ranges, setRanges] = useState<JSX.Element[]>([]);
+  const onClick = (y: number) => {
+    console.log(y);
+    setRanges([...ranges, <RangeBox min={40} step={10} max={480} defaultTop={y} />]);
+  };
 
-  const [changeDirection, setChangeDirection] = useState('top');
-  const [topDelta, setTopDelta] = useState(0);
-  const [delta, setDelta] = useState(0);
-  const [isResizing, setIsResizing] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (delta.height === 0) {
-      return;
+  const hourButtonsGrid = () => {
+    let buttons = [];
+    for (let i = 0; i < 12; i++) {
+      buttons.push(
+        <div>
+          <div
+            role="button"
+            onClick={(evnet) => onClick(40 * i)}
+            className={
+              styles.button_cell +
+              ' ' +
+              (i === 0 ? styles.top_radius : i === 11 ? styles.bottom_radius : '')
+            }
+          >
+            <Row className={'m-0'}>
+              <Col className={'align-self-center pr-0'} xs="auto">
+                {i}:00{' '}
+              </Col>
+              <Col className={'align-self-center'}>
+                <hr className={styles.hrLine} />
+              </Col>
+            </Row>
+          </div>
+        </div>
+      );
     }
-
-    setDelta(delta.height);
-    setChangeDirection(direction);
-
-    if (direction.includes('top')) {
-      setTopDelta(-delta.height);
-    }
+    return buttons;
   };
-
-  const handleStop = () => {
-    setHeight(height + delta);
-    setDelta(0);
-    setIsResizing(false);
-
-    if (changeDirection.includes('top')) {
-      setTop(top + topDelta);
-      setTopDelta(0);
-    }
-  };
-
-  const handleDrag: DraggableEventHandler = (event: any, position: any) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    // setTopDelta(position.y);
-  };
-
-  const cancelClasses = styles.handle
-    .split(' ')
-    .map((className) => `.${className}`)
-    .join(', ');
-
-  const handleStart = () => {
-    setDelta(0);
-    setIsResizing(true);
-  };
-
   return (
+    // <div role="button" onClick={onClick} className={styles.cell}>
     <div>
-      <Draggable
-        axis={'y'}
-        bounds={{
-          top: 0,
-          bottom: 200,
-          left: 0,
-          right: 0,
-        }}
-        // position={{ x: left, y: top }}
-        onDrag={handleDrag}
-        onStop={() => setIsDragging(false)}
-        onStart={() => setIsDragging(true)}
-        cancel={cancelClasses}
-        // disabled={disabled}
-      >
-        <Resizable
-          enable={{ top: true, bottom: true }}
-          className={styles.rangeBox}
-          style={{ height: height + delta, top: top + topDelta }}
-          handleWrapperClass={styles['handle-wrapper']}
-          handleClasses={{
-            bottom: classcat([styles.handle, styles.bottom]),
-            bottomLeft: styles.handle,
-            bottomRight: styles.handle,
-            left: styles.handle,
-            right: styles.handle,
-            top: classcat([styles.handle, styles.top]),
-            topLeft: styles.handle,
-            topRight: styles.handle,
-          }}
-          minWidth={'150px'}
-          maxWidth={'150px'}
-          minHeight={'100px'}
-          maxHeight={'500px'}
-          onResize={handleResize}
-          onResizeStop={handleStop}
-          onResizeStart={handleStart}
-        >
-          <span className={styles.hourLabel}>
-            {height + delta} - {top + topDelta}
-          </span>
-        </Resizable>
-      </Draggable>
+      <div className={styles.titleRect}>
+        <div className={styles.primaryLabel}>{primaryLabel}</div>
+        <div className={styles.secondaryLabel}>{secondaryLabel}</div>
+      </div>
+      <div className={styles.hours_grid}>
+        {hourButtonsGrid()}
+        {ranges}
+      </div>
     </div>
   );
 };
