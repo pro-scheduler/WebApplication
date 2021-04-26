@@ -1,20 +1,18 @@
 import { Resizable } from 're-resizable';
 import styles from './TimeGrid.module.scss';
 import classcat from 'classcat';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
 const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changeParams }: any) => {
   const [top, setTop] = useState(0);
-  const [height, setHeight] = useState(defaultHeight);
+  const [height, setHeight] = useState(0);
   const [changeDirection, setChangeDirection] = useState('top');
   const [topDelta, setTopDelta] = useState(0);
   const [delta, setDelta] = useState(0);
   const [draggingDelta, setDraggingDelta] = useState(0);
 
-  const [isResizing, setIsResizing] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  console.log('Init', defaultTop, top, topDelta, draggingDelta);
+  console.log('Init', height, defaultHeight);
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
     event.preventDefault();
     event.stopPropagation();
@@ -32,24 +30,23 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
   };
 
   const handleStop = () => {
-    let toChangeHeight = height;
+    let toChangeHeight = height + defaultHeight;
     let toChangeTop = top + defaultTop;
 
-    if (top + topDelta + draggingDelta + height + delta + defaultTop > boxSize) {
+    if (top + topDelta + draggingDelta + height + delta + defaultTop + defaultHeight > boxSize) {
       setHeight(boxSize - top - topDelta - draggingDelta - defaultTop);
       toChangeHeight = boxSize - top - topDelta - draggingDelta - defaultTop;
     } else if (top + topDelta + defaultTop + draggingDelta < 0) {
       setHeight(height + top + defaultTop);
-      toChangeHeight = height + top + defaultTop;
+      toChangeHeight = height + defaultHeight + top + defaultTop;
       toChangeTop = 0;
       setTopDelta(0);
       setDraggingDelta(0);
     } else {
       setHeight(height + delta);
-      toChangeHeight = height + delta;
+      toChangeHeight = height + delta + defaultHeight;
     }
     setDelta(0);
-    setIsResizing(false);
 
     if (changeDirection.includes('top')) {
       if (top + topDelta + defaultTop + draggingDelta >= 0) {
@@ -59,6 +56,7 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
       }
     }
     setTop(0);
+    setHeight(0);
     changeParams(id, toChangeTop, toChangeHeight);
   };
 
@@ -73,9 +71,9 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
     event.stopPropagation();
     setTop(top + draggingDelta);
     setDraggingDelta(0);
-    setIsDragging(false);
     setTop(0);
-    changeParams(id, top + draggingDelta + defaultTop, height);
+    setHeight(0);
+    changeParams(id, top + draggingDelta + defaultTop, height + defaultHeight);
   };
   const cancelClasses = styles.handle
     .split(' ')
@@ -84,7 +82,6 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
 
   const handleStart = () => {
     setDelta(0);
-    setIsResizing(true);
   };
 
   return (
@@ -93,21 +90,20 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
         axis={'y'}
         bounds={{
           top: -top - defaultTop,
-          bottom: boxSize - top - height - defaultTop,
+          bottom: boxSize - top - height - defaultTop - defaultHeight,
           left: 0,
           right: 0,
         }}
         position={{ x: 62, y: 0 }}
         onDrag={handleDrag}
         onStop={handleDragStop}
-        onStart={() => setIsDragging(true)}
         cancel={cancelClasses}
         grid={[step, step]}
         // disabled={disabled}
       >
         <Resizable
           // resposive here later to do
-          size={{ width: '150px', height: height + delta }}
+          size={{ width: '150px', height: height + delta + defaultHeight }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
           // style={{ height: height + delta, top: top + topDelta }}
@@ -132,7 +128,7 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
           grid={[step, step]}
         >
           <span className={styles.hourLabel}>
-            {height + delta} - {top + topDelta + draggingDelta + defaultTop}
+            {height + delta + defaultHeight} - {top + topDelta + draggingDelta + defaultTop}
           </span>
         </Resizable>
       </Draggable>

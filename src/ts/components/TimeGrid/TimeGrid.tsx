@@ -1,7 +1,7 @@
 import styles from './TimeGrid.module.scss';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import RangeBox from './RangeBox';
 
 const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
@@ -11,18 +11,18 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
   const getParams = () => rangesParams;
 
   const changeParams = (id: number, top: number, height: number) => {
-    console.log('Change', id, top, height, rangesParams);
+    // console.log('Change', id, top, height, rangesParams);
     let tmp = { ...rangesParams };
     tmp[id.toString()] = { top, height, id };
     setRangesParams({ ...tmp });
-    console.log('Changed', id, top, height, { ...tmp });
+    // console.log('Changed', id, top, height, { ...tmp });
   };
 
   const calculateRanges = () => {
     let ranges: any = [];
     for (const key in rangesParams) {
       if (rangesParams[key] != null) {
-        console.log('Values:', key, rangesParams[key].top, rangesParams[key].height);
+        // console.log('Values:', key, rangesParams[key].top, rangesParams[key].height);
         ranges.push(
           <RangeBox
             defaultHeight={rangesParams[key].height}
@@ -39,7 +39,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
         );
       }
     }
-    console.log('RANGES', ranges);
+    // console.log('RANGES', ranges);
     return ranges;
   };
   const onClick = (y: number, height: number) => {
@@ -52,7 +52,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
     const mergeCallback = () => {
       let r1 = null;
       let r2 = null;
-      console.log('MERGE3 ', rangesParams);
+      //   console.log('MERGE3 ', rangesParams);
 
       for (const key1 in rangesParams) {
         for (const key2 in rangesParams) {
@@ -60,7 +60,8 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
             let x1 = rangesParams[key1].top;
             let x2 = rangesParams[key1].top + rangesParams[key1].height;
             let y1 = rangesParams[key2].top;
-            let y2 = rangesParams[key2].top + rangesParams[key1].height;
+            let y2 = rangesParams[key2].top + rangesParams[key2].height;
+            console.log(x1, x2, y1, y2, x1 <= y2 && y1 <= x2);
             if (x1 <= y2 && y1 <= x2) {
               r1 = key1;
               r2 = key2;
@@ -69,25 +70,27 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
           }
         }
       }
-      console.log('MERGE4 ', rangesParams);
+      //   console.log('MERGE4 ', rangesParams);
 
-      //   if (r1 !== null && r2 != null) {
-      //     console.log('r1,r2', r1, r2);
-      //     let top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
-      //     let bottom = Math.max(
-      //       rangesParams[r1].top + rangesParams[r1].height,
-      //       rangesParams[r2].top + rangesParams[r2].height
-      //     );
-      //     console.log('Here', top, bottom, rangesParams);
-      //     //   delete rangesParams[r1];
-      //     //   delete rangesParams[r2];
-      //     rangesParams[r1] = null;
-      //     rangesParams[r2] = null;
-      //     setRangesParams({ ...rangesParams });
-      //     onClick(top, bottom - top);
-      //   }
+      if (r1 !== null && r2 != null) {
+        console.log('r1,r2', r1, r2);
+        let top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
+        let bottom = Math.max(
+          rangesParams[r1].top + rangesParams[r1].height,
+          rangesParams[r2].top + rangesParams[r2].height
+        );
+        console.log('Here', top, bottom);
+        //   delete rangesParams[r1];
+        //   delete rangesParams[r2];
+        let tmp = { ...rangesParams };
+        delete tmp[r1];
+        delete tmp[r2];
+        let randId = Math.floor(Math.random() * 10000);
+        tmp[randId.toString()] = { top: top, height: bottom - top, id: randId };
+        setRangesParams({ ...tmp });
+      }
 
-      console.log('MERGE5 ', rangesParams);
+      //   console.log('MERGE5 ', rangesParams);
     };
     mergeCallback();
   }, [rangesParams]);
