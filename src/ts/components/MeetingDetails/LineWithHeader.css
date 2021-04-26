@@ -1,0 +1,9 @@
+.lineHeader{
+    font-size: 25px;
+}
+
+hr{
+    border-top: 1px solid black;
+    color: black;
+    text-align: center;
+}
