@@ -12,6 +12,20 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
   const [delta, setDelta] = useState(0);
   const [draggingDelta, setDraggingDelta] = useState(0);
 
+  const positionToTime = (position: number) => {
+    let hour = Math.floor((5 * (position / step)) / 60);
+    let min = (5 * (position / step)) % 60;
+    let hourStr = hour.toString();
+    let minStr = min.toString();
+    if (hour < 10) {
+      hourStr = '0' + hourStr;
+    }
+    if (min < 10) {
+      minStr = '0' + minStr;
+    }
+    return hourStr + ':' + minStr;
+  };
+
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
     event.preventDefault();
     event.stopPropagation();
@@ -102,7 +116,7 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
       >
         <Resizable
           // resposive here later to do
-          size={{ width: '150px', height: height + delta + defaultHeight }}
+          size={{ width: '170px', height: height + delta + defaultHeight }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
           // style={{ height: height + delta, top: top + topDelta }}
@@ -126,9 +140,12 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
           onResizeStart={handleStart}
           grid={[step, step]}
         >
-          <span className={styles.hourLabel}>
-            {height + delta + defaultHeight} - {top + topDelta + draggingDelta + defaultTop}
-          </span>
+          <div className={styles.hourLabel}>
+            {positionToTime(top + topDelta + draggingDelta + defaultTop)} -{' '}
+            {positionToTime(
+              top + topDelta + draggingDelta + defaultTop + height + delta + defaultHeight
+            )}
+          </div>
         </Resizable>
       </Draggable>
     </div>
