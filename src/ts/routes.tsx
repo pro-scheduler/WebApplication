@@ -8,7 +8,7 @@ import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
 import MeetingDetails from './views/MeetingDetails/MeetingDetails';
-import Test from './views/Test/Test';
+import Time from './views/Time/Time';
 const Routes = () => {
   return (
     <Router>
@@ -38,9 +38,9 @@ const Routes = () => {
           <Meetings />
         </Route>
         <Route path="/test">
-          <Test />
+          <Time />
         </Route>
-        <Route path="/">
+        <Route path="/time">
           <LandingPage />
         </Route>
       </Switch>
