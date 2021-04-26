@@ -12,7 +12,6 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
   const [delta, setDelta] = useState(0);
   const [draggingDelta, setDraggingDelta] = useState(0);
 
-  console.log('Init', height, defaultHeight);
   const handleResize = (event: any, direction: any, _ref: any, delta: any) => {
     event.preventDefault();
     event.stopPropagation();
