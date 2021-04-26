@@ -87,11 +87,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
           <div
             role="button"
             onClick={(evnet) => onClick(boxSizes * i, 36)}
-            className={
-              styles.button_cell +
-              ' ' +
-              (i === 0 ? styles.top_radius : i === 11 ? styles.bottom_radius : '')
-            }
+            className={styles.button_cell + ' ' + (i === 11 ? styles.bottom_radius : '')}
           >
             <Row className={'m-0'}>
               <Col className={'align-self-center pr-0'} xs="auto">
