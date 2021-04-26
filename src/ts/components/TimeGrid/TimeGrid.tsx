@@ -19,6 +19,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
       if (rangesParams[key] != null) {
         ranges.push(
           <RangeBox
+            key={key}
             defaultHeight={rangesParams[key].height}
             step={3}
             max={432}
@@ -82,7 +83,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
     let buttons = [];
     for (let i = 0; i < 12; i++) {
       buttons.push(
-        <div>
+        <div key={i}>
           <div
             role="button"
             onClick={(evnet) => onClick(boxSizes * i, 36)}
@@ -96,7 +97,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
               <Col className={'align-self-center pr-0'} xs="auto">
                 {i}:00{' '}
               </Col>
-              <Col className={'align-self-center'}>
+              <Col>
                 <hr className={styles.hrLine} />
               </Col>
             </Row>
@@ -112,6 +113,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
         <div className={styles.primaryLabel}>{primaryLabel}</div>
         <div className={styles.secondaryLabel}>{secondaryLabel}</div>
       </div>
+      <div className={styles.top_hours_grid}></div>
       <div className={styles.hours_grid}>
         {hourButtonsGrid()}
         {calculateRanges()}

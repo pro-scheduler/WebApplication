@@ -20,10 +20,19 @@
 .borderRadius {
   border-radius: 10px;
 }
+.top_hours_grid {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 90%;
+  height: 10px;
+  position: absolute;
+  background-color: white;
+  bottom: 0;
+}
 .hours_grid {
-  box-shadow: var(--shadow);
+  clip-path: inset(0px -20px -20px -20px);
+  box-shadow: 4px 4px 8px -2px rgba(90,70,69, 0.5);
   border-radius: 10px;
-  padding-top: 10px;
   padding-bottom: 10px;
   width: 90%;
   background-color: white;
@@ -43,8 +52,8 @@
   border-top: 1.5px solid rgba(0,0,0,.1) !important;
 }
 .top_radius {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
 }
 .bottom_radius {
   border-bottom-left-radius: 10px;

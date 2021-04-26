@@ -37,10 +37,10 @@ const Routes = () => {
           <Navbar />
           <Meetings />
         </Route>
-        <Route path="/test">
+        <Route path="/time">
           <Time />
         </Route>
-        <Route path="/time">
+        <Route path="/">
           <LandingPage />
         </Route>
       </Switch>
