@@ -1,18 +1,18 @@
-.createHeader{
+.createHeader {
     font-size: var(--s-font-size);
 }
 
-.pComment{
+.pComment {
     color: #707070;
-    font-size: small;    
+    font-size: small;
 }
 
-.messageSuccess{
+.messageSuccess {
     color: #07e66b;
-    font-size: medium;  
+    font-size: medium;
 }
 
-.messageFailed{
+.messageFailed {
     color: #e60707;
-    font-size: medium;  
+    font-size: medium;
 }

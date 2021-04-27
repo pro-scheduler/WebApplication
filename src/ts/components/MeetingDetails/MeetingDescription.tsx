@@ -18,11 +18,11 @@ const MeetingDescription = (meeting: IMeetingDescription) => {
 
   return (
     <Row className="justify-content mt-5 ml-5 pl-5">
-      <Col lg={12} className="mb-2 meetingName">
+      <Col lg={12} className="mb-2 meetingDescriptionName">
         {meeting.name}
       </Col>
       <Col lg={12} className="mt-5">
-        <div className="organizerTitle mr-3">Organizer</div>
+        <div className="meetingDescriptionOrganizer mr-3">Organizer</div>
         {organizers}
       </Col>
       <Col md={8} lg={6} xl={4} className="text-left mt-5">

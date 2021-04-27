@@ -8,19 +8,19 @@
     border-radius: 50%;
     box-shadow: var(--shadow);
 }
-  
+
 .personIcon:focus {
     outline: none;
 }
 
-.personIcon1{
+.personIcon1 {
     background-color: var(--light-purple);
 }
 
-.personIcon2{
+.personIcon2 {
     background-color: #FFD05A;
 }
 
-.personIcon3{
+.personIcon3 {
     background-color: var(--purple);
 }

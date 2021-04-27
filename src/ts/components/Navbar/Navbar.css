@@ -1,50 +1,50 @@
 #navbar {
-  position: fixed;
-  height: 100%;
-  z-index: 2;
+    position: fixed;
+    height: 100%;
+    z-index: 2;
 }
 
 #navbar .closemenu {
-  position: absolute;
-  bottom: 12%;
+    position: absolute;
+    bottom: 12%;
 }
 
 #navbar .pro-sidebar {
-  width: 100%;
-  min-width: 100%;
+    width: 100%;
+    min-width: 100%;
 }
 
 #navbar .pro-sidebar.collapsed {
-  width: 80px;
-  min-width: 80px;
+    width: 80px;
+    min-width: 80px;
 }
-  
+
 #navbar .pro-sidebar-inner {
-  background-color: var(--purple);
-  box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
+    background-color: var(--purple);
+    box-shadow: 0.5px 0.866px 2px 0 rgba(0, 0, 0, 0.15);
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout {
-  overflow-y: hidden;
+    overflow-y: hidden;
 }
-  
+
 #navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
-  font-size: var(--s-font-size);
-  padding: 0 8px;
-} 
-  
+    font-size: var(--s-font-size);
+    padding: 0 8px;
+}
+
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
-  color: white;
-  margin: 10px 0px;
+    color: white;
+    margin: 10px 0;
 }
-  
+
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
-  background-color: var(--purple);
-  font-size: var(--xs-font-size);
+    background-color: var(--purple);
+    font-size: var(--xs-font-size);
 }
-  
+
 #navbar .pro-sidebar-inner .pro-sidebar-layout .active {
-  background-color: none;
-  font-weight: bold;
-  z-index: 3;
+    background-color: none;
+    font-weight: bold;
+    z-index: 3;
 }
