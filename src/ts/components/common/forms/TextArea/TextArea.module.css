@@ -1,4 +1,4 @@
-.text_area_classic{
+.text_area_classic {
     background-color: #FFFFFF;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
@@ -13,7 +13,7 @@
     height: 150px;
 }
 
-.label_classic{
+.label_classic {
     color: #707070;
 }
 

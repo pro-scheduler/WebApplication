@@ -10,7 +10,7 @@
     border-radius: 50%;
     box-shadow: var(--shadow);
 }
-  
+
 .icon:focus {
     outline: none;
 }

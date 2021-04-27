@@ -1,4 +1,4 @@
-.input_classic{
+.input_classic {
     background-color: #FFFFFF;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
@@ -11,7 +11,7 @@
     border-radius: 5px;
 }
 
-.label_classic{
+.label_classic {
     color: #707070;
 }
 

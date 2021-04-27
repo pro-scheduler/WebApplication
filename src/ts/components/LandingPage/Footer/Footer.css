@@ -1,23 +1,23 @@
-.footer{
+.footer {
     background: var(--purple);
     color: white;
 }
 
-hr{
+.footerLine {
     margin-top: 6vh;
     border-top: 1px solid white;
     color: white;
     text-align: center;
 }
 
-p{
+p {
     font-size: 18px;
 }
 
-p img{
+p img {
     height: 16px;
 }
 
-.copyright{
+.copyright {
     font-size: 10px;
 }

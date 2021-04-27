@@ -23,7 +23,7 @@ const MeetingParticipants = (meetingParticipants: IMeetingParticipants) => {
   return (
     <Row className="justify-content mt-5 ml-5 pl-5">
       <LineWithHeader header={'Who'} />
-      <Col lg={12} className="text-center mt-2 mb-5 totalMembers">
+      <Col lg={12} className="text-center mt-2 mb-5 meetingParticipantsTotalMembers">
         Total {meetingParticipants.participants.length} members
       </Col>
       {participants}

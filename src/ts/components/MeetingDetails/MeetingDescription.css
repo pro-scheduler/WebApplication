@@ -1,8 +1,8 @@
-.meetingName{
+.meetingDescriptionName {
     font-size: var(--motto-font-size);
 }
 
-.organizerTitle{
+.meetingDescriptionOrganizer {
     font-size: var(--xs-font-size);
     display: inline;
 }

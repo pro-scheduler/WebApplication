@@ -10,11 +10,11 @@
     background-color: var(--purple);
 }
 
-.userName {
+.userIconParticipantName {
     font-size: var(--xs-font-size);
     display: inline;
 }
 
-.organizerName {
+.userIconOrganizerName {
     font-weight: var(--bold-font-weight);
 }

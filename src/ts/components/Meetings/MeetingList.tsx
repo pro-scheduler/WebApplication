@@ -45,11 +45,11 @@ const MeetingList = (iMeetingList: IMeetingList) => {
     });
 
   return (
-    <Row className="justify-content-center mt-4 mr-5 row">
+    <Row className="justify-content-center mt-4 mr-5 meetingListRow">
       <Col lg={12} className="text-center mt-5">
-        <CalendarIcon className="meetingsIcon" />
+        <CalendarIcon className="meetingListIcon" />
       </Col>
-      <Col lg={12} className="text-center my-3 meetingHeader">
+      <Col lg={12} className="text-center my-3 meetingListHeader">
         {iMeetingList.header}
       </Col>
       {iMeetingList.meetings.length > 0 ? (

@@ -1,4 +1,4 @@
-.paginationCurrentItem{
+.paginationCurrentItem {
     color: var(--purple);
     font-weight: var(--bold-font-weight);
     width: 20px;
@@ -7,7 +7,7 @@
     margin: 10px;
 }
 
-.paginationItem{
+.paginationItem {
     color: #8B85D0C6;
     font-weight: var(--bold-font-weight);
     width: 20px;
@@ -16,14 +16,14 @@
     margin: 10px;
 }
 
-.paginationItem:hover{
+.paginationItem:hover {
     cursor: pointer;
 }
 
-.paginationCurrentItem:hover{
+.paginationCurrentItem:hover {
     cursor: pointer;
 }
 
-.paginationItem:after{
+.paginationItem:after {
     color: var(--purple);
 }

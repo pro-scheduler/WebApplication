@@ -14,7 +14,7 @@ const Footer = () => {
       <Container fluid>
         <Row className="mt-5 mb-0 pt-2 pb-0 ml-0">
           <Col lg={12} className="my-0 py-0">
-            <hr />
+            <hr className="footerLine" />
           </Col>
           <Col lg={6} className="my-0 py-0">
             <p>
@@ -24,7 +24,7 @@ const Footer = () => {
           </Col>
           <Col lg={6} className="my-0 py-0 text-right">
             <p className="copyright mt-3">
-              Copyright <BiCopyright></BiCopyright> 2021 ProScheduler
+              Copyright <BiCopyright /> 2021 ProScheduler
             </p>
           </Col>
         </Row>

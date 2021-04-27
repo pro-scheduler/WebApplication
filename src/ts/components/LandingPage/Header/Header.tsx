@@ -17,7 +17,7 @@ const Header = () => {
           ProScheduler
         </h1>
         <h2>Schedule meetings like a pro</h2>
-        <Row className="row text-center">
+        <Row className="headerRow text-center">
           <Col md={12} lg={6} className="mt-5 pt-5 px-0">
             <RedirectButton text="Sign In" redirectTO="/signin" className="m-4" />
           </Col>

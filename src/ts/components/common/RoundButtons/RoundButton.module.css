@@ -10,11 +10,11 @@
     border-radius: 50%;
     box-shadow: var(--shadow);
 }
-  
+
 .button:focus {
     outline: none;
 }
-  
+
 .button:hover {
     opacity: 0.8;
 }
