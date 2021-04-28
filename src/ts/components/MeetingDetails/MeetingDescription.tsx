@@ -4,16 +4,17 @@ import Col from 'react-bootstrap/Col';
 
 import './MeetingDescription.css';
 import UserIcon from './UserIcon';
+import ProUser from '../../model/ProUser';
 
 interface IMeetingDescription {
   name: string;
-  organizersId: any;
+  organizers: ProUser[];
   description: string;
 }
 
 const MeetingDescription = (meeting: IMeetingDescription) => {
-  const organizers = meeting.organizersId.map((id: any) => {
-    return <UserIcon name={'Jan Kowalski'} organizer={true} key={'organizer' + id} />;
+  const organizers = meeting.organizers.map((organizer: ProUser) => {
+    return <UserIcon name={'Jan Kowalski'} organizer={true} key={'organizer' + organizer.id} />;
   });
 
   return (

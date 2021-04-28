@@ -4,7 +4,7 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
 import MeetingPagination from './MeetingPagination';
 import React, { useState } from 'react';
-import Meeting from '../../model/Meeting';
+import Meeting from '../../model/meeting/Meeting';
 import MeetingCard from './MeetingCard';
 import './MeetingList.css';
 

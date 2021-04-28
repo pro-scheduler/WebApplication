@@ -1,5 +1,5 @@
-import TimeRange from './TimeRange';
-import ProUser from './ProUser';
+import TimeRange from '../TimeRange';
+import ProUser from '../ProUser';
 
 export default interface Meeting {
   id: number;

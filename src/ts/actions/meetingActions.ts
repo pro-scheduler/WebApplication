@@ -1,14 +1,15 @@
-import Meeting from '../model/Meeting';
+import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
 import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl } from '../API/meeting/urls';
+import MeetingDTO from '../model/meeting/MeetingDTO';
+import { mapMeetingDTOToMeeting, mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
     .then((response) => response.json())
-    .then((meetings) => {
-      console.log(meetings);
-      return dispatch({ type: 'LOAD_ALL', payload: meetings });
+    .then((meetingsDTO: MeetingDTO[]) => {
+      return dispatch({ type: 'LOAD_ALL', payload: mapMeetingsDTOToMeetings(meetingsDTO) });
     });
 };
 
@@ -35,8 +36,8 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
 const loadMeeting = (id: number) => (dispatch: Dispatch) => {
   fetch(getMeetingUrl(id))
     .then((response: Response) => response.json())
-    .then((meeting) => {
-      return dispatch({ type: 'LOAD_ONE', payload: meeting });
+    .then((meetingDTO: MeetingDTO) => {
+      return dispatch({ type: 'LOAD_ONE', payload: mapMeetingDTOToMeeting(meetingDTO) });
     });
 };
 

@@ -23,7 +23,7 @@ const MeetingDetails = () => {
       <MeetingDescription
         name={meetingState.meeting.name}
         description={meetingState.meeting.description}
-        organizersId={meetingState.meeting.organizers}
+        organizers={meetingState.meeting.organizers}
       />
       <MeetingParticipants participants={meetingState.meeting.attendees} />
     </Container>

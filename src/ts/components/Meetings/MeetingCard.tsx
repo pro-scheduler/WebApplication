@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Meeting from '../../model/Meeting';
+import Meeting from '../../model/meeting/Meeting';
 import styles from './MeetingCard.module.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

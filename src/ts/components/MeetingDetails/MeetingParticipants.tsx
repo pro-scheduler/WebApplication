@@ -12,10 +12,10 @@ interface IMeetingParticipants {
 }
 
 const MeetingParticipants = (meetingParticipants: IMeetingParticipants) => {
-  const participants = meetingParticipants.participants.map((id: any) => {
+  const participants = meetingParticipants.participants.map((participant: ProUser) => {
     return (
-      <Col lg={3} className="my-1 mx-auto text-center" key={id}>
-        <UserIcon name={'Jan Nowak'} organizer={false} key={id} />
+      <Col lg={3} className="my-1 mx-auto text-center" key={participant.id}>
+        <UserIcon name={'Jan Nowak'} organizer={false} key={'Participant' + participant.id} />
       </Col>
     );
   });
