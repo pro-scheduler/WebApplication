@@ -24,7 +24,6 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
     },
     body: JSON.stringify(meeting),
   }).then((response) => {
-    console.log(response);
     if (response.status === 201) {
       return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
     } else {

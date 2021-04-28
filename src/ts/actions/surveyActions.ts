@@ -9,7 +9,6 @@ const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
     .then((response) => response.json())
     .then((survey: Survey) => {
-      console.log(survey);
       return dispatch({ type: 'LOAD_SURVEY', payload: survey });
     });
 };
@@ -18,7 +17,6 @@ const loadSurveyResults = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyAnswersUrl(id))
     .then((response) => response.json())
     .then((surveyResultsDTO: SurveyResultsDTO) => {
-      console.log(surveyResultsDTO);
       return dispatch({ type: 'LOAD_RESULTS', payload: surveyResultsDTO });
     });
 };
@@ -34,7 +32,6 @@ const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch:
     },
     body: JSON.stringify(surveyWithQuestions),
   }).then((response) => {
-    console.log(response);
     if (response.status === 201) {
       return dispatch(createSurveySuccess('Survey has been created successfully :)'));
     } else {
@@ -56,7 +53,6 @@ const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQ
     },
     body: JSON.stringify(surveyWithQuestions),
   }).then((response) => {
-    console.log(response);
     if (response.status === 201) {
       return dispatch(createSurveySuccess('Questions has been added successfully to survey :)'));
     } else {
