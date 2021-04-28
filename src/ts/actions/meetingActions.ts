@@ -1,7 +1,7 @@
 import Meeting from '../model/Meeting';
 import { Dispatch } from 'redux';
 import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
-import { getMeetingsUrl } from '../API/meeting/urls';
+import { getMeetingsUrl, getMeetingUrl } from '../API/meeting/urls';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
@@ -32,11 +32,12 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
   });
 };
 
-const loadMeeting = (id: number) => {
-  return {
-    type: 'LOAD_ONE',
-    payload: id,
-  };
+const loadMeeting = (id: number) => (dispatch: Dispatch) => {
+  fetch(getMeetingUrl(id))
+    .then((response: Response) => response.json())
+    .then((meeting) => {
+      return dispatch({ type: 'LOAD_ONE', payload: meeting });
+    });
 };
 
 const deleteMeeting = (id: number) => {

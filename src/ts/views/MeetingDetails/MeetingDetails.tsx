@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
-import Meeting from '../../model/Meeting';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
-import { fetchMeetingWithId } from '../../API/meeting/methods';
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
-
-const initialMeeting: Meeting = {
-  name: '',
-  description: '',
-  id: 0,
-  availableTimeRanges: [],
-  attendees: [],
-  organizers: [],
-};
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import allActions from '../../actions';
 
 const MeetingDetails = () => {
+  const dispatch: Function = useDispatch();
   const { id }: any = useParams();
-  const [meeting, setMeeting] = useState(initialMeeting);
+  const meetingState = useSelector((state: RootStateOrAny) => {
+    return state.meetings;
+  });
 
   useEffect(() => {
-    fetchMeetingWithId(id).then((meeting: Meeting) => setMeeting(meeting));
+    dispatch(allActions.meetingActions.loadMeeting(id));
     // eslint-disable-next-line
   }, []);
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
       <MeetingDescription
-        name={meeting.name}
-        description={meeting.description}
-        organizersId={meeting.organizers}
+        name={meetingState.meeting.name}
+        description={meetingState.meeting.description}
+        organizersId={meetingState.meeting.organizers}
       />
-      <MeetingParticipants participants={meeting.attendees} />
+      <MeetingParticipants participants={meetingState.meeting.attendees} />
     </Container>
   );
 };

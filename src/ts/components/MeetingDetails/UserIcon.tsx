@@ -15,7 +15,7 @@ const UserIcon = (user: IUserIcon) => {
         <FcManager />
       </div>
       {user.organizer ? (
-        <div className="ml-3 userIconUserParticipantName userIconOrganizerName">{user.name}</div>
+        <div className="ml-3 userIconParticipantName userIconOrganizerName">{user.name}</div>
       ) : (
         <div className="ml-3 userIconParticipantName">{user.name}</div>
       )}

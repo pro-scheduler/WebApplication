@@ -41,7 +41,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
   const meetingCards = iMeetingList.meetings
     .slice(currentPage * 4 - 4, currentPage * 4)
     .map((meeting: Meeting) => {
-      return <MeetingCard key={meeting.name} {...meeting} />;
+      return <MeetingCard key={meeting.id} {...meeting} />;
     });
 
   return (
