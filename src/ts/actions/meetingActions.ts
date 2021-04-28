@@ -1,6 +1,6 @@
 import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
-import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
+import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl } from '../API/meeting/urls';
 import MeetingDTO from '../model/meeting/MeetingDTO';
 import { mapMeetingDTOToMeeting, mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
@@ -14,7 +14,7 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
 };
 
 const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
-  dispatch(crateMeetingReset());
+  dispatch(createMeetingReset());
 
   fetch(getMeetingsUrl(), {
     method: 'POST',
@@ -26,9 +26,9 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
   }).then((response) => {
     console.log(response);
     if (response.status === 201) {
-      return dispatch(crateMeetingSuccess('Meeting has been created sucessfully :)'));
+      return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
     } else {
-      return dispatch(crateMeetingFailed('Meeting has not been created ;/'));
+      return dispatch(createMeetingFailed('Meeting has not been created ;/'));
     }
   });
 };
