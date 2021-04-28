@@ -4,9 +4,9 @@ import DropdownQuestion from '../../question/types/DropdownQuestion';
 
 export default class DropdownAnswer implements Answer {
   constructor(
-    public id: number,
     public question: DropdownQuestion,
     public dropdownChoice: string,
+    public id: number | null = null,
     public type: Type = Type.DROPDOWN
   ) {}
 }

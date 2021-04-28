@@ -4,9 +4,9 @@ import { Type } from '../../question/Question';
 
 export default class OpenAnswer implements Answer {
   constructor(
-    public id: number,
     public question: OpenQuestion,
     public text: string,
+    public id: number | null = null,
     public type: Type = Type.OPEN
   ) {}
 }

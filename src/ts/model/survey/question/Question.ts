@@ -5,7 +5,7 @@ import DropdownQuestion from './types/DropdownQuestion';
 import LinearScaleQuestion from './types/LinearScaleQuestion';
 
 export default interface Question {
-  id: number;
+  id: number | null;
   question: string;
   type: Type;
 }

@@ -4,9 +4,9 @@ import { Type } from '../../question/Question';
 
 export default class LinearScaleAnswer implements Answer {
   constructor(
-    public id: number,
     public question: LinearScaleQuestion,
     public rating: number,
+    public id: number | null = null,
     public type: Type = Type.LINEAR_SCALE
   ) {}
 }

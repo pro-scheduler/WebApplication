@@ -4,9 +4,9 @@ import { Type } from '../../question/Question';
 
 export default class YesOrNoAnswer implements Answer {
   constructor(
-    public id: number,
     public question: YesOrNoQuestion,
     public decision: boolean,
+    public id: number | null = null,
     public type: Type = Type.YES_OR_NO
   ) {}
 }
