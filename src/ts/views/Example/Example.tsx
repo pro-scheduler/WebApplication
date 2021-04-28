@@ -11,7 +11,6 @@ import ArrowButton from '../../components/common/RoundButtons/ArrowButton';
 import CalendarButton from '../../components/common/RoundButtons/CalendarButton';
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
-import Counter from '../../components/Counter/Counter';
 
 import styles from './Example.module.css';
 
@@ -40,7 +39,6 @@ const Example = () => {
 
   return (
     <div className={styles.example}>
-      <Counter />
       <SwitchButton
         className={styles.switchButton}
         onChange={() => setShowText(!showText)}
