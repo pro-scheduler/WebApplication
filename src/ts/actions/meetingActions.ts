@@ -1,7 +1,7 @@
 import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
 import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
-import { getMeetingsUrl, getMeetingUrl } from '../API/meeting/urls';
+import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
 import MeetingDTO from '../model/meeting/MeetingDTO';
 import { mapMeetingDTOToMeeting, mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
@@ -40,6 +40,19 @@ const loadMeeting = (id: number) => (dispatch: Dispatch) => {
     });
 };
 
+const removeUserFromMeeting = (meetingId: number, userId: number) => {
+  fetch(getRemoveUserFromMeetingUrl(meetingId), {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userId),
+  }).then((response) => {
+    console.log(response);
+  });
+};
+
 const deleteMeeting = (id: number) => {
   return {
     type: 'DELETE_MEETING',
@@ -60,6 +73,7 @@ const actions = {
   fetchAllMeetings,
   loadMeeting,
   saveMeeting,
+  removeUserFromMeeting,
 };
 
 export default actions;

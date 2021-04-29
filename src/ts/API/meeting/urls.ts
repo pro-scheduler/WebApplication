@@ -15,3 +15,6 @@ export const getMeetingOrganizersUrl = (meetingId: number) =>
 export const getJoinMeetingUrl = () => getMeetingsUrl() + '/join';
 
 export const getLeaveMeetingUrl = () => getMeetingsUrl() + '/leave';
+
+export const getRemoveUserFromMeetingUrl = (meetingId: number) =>
+  getMeetingUrl(meetingId) + '/remove';

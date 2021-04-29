@@ -8,13 +8,23 @@ import ProUser from '../../model/ProUser';
 
 interface IMeetingDescription {
   name: string;
+  meetingId: number;
   organizers: ProUser[];
   description: string;
 }
 
 const MeetingDescription = (meeting: IMeetingDescription) => {
   const organizers = meeting.organizers.map((organizer: ProUser) => {
-    return <UserIcon name={'Jan Kowalski'} organizer={true} key={'organizer' + organizer.id} />;
+    return (
+      <UserIcon
+        name={'Jan Kowalski'}
+        meetingId={meeting.meetingId}
+        userId={organizer.id}
+        canDelete={false}
+        fontBold={true}
+        key={'organizer' + organizer.id}
+      />
+    );
   });
 
   return (
