@@ -18,3 +18,12 @@
 .userIconOrganizerName {
     font-weight: var(--bold-font-weight);
 }
+
+.deleteUserButton {
+    font-size: 30px;
+    color: var(--light-red);
+}
+
+.deleteUserButton:hover {
+    cursor: pointer;
+}

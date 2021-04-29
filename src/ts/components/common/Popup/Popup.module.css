@@ -1,0 +1,14 @@
+.popupTitle {
+    font-size: 20px;
+}
+
+.popupYesButton {
+    width: 80px;
+    margin: 10px;
+}
+
+.popupNoButton {
+    width: 80px;
+    margin: 10px;
+    background-color: var(--light-red);
+}
