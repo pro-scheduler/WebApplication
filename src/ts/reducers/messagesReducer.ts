@@ -1,13 +1,23 @@
 // you can put here any notification/message you want to use in redux State
 
+enum messageStatus {
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+  NO_DISPLAY = 'NO_DISPLAY',
+}
+
 type messagesState = {
   createMeetingMessageStatus: string;
   createMeetingMessage: string;
+  createSurveyMessageStatus: string;
+  createSurveyMessage: string;
 };
 
 const defaultState: messagesState = {
-  createMeetingMessageStatus: 'NO_DISPLAY',
+  createMeetingMessageStatus: messageStatus.NO_DISPLAY,
   createMeetingMessage: '',
+  createSurveyMessageStatus: messageStatus.NO_DISPLAY,
+  createSurveyMessage: '',
 };
 
 const messagesReducer = (
@@ -15,22 +25,40 @@ const messagesReducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case 'CREATE_MESSAGE_SUCCESS':
+    case 'CREATE_MEETING_SUCCESS':
       return {
         ...state,
-        createMeetingMessageStatus: 'SUCCESS',
+        createMeetingMessageStatus: messageStatus.SUCCESS,
         createMeetingMessage: action.payload,
       };
-    case 'CREATE_MESSAGE_FAILED':
+    case 'CREATE_MEETING_FAILED':
       return {
         ...state,
-        createMeetingMessageStatus: 'FAILED',
+        createMeetingMessageStatus: messageStatus.FAILED,
         createMeetingMessage: action.payload,
       };
-    case 'RESET_CREATE_MESSAGE':
+    case 'RESET_MEETING_MESSAGE':
       return {
         ...state,
-        createMeetingMessageStatus: 'NO_DISPLAY',
+        createMeetingMessageStatus: messageStatus.NO_DISPLAY,
+        createMeetingMessage: '',
+      };
+    case 'CREATE_SURVEY_SUCCESS':
+      return {
+        ...state,
+        createSurveyMessageStatus: messageStatus.SUCCESS,
+        createSurveyMessage: action.payload,
+      };
+    case 'CREATE_SURVEY_FAILED':
+      return {
+        ...state,
+        createSurveyMessageStatus: messageStatus.FAILED,
+        createSurveyMessage: action.payload,
+      };
+    case 'RESET_SURVEY_MESSAGE':
+      return {
+        ...state,
+        createMeetingMessageStatus: messageStatus.NO_DISPLAY,
         createMeetingMessage: '',
       };
     default:

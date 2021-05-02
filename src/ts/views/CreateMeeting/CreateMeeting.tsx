@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import actions from '../../actions/meetingActions';
 import { useDispatch, useSelector } from 'react-redux';
-import Meeting from '../../model/Meeting';
+import Meeting from '../../model/meeting/Meeting';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

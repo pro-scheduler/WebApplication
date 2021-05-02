@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import counterReducer from './counterReducer';
 import userReducer from './userReducer';
 import meetingReducer from './meetingReducer';
 import messagesReducer from './messagesReducer';
+import surveyReducer from './surveyReducer';
 
 const rootReducer = combineReducers({
   userReducer,
-  counterReducer,
   meetings: meetingReducer,
   messages: messagesReducer,
+  surveyReducer,
 });
 
 export default rootReducer;

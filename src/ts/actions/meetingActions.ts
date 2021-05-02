@@ -1,19 +1,20 @@
-import Meeting from '../model/Meeting';
+import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
-import { crateMeetingSuccess, crateMeetingFailed, crateMeetingReset } from './messagesActions';
-import { getMeetingsUrl } from '../API/meeting/urls';
+import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
+import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
+import MeetingDTO from '../model/meeting/MeetingDTO';
+import { mapMeetingDTOToMeeting, mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
     .then((response) => response.json())
-    .then((meetings) => {
-      console.log(meetings);
-      return dispatch({ type: 'LOAD_ALL', payload: meetings });
+    .then((meetingsDTO: MeetingDTO[]) => {
+      return dispatch({ type: 'LOAD_ALL', payload: mapMeetingsDTOToMeetings(meetingsDTO) });
     });
 };
 
 const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
-  dispatch(crateMeetingReset());
+  dispatch(createMeetingReset());
 
   fetch(getMeetingsUrl(), {
     method: 'POST',
@@ -23,20 +24,33 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
     },
     body: JSON.stringify(meeting),
   }).then((response) => {
-    console.log(response);
     if (response.status === 201) {
-      return dispatch(crateMeetingSuccess('Meeting has been created sucessfully :)'));
+      return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
     } else {
-      return dispatch(crateMeetingFailed('Meeting has not been created ;/'));
+      return dispatch(createMeetingFailed('Meeting has not been created ;/'));
     }
   });
 };
 
-const loadMeeting = (id: number) => {
-  return {
-    type: 'LOAD_ONE',
-    payload: id,
-  };
+const loadMeeting = (id: number) => (dispatch: Dispatch) => {
+  fetch(getMeetingUrl(id))
+    .then((response: Response) => response.json())
+    .then((meetingDTO: MeetingDTO) => {
+      return dispatch({ type: 'LOAD_ONE', payload: mapMeetingDTOToMeeting(meetingDTO) });
+    });
+};
+
+const removeUserFromMeeting = (meetingId: number, userId: number) => {
+  fetch(getRemoveUserFromMeetingUrl(meetingId), {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userId),
+  }).then((response) => {
+    console.log(response);
+  });
 };
 
 const deleteMeeting = (id: number) => {
@@ -59,6 +73,7 @@ const actions = {
   fetchAllMeetings,
   loadMeeting,
   saveMeeting,
+  removeUserFromMeeting,
 };
 
 export default actions;

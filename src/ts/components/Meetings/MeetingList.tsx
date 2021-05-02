@@ -4,7 +4,7 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
 import MeetingPagination from './MeetingPagination';
 import React, { useState } from 'react';
-import Meeting from '../../model/Meeting';
+import Meeting from '../../model/meeting/Meeting';
 import MeetingCard from './MeetingCard';
 import './MeetingList.css';
 
@@ -41,7 +41,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
   const meetingCards = iMeetingList.meetings
     .slice(currentPage * 4 - 4, currentPage * 4)
     .map((meeting: Meeting) => {
-      return <MeetingCard key={meeting.name} {...meeting} />;
+      return <MeetingCard key={meeting.id} {...meeting} />;
     });
 
   return (
