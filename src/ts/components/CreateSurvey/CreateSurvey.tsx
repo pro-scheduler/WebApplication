@@ -4,14 +4,14 @@ import SurveyIcon from '../common/Icons/SurveyIcon';
 import style from '../CreateMeeting/NameAndDesctiption.module.css';
 import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
-import QuestionField from './QuestionField';
+import QuestionCreate from './QuestionCreate';
 import { useEffect, useState } from 'react';
 
 const CreateSurvey = () => {
   const [questions, setQuestions] = useState<any[]>([]);
 
   const createNewQuestion = () => {
-    setQuestions([...questions, <QuestionField key={questions.length} />]);
+    setQuestions([...questions, <QuestionCreate key={questions.length} />]);
   };
 
   useEffect(() => {

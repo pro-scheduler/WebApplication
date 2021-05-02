@@ -1,11 +1,13 @@
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import styles from './QuestionField.module.css';
+import styles from './QuestionCreate.module.css';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import React, { useState } from 'react';
 import LinearScaleQuestionCreate from './LinearScaleQuestionCreate';
 import OpenQuestionCreate from './OpenQuestionCreate';
 import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
+import DropdownQuestionCreate from './DropdownQuestionCreate';
+import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 
 const options = [
   { value: 'DropdownQuestion', label: 'Dropdown' },
@@ -15,8 +17,8 @@ const options = [
   { value: 'YesOrNoQuestion', label: 'Yes or No' },
 ];
 
-const QuestionField = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+const QuestionCreate = () => {
+  const [selectedValue, setSelectedValue] = useState('OpenQuestion');
 
   const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
@@ -26,15 +28,17 @@ const QuestionField = () => {
     <>
       <Col lg={12} className={styles.questionField}>
         <Row>
-          <Col lg={4} className="text-right mt-4">
+          <Col lg={12} className="text-right mt-2">
             <SingleDropdownButton
               onchange={handleSingleChoice}
               options={options}
-              defaultValue={options[0]}
+              defaultValue={options[3]}
               className="mr-0"
             />
           </Col>
+          {selectedValue === options[0].value && <DropdownQuestionCreate />}
           {selectedValue === options[1].value && <LinearScaleQuestionCreate />}
+          {selectedValue === options[2].value && <MultiChoiceQuestionCreate />}
           {selectedValue === options[3].value && <OpenQuestionCreate />}
           {selectedValue === options[4].value && <YesOrNoQuestionCreate />}
         </Row>
@@ -43,4 +47,4 @@ const QuestionField = () => {
   );
 };
 
-export default QuestionField;
+export default QuestionCreate;

@@ -14,10 +14,10 @@ const SingleValueInput = ({ label, valueHandler }: SingleValueInputProps) => {
     valueHandler(event.target.value);
   };
   return (
-    <div>
+    <>
       <div className={styles.label_classic}>{label}</div>
       <input className={styles.input_classic} type="text" value={state} onChange={handleChange} />
-    </div>
+    </>
   );
 };
 
