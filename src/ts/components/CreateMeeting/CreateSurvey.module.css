@@ -1,0 +1,13 @@
+.addQuestionButton {
+    background-color: #c7f5d3;
+    border-radius: 20px;
+    padding-left: 40px;
+    width: 220px;
+}
+
+.button {
+    background-color: var(--bright-green);
+    margin-left: 20px;
+    width: 50px;
+    height: 50px;
+}
