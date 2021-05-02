@@ -32,7 +32,7 @@ const MultiChoiceQuestionCreate = () => {
       <Col lg={8} className="text-left mt-4">
         <div className="mb-3">Options:</div>
         {options.map((option: any) => (
-          <div className="mt-2">
+          <div className="mt-2" key={option}>
             <BsCircle className="mr-2" /> {option}
             <TiDelete className="ml-2 removeOptionButton" onClick={() => deleteOption(option)} />
           </div>

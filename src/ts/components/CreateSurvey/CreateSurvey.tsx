@@ -12,6 +12,7 @@ const CreateSurvey = () => {
 
   const createNewQuestion = () => {
     setQuestions([...questions, <QuestionCreate key={questions.length} />]);
+    console.log(questions);
   };
 
   useEffect(() => {
