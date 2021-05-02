@@ -3,7 +3,9 @@ import Row from 'react-bootstrap/Row';
 import styles from './QuestionField.module.css';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import React, { useState } from 'react';
-import TextArea from '../common/forms/TextArea/TextArea';
+import LinearScaleQuestionCreate from './LinearScaleQuestionCreate';
+import OpenQuestionCreate from './OpenQuestionCreate';
+import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 
 const options = [
   { value: 'DropdownQuestion', label: 'Dropdown' },
@@ -15,23 +17,16 @@ const options = [
 
 const QuestionField = () => {
   const [selectedValue, setSelectedValue] = useState(null);
-  const [question, setQuestion] = useState('');
 
   const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
   };
+
   return (
     <>
       <Col lg={12} className={styles.questionField}>
         <Row>
-          <Col lg={6} className="text-left">
-            <TextArea
-              label="Question"
-              valueHandler={setQuestion}
-              className={styles.questionTextArea}
-            />
-          </Col>
-          <Col lg={6} className="text-right mt-4">
+          <Col lg={4} className="text-right mt-4">
             <SingleDropdownButton
               onchange={handleSingleChoice}
               options={options}
@@ -39,6 +34,9 @@ const QuestionField = () => {
               className="mr-0"
             />
           </Col>
+          {selectedValue === options[1].value && <LinearScaleQuestionCreate />}
+          {selectedValue === options[3].value && <OpenQuestionCreate />}
+          {selectedValue === options[4].value && <YesOrNoQuestionCreate />}
         </Row>
       </Col>
     </>

@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NameAndDescription from '../../components/CreateMeeting/NameAndDescription';
-import CreateSurvey from '../../components/CreateMeeting/CreateSurvey';
+import CreateSurvey from '../../components/CreateSurvey/CreateSurvey';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 
 const CreateMeeting = () => {
