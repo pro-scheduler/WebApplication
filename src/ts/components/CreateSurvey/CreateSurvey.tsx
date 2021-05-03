@@ -10,6 +10,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import allActions from '../../actions';
+import TextArea from '../common/forms/TextArea/TextArea';
 
 const CreateSurvey = () => {
   const dispatch: Function = useDispatch();
@@ -36,6 +37,10 @@ const CreateSurvey = () => {
     setQuestions(questions.filter((id: number) => idToDelete !== id));
   };
 
+  const saveSurveyDescription = (description: string) => {
+    dispatch(allActions.surveyActions.addDescriptionToSurveyWithQuestionsDTO(description));
+  };
+
   const saveSurvey = () => {
     dispatch(allActions.surveyActions.createSurvey(survey.newSurvey));
   };
@@ -57,6 +62,13 @@ const CreateSurvey = () => {
       </Row>
 
       <Row className="justify-content-center mt-4">
+        <Col lg={8} className="text-left">
+          <TextArea
+            label="Survey Description"
+            valueHandler={saveSurveyDescription}
+            className={styles.surveyDescriptionInput}
+          />
+        </Col>
         {questions.map((id: number) => {
           return (
             <QuestionCreate

@@ -76,6 +76,14 @@ const userReducer = (state: surveyState = defaultState, action: { type: string; 
           ),
         },
       };
+    case 'ADD_DESCRIPTION':
+      return {
+        ...state,
+        newSurvey: {
+          ...state.newSurvey,
+          description: action.payload.description,
+        },
+      };
     default:
       return state;
   }

@@ -77,6 +77,10 @@ const removeQuestionFromSurveyWithQuestionsDTO = (id: number) => (dispatch: Disp
   return dispatch({ type: 'REMOVE_QUESTION', payload: { id } });
 };
 
+const addDescriptionToSurveyWithQuestionsDTO = (description: string) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'ADD_DESCRIPTION', payload: { description } });
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
@@ -84,6 +88,7 @@ const actions = {
   addQuestionsToSurvey,
   addQuestionToSurveyWithQuestionsDTO,
   removeQuestionFromSurveyWithQuestionsDTO,
+  addDescriptionToSurveyWithQuestionsDTO,
 };
 
 export default actions;
