@@ -25,7 +25,7 @@ const defaultSurveyResults: SurveyResultsDTO = {
 };
 
 const defaultNewSurvey: SurveyWithQuestionsDTO = {
-  meetingId: 0,
+  meetingId: 2,
   description: '',
   questions: [],
 };

@@ -25,6 +25,13 @@ const loadSurveyResults = (id: number) => (dispatch: Dispatch) => {
 const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch: Dispatch) => {
   dispatch(createSurveyReset());
 
+  surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
+    question.id = null;
+    return question;
+  });
+
+  console.log(surveyWithQuestions);
+
   fetch(getSurveysUrl(), {
     method: 'POST',
     headers: {

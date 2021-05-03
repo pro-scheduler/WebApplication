@@ -6,7 +6,7 @@ import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import allActions from '../../actions';
@@ -15,6 +15,16 @@ const CreateSurvey = () => {
   const dispatch: Function = useDispatch();
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
+  const survey = useSelector((state: RootStateOrAny) => {
+    return state.surveyReducer;
+  });
+
+  const messageStatus = useSelector((state: RootStateOrAny) => {
+    return state.messages.createSurveyMessageStatus;
+  });
+  const message = useSelector((state: RootStateOrAny) => {
+    return state.messages.createSurveyMessage;
+  });
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -27,7 +37,7 @@ const CreateSurvey = () => {
   };
 
   const saveSurvey = () => {
-    console.log('Saving survey');
+    dispatch(allActions.surveyActions.createSurvey(survey.newSurvey));
   };
 
   useEffect(() => {
@@ -79,6 +89,16 @@ const CreateSurvey = () => {
           </Col>
         </Row>
       )}
+
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
+          {messageStatus === 'NO_DISPLAY' ? null : (
+            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
+              {message}
+            </p>
+          )}
+        </Col>
+      </Row>
     </div>
   );
 };
