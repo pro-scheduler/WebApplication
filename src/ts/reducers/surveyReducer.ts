@@ -50,6 +50,14 @@ const userReducer = (state: surveyState = defaultState, action: { type: string; 
         ...state,
         surveyResults: action.payload,
       };
+    case 'SET_MEETING_ID':
+      return {
+        ...state,
+        newSurvey: {
+          ...state.newSurvey,
+          meetingId: action.payload.meetingId,
+        },
+      };
     case 'ADD_QUESTION':
       return {
         ...state,

@@ -5,10 +5,12 @@ import style from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import actions from '../../actions/meetingActions';
 import Meeting from '../../model/meeting/Meeting';
+import ProUser from '../../model/ProUser';
+import allActions from '../../actions';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
 type messageState = { createMeetingMessageStatus: string; createMeetingMessage: string };
@@ -19,6 +21,9 @@ interface RootState {
 
 const NameAndDescription = () => {
   const dispatch: Function = useDispatch();
+  const user: ProUser = useSelector((state: RootStateOrAny) => {
+    return state.userReducer;
+  });
   const messageStatus = useSelector((state: RootState) => {
     return state.messages.createMeetingMessageStatus;
   });
@@ -41,6 +46,22 @@ const NameAndDescription = () => {
       })
     );
   };
+
+  useEffect(() => {
+    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
+  }, [dispatch, messageStatus, user.id]);
+
+  useEffect(() => {
+    const createdMeeting: Meeting | undefined = user.organizedMeetings
+      .filter((meeting: Meeting) => meeting.name === name)
+      .pop();
+    dispatch(
+      allActions.surveyActions.setMeetingIdInSurveyWithQuestionsDTO(
+        createdMeeting === undefined ? 0 : createdMeeting.id
+      )
+    );
+  }, [dispatch, name, user.organizedMeetings]);
+
   return (
     <div>
       <Row className="justify-content-center mt-5">
