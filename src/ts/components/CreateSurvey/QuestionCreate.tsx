@@ -31,18 +31,18 @@ const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
 
   return (
     <>
-      <Col lg={12} className={styles.questionField}>
+      <Col sm={8} lg={10} className={styles.questionField}>
         <Row>
-          <Col sm={6} lg={11} className="text-right mt-2">
+          <Col lg={12} className="text-right ml-0 pl-1 mt-sm-0">
+            {deleteButton}
+          </Col>
+          <Col sm={6} lg={11} className="text-right my-sm-4">
             <SingleDropdownButton
               onchange={handleSingleChoice}
               options={options}
               defaultValue={options[3]}
               className="mr-0"
             />
-          </Col>
-          <Col sm={6} lg={1} className="text-right ml-0 pl-1">
-            {deleteButton}
           </Col>
           {selectedValue === options[0].value && <DropdownQuestionCreate id={id} />}
           {selectedValue === options[1].value && <LinearScaleQuestionCreate id={id} />}

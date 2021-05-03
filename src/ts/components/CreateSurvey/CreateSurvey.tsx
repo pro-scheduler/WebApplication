@@ -62,7 +62,7 @@ const CreateSurvey = () => {
       </Row>
 
       <Row className="justify-content-center mt-4">
-        <Col lg={8} className="text-left">
+        <Col xs={8} lg={8} className="text-left">
           <TextArea
             label="Survey Description"
             valueHandler={saveSurveyDescription}
@@ -87,7 +87,7 @@ const CreateSurvey = () => {
       </Row>
 
       <Row className="justify-content-center mt-4">
-        <Col lg={2} className="text-right mr-0 pr-0 offset-9">
+        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-9">
           <div className={styles.addQuestionButton}>
             Add question
             <PlusButton className={styles.button} onclick={createNewQuestion} />
