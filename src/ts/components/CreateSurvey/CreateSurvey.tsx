@@ -87,7 +87,7 @@ const CreateSurvey = () => {
       </Row>
 
       <Row className="justify-content-center mt-4">
-        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-9">
+        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-7">
           <div className={styles.addQuestionButton}>
             Add question
             <PlusButton className={styles.button} onclick={createNewQuestion} />

@@ -56,7 +56,7 @@ const LinearScaleQuestionCreate = ({ id }: IQuestionCreate) => {
 
   return (
     <>
-      <Col lg={8} className="text-left">
+      <Col lg={12} className="text-left">
         <TextArea
           label="Question"
           valueHandler={handleQuestionChange}

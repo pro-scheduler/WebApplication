@@ -54,7 +54,7 @@ const QuestionWithOptionsCreate = ({ id, type }: IQuestionCreate) => {
 
   return (
     <>
-      <Col lg={8} className="text-left">
+      <Col lg={12} className="text-left">
         <TextArea
           label="Question"
           valueHandler={handleQuestionChange}
@@ -62,14 +62,14 @@ const QuestionWithOptionsCreate = ({ id, type }: IQuestionCreate) => {
         />
       </Col>
       <Col lg={8} className="text-left mt-4">
-        <div className="mb-3">Options:</div>
+        <div className="mb-3 optionsText">Options:</div>
         {options.map((option: any) => (
           <div className="mt-2" key={option}>
             <BsCircle className="mr-2" /> {option}
             <TiDelete className="ml-2 removeOptionButton" onClick={() => deleteOption(option)} />
           </div>
         ))}
-        <div className="mt-5">
+        <div className="mt-3">
           <SingleValueInput label="" valueHandler={setCurrentOption} />
           <PlusButton onclick={addOption} className={'ml-3 addOptionButton'} />
         </div>

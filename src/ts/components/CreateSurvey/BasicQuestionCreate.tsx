@@ -24,7 +24,7 @@ const BasicQuestionCreate = ({ id, type }: IQuestionCreate) => {
 
   return (
     <>
-      <Col lg={6} className="text-left">
+      <Col lg={12} className="text-left">
         <TextArea
           label="Question"
           valueHandler={saveQuestion}

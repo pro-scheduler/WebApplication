@@ -33,10 +33,10 @@ const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
     <>
       <Col sm={8} lg={10} className={styles.questionField}>
         <Row>
-          <Col lg={12} className="text-right ml-0 pl-1 mt-sm-0">
+          <Col lg={12} className="text-right mt-sm-0">
             {deleteButton}
           </Col>
-          <Col sm={6} lg={11} className="text-right my-sm-4">
+          <Col sm={6} lg={12} className="text-right my-sm-4">
             <SingleDropdownButton
               onchange={handleSingleChoice}
               options={options}
@@ -44,6 +44,7 @@ const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
               className="mr-0"
             />
           </Col>
+          <Col lg={11} className={styles.questionCreateFooter} />
           {selectedValue === options[0].value && <DropdownQuestionCreate id={id} />}
           {selectedValue === options[1].value && <LinearScaleQuestionCreate id={id} />}
           {selectedValue === options[2].value && <MultiChoiceQuestionCreate id={id} />}
