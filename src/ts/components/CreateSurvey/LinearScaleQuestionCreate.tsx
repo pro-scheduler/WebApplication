@@ -3,6 +3,9 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
+import { useDispatch } from 'react-redux';
+import LinearScaleQuestion from '../../model/survey/question/types/LinearScaleQuestion';
+import allActions from '../../actions';
 
 const linearScaleFromOptions = [
   { value: 0, label: 0 },
@@ -21,27 +24,48 @@ const linearScaleToOptions = [
   { value: 10, label: 10 },
 ];
 
-const LinearScaleQuestionCreate = () => {
+interface IQuestionCreate {
+  id: number;
+}
+
+const LinearScaleQuestionCreate = ({ id }: IQuestionCreate) => {
+  const dispatch: Function = useDispatch();
   const [question, setQuestion] = useState('');
   const [fromValue, setFromValue] = useState(0);
   const [toValue, setToValue] = useState(10);
 
-  const handleFromValueChoice = ({ value, _ }: any) => {
+  const handleFromValueChange = ({ value, _ }: any) => {
     setFromValue(value);
+    save(value, toValue, question);
   };
 
-  const handleToValueChoice = ({ value, _ }: any) => {
+  const handleToValueChange = ({ value, _ }: any) => {
     setToValue(value);
+    save(fromValue, value, question);
+  };
+
+  const handleQuestionChange = (value: string) => {
+    setQuestion(value);
+    save(fromValue, toValue, value);
+  };
+
+  const save = (from: number, to: number, value: string) => {
+    const linearScaleQuestion = new LinearScaleQuestion(value, from, to, id);
+    dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(linearScaleQuestion));
   };
 
   return (
     <>
       <Col lg={8} className="text-left">
-        <TextArea label="Question" valueHandler={setQuestion} className={styles.questionTextArea} />
+        <TextArea
+          label="Question"
+          valueHandler={handleQuestionChange}
+          className={styles.questionTextArea}
+        />
       </Col>
       <Col lg={5} className="text-center mt-5">
         <SingleDropdownButton
-          onchange={handleFromValueChoice}
+          onchange={handleFromValueChange}
           options={linearScaleFromOptions}
           defaultValue={linearScaleFromOptions[0]}
           className="mx-auto"
@@ -55,7 +79,7 @@ const LinearScaleQuestionCreate = () => {
 
       <Col lg={5} className="text-center mt-5">
         <SingleDropdownButton
-          onchange={handleToValueChoice}
+          onchange={handleToValueChange}
           options={linearScaleToOptions}
           defaultValue={linearScaleToOptions[8]}
           className="mx-auto"

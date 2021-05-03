@@ -4,6 +4,7 @@ import Survey from '../model/survey/Survey';
 import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
 import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
 import { createSurveyFailed, createSurveyReset, createSurveySuccess } from './messagesActions';
+import Question from '../model/survey/question/Question';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -61,11 +62,21 @@ const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQ
   });
 };
 
+const addQuestionToSurveyWithQuestionsDTO = (question: Question) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'ADD_QUESTION', payload: { question } });
+};
+
+const removeQuestionFromSurveyWithQuestionsDTO = (id: number) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'REMOVE_QUESTION', payload: { id } });
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
   addQuestionsToSurvey,
+  addQuestionToSurveyWithQuestionsDTO,
+  removeQuestionFromSurveyWithQuestionsDTO,
 };
 
 export default actions;

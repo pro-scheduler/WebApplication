@@ -17,7 +17,12 @@ const options = [
   { value: 'YesOrNoQuestion', label: 'Yes or No' },
 ];
 
-const QuestionCreate = () => {
+interface IQuestionCreate {
+  id: number;
+  deleteButton: JSX.Element;
+}
+
+const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
   const [selectedValue, setSelectedValue] = useState('OpenQuestion');
 
   const handleSingleChoice = ({ value, _ }: any) => {
@@ -28,7 +33,7 @@ const QuestionCreate = () => {
     <>
       <Col lg={12} className={styles.questionField}>
         <Row>
-          <Col lg={12} className="text-right mt-2">
+          <Col sm={6} lg={11} className="text-right mt-2">
             <SingleDropdownButton
               onchange={handleSingleChoice}
               options={options}
@@ -36,11 +41,14 @@ const QuestionCreate = () => {
               className="mr-0"
             />
           </Col>
-          {selectedValue === options[0].value && <DropdownQuestionCreate />}
-          {selectedValue === options[1].value && <LinearScaleQuestionCreate />}
-          {selectedValue === options[2].value && <MultiChoiceQuestionCreate />}
-          {selectedValue === options[3].value && <OpenQuestionCreate />}
-          {selectedValue === options[4].value && <YesOrNoQuestionCreate />}
+          <Col sm={6} lg={1} className="text-right ml-0 pl-1">
+            {deleteButton}
+          </Col>
+          {selectedValue === options[0].value && <DropdownQuestionCreate id={id} />}
+          {selectedValue === options[1].value && <LinearScaleQuestionCreate id={id} />}
+          {selectedValue === options[2].value && <MultiChoiceQuestionCreate id={id} />}
+          {selectedValue === options[3].value && <OpenQuestionCreate id={id} />}
+          {selectedValue === options[4].value && <YesOrNoQuestionCreate id={id} />}
         </Row>
       </Col>
     </>

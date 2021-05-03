@@ -1,7 +1,13 @@
 import Survey from '../model/survey/Survey';
 import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
+import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
+import Question from '../model/survey/question/Question';
 
-type surveyState = { survey: Survey; surveyResults: SurveyResultsDTO };
+type surveyState = {
+  survey: Survey;
+  surveyResults: SurveyResultsDTO;
+  newSurvey: SurveyWithQuestionsDTO;
+};
 
 const defaultSurvey: Survey = {
   id: 0,
@@ -18,9 +24,16 @@ const defaultSurveyResults: SurveyResultsDTO = {
   questionsAndAnswers: [],
 };
 
+const defaultNewSurvey: SurveyWithQuestionsDTO = {
+  meetingId: 0,
+  description: '',
+  questions: [],
+};
+
 const defaultState: surveyState = {
   survey: defaultSurvey,
   surveyResults: defaultSurveyResults,
+  newSurvey: defaultNewSurvey,
 };
 
 const userReducer = (state: surveyState = defaultState, action: { type: string; payload: any }) => {
@@ -37,9 +50,39 @@ const userReducer = (state: surveyState = defaultState, action: { type: string; 
         ...state,
         surveyResults: action.payload,
       };
+    case 'ADD_QUESTION':
+      return {
+        ...state,
+        newSurvey: {
+          ...state.newSurvey,
+          questions: questionWithIdExists(action.payload.question.id, state.newSurvey.questions)
+            ? state.newSurvey.questions.map((question: Question) => {
+                if (question.id !== action.payload.question.id) return question;
+                return {
+                  ...question,
+                  ...action.payload.question,
+                };
+              })
+            : [...state.newSurvey.questions, action.payload.question],
+        },
+      };
+    case 'REMOVE_QUESTION':
+      return {
+        ...state,
+        newSurvey: {
+          ...state.newSurvey,
+          questions: state.newSurvey.questions.filter(
+            (question: Question) => question.id !== action.payload.id
+          ),
+        },
+      };
     default:
       return state;
   }
+};
+
+const questionWithIdExists = (id: number, questions: Question[]): boolean => {
+  return questions.filter((question: Question) => question.id === id).length > 0;
 };
 
 export default userReducer;

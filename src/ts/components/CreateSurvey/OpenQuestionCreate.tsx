@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import TextArea from '../common/forms/TextArea/TextArea';
-import styles from './QuestionCreate.module.css';
-import Col from 'react-bootstrap/Col';
+import React from 'react';
+import BasicQuestionCreate from './BasicQuestionCreate';
 
-const OpenQuestionCreate = () => {
-  const [question, setQuestion] = useState('');
+interface IQuestionCreate {
+  id: number;
+}
 
-  return (
-    <>
-      <Col lg={8} className="text-left">
-        <TextArea label="Question" valueHandler={setQuestion} className={styles.questionTextArea} />
-      </Col>
-    </>
-  );
+const OpenQuestionCreate = ({ id }: IQuestionCreate) => {
+  return <BasicQuestionCreate id={id} type={'open'} />;
 };
 
 export default OpenQuestionCreate;
