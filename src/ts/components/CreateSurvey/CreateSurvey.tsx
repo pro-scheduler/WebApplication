@@ -104,7 +104,7 @@ const CreateSurvey = () => {
 
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
-          {messageStatus === 'NO_DISPLAY' ? null : (
+          {messageStatus === 'NO_DISPLAY' && (
             <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
               {message}
             </p>

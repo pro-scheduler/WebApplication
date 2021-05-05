@@ -78,7 +78,6 @@ const NameAndDescription = () => {
           <SingleValueInput label="Name" valueHandler={setName} />
           <div className="mt-4">
             <TextArea label="Description" valueHandler={setDescription} className={''} />
-            <p className={style.pComment}>You always can change your preferences later</p>
           </div>
         </Col>
         <Col />
@@ -90,7 +89,7 @@ const NameAndDescription = () => {
       </Row>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
-          {messageStatus === 'NO_DISPLAY' ? null : (
+          {messageStatus !== 'NO_DISPLAY' && (
             <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
               {message}
             </p>

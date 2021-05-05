@@ -2,11 +2,6 @@
     font-size: var(--s-font-size);
 }
 
-.pComment {
-    color: #707070;
-    font-size: small;
-}
-
 .messageSuccess {
     color: #07e66b;
     font-size: medium;
