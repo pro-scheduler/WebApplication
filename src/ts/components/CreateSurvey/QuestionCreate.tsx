@@ -8,13 +8,15 @@ import OpenQuestionCreate from './OpenQuestionCreate';
 import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
+import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
+import { Type } from '../../model/survey/question/Question';
 
 const options = [
-  { value: 'DropdownQuestion', label: 'Dropdown' },
-  { value: 'LinearScaleQuestion', label: 'Linear Scale' },
-  { value: 'MultiChoiceQuestion', label: 'Multi Choice' },
-  { value: 'OpenQuestion', label: 'Open' },
-  { value: 'YesOrNoQuestion', label: 'Yes or No' },
+  new ValueLabelPair(Type.DROPDOWN, 'Dropdown'),
+  new ValueLabelPair(Type.LINEAR_SCALE, 'Linear Scale'),
+  new ValueLabelPair(Type.MULTI_CHOICE, 'MultiChoice'),
+  new ValueLabelPair(Type.OPEN, 'Open'),
+  new ValueLabelPair(Type.YES_OR_NO, 'Yes or No'),
 ];
 
 interface IQuestionCreate {
@@ -45,11 +47,11 @@ const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
             />
           </Col>
           <Col lg={11} className={styles.questionCreateFooter} />
-          {selectedValue === options[0].value && <DropdownQuestionCreate id={id} />}
-          {selectedValue === options[1].value && <LinearScaleQuestionCreate id={id} />}
-          {selectedValue === options[2].value && <MultiChoiceQuestionCreate id={id} />}
-          {selectedValue === options[3].value && <OpenQuestionCreate id={id} />}
-          {selectedValue === options[4].value && <YesOrNoQuestionCreate id={id} />}
+          {selectedValue === Type.DROPDOWN && <DropdownQuestionCreate id={id} />}
+          {selectedValue === Type.LINEAR_SCALE && <LinearScaleQuestionCreate id={id} />}
+          {selectedValue === Type.MULTI_CHOICE && <MultiChoiceQuestionCreate id={id} />}
+          {selectedValue === Type.OPEN && <OpenQuestionCreate id={id} />}
+          {selectedValue === Type.YES_OR_NO && <YesOrNoQuestionCreate id={id} />}
         </Row>
       </Col>
     </>

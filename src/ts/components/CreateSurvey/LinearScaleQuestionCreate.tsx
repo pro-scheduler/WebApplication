@@ -6,23 +6,11 @@ import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import { useDispatch } from 'react-redux';
 import LinearScaleQuestion from '../../model/survey/question/types/LinearScaleQuestion';
 import allActions from '../../actions';
+import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
 
-const linearScaleFromOptions = [
-  { value: 0, label: 0 },
-  { value: 1, label: 1 },
-];
+const linearScaleFromOptions = Array.from({ length: 2 }, (_, i) => optionToValueLabelPair(i));
 
-const linearScaleToOptions = [
-  { value: 2, label: 2 },
-  { value: 3, label: 3 },
-  { value: 4, label: 4 },
-  { value: 5, label: 5 },
-  { value: 6, label: 6 },
-  { value: 7, label: 7 },
-  { value: 8, label: 8 },
-  { value: 9, label: 9 },
-  { value: 10, label: 10 },
-];
+const linearScaleToOptions = Array.from({ length: 9 }, (_, i) => optionToValueLabelPair(i + 2));
 
 interface IQuestionCreate {
   id: number;
