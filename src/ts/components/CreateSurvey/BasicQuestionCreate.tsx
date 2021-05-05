@@ -3,14 +3,14 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from 'react-redux';
-import Question from '../../model/survey/question/Question';
+import Question, { Type } from '../../model/survey/question/Question';
 import allActions from '../../actions';
 import OpenQuestion from '../../model/survey/question/types/OpenQuestion';
 import YesOrNoQuestion from '../../model/survey/question/types/YesOrNoQuestion';
 
 interface IQuestionCreate {
   id: number;
-  type: string;
+  type: Type;
 }
 
 const BasicQuestionCreate = ({ id, type }: IQuestionCreate) => {
@@ -18,7 +18,7 @@ const BasicQuestionCreate = ({ id, type }: IQuestionCreate) => {
 
   const saveQuestion = (question: string) => {
     const basicQuestion: Question =
-      type === 'open' ? new OpenQuestion(question, id) : new YesOrNoQuestion(question, id);
+      type === Type.OPEN ? new OpenQuestion(question, id) : new YesOrNoQuestion(question, id);
     dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(basicQuestion));
   };
 

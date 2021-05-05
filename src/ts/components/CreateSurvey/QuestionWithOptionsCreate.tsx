@@ -8,14 +8,14 @@ import { BsCircle } from 'react-icons/bs';
 import { TiDelete } from 'react-icons/ti';
 import PlusButton from '../common/RoundButtons/PlusButton';
 import { useDispatch } from 'react-redux';
-import Question from '../../model/survey/question/Question';
+import Question, { Type } from '../../model/survey/question/Question';
 import allActions from '../../actions';
 import MultiChoiceQuestion from '../../model/survey/question/types/MultiChoiceQuestion';
 import DropdownQuestion from '../../model/survey/question/types/DropdownQuestion';
 
 interface IQuestionCreate {
   id: number;
-  type: string;
+  type: Type;
 }
 
 const QuestionWithOptionsCreate = ({ id, type }: IQuestionCreate) => {
@@ -46,7 +46,7 @@ const QuestionWithOptionsCreate = ({ id, type }: IQuestionCreate) => {
 
   const save = (value: string, possibleOptions: string[]) => {
     const questionWithOptions: Question =
-      type === 'multiChoice'
+      type === Type.MULTI_CHOICE
         ? new MultiChoiceQuestion(value, possibleOptions, id)
         : new DropdownQuestion(value, possibleOptions, id);
     dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(questionWithOptions));
