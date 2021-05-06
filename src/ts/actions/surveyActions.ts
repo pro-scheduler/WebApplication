@@ -4,6 +4,7 @@ import Survey from '../model/survey/Survey';
 import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
 import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
 import { createSurveyFailed, createSurveyReset, createSurveySuccess } from './messagesActions';
+import Question from '../model/survey/question/Question';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -23,6 +24,13 @@ const loadSurveyResults = (id: number) => (dispatch: Dispatch) => {
 
 const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch: Dispatch) => {
   dispatch(createSurveyReset());
+
+  surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
+    question.id = null;
+    return question;
+  });
+
+  console.log(surveyWithQuestions);
 
   fetch(getSurveysUrl(), {
     method: 'POST',
@@ -61,11 +69,31 @@ const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQ
   });
 };
 
+const addQuestionToSurveyWithQuestionsDTO = (question: Question) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'ADD_QUESTION', payload: { question } });
+};
+
+const removeQuestionFromSurveyWithQuestionsDTO = (id: number) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'REMOVE_QUESTION', payload: { id } });
+};
+
+const addDescriptionToSurveyWithQuestionsDTO = (description: string) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'ADD_DESCRIPTION', payload: { description } });
+};
+
+const setMeetingIdInSurveyWithQuestionsDTO = (meetingId: number) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'SET_MEETING_ID', payload: { meetingId } });
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
   addQuestionsToSurvey,
+  addQuestionToSurveyWithQuestionsDTO,
+  removeQuestionFromSurveyWithQuestionsDTO,
+  addDescriptionToSurveyWithQuestionsDTO,
+  setMeetingIdInSurveyWithQuestionsDTO,
 };
 
 export default actions;

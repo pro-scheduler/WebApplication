@@ -34,7 +34,7 @@ const MeetingDetails = () => {
       />
       <MeetingParticipants
         meetingId={id}
-        participants={meetingState.meeting.attendees}
+        participants={meetingState.meeting.participants}
         canDelete={
           user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
           undefined

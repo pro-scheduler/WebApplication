@@ -7,7 +7,7 @@ const initialMeeting: Meeting = {
   description: '',
   id: 0,
   availableTimeRanges: [],
-  attendees: [],
+  participants: [],
   organizers: [],
 };
 

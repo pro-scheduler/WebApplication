@@ -1,0 +1,17 @@
+.removeOptionButton {
+    color: var(--light-red);
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.addOptionButton {
+    background-color: var(--bright-green);
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+}
+
+.optionsText{
+    color: #707070;
+}

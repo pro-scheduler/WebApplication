@@ -1,0 +1,13 @@
+.questionField {
+    text-align: right;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin: 2%;
+    padding: 20px 20px 35px;
+}
+
+.questionTextArea {
+    width: 100%;
+    height: 40px;
+}

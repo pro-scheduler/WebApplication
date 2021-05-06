@@ -13,17 +13,17 @@ export const mapMeetingDTOToMeeting = (meetingDTO: MeetingDTO): Meeting => {
   const organizers: ProUser[] = meetingDTO.organizers.map((id: number) => {
     return {
       id: id,
+      email: '',
       organizedMeetings: [],
-      attendees: [],
       participatedMeetings: [],
     };
   });
 
-  const attendees: ProUser[] = meetingDTO.attendees.map((id: number) => {
+  const participants: ProUser[] = meetingDTO.participants.map((id: number) => {
     return {
       id: id,
+      email: '',
       organizedMeetings: [],
-      attendees: [],
       participatedMeetings: [],
     };
   });
@@ -33,7 +33,7 @@ export const mapMeetingDTOToMeeting = (meetingDTO: MeetingDTO): Meeting => {
     description: meetingDTO.description,
     id: meetingDTO.id,
     availableTimeRanges: meetingDTO.availableTimeRanges,
-    attendees: attendees,
+    participants: participants,
     organizers: organizers,
   };
 };

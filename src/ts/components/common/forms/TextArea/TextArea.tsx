@@ -1,8 +1,10 @@
 import styles from './TextArea.module.css';
 import { useState } from 'react';
+import cx from 'classnames';
 
-type TextAreaProps = { label: string; valueHandler: Function };
-const TextArea = ({ label, valueHandler }: TextAreaProps) => {
+type TextAreaProps = { label: string; valueHandler: Function; className: any };
+const TextArea = ({ label, valueHandler, className }: TextAreaProps) => {
+  const textAreaStyles = cx(styles.text_area_classic, className);
   const [state, setState] = useState('');
 
   const handleChange = (event: any) => {
@@ -12,7 +14,7 @@ const TextArea = ({ label, valueHandler }: TextAreaProps) => {
   return (
     <div>
       <div className={styles.label_classic}>{label}</div>
-      <textarea className={styles.text_area_classic} value={state} onChange={handleChange} />
+      <textarea className={textAreaStyles} value={state} onChange={handleChange} />
     </div>
   );
 };
