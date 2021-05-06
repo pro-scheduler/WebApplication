@@ -25,7 +25,7 @@ interface IQuestionCreate {
 }
 
 const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
-  const [selectedValue, setSelectedValue] = useState('OpenQuestion');
+  const [selectedValue, setSelectedValue] = useState(Type.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);

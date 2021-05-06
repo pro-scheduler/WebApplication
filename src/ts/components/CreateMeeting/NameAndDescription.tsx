@@ -41,7 +41,7 @@ const NameAndDescription = () => {
         description: description,
         id: 0,
         availableTimeRanges: [],
-        attendees: [],
+        participants: [],
         organizers: [],
       })
     );

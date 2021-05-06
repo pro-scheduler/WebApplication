@@ -7,5 +7,5 @@ export default interface Meeting {
   description: string;
   availableTimeRanges: TimeRange[];
   organizers: ProUser[];
-  attendees: ProUser[];
+  participants: ProUser[];
 }

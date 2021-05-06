@@ -6,5 +6,5 @@ export default interface MeetingDTO {
   description: string;
   availableTimeRanges: TimeRange[];
   organizers: number[];
-  attendees: number[];
+  participants: number[];
 }
