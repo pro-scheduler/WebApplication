@@ -4,7 +4,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import ProUser from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
-import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
+import InvitationList from '../../components/Meetings/InvitationList';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -22,18 +22,9 @@ const Meetings = () => {
     // eslint-disable-next-line
   }, []);
 
-  const pendingInvitations = invitations.basicInvitationInfos.map(
-    (basicInvitationInfo: BasicInvitationInfo) => {
-      return (
-        <p key={basicInvitationInfo.basicMeetingDetailsDTO.id} className="text-center">
-          {basicInvitationInfo.basicMeetingDetailsDTO.name}
-        </p>
-      );
-    }
-  );
-
   return (
     <Container fluid className="ml-5 ml-sm-auto">
+      <InvitationList invitations={invitations.basicInvitationInfos} />
       <MeetingList
         meetings={user.organizedMeetings}
         header={'Meetings you organize'}
@@ -44,7 +35,6 @@ const Meetings = () => {
         header={'Meetings you participate in'}
         noMeetingsInfo={"You don't participate in any meeting"}
       />
-      {pendingInvitations}
     </Container>
   );
 };
