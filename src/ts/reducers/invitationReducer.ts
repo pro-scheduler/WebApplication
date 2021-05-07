@@ -1,8 +1,9 @@
 import { BasicInvitationInfo } from '../model/invitation/InvitationDTO';
 
-type invitationsState = { basicInvitationInfos: BasicInvitationInfo[] };
+type invitationsState = { basicInvitationInfos: BasicInvitationInfo[]; meetingId: number };
 
 const defaultState: invitationsState = {
+  meetingId: 0,
   basicInvitationInfos: [],
 };
 
@@ -17,6 +18,9 @@ const invitationReducer = (
     case 'LOAD_MEETING_INVITATIONS':
       console.log(action);
       return { ...state, basicInvitationInfos: action.payload };
+    case 'SET_MEETING_ID':
+      console.log(action);
+      return { ...state, meetingId: action.payload.meetingId };
     default:
       return state;
   }
