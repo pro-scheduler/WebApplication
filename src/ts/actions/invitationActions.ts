@@ -5,7 +5,7 @@ import {
   getRejectInvitationUrl,
   getUserPendingInvitationsUrl,
 } from '../API/invitation/urls';
-import { BasicInvitationInfo } from '../model/invitation/InvitationDTO';
+import { BasicInvitationInfo, InvitationEmailsDTO } from '../model/invitation/InvitationDTO';
 
 const fetchUserPendingInvitations = (userId: number) => (dispatch: Dispatch) => {
   fetch(getUserPendingInvitationsUrl(userId))
@@ -43,11 +43,28 @@ const rejectInvitation = (invitationId: number) => {
   });
 };
 
+const createInvitations = (meetingId: number, invitationEmailsDTO: InvitationEmailsDTO) => {
+  return fetch(getMeetingInvitationsUrl(meetingId), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(invitationEmailsDTO),
+  });
+};
+
+const setMeetingIdInInvitations = (meetingId: number) => (dispatch: Dispatch) => {
+  return dispatch({ type: 'SET_MEETING_ID', payload: { meetingId } });
+};
+
 const actions = {
   fetchUserPendingInvitations,
   fetchMeetingInvitations,
   acceptInvitation,
   rejectInvitation,
+  createInvitations,
+  setMeetingIdInInvitations,
 };
 
 export default actions;

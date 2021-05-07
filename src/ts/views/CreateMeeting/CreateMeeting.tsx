@@ -5,13 +5,25 @@ import Col from 'react-bootstrap/Col';
 import NameAndDescription from '../../components/CreateMeeting/NameAndDescription';
 import CreateSurvey from '../../components/CreateSurvey/CreateSurvey';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
+import CreateInvitations from '../../components/CreateMeeting/CreateInvitations';
 
 const CreateMeeting = () => {
   const [showSurveyModule, setShowSurveyModule] = useState(false);
+  const [showInvitationModule, setShowInvitationModule] = useState(false);
 
   return (
     <Container className="ml-5 ml-sm-auto">
       <NameAndDescription />
+      <Row className="justify-content-center mt-5 pb-5">
+        <Col className="text-center">
+          <SwitchButton
+            className={''}
+            onChange={() => setShowInvitationModule(!showInvitationModule)}
+            title={'Invite participants to your meeting'}
+          />
+        </Col>
+      </Row>
+      {showInvitationModule && <CreateInvitations />}
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton

@@ -1,0 +1,8 @@
+.multiValueInput {
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    text-align: left;
+    color: var(--purple);
+    margin: auto;
+    border-radius: 10px;
+}
