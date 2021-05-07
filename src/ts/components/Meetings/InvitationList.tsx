@@ -23,13 +23,7 @@ const InvitationList = ({ invitations }: InvitationsList) => {
       <Col lg={12} className="text-center my-3 meetingListHeader">
         {'Your invitations'}
       </Col>
-      {invitations.length > 0 ? (
-        <>{invitationCards}</>
-      ) : (
-        <div className="text-center mt-3">
-          <div>{'You have not got any invitations'}</div>
-        </div>
-      )}
+      {invitationCards}
     </Row>
   );
 };
