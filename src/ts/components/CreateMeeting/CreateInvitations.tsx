@@ -9,7 +9,10 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import FriendsIcon from '../common/Icons/FriendsIcon';
 
-const CreateInvitations = () => {
+interface ICreateInvitations {
+  showIcon: boolean;
+}
+const CreateInvitations = ({ showIcon }: ICreateInvitations) => {
   const [inputValue, setInputValue] = useState('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const invitations = useSelector((state: RootStateOrAny) => {
@@ -50,14 +53,19 @@ const CreateInvitations = () => {
 
   return (
     <div>
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          <FriendsIcon />
-        </Col>
-      </Row>
-      <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Invite participants</div>
-      </Row>
+      {showIcon && (
+        <>
+          <Row className="justify-content-center mt-5">
+            <Col xs="auto">
+              <FriendsIcon />
+            </Col>
+          </Row>
+
+          <Row className="justify-content-center mt-4">
+            <div className={style.createHeader}>Invite participants</div>
+          </Row>
+        </>
+      )}
       <Row className="justify-content-center mt-4">
         <Col />
         <Col xs={8} lg={6}>

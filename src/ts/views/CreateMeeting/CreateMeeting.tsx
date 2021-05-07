@@ -23,7 +23,7 @@ const CreateMeeting = () => {
           />
         </Col>
       </Row>
-      {showInvitationModule && <CreateInvitations />}
+      {showInvitationModule && <CreateInvitations showIcon={true} />}
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton
