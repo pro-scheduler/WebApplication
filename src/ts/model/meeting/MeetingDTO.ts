@@ -8,3 +8,9 @@ export default interface MeetingDTO {
   organizers: number[];
   participants: number[];
 }
+
+export interface BasicMeetingDetailsDTO {
+  id: number;
+  name: string;
+  description: string;
+}

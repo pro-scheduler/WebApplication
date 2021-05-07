@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 
 import './MeetingDescription.css';
 import UserIcon from './UserIcon';
-import ProUser from '../../model/ProUser';
+import ProUser from '../../model/user/ProUser';
 
 interface IMeetingDescription {
   name: string;

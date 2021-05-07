@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ProUser from '../../model/ProUser';
+import ProUser from '../../model/user/ProUser';
 import UserIcon from './UserIcon';
 import LineWithHeader from './LineWithHeader';
 

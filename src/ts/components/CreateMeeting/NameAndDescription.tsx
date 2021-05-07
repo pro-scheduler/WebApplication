@@ -9,7 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import actions from '../../actions/meetingActions';
 import Meeting from '../../model/meeting/Meeting';
-import ProUser from '../../model/ProUser';
+import ProUser from '../../model/user/ProUser';
 import allActions from '../../actions';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
