@@ -3,7 +3,7 @@ import { State } from './Invitation';
 import { BasicMeetingDetailsDTO } from '../meeting/MeetingDTO';
 
 export interface BasicInvitationInfo {
-  // TODO add invitationId
+  id: number;
   basicMeetingDetailsDTO: BasicMeetingDetailsDTO;
   basicUserInfoDTO: BasicUserInfoDTO;
   state: State;

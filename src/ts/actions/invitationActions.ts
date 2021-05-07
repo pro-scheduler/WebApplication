@@ -1,5 +1,10 @@
 import { Dispatch } from 'redux';
-import { getMeetingInvitationsUrl, getUserPendingInvitationsUrl } from '../API/invitation/urls';
+import {
+  getAcceptInvitationUrl,
+  getMeetingInvitationsUrl,
+  getRejectInvitationUrl,
+  getUserPendingInvitationsUrl,
+} from '../API/invitation/urls';
 import { BasicInvitationInfo } from '../model/invitation/InvitationDTO';
 
 const fetchUserPendingInvitations = (userId: number) => (dispatch: Dispatch) => {
@@ -18,9 +23,31 @@ const fetchMeetingInvitations = (meetingId: number) => (dispatch: Dispatch) => {
     });
 };
 
+const acceptInvitation = (invitationId: number) => {
+  return fetch(getAcceptInvitationUrl(invitationId), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+const rejectInvitation = (invitationId: number) => {
+  return fetch(getRejectInvitationUrl(invitationId), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
 const actions = {
   fetchUserPendingInvitations,
   fetchMeetingInvitations,
+  acceptInvitation,
+  rejectInvitation,
 };
 
 export default actions;

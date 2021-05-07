@@ -24,7 +24,9 @@ const Meetings = () => {
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      <InvitationList invitations={invitations.basicInvitationInfos} />
+      {invitations.basicInvitationInfos.length > 0 && (
+        <InvitationList invitations={invitations.basicInvitationInfos} />
+      )}
       <MeetingList
         meetings={user.organizedMeetings}
         header={'Meetings you organize'}

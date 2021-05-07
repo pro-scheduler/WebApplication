@@ -1,6 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import CalendarIcon from '../common/Icons/CalendarIcon';
+import EnvelopIcon from '../common/Icons/EnvelopIcon';
 import React from 'react';
 import './MeetingList.css';
 import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
@@ -18,7 +18,7 @@ const InvitationList = ({ invitations }: InvitationsList) => {
   return (
     <Row className="justify-content-center mt-4 mr-5 meetingListRow">
       <Col lg={12} className="text-center mt-5">
-        <CalendarIcon className="meetingListIcon" />
+        <EnvelopIcon className="meetingListIcon" />
       </Col>
       <Col lg={12} className="text-center my-3 meetingListHeader">
         {'Your invitations'}
