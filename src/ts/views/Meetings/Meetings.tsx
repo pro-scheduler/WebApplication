@@ -2,23 +2,31 @@ import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
-import ProUser from '../../model/ProUser';
+import ProUser from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
+import InvitationList from '../../components/Meetings/InvitationList';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
+  });
+  const invitations = useSelector((state: RootStateOrAny) => {
+    return state.invitationReducer;
   });
   const dispatch: Function = useDispatch();
 
   useEffect(() => {
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
+    dispatch(allActions.invitationActions.fetchUserPendingInvitations(user.id));
     // eslint-disable-next-line
   }, []);
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
+      {invitations.basicInvitationInfos.length > 0 && (
+        <InvitationList invitations={invitations.basicInvitationInfos} />
+      )}
       <MeetingList
         meetings={user.organizedMeetings}
         header={'Meetings you organize'}

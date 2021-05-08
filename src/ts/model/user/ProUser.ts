@@ -1,4 +1,4 @@
-import Meeting from './meeting/Meeting';
+import Meeting from '../meeting/Meeting';
 
 export default interface ProUser {
   id: number;

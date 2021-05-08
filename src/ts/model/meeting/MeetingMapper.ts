@@ -1,6 +1,6 @@
 import MeetingDTO from './MeetingDTO';
 import Meeting from './Meeting';
-import ProUser from '../ProUser';
+import ProUser from '../user/ProUser';
 
 export const mapMeetingsDTOToMeetings = (meetingsDTO: MeetingDTO[]): Meeting[] => {
   return meetingsDTO.map((meetingDTO: MeetingDTO) => {

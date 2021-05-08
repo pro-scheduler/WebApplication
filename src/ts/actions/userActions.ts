@@ -17,7 +17,7 @@ const fetchUserOrganizedMeetings = (userId: number) => (dispatch: Dispatch) => {
 const fetchUserParticipatedMeetings = (userId: number) => (dispatch: Dispatch) => {
   return fetch(getUserParticipatedMeetingsUrl(userId))
     .then((response: Response) => response.json())
-    .then((participatedMeetings) => {
+    .then((participatedMeetings: MeetingDTO[]) => {
       return dispatch({
         type: 'LOAD_PARTICIPATED_MEETINGS',
         payload: mapMeetingsDTOToMeetings(participatedMeetings),

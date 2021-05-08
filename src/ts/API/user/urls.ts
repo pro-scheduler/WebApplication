@@ -1,6 +1,6 @@
-export const getUsersUrl = () => 'http://localhost:8080/api/users';
+export const getUsersUrl = () => `${process.env.REACT_APP_API_URL}users`;
 
-export const getUserUrl = (userId: number) => `http://localhost:8080/api/users/${userId}`;
+export const getUserUrl = (userId: number) => getUsersUrl() + `/${userId}`;
 
 export const getUserParticipatedMeetingsUrl = (userId: number) =>
   getUserUrl(userId) + '/meetings?organized=false';

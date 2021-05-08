@@ -9,7 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import actions from '../../actions/meetingActions';
 import Meeting from '../../model/meeting/Meeting';
-import ProUser from '../../model/ProUser';
+import ProUser from '../../model/user/ProUser';
 import allActions from '../../actions';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
@@ -49,7 +49,8 @@ const NameAndDescription = () => {
 
   useEffect(() => {
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
-  }, [dispatch, messageStatus, user.id]);
+    // eslint-disable-next-line
+  }, [messageStatus]);
 
   useEffect(() => {
     const createdMeeting: Meeting | undefined = user.organizedMeetings
@@ -60,7 +61,13 @@ const NameAndDescription = () => {
         createdMeeting === undefined ? 0 : createdMeeting.id
       )
     );
-  }, [dispatch, name, user.organizedMeetings]);
+    dispatch(
+      allActions.invitationActions.setMeetingIdInInvitations(
+        createdMeeting === undefined ? 0 : createdMeeting.id
+      )
+    );
+    // eslint-disable-next-line
+  }, [user.organizedMeetings]);
 
   return (
     <div>
