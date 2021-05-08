@@ -4,6 +4,7 @@ import { TiTick } from 'react-icons/ti';
 
 import './UserIcon.css';
 import { State } from '../../model/invitation/Invitation';
+import { FcManager } from 'react-icons/fc';
 
 interface UserInvitationIconProps {
   email: String;
@@ -13,6 +14,9 @@ interface UserInvitationIconProps {
 const UserInvitationIcon = ({ email, state }: UserInvitationIconProps) => {
   return (
     <>
+      <div className="userIcon">
+        <FcManager />
+      </div>
       <div className="ml-3 userIconParticipantName">{email}</div>
       {state === State.PENDING && <VscLoading className="ml-2 pendingStatus" />}
       {state === State.ACCEPTED && <TiTick className="ml-2 acceptedStatus" />}
