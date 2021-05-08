@@ -12,7 +12,7 @@ interface InvitationsList {
 
 const InvitationList = ({ invitations }: InvitationsList) => {
   const invitationCards = invitations.map((invitation: BasicInvitationInfo) => {
-    return <InvitationCard key={invitation.basicMeetingDetailsDTO.id} {...invitation} />;
+    return <InvitationCard key={invitation.invitationId} {...invitation} />;
   });
 
   return (

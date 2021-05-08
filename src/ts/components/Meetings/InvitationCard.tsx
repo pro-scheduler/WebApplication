@@ -43,11 +43,11 @@ const InvitationCard = (invitation: BasicInvitationInfo) => {
             <Col lg={12} className="text-center mx-auto mt-4">
               <AiFillPlusCircle
                 className={invitationStyles.acceptInvitationButton}
-                onClick={() => acceptInvitation(invitation.id)}
+                onClick={() => acceptInvitation(invitation.invitationId)}
               />
               <AiFillMinusCircle
                 className={invitationStyles.rejectInvitationButton}
-                onClick={() => rejectInvitation(invitation.id)}
+                onClick={() => rejectInvitation(invitation.invitationId)}
               />
             </Col>
           </Row>
