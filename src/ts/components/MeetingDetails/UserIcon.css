@@ -27,3 +27,18 @@
 .deleteUserButton:hover {
     cursor: pointer;
 }
+
+.pendingStatus {
+    font-size: 30px;
+    color: var(--purple);
+}
+
+.acceptedStatus {
+    font-size: 30px;
+    color: var(--bright-green);
+}
+
+.rejectedStatus {
+    font-size: 30px;
+    color: var(--light-red);
+}

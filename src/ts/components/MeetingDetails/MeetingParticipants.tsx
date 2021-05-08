@@ -8,7 +8,9 @@ import LineWithHeader from './LineWithHeader';
 import './MeetingParticipants.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
 import allActions from '../../actions';
-import { useDispatch } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
+import UserInvitationIcon from './UserInvitationIcon';
 
 interface IMeetingParticipants {
   participants: ProUser[];
@@ -18,9 +20,13 @@ interface IMeetingParticipants {
 
 const MeetingParticipants = ({ participants, meetingId, isOrganizer }: IMeetingParticipants) => {
   const dispatch: Function = useDispatch();
+  const invitations = useSelector((state: RootStateOrAny) => {
+    return state.invitationReducer;
+  });
 
   useEffect(() => {
     dispatch(allActions.invitationActions.setMeetingIdInInvitations(meetingId));
+    dispatch(allActions.invitationActions.fetchMeetingInvitations(meetingId));
     // eslint-disable-next-line
   }, []);
 
@@ -39,17 +45,32 @@ const MeetingParticipants = ({ participants, meetingId, isOrganizer }: IMeetingP
     );
   });
 
+  const invitationsIcons = invitations.basicInvitationInfos.map(
+    (basicInvitationInfo: BasicInvitationInfo) => {
+      return (
+        <Col lg={3} className="my-1 mx-auto text-center" key={basicInvitationInfo.invitationId}>
+          <UserInvitationIcon email={'jnowak@mail.com'} state={basicInvitationInfo.state} />
+        </Col>
+      );
+    }
+  );
   return (
-    <Row className="justify-content mt-5 ml-5 pl-5">
+    <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Who'} />
       <Col lg={12} className="text-center mt-2 mb-5 meetingParticipantsTotalMembers">
         Total {participants.length} members
       </Col>
       {participantsIcons}
       {isOrganizer && (
-        <Col lg={12}>
-          <CreateInvitations showIcon={false} />
-        </Col>
+        <>
+          <Col lg={12} className="text-center mt-5 pt-5 mb-5 meetingParticipantsTotalMembers">
+            Invitations
+          </Col>
+          {invitationsIcons}
+          <Col lg={12}>
+            <CreateInvitations showIcon={false} />
+          </Col>
+        </>
       )}
     </Row>
   );
