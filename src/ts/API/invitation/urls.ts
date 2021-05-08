@@ -1,7 +1,6 @@
-export const getInvitationsUrl = () => 'http://localhost:8080/api/invitations';
+export const getInvitationsUrl = () => `${process.env.REACT_APP_API_URL}invitations`;
 
-export const getInvitationUrl = (invitationId: number) =>
-  `http://localhost:8080/api/invitations/${invitationId}`;
+export const getInvitationUrl = (invitationId: number) => getInvitationsUrl() + `/${invitationId}`;
 
 export const getAcceptInvitationUrl = (invitationId: number) =>
   getInvitationUrl(invitationId) + '/accept';
