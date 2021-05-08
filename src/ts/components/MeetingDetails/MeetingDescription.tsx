@@ -17,7 +17,7 @@ const MeetingDescription = (meeting: IMeetingDescription) => {
   const organizers = meeting.organizers.map((organizer: ProUser) => {
     return (
       <UserIcon
-        name={'Jan Kowalski'}
+        name={organizer.email}
         meetingId={meeting.meetingId}
         userId={organizer.id}
         canDelete={false}

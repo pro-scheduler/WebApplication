@@ -2,8 +2,8 @@ import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
 import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
-import MeetingDTO from '../model/meeting/MeetingDTO';
-import { mapMeetingDTOToMeeting, mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
+import MeetingDTO, { DeepMeetingDetailsDTO } from '../model/meeting/MeetingDTO';
+import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
@@ -35,8 +35,8 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
 const loadMeeting = (id: number) => (dispatch: Dispatch) => {
   fetch(getMeetingUrl(id))
     .then((response: Response) => response.json())
-    .then((meetingDTO: MeetingDTO) => {
-      return dispatch({ type: 'LOAD_ONE', payload: mapMeetingDTOToMeeting(meetingDTO) });
+    .then((deepMeetingDetailsDTO: DeepMeetingDetailsDTO) => {
+      return dispatch({ type: 'LOAD_ONE', payload: deepMeetingDetailsDTO });
     });
 };
 

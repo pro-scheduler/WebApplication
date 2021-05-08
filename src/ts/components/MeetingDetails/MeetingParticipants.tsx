@@ -34,7 +34,7 @@ const MeetingParticipants = ({ participants, meetingId, isOrganizer }: IMeetingP
     return (
       <Col lg={3} className="my-1 mx-auto text-center" key={participant.id}>
         <UserIcon
-          name={'Jan Nowak'}
+          name={participant.email}
           meetingId={meetingId}
           userId={participant.id}
           canDelete={isOrganizer}
@@ -49,7 +49,10 @@ const MeetingParticipants = ({ participants, meetingId, isOrganizer }: IMeetingP
     (basicInvitationInfo: BasicInvitationInfo) => {
       return (
         <Col lg={3} className="my-1 mx-auto text-center" key={basicInvitationInfo.invitationId}>
-          <UserInvitationIcon email={'jnowak@mail.com'} state={basicInvitationInfo.state} />
+          <UserInvitationIcon
+            email={basicInvitationInfo.basicUserInfoDTO.email}
+            state={basicInvitationInfo.state}
+          />
         </Col>
       );
     }
