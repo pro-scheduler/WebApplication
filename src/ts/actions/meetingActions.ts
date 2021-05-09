@@ -42,7 +42,7 @@ const loadMeeting = (id: number) => (dispatch: Dispatch) => {
 
 const removeUserFromMeeting = (meetingId: number, userId: number) => {
   fetch(getRemoveUserFromMeetingUrl(meetingId), {
-    method: 'DELETE',
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
