@@ -30,13 +30,15 @@ const ChooseTime = () => {
           <CalendarIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4" style={{ marginBottom: 30 }}>
         <div className={style.createHeader}>Set the time of the meeting</div>
       </Row>
       <Row>
-        <div>
+        <Col />
+        <Col>
           <DayPicker selectedDays={selectedDays} onDayClick={handleDayClick} />
-        </div>
+        </Col>
+        <Col />
       </Row>
       <TimePicker days={selectedDays} />
     </div>

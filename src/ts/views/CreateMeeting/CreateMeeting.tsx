@@ -14,6 +14,7 @@ const CreateMeeting = () => {
   return (
     <Container className="ml-5 ml-sm-auto">
       <NameAndDescription />
+      <ChooseTime />
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton
@@ -23,7 +24,6 @@ const CreateMeeting = () => {
           />
         </Col>
       </Row>
-      <ChooseTime />
       {showInvitationModule && <CreateInvitations showIcon={true} />}
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">

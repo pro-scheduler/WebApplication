@@ -3,6 +3,10 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import TimeGrid from '../../components/TimeGrid/TimeGrid';
 import { useEffect, useState } from 'react';
+import NextLeftButton from '../../components/common/NextButton/NextLeftButton';
+import NextRightButton from '../../components/common/NextButton/NextRightButton';
+import styles from './TimePicker.module.css';
+
 interface ITimePickerProps {
   days: Date[];
 }
@@ -31,13 +35,22 @@ const TimePicker = ({ days }: ITimePickerProps) => {
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      <Row className="justify-content-center mt-4">{currentDays}</Row>
-      <button onClick={() => setStart(start - 1)} disabled={start === 0}>
-        Left
-      </button>
-      <button onClick={() => setStart(start + 1)} disabled={start >= days.length - 4}>
-        Right
-      </button>
+      <Row className="justify-content-center mt-4">
+        <div className={styles.leftArrow}>
+          {days.length > 4 ? (
+            <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
+          ) : null}
+        </div>
+        {currentDays}
+        <div className={styles.rightArrow}>
+          {days.length > 4 ? (
+            <NextRightButton
+              onclick={() => setStart(start + 1)}
+              disabled={start >= days.length - 4}
+            />
+          ) : null}
+        </div>
+      </Row>
     </Container>
   );
 };
