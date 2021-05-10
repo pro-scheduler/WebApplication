@@ -15,15 +15,17 @@ const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satur
 const TimePicker = ({ days }: ITimePickerProps) => {
   const [currentDays, setCurrentDays] = useState([<Col />, <Col />, <Col />, <Col />]);
   const [start, setStart] = useState(0);
+
   useEffect(() => {
     let tmp = days
-      .filter((day, index) => index >= start && index < start + 4)
-      .map((day) => (
-        <Col>
+      //   .filter((day, index) => index >= start && index < start + 4)
+      .map((day, index) => (
+        <Col hidden={!(index >= start && index < start + 4)}>
           <TimeGrid
             primaryLabel={('0' + day.getDate()).slice(-2) + '.' + ('0' + day.getMonth()).slice(-2)}
             secondaryLabel={weekDays[day.getDay()]}
             boxSizes={36}
+            timeRanges={[]}
           />
         </Col>
       ));

@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import RangeBox from './RangeBox';
 
-const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
+const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, timeRanges }: any) => {
   const [rangesParams, setRangesParams] = useState<any>({});
 
   const changeParams = (id: number, top: number, height: number) => {

@@ -1,9 +1,8 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import CalendarIcon from '../common/Icons/CalendarIcon';
 import style from './NameAndDesctiption.module.css';
-import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
+import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
