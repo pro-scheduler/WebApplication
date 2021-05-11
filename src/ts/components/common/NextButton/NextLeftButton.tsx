@@ -5,7 +5,7 @@ import styles from './NextButton.module.css';
 
 interface IButton {
   onclick: MouseEventHandler;
-  disabled: any;
+  disabled: boolean;
 }
 
 const NextLeftButton = ({ onclick, disabled }: IButton) => {
