@@ -47,7 +47,9 @@ const removeUserFromMeeting = (meetingId: number, userId: number) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(userId),
+    body: JSON.stringify({
+      id: userId,
+    }),
   }).then((response) => {
     console.log(response);
   });

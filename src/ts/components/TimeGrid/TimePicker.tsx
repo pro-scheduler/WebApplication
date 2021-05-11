@@ -28,7 +28,7 @@ const TimePicker = ({ days }: ITimePickerProps) => {
       </Col>
     ));
     while (tmp.length < 4) {
-      tmp.push(<Col />);
+      tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
   }, [start, days]);
