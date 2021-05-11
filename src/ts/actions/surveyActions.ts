@@ -48,26 +48,26 @@ const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch:
   });
 };
 
-const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => (
-  dispatch: Dispatch
-) => {
-  dispatch(createSurveyReset());
-
-  fetch(getSurveyUrl(surveyId), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(surveyWithQuestions),
-  }).then((response) => {
-    if (response.status === 201) {
-      return dispatch(createSurveySuccess('Questions has been added successfully to survey :)'));
-    } else {
-      return dispatch(createSurveyFailed('Questions has not been added to survey ;/'));
-    }
-  });
-};
+// const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => (
+//   dispatch: Dispatch
+// ) => {
+//   dispatch(createSurveyReset());
+//
+//   fetch(getSurveyUrl(surveyId), {
+//     method: 'POST',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(surveyWithQuestions),
+//   }).then((response) => {
+//     if (response.status === 201) {
+//       return dispatch(createSurveySuccess('Questions has been added successfully to survey :)'));
+//     } else {
+//       return dispatch(createSurveyFailed('Questions has not been added to survey ;/'));
+//     }
+//   });
+// };
 
 const addQuestionToSurveyWithQuestionsDTO = (question: Question) => (dispatch: Dispatch) => {
   return dispatch({ type: 'ADD_QUESTION', payload: { question } });
@@ -89,7 +89,6 @@ const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
-  addQuestionsToSurvey,
   addQuestionToSurveyWithQuestionsDTO,
   removeQuestionFromSurveyWithQuestionsDTO,
   addDescriptionToSurveyWithQuestionsDTO,
