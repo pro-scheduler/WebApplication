@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './IconButton.module.css';
 
-interface IButton {
-  redirectTO: string;
+export type IconButtonProps = {
+  redirectTo: string;
   text: string;
-  className: any;
-  icon: JSX.Element;
-}
+  className?: string;
+  icon?: JSX.Element;
+};
 
-const IconButton = ({ redirectTO, text, className, icon }: IButton) => {
+const IconButton = ({ redirectTo, text, className, icon }: IconButtonProps) => {
   const buttonStyles = cx(styles.button, className);
 
   return (
-    <Link to={redirectTO}>
+    <Link to={redirectTo}>
       <button className={buttonStyles} type="submit">
         {icon} {text}
       </button>

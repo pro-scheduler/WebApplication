@@ -8,8 +8,8 @@ import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import actions from '../../actions/meetingActions';
-import Meeting from '../../model/meeting/Meeting';
-import ProUser from '../../model/user/ProUser';
+import { Meeting } from '../../model/meeting/Meeting';
+import { ProUser } from '../../model/user/ProUser';
 import allActions from '../../actions';
 
 type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
@@ -84,7 +84,7 @@ const NameAndDescription = () => {
         <Col xs="auto">
           <SingleValueInput label="Name" valueHandler={setName} />
           <div className="mt-4">
-            <TextArea label="Description" valueHandler={setDescription} className={''} />
+            <TextArea label="Description" valueHandler={setDescription} />
           </div>
         </Col>
         <Col />

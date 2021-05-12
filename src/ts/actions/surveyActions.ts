@@ -1,10 +1,8 @@
 import { Dispatch } from 'redux';
 import { getSurveyAnswersUrl, getSurveysUrl, getSurveyUrl } from '../API/survey/urls';
-import Survey from '../model/survey/Survey';
-import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
-import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
+import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
 import { createSurveyFailed, createSurveyReset, createSurveySuccess } from './messagesActions';
-import Question from '../model/survey/question/Question';
+import { Question } from '../model/survey/Question';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))

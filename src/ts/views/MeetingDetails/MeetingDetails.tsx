@@ -5,8 +5,8 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
-import ProUser from '../../model/user/ProUser';
-import Meeting from '../../model/meeting/Meeting';
+import { ProUser } from '../../model/user/ProUser';
+import { Meeting } from '../../model/meeting/Meeting';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();

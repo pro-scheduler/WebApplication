@@ -23,7 +23,7 @@ const Example = () => {
     setSelectedValues(option);
   };
 
-  const handleSingleChoice = ({ value, label }: any) => {
+  const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
   };
 
@@ -45,7 +45,7 @@ const Example = () => {
         title={'Example switch'}
       />
       {showText ? <p>Switch on</p> : <p>Switch off</p>}
-      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
+      <ArrowButton onclick={() => console.log('Arrow clicked')} />
       <p />
       <PlusButton onclick={() => console.log('Plus clicked')} className={styles.plus} />
       <p />
@@ -59,12 +59,12 @@ const Example = () => {
       <SurveyIcon className={styles.icon} />
 
       <p>Multichoice</p>
-      <MultiDropdownButton onchange={handleMultiChoice} options={options} defaultValue={null} />
+      <MultiDropdownButton onChange={handleMultiChoice} options={options} />
       {values}
 
       <p className="mt-5">Singlechoice</p>
       <SingleDropdownButton
-        onchange={handleSingleChoice}
+        onChange={handleSingleChoice}
         options={options}
         defaultValue={options[0]}
       />

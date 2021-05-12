@@ -1,6 +1,6 @@
 import { getUserOrganizedMeetingsUrl, getUserParticipatedMeetingsUrl } from '../API/user/urls';
 import { Dispatch } from 'redux';
-import MeetingDTO from '../model/meeting/MeetingDTO';
+import { MeetingDTO } from '../model/meeting/Meeting';
 import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchUserOrganizedMeetings = (userId: number) => (dispatch: Dispatch) => {

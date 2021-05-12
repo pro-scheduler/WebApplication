@@ -2,7 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './AuthDetails.css';
 
-const AuthDetails = ({ title, question, redirectText, redirectTo, children }: any) => {
+export type AuthDetailsProps = {
+  title: string;
+  question: string;
+  redirectText: string;
+  redirectTo: string;
+  children: React.ReactNode[];
+};
+
+const AuthDetails = ({ title, question, redirectText, redirectTo, children }: AuthDetailsProps) => {
   return (
     <div>
       <h1 className="mt-4 ml-2 mb-5">{title}</h1>
@@ -16,4 +24,5 @@ const AuthDetails = ({ title, question, redirectText, redirectTo, children }: an
     </div>
   );
 };
+
 export default AuthDetails;

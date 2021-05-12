@@ -1,8 +1,7 @@
-import Meeting from '../model/meeting/Meeting';
 import { Dispatch } from 'redux';
 import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
-import MeetingDTO, { DeepMeetingDetailsDTO } from '../model/meeting/MeetingDTO';
+import { DeepMeetingDetailsDTO, Meeting, MeetingDTO } from '../model/meeting/Meeting';
 import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {

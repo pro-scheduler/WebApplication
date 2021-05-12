@@ -9,11 +9,8 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import FriendsIcon from '../common/Icons/FriendsIcon';
 
-interface ICreateInvitations {
-  showIcon: boolean;
-}
-const CreateInvitations = ({ showIcon }: ICreateInvitations) => {
-  const [inputValue, setInputValue] = useState('');
+const CreateInvitations = ({ showIcon }: { showIcon: boolean }) => {
+  const [inputValue, setInputValue] = useState<string>('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const invitations = useSelector((state: RootStateOrAny) => {
     return state.invitationReducer;

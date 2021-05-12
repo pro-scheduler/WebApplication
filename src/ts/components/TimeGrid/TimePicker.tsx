@@ -7,14 +7,11 @@ import NextLeftButton from '../../components/common/NextButton/NextLeftButton';
 import NextRightButton from '../../components/common/NextButton/NextRightButton';
 import styles from './TimePicker.module.css';
 
-interface ITimePickerProps {
-  days: Date[];
-}
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const TimePicker = ({ days }: ITimePickerProps) => {
+const TimePicker = ({ days }: { days: Date[] }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
-  const [start, setStart] = useState(0);
+  const [start, setStart] = useState<number>(0);
 
   useEffect(() => {
     const tmp = days.map((day: Date, index: number) => (
@@ -23,7 +20,6 @@ const TimePicker = ({ days }: ITimePickerProps) => {
           primaryLabel={('0' + day.getDate()).slice(-2) + '.' + ('0' + day.getMonth()).slice(-2)}
           secondaryLabel={weekDays[day.getDay()]}
           boxSizes={36}
-          timeRanges={[]}
         />
       </Col>
     ));

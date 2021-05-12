@@ -3,10 +3,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './AuthView.css';
 
-import AuthDetails from '../../components/Auth/AuthDetails';
+import AuthDetails, { AuthDetailsProps } from '../../components/Auth/AuthDetails';
 import AuthDecoration from '../../components/Auth/AuthDecoration';
 
-const AuthView = ({ title, question, redirectText, redirectTo, children }: any) => {
+const AuthView = ({ title, question, redirectText, redirectTo, children }: AuthDetailsProps) => {
   return (
     <Row className="justify-content-center mt-5">
       <Col xs="auto" className="col-12 text-center mt-5">

@@ -1,4 +1,4 @@
-import { BasicInvitationInfo } from '../model/invitation/InvitationDTO';
+import { BasicInvitationInfo } from '../model/invitation/Invitation';
 
 type invitationsState = { basicInvitationInfos: BasicInvitationInfo[]; meetingId: number };
 

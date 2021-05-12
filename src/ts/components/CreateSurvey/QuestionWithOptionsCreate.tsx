@@ -8,17 +8,11 @@ import { BsCircle } from 'react-icons/bs';
 import { TiDelete } from 'react-icons/ti';
 import PlusButton from '../common/RoundButtons/PlusButton';
 import { useDispatch } from 'react-redux';
-import Question, { Type } from '../../model/survey/question/Question';
+import { DropdownQuestion, MultiChoiceQuestion, Question, Type } from '../../model/survey/Question';
 import allActions from '../../actions';
-import MultiChoiceQuestion from '../../model/survey/question/types/MultiChoiceQuestion';
-import DropdownQuestion from '../../model/survey/question/types/DropdownQuestion';
+import { QuestionProps } from './BasicQuestionCreate';
 
-interface IQuestionCreate {
-  id: number;
-  type: Type;
-}
-
-const QuestionWithOptionsCreate = ({ id, type }: IQuestionCreate) => {
+const QuestionWithOptionsCreate = ({ id, type }: QuestionProps) => {
   const dispatch: Function = useDispatch();
   const [question, setQuestion] = useState('');
   const [currentOption, setCurrentOption] = useState('');

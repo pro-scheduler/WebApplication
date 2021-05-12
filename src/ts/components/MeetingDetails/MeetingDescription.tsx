@@ -4,21 +4,26 @@ import Col from 'react-bootstrap/Col';
 
 import './MeetingDescription.css';
 import UserIcon from './UserIcon';
-import ProUser from '../../model/user/ProUser';
+import { ProUser } from '../../model/user/ProUser';
 
-interface IMeetingDescription {
+export type MeetingDescriptionProps = {
   name: string;
   meetingId: number;
   organizers: ProUser[];
   description: string;
-}
+};
 
-const MeetingDescription = (meeting: IMeetingDescription) => {
-  const organizers = meeting.organizers.map((organizer: ProUser) => {
+const MeetingDescription = ({
+  name,
+  meetingId,
+  organizers,
+  description,
+}: MeetingDescriptionProps) => {
+  const organizersIcons = organizers.map((organizer: ProUser) => {
     return (
       <UserIcon
         name={organizer.email}
-        meetingId={meeting.meetingId}
+        meetingId={meetingId}
         userId={organizer.id}
         canDelete={false}
         fontBold={true}
@@ -30,14 +35,14 @@ const MeetingDescription = (meeting: IMeetingDescription) => {
   return (
     <Row className="justify-content mt-5 ml-5 pl-5">
       <Col lg={12} className="mb-2 meetingDescriptionName">
-        {meeting.name}
+        {name}
       </Col>
       <Col lg={12} className="mt-5">
         <div className="meetingDescriptionOrganizer mr-3">Organizer</div>
-        {organizers}
+        {organizersIcons}
       </Col>
       <Col md={8} lg={6} xl={4} className="text-left mt-5">
-        {meeting.description}
+        {description}
       </Col>
     </Row>
   );

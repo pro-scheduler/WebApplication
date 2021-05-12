@@ -3,13 +3,13 @@ import { MouseEventHandler } from 'react';
 import cx from 'classnames';
 import styles from './ActionButton.module.css';
 
-interface IButton {
+export type ActionButtonProps = {
   onclick: MouseEventHandler;
-  text: any;
-  className: any;
-}
+  text: string;
+  className?: string;
+};
 
-const ActionButton = ({ onclick, text, className }: IButton) => {
+const ActionButton = ({ onclick, text, className }: ActionButtonProps) => {
   const buttonStyles = cx(styles.button, className);
 
   return (

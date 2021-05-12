@@ -2,14 +2,20 @@ import React from 'react';
 import Select from 'react-select';
 import styles from './DropdownButton.module.css';
 import cx from 'classnames';
+import { DropdownButtonProps } from './MultiDropdownButton';
 
-const SingleDropdownButton = ({ options, defaultValue, onchange, className }: any) => {
+const SingleDropdownButton = ({
+  options,
+  defaultValue,
+  onChange,
+  className,
+}: DropdownButtonProps) => {
   const dropdownStyles = cx(styles.dropdown, className);
 
   return (
     <Select
       defaultValue={defaultValue}
-      onChange={onchange}
+      onChange={onChange}
       options={options}
       className={dropdownStyles}
       theme={(theme) => ({

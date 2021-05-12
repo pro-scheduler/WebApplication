@@ -6,10 +6,10 @@ import './UserIcon.css';
 import { State } from '../../model/invitation/Invitation';
 import { FcManager } from 'react-icons/fc';
 
-interface UserInvitationIconProps {
-  email: String;
+export type UserInvitationIconProps = {
+  email: string;
   state: State;
-}
+};
 
 const UserInvitationIcon = ({ email, state }: UserInvitationIconProps) => {
   return (

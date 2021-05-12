@@ -1,7 +1,5 @@
-import Survey from '../model/survey/Survey';
-import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
-import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
-import Question from '../model/survey/question/Question';
+import { Question } from '../model/survey/Question';
+import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
 
 type surveyState = {
   survey: Survey;

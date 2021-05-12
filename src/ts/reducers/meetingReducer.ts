@@ -1,4 +1,4 @@
-import Meeting from '../model/meeting/Meeting';
+import { Meeting } from '../model/meeting/Meeting';
 
 type meetingState = { meetings: Meeting[]; meeting: Meeting };
 

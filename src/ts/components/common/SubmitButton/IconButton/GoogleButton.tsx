@@ -1,20 +1,14 @@
 import React from 'react';
 
 import './GoogleButton.css';
-import IconButton from './IconButton';
+import IconButton, { IconButtonProps } from './IconButton';
 import { FcGoogle } from 'react-icons/fc';
 
-interface IButton {
-  redirectTo: string;
-  text: string;
-  className: any;
-}
-
-const GoogleButton = ({ redirectTo, text, className }: IButton) => {
+const GoogleButton = ({ redirectTo, text, className }: IconButtonProps) => {
   return (
     <div className={className}>
       <IconButton
-        redirectTO={redirectTo}
+        redirectTo={redirectTo}
         text={text}
         icon={<FcGoogle className="mr-4 googleIcon" />}
         className=""

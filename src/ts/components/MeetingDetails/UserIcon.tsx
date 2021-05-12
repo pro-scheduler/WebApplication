@@ -6,18 +6,18 @@ import './UserIcon.css';
 import allActions from '../../actions';
 import Popup from '../common/Popup/Popup';
 
-interface IUserIcon {
+export type UserIconProps = {
   name: String;
   meetingId: number;
   userId: number;
   canDelete: boolean;
   fontBold: boolean;
-}
+};
 
-const UserIcon = (user: IUserIcon) => {
+const UserIcon = ({ name, meetingId, userId, canDelete, fontBold }: UserIconProps) => {
   const [modalShow, setModalShow] = useState(false);
   const deleteParticipant = () => {
-    allActions.meetingActions.removeUserFromMeeting(user.meetingId, user.userId);
+    allActions.meetingActions.removeUserFromMeeting(meetingId, userId);
     setModalShow(false);
   };
   return (
@@ -25,12 +25,12 @@ const UserIcon = (user: IUserIcon) => {
       <div className="userIcon">
         <FcManager />
       </div>
-      {user.fontBold ? (
-        <div className="ml-3 userIconParticipantName userIconOrganizerName">{user.name}</div>
+      {fontBold ? (
+        <div className="ml-3 userIconParticipantName userIconOrganizerName">{name}</div>
       ) : (
-        <div className="ml-3 userIconParticipantName">{user.name}</div>
+        <div className="ml-3 userIconParticipantName">{name}</div>
       )}
-      {user.canDelete && (
+      {canDelete && (
         <TiDelete className="ml-2 deleteUserButton" onClick={() => setModalShow(true)} />
       )}
       <Popup

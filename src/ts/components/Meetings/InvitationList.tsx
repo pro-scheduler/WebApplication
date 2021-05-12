@@ -3,14 +3,10 @@ import Col from 'react-bootstrap/Col';
 import EnvelopIcon from '../common/Icons/EnvelopIcon';
 import React from 'react';
 import './MeetingList.css';
-import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
+import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import InvitationCard from './InvitationCard';
 
-interface InvitationsList {
-  invitations: BasicInvitationInfo[];
-}
-
-const InvitationList = ({ invitations }: InvitationsList) => {
+const InvitationList = ({ invitations }: { invitations: BasicInvitationInfo[] }) => {
   const invitationCards = invitations.map((invitation: BasicInvitationInfo) => {
     return <InvitationCard key={invitation.invitationId} {...invitation} />;
   });

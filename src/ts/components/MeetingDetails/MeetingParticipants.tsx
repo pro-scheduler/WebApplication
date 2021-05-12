@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ProUser from '../../model/user/ProUser';
+import { ProUser } from '../../model/user/ProUser';
 import UserIcon from './UserIcon';
 import LineWithHeader from './LineWithHeader';
-
 import './MeetingParticipants.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
 import allActions from '../../actions';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
 import UserInvitationIcon from './UserInvitationIcon';
+import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 
-interface IMeetingParticipants {
+export type MeetingParticipantsProps = {
   participants: ProUser[];
   meetingId: number;
   isOrganizer: boolean;
-}
+};
 
-const MeetingParticipants = ({ participants, meetingId, isOrganizer }: IMeetingParticipants) => {
+const MeetingParticipants = ({
+  participants,
+  meetingId,
+  isOrganizer,
+}: MeetingParticipantsProps) => {
   const dispatch: Function = useDispatch();
   const invitations = useSelector((state: RootStateOrAny) => {
     return state.invitationReducer;

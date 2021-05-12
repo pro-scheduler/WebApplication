@@ -1,6 +1,5 @@
-import MeetingDTO from './MeetingDTO';
-import Meeting from './Meeting';
-import ProUser from '../user/ProUser';
+import { Meeting, MeetingDTO } from './Meeting';
+import { ProUser } from '../user/ProUser';
 
 export const mapMeetingsDTOToMeetings = (meetingsDTO: MeetingDTO[]): Meeting[] => {
   return meetingsDTO.map((meetingDTO: MeetingDTO) => {
@@ -8,7 +7,7 @@ export const mapMeetingsDTOToMeetings = (meetingsDTO: MeetingDTO[]): Meeting[] =
   });
 };
 
-// This is needed because due to the many-to-many relationship between user and meeting, we only get user id in json
+// This is needed because due to the many-to-many relationship between user and meeting, we only get user id and email in json
 export const mapMeetingDTOToMeeting = (meetingDTO: MeetingDTO): Meeting => {
   const organizers: ProUser[] = meetingDTO.organizers.map((id: number) => {
     return {

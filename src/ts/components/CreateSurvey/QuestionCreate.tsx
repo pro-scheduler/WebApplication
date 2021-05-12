@@ -9,7 +9,7 @@ import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import { Type } from '../../model/survey/question/Question';
+import { Type } from '../../model/survey/Question';
 
 const options = [
   new ValueLabelPair(Type.DROPDOWN, 'Dropdown'),
@@ -19,12 +19,12 @@ const options = [
   new ValueLabelPair(Type.YES_OR_NO, 'Yes or No'),
 ];
 
-interface IQuestionCreate {
+export type QuestionCreateProps = {
   id: number;
   deleteButton: JSX.Element;
-}
+};
 
-const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
+const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
   const [selectedValue, setSelectedValue] = useState(Type.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
@@ -40,7 +40,7 @@ const QuestionCreate = ({ id, deleteButton }: IQuestionCreate) => {
           </Col>
           <Col sm={6} lg={12} className="text-right my-sm-4">
             <SingleDropdownButton
-              onchange={handleSingleChoice}
+              onChange={handleSingleChoice}
               options={options}
               defaultValue={options[3]}
               className="mr-0"
