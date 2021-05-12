@@ -48,6 +48,7 @@ const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch:
   });
 };
 
+// prettier-ignore
 const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => (
   dispatch: Dispatch
 ) => {

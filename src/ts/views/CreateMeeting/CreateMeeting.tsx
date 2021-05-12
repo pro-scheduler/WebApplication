@@ -6,7 +6,7 @@ import NameAndDescription from '../../components/CreateMeeting/NameAndDescriptio
 import CreateSurvey from '../../components/CreateSurvey/CreateSurvey';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import CreateInvitations from '../../components/CreateMeeting/CreateInvitations';
-
+import ChooseTime from '../../components/CreateMeeting/ChooseTime';
 const CreateMeeting = () => {
   const [showSurveyModule, setShowSurveyModule] = useState(false);
   const [showInvitationModule, setShowInvitationModule] = useState(false);
@@ -14,6 +14,7 @@ const CreateMeeting = () => {
   return (
     <Container className="ml-5 ml-sm-auto">
       <NameAndDescription />
+      <ChooseTime />
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton

@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import RangeBox from './RangeBox';
 
-const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
+const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, timeRanges }: any) => {
   const [rangesParams, setRangesParams] = useState<any>({});
 
   const changeParams = (id: number, top: number, height: number) => {
@@ -22,8 +22,8 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
             key={key}
             defaultHeight={rangesParams[key].height}
             step={3}
-            max={432}
-            boxSize={432}
+            max={432 * 2}
+            boxSize={432 * 2}
             defaultTop={rangesParams[key].top}
             id={rangesParams[key].id}
             changeParams={changeParams}
@@ -81,13 +81,13 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
 
   const hourButtonsGrid = () => {
     let buttons = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 24; i++) {
       buttons.push(
         <div key={i}>
           <div
             role="button"
             onClick={(evnet) => onClick(boxSizes * i, 36)}
-            className={styles.button_cell + ' ' + (i === 11 ? styles.bottom_radius : '')}
+            className={styles.button_cell + ' ' + (i === 23 ? styles.bottom_radius : '')}
           >
             <Row className={'m-0'}>
               <Col className={'align-self-center pr-0'} xs="auto">
