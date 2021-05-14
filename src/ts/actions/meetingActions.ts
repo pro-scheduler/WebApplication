@@ -15,6 +15,7 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
     });
 };
 
+// prettier-ignore
 const saveMeeting = (
   meeting: Meeting,
   invitations: InvitationEmailsDTO,
