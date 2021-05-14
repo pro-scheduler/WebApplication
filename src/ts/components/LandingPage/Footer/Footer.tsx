@@ -18,7 +18,7 @@ const Footer = () => {
           </Col>
           <Col lg={6} className="my-0 py-0">
             <p className={styles.footerLogo}>
-              <img src={logo} alt="logo" className="mt-2" />
+              <img src={logo} alt="logo" className={styles.footerLogoImg} />
               ProScheduler
             </p>
           </Col>

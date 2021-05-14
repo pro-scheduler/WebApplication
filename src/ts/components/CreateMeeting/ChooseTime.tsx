@@ -29,7 +29,7 @@ const ChooseTime = () => {
           <CalendarIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4" style={{ marginBottom: 30 }}>
+      <Row className="justify-content-center my-4">
         <div className={style.createHeader}>Set time of the meeting</div>
       </Row>
       <Row>

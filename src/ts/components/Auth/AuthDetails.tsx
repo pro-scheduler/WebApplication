@@ -13,7 +13,7 @@ export type AuthDetailsProps = {
 const AuthDetails = ({ title, question, redirectText, redirectTo, children }: AuthDetailsProps) => {
   return (
     <div>
-      <h1 className="mt-4 ml-2 mb-5">{title}</h1>
+      <h2 className="mt-4 ml-2 mb-5">{title}</h2>
       <div className="text-center mb-4">{children}</div>
       <div className="ml-2 mt-5">
         <p className={styles.redirectQuestion}>{question}</p>

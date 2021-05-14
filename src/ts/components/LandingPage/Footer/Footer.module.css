@@ -16,8 +16,9 @@
     font-size: 18px;
 }
 
-.footerLogo img {
+.footerLogoImg {
     height: 16px;
+    margin-right: 5px;
 }
 
 .copyright {
