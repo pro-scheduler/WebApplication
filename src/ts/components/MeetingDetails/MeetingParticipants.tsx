@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ProUser } from '../../model/user/ProUser';
@@ -10,6 +10,8 @@ import allActions from '../../actions';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import UserInvitationIcon from './UserInvitationIcon';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
+import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
+import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 
 export type MeetingParticipantsProps = {
   participants: ProUser[];
@@ -22,6 +24,7 @@ const MeetingParticipants = ({
   meetingId,
   isOrganizer,
 }: MeetingParticipantsProps) => {
+  const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const dispatch: Function = useDispatch();
   const invitations = useSelector((state: RootStateOrAny) => {
     return state.invitationReducer;
@@ -32,6 +35,14 @@ const MeetingParticipants = ({
     dispatch(allActions.invitationActions.fetchMeetingInvitations(meetingId));
     // eslint-disable-next-line
   }, []);
+
+  const sendInvitations = () => {
+    allActions.invitationActions
+      .createInvitations(meetingId, {
+        emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+      })
+      .then(() => setEmails([]));
+  };
 
   const participantsIcons = participants.map((participant: ProUser) => {
     return (
@@ -72,8 +83,13 @@ const MeetingParticipants = ({
             Invitations
           </Col>
           {invitationsIcons}
-          <Col lg={12}>
-            <CreateInvitations showIcon={false} />
+          <Col lg={12} className="text-center mx-auto">
+            <CreateInvitations showIcon={false} emails={emails} setEmails={setEmails} />
+            <ActionButton
+              text="Invite"
+              onclick={sendInvitations}
+              className="text-center mx-auto mt-5"
+            />
           </Col>
         </>
       )}

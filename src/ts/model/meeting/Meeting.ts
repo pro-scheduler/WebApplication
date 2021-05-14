@@ -26,6 +26,7 @@ export type BasicMeetingDetailsDTO = {
 };
 
 export type DeepMeetingDetailsDTO = {
+  id: number;
   name: string;
   description: string;
   availableTimeRanges: TimeRange[];

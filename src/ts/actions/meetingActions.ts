@@ -3,6 +3,9 @@ import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from '.
 import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
 import { DeepMeetingDetailsDTO, Meeting, MeetingDTO } from '../model/meeting/Meeting';
 import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
+import { InvitationEmailsDTO } from '../model/invitation/Invitation';
+import allActions from './index';
+import { SurveyWithQuestionsDTO } from '../model/survey/Survey';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
@@ -12,7 +15,11 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
     });
 };
 
-const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
+const saveMeeting = (
+  meeting: Meeting,
+  invitations: InvitationEmailsDTO,
+  survey: SurveyWithQuestionsDTO
+) => (dispatch: Dispatch) => {
   dispatch(createMeetingReset());
 
   fetch(getMeetingsUrl(), {
@@ -24,7 +31,17 @@ const saveMeeting = (meeting: Meeting) => (dispatch: Dispatch) => {
     body: JSON.stringify(meeting),
   }).then((response) => {
     if (response.status === 201) {
-      return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
+      response.json().then((meeting: DeepMeetingDetailsDTO) => {
+        if (invitations.emails.length > 0) {
+          allActions.invitationActions
+            .createInvitations(meeting.id, invitations)
+            .then(() => void 0);
+        }
+        if (survey.questions.length > 0) {
+          allActions.surveyActions.createSurvey(meeting.id, survey).then(() => void 0);
+        }
+        return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
+      });
     } else {
       return dispatch(createMeetingFailed('Meeting has not been created ;/'));
     }
