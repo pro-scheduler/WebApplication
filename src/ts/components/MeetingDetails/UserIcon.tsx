@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FcManager } from 'react-icons/fc';
 import { TiDelete } from 'react-icons/ti';
 
-import './UserIcon.css';
+import styles from './UserIcon.module.css';
 import allActions from '../../actions';
 import Popup from '../common/Popup/Popup';
 
@@ -11,10 +11,9 @@ export type UserIconProps = {
   meetingId: number;
   userId: number;
   canDelete: boolean;
-  fontBold: boolean;
 };
 
-const UserIcon = ({ name, meetingId, userId, canDelete, fontBold }: UserIconProps) => {
+const UserIcon = ({ name, meetingId, userId, canDelete }: UserIconProps) => {
   const [modalShow, setModalShow] = useState(false);
   const deleteParticipant = () => {
     allActions.meetingActions.removeUserFromMeeting(meetingId, userId);
@@ -22,16 +21,12 @@ const UserIcon = ({ name, meetingId, userId, canDelete, fontBold }: UserIconProp
   };
   return (
     <>
-      <div className="userIcon">
+      <div className={styles.userIcon}>
         <FcManager />
       </div>
-      {fontBold ? (
-        <div className="ml-3 userIconParticipantName userIconOrganizerName">{name}</div>
-      ) : (
-        <div className="ml-3 userIconParticipantName">{name}</div>
-      )}
+      <div className={styles.userIconParticipantName}>{name}</div>
       {canDelete && (
-        <TiDelete className="ml-2 deleteUserButton" onClick={() => setModalShow(true)} />
+        <TiDelete className={styles.deleteUserButton} onClick={() => setModalShow(true)} />
       )}
       <Popup
         show={modalShow}

@@ -1,0 +1,13 @@
+.meetingParticipantsTotalMembers {
+    font-size: var(--s-font-size);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.meetingInvitations {
+    font-size: var(--s-font-size);
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}

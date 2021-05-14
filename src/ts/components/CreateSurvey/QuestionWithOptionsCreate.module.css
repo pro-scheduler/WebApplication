@@ -10,8 +10,10 @@
     width: 34px;
     height: 34px;
     font-size: 18px;
+    margin-left: 20px;
 }
 
 .optionsText{
     color: #707070;
+    margin-bottom: 20px;
 }

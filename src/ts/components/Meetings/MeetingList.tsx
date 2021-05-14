@@ -6,7 +6,7 @@ import MeetingPagination from './MeetingPagination';
 import React, { useState } from 'react';
 import { Meeting } from '../../model/meeting/Meeting';
 import MeetingCard from './MeetingCard';
-import './MeetingList.css';
+import styles from './MeetingList.module.css';
 
 export type MeetingListProps = {
   header: string;
@@ -45,11 +45,11 @@ const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => 
     });
 
   return (
-    <Row className="justify-content-center mt-4 mr-5 meetingListRow">
+    <Row className="justify-content-center mt-4 mr-5" style={{ marginLeft: '6%' }}>
       <Col lg={12} className="text-center mt-5">
-        <CalendarIcon className="meetingListIcon" />
+        <CalendarIcon className={styles.meetingListIcon} />
       </Col>
-      <Col lg={12} className="text-center my-3 meetingListHeader">
+      <Col lg={12} className={styles.meetingListHeader}>
         {header}
       </Col>
       {meetings.length > 0 ? (

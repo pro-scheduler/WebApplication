@@ -13,15 +13,13 @@
 .userIconParticipantName {
     font-size: var(--xs-font-size);
     display: inline;
-}
-
-.userIconOrganizerName {
-    font-weight: var(--bold-font-weight);
+    margin-left: 10px;
 }
 
 .deleteUserButton {
     font-size: 30px;
     color: var(--light-red);
+    margin-left: 10px;
 }
 
 .deleteUserButton:hover {
@@ -31,14 +29,11 @@
 .pendingStatus {
     font-size: 30px;
     color: var(--purple);
-}
-
-.acceptedStatus {
-    font-size: 30px;
-    color: var(--bright-green);
+    margin-left: 10px;
 }
 
 .rejectedStatus {
     font-size: 30px;
     color: var(--light-red);
+    margin-left: 10px;
 }

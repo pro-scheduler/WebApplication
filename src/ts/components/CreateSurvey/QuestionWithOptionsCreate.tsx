@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
-import './QuestionWithOptionsCreate.css';
+import mainStyles from './QuestionWithOptionsCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import { BsCircle } from 'react-icons/bs';
@@ -56,16 +56,19 @@ const QuestionWithOptionsCreate = ({ id, type }: QuestionProps) => {
         />
       </Col>
       <Col lg={8} className="text-left mt-4">
-        <div className="mb-3 optionsText">Options:</div>
+        <div className={mainStyles.optionsText}>Options:</div>
         {options.map((option: any) => (
           <div className="mt-2" key={option}>
             <BsCircle className="mr-2" /> {option}
-            <TiDelete className="ml-2 removeOptionButton" onClick={() => deleteOption(option)} />
+            <TiDelete
+              className={mainStyles.removeOptionButton}
+              onClick={() => deleteOption(option)}
+            />
           </div>
         ))}
         <div className="mt-3">
-          <SingleValueInput label="" valueHandler={setCurrentOption} />
-          <PlusButton onclick={addOption} className={'ml-3 addOptionButton'} />
+          <SingleValueInput valueHandler={setCurrentOption} />
+          <PlusButton onclick={addOption} className={mainStyles.addOptionButton} />
         </div>
       </Col>
     </>

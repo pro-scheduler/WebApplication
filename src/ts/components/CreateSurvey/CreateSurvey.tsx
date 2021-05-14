@@ -76,7 +76,7 @@ const CreateSurvey = () => {
               id={id}
               deleteButton={
                 <TiDelete
-                  className="ml-2 removeOptionButton"
+                  className={styles.removeQuestionButton}
                   onClick={() => deleteQuestion(id)}
                   key={id}
                 />
@@ -114,5 +114,4 @@ const CreateSurvey = () => {
     </div>
   );
 };
-
 export default CreateSurvey;

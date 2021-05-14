@@ -1,6 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination';
 import React, { useState } from 'react';
-import './MeetingPagination.css';
+import styles from './MeetingPagination.module.css';
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
@@ -36,6 +36,10 @@ const MeetingPagination = ({
     pageNumbers.push(i);
   }
 
+  const getStyle = (name: string) => {
+    return name === 'paginationCurrentItem' ? styles.paginationCurrentItem : styles.paginationItem;
+  };
+
   const paginationItems = pageNumbers
     .slice(currentPage - 3 < 0 ? 0 : currentPage - 3, currentPage + 2)
     .map((number: number) => {
@@ -46,7 +50,7 @@ const MeetingPagination = ({
             setCurrentPage(number);
             paginate(number);
           }}
-          className={className(number)}
+          className={getStyle(className(number))}
         >
           {number}
         </li>
@@ -61,7 +65,7 @@ const MeetingPagination = ({
           firstPage();
           setCurrentPage(1);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineDoubleLeft />}
       </li>
@@ -72,7 +76,7 @@ const MeetingPagination = ({
           setCurrentPage(currentPage - 1 < 1 ? currentPage : currentPage - 1);
           console.log(currentPage);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineArrowLeft />}
       </li>
@@ -88,7 +92,7 @@ const MeetingPagination = ({
           );
           console.log(currentPage);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineArrowRight />}
       </li>
@@ -98,7 +102,7 @@ const MeetingPagination = ({
           lastPage();
           setCurrentPage(Math.ceil(totalMeetings / meetingsPerPage));
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineDoubleRight />}
       </li>

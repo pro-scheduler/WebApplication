@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './AuthDetails.css';
+import styles from './AuthDetails.module.css';
 
 export type AuthDetailsProps = {
   title: string;
@@ -15,9 +15,9 @@ const AuthDetails = ({ title, question, redirectText, redirectTo, children }: Au
     <div>
       <h1 className="mt-4 ml-2 mb-5">{title}</h1>
       <div className="text-center mb-4">{children}</div>
-      <div className="redirect">
-        <p className="ml-2 mt-5 redirect">{question}</p>
-        <Link to={redirectTo} className="ml-2 pb-5 link">
+      <div className="ml-2 mt-5">
+        <p className={styles.redirectQuestion}>{question}</p>
+        <Link to={redirectTo} className={styles.link}>
           {redirectText}
         </Link>
       </div>

@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { ProUser } from '../../model/user/ProUser';
 import UserIcon from './UserIcon';
 import LineWithHeader from './LineWithHeader';
-import './MeetingParticipants.css';
+import styles from './MeetingParticipants.module.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
 import allActions from '../../actions';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,6 @@ const MeetingParticipants = ({
           meetingId={meetingId}
           userId={participant.id}
           canDelete={isOrganizer}
-          fontBold={false}
           key={'Participant' + participant.id}
         />
       </Col>
@@ -63,13 +62,13 @@ const MeetingParticipants = ({
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Who'} />
-      <Col lg={12} className="text-center mt-2 mb-5 meetingParticipantsTotalMembers">
+      <Col lg={12} className={styles.meetingParticipantsTotalMembers}>
         Total {participants.length} members
       </Col>
       {participantsIcons}
       {isOrganizer && (
         <>
-          <Col lg={12} className="text-center mt-5 pt-5 mb-5 meetingParticipantsTotalMembers">
+          <Col lg={12} className={styles.meetingInvitations}>
             Invitations
           </Col>
           {invitationsIcons}
