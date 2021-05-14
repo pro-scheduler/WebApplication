@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './GoogleButton.css';
+import styles from './GoogleButton.module.css';
 import IconButton, { IconButtonProps } from './IconButton';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -10,8 +10,7 @@ const GoogleButton = ({ redirectTo, text, className }: IconButtonProps) => {
       <IconButton
         redirectTo={redirectTo}
         text={text}
-        icon={<FcGoogle className="mr-4 googleIcon" />}
-        className=""
+        icon={<FcGoogle className={styles.googleIcon} />}
       />
     </div>
   );

@@ -3,11 +3,11 @@
 }
 
 .messageSuccess {
-    color: #07e66b;
+    color: var(--bright-green);
     font-size: medium;
 }
 
 .messageFailed {
-    color: #e60707;
+    color: var(--light-red);
     font-size: medium;
 }

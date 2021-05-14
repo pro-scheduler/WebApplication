@@ -7,7 +7,7 @@
     color: var(--bright-green);
     background-color: white;
     font-size: var(--l-font-size);
-    border-radius: 50%;
+    border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
 }
 

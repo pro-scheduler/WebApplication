@@ -7,7 +7,7 @@
     background-color: var(--purple);
     font-size: var(--s-font-size);
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
 }
 

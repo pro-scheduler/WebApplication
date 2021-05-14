@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './FacebookButton.css';
+import styles from './FacebookButton.module.css';
 import IconButton, { IconButtonProps } from './IconButton';
 import { SiFacebook } from 'react-icons/si';
 
@@ -10,8 +10,8 @@ const FacebookButton = ({ redirectTo, text, className }: IconButtonProps) => {
       <IconButton
         redirectTo={redirectTo}
         text={text}
-        icon={<SiFacebook className="mr-4 fbIcon" />}
-        className="fbButton"
+        icon={<SiFacebook className={styles.fbIcon} />}
+        className={styles.fbButton}
       />
     </div>
   );

@@ -5,7 +5,7 @@
     display: inline-block;
     text-align: center;
     font-size: var(--s-font-size);
-    border-radius: 50%;
+    border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
     background-color: var(--purple);
 }
@@ -17,7 +17,7 @@
 }
 
 .deleteUserButton {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--light-red);
     margin-left: 10px;
 }
@@ -27,13 +27,13 @@
 }
 
 .pendingStatus {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--purple);
     margin-left: 10px;
 }
 
 .rejectedStatus {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--light-red);
     margin-left: 10px;
 }

@@ -13,7 +13,7 @@
 }
 
 .footerLogo {
-    font-size: 18px;
+    font-size: var(--xs-font-size);
 }
 
 .footerLogoImg {

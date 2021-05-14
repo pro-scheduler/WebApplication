@@ -2,16 +2,16 @@
     background-color: #FFFFFF;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
-    border-color: #707070;
+    border-color: var(--medium-grey);
     border-width: 1px;
     text-align: left;
-    color: #707070;
+    color: var(--medium-grey);
     margin: auto;
     padding: 7px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
 }
 
 .label_classic {
-    color: #707070;
+    color: var(--medium-grey);
 }
 

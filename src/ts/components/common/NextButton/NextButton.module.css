@@ -6,7 +6,7 @@
     color: black;
     font-size: var(--s-font-size);
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: var(--circle-border-radius);
     align-items: center;
     display: flex;
 }
