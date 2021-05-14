@@ -3,18 +3,18 @@ import Modal from 'react-bootstrap/Modal';
 import ActionButton from '../SubmitButton/ActionButton/ActionButton';
 import styles from './Popup.module.css';
 
-interface IPopup {
+export type PopupProps = {
   show: boolean;
   information: string;
   onAccept: Function;
   onDecline: Function;
-}
+};
 
-const Popup = (popup: IPopup) => {
+const Popup = ({ show, information, onAccept, onDecline }: PopupProps) => {
   return (
     <Modal
-      show={popup.show}
-      onHide={popup.onDecline}
+      show={show}
+      onHide={onDecline}
       animation={false}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -22,20 +22,12 @@ const Popup = (popup: IPopup) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className={styles.popupTitle}>
-          {popup.information}
+          {information}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center">
-        <ActionButton
-          onclick={() => popup.onAccept()}
-          text={'Yes'}
-          className={styles.popupYesButton}
-        />
-        <ActionButton
-          onclick={() => popup.onDecline()}
-          text={'No'}
-          className={styles.popupNoButton}
-        />
+        <ActionButton onclick={() => onAccept()} text={'Yes'} className={styles.popupYesButton} />
+        <ActionButton onclick={() => onDecline()} text={'No'} className={styles.popupNoButton} />
       </Modal.Body>
     </Modal>
   );

@@ -1,12 +1,12 @@
 import cx from 'classnames';
 import styles from './Icon.module.css';
 
-interface IMeetingIcon {
-  className: any;
+export type IconProps = {
+  className?: string;
   icon: JSX.Element;
-}
+};
 
-const Icon = ({ className, icon }: IMeetingIcon) => {
+const Icon = ({ className, icon }: IconProps) => {
   const iconStyles = cx(styles.icon, className);
 
   return <div className={iconStyles}>{icon}</div>;

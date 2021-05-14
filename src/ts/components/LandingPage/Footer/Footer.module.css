@@ -1,6 +1,8 @@
 .footer {
     background: var(--purple);
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 .footerLine {
@@ -10,14 +12,16 @@
     text-align: center;
 }
 
-p {
-    font-size: 18px;
+.footerLogo {
+    font-size: var(--xs-font-size);
 }
 
-p img {
+.footerLogoImg {
     height: 16px;
+    margin-right: 5px;
 }
 
 .copyright {
     font-size: 10px;
+    margin-top: 20px;
 }

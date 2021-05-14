@@ -4,17 +4,17 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
 import MeetingPagination from './MeetingPagination';
 import React, { useState } from 'react';
-import Meeting from '../../model/meeting/Meeting';
+import { Meeting } from '../../model/meeting/Meeting';
 import MeetingCard from './MeetingCard';
-import './MeetingList.css';
+import styles from './MeetingList.module.css';
 
-interface IMeetingList {
+export type MeetingListProps = {
   header: string;
   noMeetingsInfo: string;
   meetings: Meeting[];
-}
+};
 
-const MeetingList = (iMeetingList: IMeetingList) => {
+const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const onFirstPageClick = () => {
@@ -22,7 +22,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
   };
 
   const onNextPageClick = () => {
-    if (currentPage < Math.ceil(iMeetingList.meetings.length / 4)) setCurrentPage(currentPage + 1);
+    if (currentPage < Math.ceil(meetings.length / 4)) setCurrentPage(currentPage + 1);
   };
 
   const onPrevPageClick = () => {
@@ -30,7 +30,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
   };
 
   const onLastPageClick = () => {
-    setCurrentPage(Math.ceil(iMeetingList.meetings.length / 4));
+    setCurrentPage(Math.ceil(meetings.length / 4));
   };
 
   const getClassName = (number: number) => {
@@ -38,21 +38,21 @@ const MeetingList = (iMeetingList: IMeetingList) => {
     return 'paginationItem';
   };
 
-  const meetingCards = iMeetingList.meetings
+  const meetingCards = meetings
     .slice(currentPage * 4 - 4, currentPage * 4)
     .map((meeting: Meeting) => {
       return <MeetingCard key={meeting.id} {...meeting} />;
     });
 
   return (
-    <Row className="justify-content-center mt-4 mr-5 meetingListRow">
+    <Row className="justify-content-center mt-4 mr-5" style={{ marginLeft: '6%' }}>
       <Col lg={12} className="text-center mt-5">
-        <CalendarIcon className="meetingListIcon" />
+        <CalendarIcon className={styles.meetingListIcon} />
       </Col>
-      <Col lg={12} className="text-center my-3 meetingListHeader">
-        {iMeetingList.header}
+      <Col lg={12} className={styles.meetingListHeader}>
+        {header}
       </Col>
-      {iMeetingList.meetings.length > 0 ? (
+      {meetings.length > 0 ? (
         <>
           {meetingCards}
           <Col lg={12} />
@@ -60,7 +60,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
             <div className="text-center">
               <MeetingPagination
                 meetingsPerPage={4}
-                totalMeetings={iMeetingList.meetings.length}
+                totalMeetings={meetings.length}
                 paginate={(number: number) => setCurrentPage(number)}
                 nextPage={onNextPageClick}
                 prevPage={onPrevPageClick}
@@ -73,7 +73,7 @@ const MeetingList = (iMeetingList: IMeetingList) => {
         </>
       ) : (
         <div className="text-center mt-3">
-          <div>{iMeetingList.noMeetingsInfo}</div>
+          <div>{noMeetingsInfo}</div>
           <RedirectButton className="mt-4" redirectTO="/create" text="Add new meeting" />
         </div>
       )}

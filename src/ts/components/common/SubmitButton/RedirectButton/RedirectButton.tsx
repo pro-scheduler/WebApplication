@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ActionButton from '../ActionButton/ActionButton';
 
-interface IButton {
+export type RedirectButtonProps = {
   redirectTO: string;
   text: string;
-  className: any;
-}
+  className?: string;
+};
 
-const RedirectButton = ({ redirectTO, text, className }: IButton) => {
+const RedirectButton = ({ redirectTO, text, className }: RedirectButtonProps) => {
   return (
     <Link to={redirectTO}>
       <ActionButton onclick={() => void 0} className={className} text={text} />

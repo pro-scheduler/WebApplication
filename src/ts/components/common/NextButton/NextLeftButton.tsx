@@ -2,15 +2,18 @@ import { MouseEventHandler } from 'react';
 
 import { AiOutlineLeft } from 'react-icons/ai';
 import styles from './NextButton.module.css';
+import cx from 'classnames';
 
-interface IButton {
+export type NextButtonProps = {
   onclick: MouseEventHandler;
   disabled: boolean;
-}
+  className?: string;
+};
 
-const NextLeftButton = ({ onclick, disabled }: IButton) => {
+const NextLeftButton = ({ onclick, disabled, className }: NextButtonProps) => {
+  const buttonStyles = cx(styles.button, className);
   return (
-    <button className={styles.button} onClick={onclick} disabled={disabled}>
+    <button className={buttonStyles} onClick={onclick} disabled={disabled}>
       <AiOutlineLeft style={{ fontSize: '400%', margin: '0 auto' }} />
     </button>
   );

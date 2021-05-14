@@ -4,19 +4,36 @@ import classcat from 'classcat';
 import { useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
-const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changeParams }: any) => {
-  const [top, setTop] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [changeDirection, setChangeDirection] = useState('top');
-  const [topDelta, setTopDelta] = useState(0);
-  const [delta, setDelta] = useState(0);
-  const [draggingDelta, setDraggingDelta] = useState(0);
+export type RangeBoxProps = {
+  step: number;
+  defaultHeight: any;
+  max: number;
+  boxSize: number;
+  defaultTop: any;
+  id: number;
+  changeParams: any;
+};
+const RangeBox = ({
+  step,
+  defaultHeight,
+  max,
+  boxSize,
+  defaultTop,
+  id,
+  changeParams,
+}: RangeBoxProps) => {
+  const [top, setTop] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  const [changeDirection, setChangeDirection] = useState<string>('top');
+  const [topDelta, setTopDelta] = useState<number>(0);
+  const [delta, setDelta] = useState<number>(0);
+  const [draggingDelta, setDraggingDelta] = useState<number>(0);
 
   const positionToTime = (position: number) => {
-    let hour = Math.floor((5 * (position / step)) / 60);
-    let min = (5 * (position / step)) % 60;
-    let hourStr = hour.toString();
-    let minStr = min.toString();
+    const hour: number = Math.floor((5 * (position / step)) / 60);
+    const min: number = (5 * (position / step)) % 60;
+    let hourStr: string = hour.toString();
+    let minStr: string = min.toString();
     if (hour < 10) {
       hourStr = '0' + hourStr;
     }
@@ -43,8 +60,8 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
   };
 
   const handleStop = () => {
-    let toChangeHeight = height + defaultHeight;
-    let toChangeTop = top + defaultTop;
+    let toChangeHeight: number;
+    let toChangeTop: number = top + defaultTop;
 
     if (top + topDelta + draggingDelta + height + delta + defaultTop + defaultHeight > boxSize) {
       setHeight(boxSize - top - topDelta - draggingDelta - defaultTop);
@@ -79,7 +96,7 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
     setDraggingDelta(position.y);
   };
 
-  const handleDragStop: DraggableEventHandler = (event: any, position: any) => {
+  const handleDragStop: DraggableEventHandler = (event: any, _: any) => {
     event.preventDefault();
     event.stopPropagation();
     setTop(top + draggingDelta);
@@ -115,7 +132,7 @@ const RangeBox = ({ step, defaultHeight, max, boxSize, defaultTop, id, changePar
         // disabled={disabled}
       >
         <Resizable
-          // resposive here later to do
+          // responsive here later to do
           size={{ width: '170px', height: height + delta + defaultHeight }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}

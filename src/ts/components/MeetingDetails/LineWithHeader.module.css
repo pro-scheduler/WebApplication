@@ -1,9 +1,12 @@
 .meetingDetailsHeader {
     font-size: 25px;
+    margin-bottom: 0;
+    margin-top: 30px;
 }
 
 .meetingDetailsLine {
     border-top: 1px solid black;
     color: black;
     text-align: center;
+    margin-top: 10px;
 }

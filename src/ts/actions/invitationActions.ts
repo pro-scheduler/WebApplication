@@ -5,7 +5,7 @@ import {
   getRejectInvitationUrl,
   getUserPendingInvitationsUrl,
 } from '../API/invitation/urls';
-import { BasicInvitationInfo, InvitationEmailsDTO } from '../model/invitation/InvitationDTO';
+import { BasicInvitationInfo, InvitationEmailsDTO } from '../model/invitation/Invitation';
 
 const fetchUserPendingInvitations = (userId: number) => (dispatch: Dispatch) => {
   fetch(getUserPendingInvitationsUrl(userId))

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
-import ProUser from '../../model/user/ProUser';
+import { ProUser } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import InvitationList from '../../components/Meetings/InvitationList';
 

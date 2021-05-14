@@ -5,5 +5,6 @@
 
 .fbIcon {
     color: white;
-    font-size: 30px;
+    font-size: var(--m-font-size);
+    margin-right: 25px;
 }

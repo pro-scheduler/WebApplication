@@ -5,19 +5,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import purpleLogo from '../../../../images/purpleLogo.svg';
 
-import './Header.css';
+import styles from './Header.module.css';
 import RedirectButton from '../../common/SubmitButton/RedirectButton/RedirectButton';
 
 const Header = () => {
   return (
-    <Jumbotron fluid className="mx-0 my-0 px-4 py-4 header">
+    <Jumbotron fluid className={styles.headerJumbotron}>
       <Container fluid className="ml-2 mt-2">
-        <h1>
+        <h1 className={styles.headerLogo}>
           <img src={purpleLogo} alt="logo" />
           ProScheduler
         </h1>
-        <h2>Schedule meetings like a pro</h2>
-        <Row className="headerRow text-center">
+        <h2 className={styles.headerMotto}>Schedule meetings like a pro</h2>
+        <Row className={styles.headerRow}>
           <Col md={12} lg={6} className="mt-5 pt-5 px-0">
             <RedirectButton text="Sign In" redirectTO="/signin" className="m-4" />
           </Col>

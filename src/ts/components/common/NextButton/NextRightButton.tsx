@@ -1,16 +1,12 @@
-import { MouseEventHandler } from 'react';
-
 import { AiOutlineRight } from 'react-icons/ai';
 import styles from './NextButton.module.css';
+import { NextButtonProps } from './NextLeftButton';
+import cx from 'classnames';
 
-interface IButton {
-  onclick: MouseEventHandler;
-  disabled: boolean;
-}
-
-const NextRightButton = ({ onclick, disabled }: IButton) => {
+const NextRightButton = ({ onclick, disabled, className }: NextButtonProps) => {
+  const buttonStyles = cx(styles.button, className);
   return (
-    <button className={styles.button} onClick={onclick} disabled={disabled}>
+    <button className={buttonStyles} onClick={onclick} disabled={disabled}>
       <AiOutlineRight style={{ fontSize: '400%', margin: '0 auto' }} />
     </button>
   );

@@ -2,10 +2,11 @@ import styles from './TextArea.module.css';
 import { useState } from 'react';
 import cx from 'classnames';
 
-type TextAreaProps = { label: string; valueHandler: Function; className: any };
+export type TextAreaProps = { label: string; valueHandler: Function; className?: string };
+
 const TextArea = ({ label, valueHandler, className }: TextAreaProps) => {
   const textAreaStyles = cx(styles.text_area_classic, className);
-  const [state, setState] = useState('');
+  const [state, setState] = useState<string>('');
 
   const handleChange = (event: any) => {
     setState(event.target.value);
