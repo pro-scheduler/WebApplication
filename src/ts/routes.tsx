@@ -9,6 +9,8 @@ import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
 import MeetingDetails from './views/MeetingDetails/MeetingDetails';
 import Time from './views/Time/Time';
+import ExampleInvalid from './views/Example/ExampleInvalid';
+
 const Routes = () => {
   return (
     <Router>
@@ -16,6 +18,10 @@ const Routes = () => {
         <Route path="/example">
           <Navbar />
           <Example />
+        </Route>
+        <Route path="/invalid">
+          <Navbar />
+          <ExampleInvalid />
         </Route>
         <Route path="/signin">
           <Navbar showDetails={false} />

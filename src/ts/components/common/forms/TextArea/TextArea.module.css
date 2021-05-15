@@ -17,3 +17,21 @@
     color: #707070;
 }
 
+.text_area_classic_invalid {
+    background-color: #FFFFFF;
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    border-color: #d33a3a;
+    border-width: 1px;
+    text-align: left;
+    color: #707070;
+    margin: auto;
+    padding: 7px;
+    border-radius: 10px;
+    width: 300px;
+    height: 150px;
+}
+
+.invalid_text {
+    color: #d33a3a;
+}

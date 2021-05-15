@@ -10,3 +10,17 @@
     border-radius: 10px;
 }
 
+.dropdown_invalid {
+    width: 320px;
+    background-color: #d33a3a;
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    border-color: #d33a3a;
+    text-align: center;
+    margin: auto;
+    padding: 1px;
+    border-radius: 10px;
+}
+.invalid_text {
+    color: #d33a3a;
+}

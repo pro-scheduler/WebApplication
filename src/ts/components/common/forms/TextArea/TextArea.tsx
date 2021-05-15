@@ -1,10 +1,18 @@
 import styles from './TextArea.module.css';
 import { useState } from 'react';
 import cx from 'classnames';
-
-type TextAreaProps = { label: string; valueHandler: Function; className: any };
-const TextArea = ({ label, valueHandler, className }: TextAreaProps) => {
-  const textAreaStyles = cx(styles.text_area_classic, className);
+interface TextAreaProps {
+  label: string;
+  valueHandler: Function;
+  className?: any;
+  invalid?: boolean;
+  invalidText?: string;
+}
+const TextArea = ({ label, valueHandler, className, invalid, invalidText }: TextAreaProps) => {
+  const textAreaStyles = cx(
+    invalid ? styles.text_area_classic_invalid : styles.text_area_classic,
+    className
+  );
   const [state, setState] = useState('');
 
   const handleChange = (event: any) => {
@@ -15,6 +23,7 @@ const TextArea = ({ label, valueHandler, className }: TextAreaProps) => {
     <div>
       <div className={styles.label_classic}>{label}</div>
       <textarea className={textAreaStyles} value={state} onChange={handleChange} />
+      {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </div>
   );
 };

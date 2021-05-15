@@ -10,8 +10,21 @@
     padding: 7px;
     border-radius: 10px;
 }
-
+.input_classic_invalid {
+    background-color: #FFFFFF;
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    border-color: #d33a3a;
+    border-width: 1px;
+    text-align: left;
+    color: #707070;
+    margin: auto;
+    padding: 7px;
+    border-radius: 10px;
+}
 .label_classic {
     color: #707070;
 }
-
+.invalid_text {
+    color: #d33a3a;
+}
