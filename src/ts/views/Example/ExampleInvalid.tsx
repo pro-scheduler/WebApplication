@@ -43,9 +43,13 @@ const Example = () => {
         Example of disabled switches and ivalid inputs (Note that validation here is just view,
         lables are just example)
       </p>
-      <GoogleButton redirectTo="/signup" text="Sign in with Google" className="my-2" />
-      <FacebookButton redirectTo="/signup" text="Sign in with Facebook" className="mt-4" />
+      Normal:
+      <GoogleButton redirectTo="/invalid" text="Sign in with Google" className="my-2" />
+      <FacebookButton redirectTo="/invalid" text="Sign in with Facebook" className="mt-4" />
+      <br />
+      Disabled:
       <GoogleButton redirectTo="/signup" text="Sign in with Google" disabled={true} />
+      <br />
       <FacebookButton redirectTo="/signup" text="Sign in with Facebook" disabled={true} />
       <div style={{ margin: 20 }}>
         <RedirectButton text="Redirect" disabled={true} redirectTO="/create" />
