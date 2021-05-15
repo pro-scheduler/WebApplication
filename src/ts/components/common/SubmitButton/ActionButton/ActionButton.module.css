@@ -11,6 +11,23 @@
     box-shadow: var(--shadow);
 }
 
+.button_disabled {
+    width: 320px;
+    height: 45px;
+    border: none;
+    text-align: center;
+    color: white;
+    background-color: var(--light-grey);
+    font-size: var(--button-font-size);
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    opacity: 0.8;
+}
+.button_disabled:focus {
+    outline: none;
+}
+
 .button:focus {
     outline: none;
 }

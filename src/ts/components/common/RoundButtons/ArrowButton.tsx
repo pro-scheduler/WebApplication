@@ -9,8 +9,15 @@ interface IButton {
   disabled?: boolean;
 }
 
-const ArrowButton = ({ onclick, className }: IButton) => {
-  return <RoundButton onclick={onclick} className={className} icon={<BsArrowUpRight />} disabled />;
+const ArrowButton = ({ onclick, className, disabled }: IButton) => {
+  return (
+    <RoundButton
+      onclick={onclick}
+      className={className}
+      icon={<BsArrowUpRight />}
+      disabled={disabled}
+    />
+  );
 };
 
 export default ArrowButton;

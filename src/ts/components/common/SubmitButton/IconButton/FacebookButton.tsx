@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './FacebookButton.css';
 import IconButton from './IconButton';
 import { SiFacebook } from 'react-icons/si';
@@ -7,10 +5,11 @@ import { SiFacebook } from 'react-icons/si';
 interface IButton {
   redirectTo: string;
   text: string;
-  className: any;
+  className?: any;
+  disabled?: boolean;
 }
 
-const FacebookButton = ({ redirectTo, text, className }: IButton) => {
+const FacebookButton = ({ redirectTo, text, className, disabled }: IButton) => {
   return (
     <div className={className}>
       <IconButton
@@ -18,6 +17,7 @@ const FacebookButton = ({ redirectTo, text, className }: IButton) => {
         text={text}
         icon={<SiFacebook className="mr-4 fbIcon" />}
         className="fbButton"
+        disabled={disabled}
       />
     </div>
   );

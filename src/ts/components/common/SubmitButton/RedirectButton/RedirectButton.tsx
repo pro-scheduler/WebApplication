@@ -6,13 +6,14 @@ import ActionButton from '../ActionButton/ActionButton';
 interface IButton {
   redirectTO: string;
   text: string;
-  className: any;
+  className?: any;
+  disabled?: boolean;
 }
 
-const RedirectButton = ({ redirectTO, text, className }: IButton) => {
+const RedirectButton = ({ redirectTO, text, className, disabled }: IButton) => {
   return (
     <Link to={redirectTO}>
-      <ActionButton onclick={() => void 0} className={className} text={text} />
+      <ActionButton onclick={() => void 0} className={className} text={text} disabled={disabled} />
     </Link>
   );
 };

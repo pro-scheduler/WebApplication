@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './GoogleButton.css';
 import IconButton from './IconButton';
 import { FcGoogle } from 'react-icons/fc';
@@ -7,10 +5,11 @@ import { FcGoogle } from 'react-icons/fc';
 interface IButton {
   redirectTo: string;
   text: string;
-  className: any;
+  className?: any;
+  disabled?: boolean;
 }
 
-const GoogleButton = ({ redirectTo, text, className }: IButton) => {
+const GoogleButton = ({ redirectTo, text, className, disabled }: IButton) => {
   return (
     <div className={className}>
       <IconButton
@@ -18,6 +17,7 @@ const GoogleButton = ({ redirectTo, text, className }: IButton) => {
         text={text}
         icon={<FcGoogle className="mr-4 googleIcon" />}
         className=""
+        disabled={disabled}
       />
     </div>
   );

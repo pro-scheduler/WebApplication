@@ -9,8 +9,15 @@ interface IButton {
   disabled?: boolean;
 }
 
-const PlusButton = ({ onclick, className }: IButton) => {
-  return <RoundButton onclick={onclick} className={className} icon={<AiOutlinePlus />} disabled />;
+const PlusButton = ({ onclick, className, disabled }: IButton) => {
+  return (
+    <RoundButton
+      onclick={onclick}
+      className={className}
+      icon={<AiOutlinePlus />}
+      disabled={disabled}
+    />
+  );
 };
 
 export default PlusButton;

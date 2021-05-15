@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import MultiDropdownButton from '../../components/common/Dropdown/MultiDropdownButton';
 import SingleDropdownButton from '../../components/common/Dropdown/SingleDropdownButton';
@@ -8,6 +7,10 @@ import CalendarButton from '../../components/common/RoundButtons/CalendarButton'
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
 import styles from './Example.module.css';
+import RedirectButton from '../../components/common/SubmitButton/RedirectButton/RedirectButton';
+import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
+import FacebookButton from '../../components/common/SubmitButton/IconButton/FacebookButton';
+import GoogleButton from '../../components/common/SubmitButton/IconButton/GoogleButton';
 
 const Example = () => {
   const [selectedValues, setSelectedValues] = useState([]);
@@ -40,7 +43,22 @@ const Example = () => {
         Example of disabled switches and ivalid inputs (Note that validation here is just view,
         lables are just example)
       </p>
-      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
+      <GoogleButton redirectTo="/signup" text="Sign in with Google" className="my-2" />
+      <FacebookButton redirectTo="/signup" text="Sign in with Facebook" className="mt-4" />
+      <GoogleButton redirectTo="/signup" text="Sign in with Google" disabled={true} />
+      <FacebookButton redirectTo="/signup" text="Sign in with Facebook" disabled={true} />
+      <div style={{ margin: 20 }}>
+        <RedirectButton text="Redirect" disabled={true} redirectTO="/create" />
+      </div>
+      <div style={{ margin: 20 }}>
+        <ActionButton
+          text="Submit"
+          onclick={() => console.log('Action clicked')}
+          className="button"
+          disabled={true}
+        />
+      </div>
+      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" disabled={true} />
       <p />
       <PlusButton
         onclick={() => console.log('Plus clicked')}
@@ -48,9 +66,12 @@ const Example = () => {
         disabled={true}
       />
       <p />
-      <CalendarButton onclick={() => console.log('Calendar clicked')} className={styles.calendar} />
+      <CalendarButton
+        onclick={() => console.log('Calendar clicked')}
+        className={styles.calendar}
+        disabled={true}
+      />
       <p />
-
       <p>Multichoice</p>
       <MultiDropdownButton
         onchange={handleMultiChoice}
@@ -60,7 +81,6 @@ const Example = () => {
         invalidText="Please select at least one option"
       />
       {values}
-
       <p className="mt-5">Singlechoice</p>
       <SingleDropdownButton
         onchange={handleSingleChoice}

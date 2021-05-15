@@ -9,9 +9,14 @@ interface IButton {
   disabled?: boolean;
 }
 
-const CalendarButton = ({ onclick, className }: IButton) => {
+const CalendarButton = ({ onclick, className, disabled }: IButton) => {
   return (
-    <RoundButton onclick={onclick} className={className} icon={<BiCalendarEvent />} disabled />
+    <RoundButton
+      onclick={onclick}
+      className={className}
+      icon={<BiCalendarEvent />}
+      disabled={disabled}
+    />
   );
 };
 

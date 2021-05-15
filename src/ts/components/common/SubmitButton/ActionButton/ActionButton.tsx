@@ -7,13 +7,14 @@ interface IButton {
   onclick: MouseEventHandler;
   text: any;
   className: any;
+  disabled?: boolean;
 }
 
-const ActionButton = ({ onclick, text, className }: IButton) => {
-  const buttonStyles = cx(styles.button, className);
+const ActionButton = ({ onclick, text, className, disabled }: IButton) => {
+  const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
 
   return (
-    <button className={buttonStyles} type="submit" onClick={onclick}>
+    <button className={buttonStyles} type="submit" onClick={onclick} disabled={disabled}>
       {text}
     </button>
   );
