@@ -6,12 +6,10 @@ import SingleValueInput from '../../components/common/forms/Input/SingleValueInp
 import ArrowButton from '../../components/common/RoundButtons/ArrowButton';
 import CalendarButton from '../../components/common/RoundButtons/CalendarButton';
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
-import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
 import styles from './Example.module.css';
 
 const Example = () => {
-  const [showText, setShowText] = useState(true);
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
   const setTextInpuValue = (event: any) => {
@@ -37,16 +35,18 @@ const Example = () => {
   });
 
   return (
-    <div className={styles.example}>
-      <SwitchButton
-        className={styles.switchButton}
-        onChange={() => setShowText(!showText)}
-        title={'Example of disabled switches and ivalid inputs'}
-      />
-      {showText ? <p>Switch on</p> : <p>Switch off</p>}
+    <div className={styles.example} style={{ padding: 30 }}>
+      <p>
+        Example of disabled switches and ivalid inputs (Note that validation here is just view,
+        lables are just example)
+      </p>
       <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
       <p />
-      <PlusButton onclick={() => console.log('Plus clicked')} className={styles.plus} />
+      <PlusButton
+        onclick={() => console.log('Plus clicked')}
+        className={styles.plus}
+        disabled={true}
+      />
       <p />
       <CalendarButton onclick={() => console.log('Calendar clicked')} className={styles.calendar} />
       <p />
