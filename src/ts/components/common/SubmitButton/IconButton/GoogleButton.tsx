@@ -16,7 +16,6 @@ const GoogleButton = ({ redirectTo, text, className, disabled }: IButton) => {
         redirectTO={redirectTo}
         text={text}
         icon={<FcGoogle className="mr-4 googleIcon" />}
-        className=""
         disabled={disabled}
       />
     </div>

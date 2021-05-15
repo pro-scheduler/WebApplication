@@ -5,7 +5,7 @@ import styles from './RoundButton.module.css';
 
 interface IButton {
   onclick: MouseEventHandler;
-  className: any;
+  className?: any;
   icon: any;
   disabled?: boolean;
 }

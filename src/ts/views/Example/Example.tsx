@@ -49,7 +49,7 @@ const Example = () => {
         title={'Example switch'}
       />
       {showText ? <p>Switch on</p> : <p>Switch off</p>}
-      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" />
+      <ArrowButton onclick={() => console.log('Arrow clicked')} />
       <p />
       <PlusButton onclick={() => console.log('Plus clicked')} className={styles.plus} />
       <p />

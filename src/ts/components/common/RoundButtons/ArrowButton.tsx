@@ -5,7 +5,7 @@ import RoundButton from './RoundButton';
 
 interface IButton {
   onclick: MouseEventHandler;
-  className: any;
+  className?: any;
   disabled?: boolean;
 }
 

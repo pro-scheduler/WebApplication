@@ -58,7 +58,7 @@ const Example = () => {
           disabled={true}
         />
       </div>
-      <ArrowButton onclick={() => console.log('Arrow clicked')} className="" disabled={true} />
+      <ArrowButton onclick={() => console.log('Arrow clicked')} disabled={true} />
       <p />
       <PlusButton
         onclick={() => console.log('Plus clicked')}
