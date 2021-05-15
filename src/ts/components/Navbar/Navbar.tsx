@@ -18,7 +18,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
 
-const Navbar = ({ showDetails = true }: any) => {
+const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
   const [activeIcon, setActiveIcon] = useState('');
 

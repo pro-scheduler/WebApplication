@@ -4,34 +4,69 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NameAndDescription from '../../components/CreateMeeting/NameAndDescription';
 import CreateSurvey from '../../components/CreateSurvey/CreateSurvey';
-import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import CreateInvitations from '../../components/CreateMeeting/CreateInvitations';
+import ChooseTime from '../../components/CreateMeeting/ChooseTime';
+import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
+import style from '../../components/CreateMeeting/NameAndDesctiption.module.css';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
+import actions from '../../actions/meetingActions';
 
 const CreateMeeting = () => {
-  const [showSurveyModule, setShowSurveyModule] = useState(false);
-  const [showInvitationModule, setShowInvitationModule] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+
+  const dispatch: Function = useDispatch();
+  const messageStatus = useSelector((state: RootStateOrAny) => {
+    return state.messages.createMeetingMessageStatus;
+  });
+  const message = useSelector((state: RootStateOrAny) => {
+    return state.messages.createMeetingMessage;
+  });
+  const survey = useSelector((state: RootStateOrAny) => {
+    return state.surveyReducer;
+  });
+
+  const saveMeeting = () => {
+    dispatch(
+      actions.saveMeeting(
+        {
+          name: name,
+          description: description,
+          id: 0,
+          availableTimeRanges: [],
+          participants: [],
+          organizers: [],
+        },
+        {
+          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+        },
+        survey.newSurvey
+      )
+    );
+  };
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <NameAndDescription />
-      <Row className="justify-content-center mt-5 pb-5">
-        <Col className="text-center">
-          <SwitchButton
-            onChange={() => setShowInvitationModule(!showInvitationModule)}
-            title={'Invite participants to your meeting'}
-          />
+      <NameAndDescription setName={setName} setDescription={setDescription} />
+      <ChooseTime />
+      <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
+      <CreateSurvey />
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
+          <ActionButton text="Create meeting" onclick={saveMeeting} />
         </Col>
       </Row>
-      {showInvitationModule && <CreateInvitations showIcon={true} />}
-      <Row className="justify-content-center mt-5 pb-5">
-        <Col className="text-center">
-          <SwitchButton
-            onChange={() => setShowSurveyModule(!showSurveyModule)}
-            title={'Add survey to your meeting'}
-          />
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto">
+          {messageStatus !== 'NO_DISPLAY' && (
+            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
+              {message}
+            </p>
+          )}
         </Col>
       </Row>
-      {showSurveyModule && <CreateSurvey />}
     </Container>
   );
 };

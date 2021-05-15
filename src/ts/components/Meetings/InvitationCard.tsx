@@ -5,10 +5,10 @@ import invitationStyles from './InvitationCard.module.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import { BasicInvitationInfo } from '../../model/invitation/InvitationDTO';
+import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 import allActions from '../../actions';
-import ProUser from '../../model/user/ProUser';
+import { ProUser } from '../../model/user/ProUser';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 const InvitationCard = (invitation: BasicInvitationInfo) => {

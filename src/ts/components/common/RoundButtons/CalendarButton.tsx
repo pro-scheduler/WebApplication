@@ -1,15 +1,7 @@
-import { MouseEventHandler } from 'react';
-
 import { BiCalendarEvent } from 'react-icons/bi';
-import RoundButton from './RoundButton';
+import RoundButton, { RoundButtonProps } from './RoundButton';
 
-interface IButton {
-  onclick: MouseEventHandler;
-  className?: any;
-  disabled?: boolean;
-}
-
-const CalendarButton = ({ onclick, className, disabled }: IButton) => {
+const CalendarButton = ({ onclick, className, disabled }: RoundButtonProps) => {
   return (
     <RoundButton
       onclick={onclick}

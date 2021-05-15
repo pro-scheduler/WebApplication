@@ -4,7 +4,14 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import RangeBox from './RangeBox';
 
-const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
+export type TimeGridProps = {
+  primaryLabel: string;
+  secondaryLabel: string;
+  boxSizes: number;
+  timeRanges?: any;
+};
+
+const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, timeRanges = [] }: TimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<any>({});
 
   const changeParams = (id: number, top: number, height: number) => {
@@ -16,19 +23,17 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
   const calculateRanges = () => {
     let ranges: any = [];
     for (const key in rangesParams) {
-      if (rangesParams[key] != null) {
+      if (rangesParams.hasOwnProperty(key)) {
         ranges.push(
           <RangeBox
             key={key}
             defaultHeight={rangesParams[key].height}
             step={3}
-            max={432}
-            boxSize={432}
+            max={432 * 2}
+            boxSize={432 * 2}
             defaultTop={rangesParams[key].top}
             id={rangesParams[key].id}
             changeParams={changeParams}
-            setRangesParams={setRangesParams}
-            rangesParams={rangesParams}
           />
         );
       }
@@ -48,30 +53,30 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
       let r2 = null;
 
       for (const key1 in rangesParams) {
-        for (const key2 in rangesParams) {
-          if (key1 !== key2 && rangesParams[key1] != null && rangesParams[key2] != null) {
-            let x1 = rangesParams[key1].top;
-            let x2 = rangesParams[key1].top + rangesParams[key1].height;
-            let y1 = rangesParams[key2].top;
-            let y2 = rangesParams[key2].top + rangesParams[key2].height;
-            if (x1 <= y2 && y1 <= x2) {
-              r1 = key1;
-              r2 = key2;
+        if (rangesParams.hasOwnProperty(key1)) {
+          for (const key2 in rangesParams) {
+            if (key1 !== key2 && rangesParams.hasOwnProperty(key2)) {
+              let x = rangesParams[key1].top + rangesParams[key1].height;
+              let y = rangesParams[key2].top + rangesParams[key2].height;
+              if (rangesParams[key1].top <= y && rangesParams[key2].top <= x) {
+                r1 = key1;
+                r2 = key2;
+              }
             }
           }
         }
       }
 
       if (r1 !== null && r2 != null) {
-        let top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
-        let bottom = Math.max(
+        const top = Math.min(rangesParams[r1].top, rangesParams[r2].top);
+        const bottom = Math.max(
           rangesParams[r1].top + rangesParams[r1].height,
           rangesParams[r2].top + rangesParams[r2].height
         );
         let tmp = { ...rangesParams };
         delete tmp[r1];
         delete tmp[r2];
-        let randId = Math.floor(Math.random() * 10000);
+        const randId = Math.floor(Math.random() * 10000);
         tmp[randId.toString()] = { top: top, height: bottom - top, id: randId };
         setRangesParams({ ...tmp });
       }
@@ -81,13 +86,13 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
 
   const hourButtonsGrid = () => {
     let buttons = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 24; i++) {
       buttons.push(
         <div key={i}>
           <div
             role="button"
-            onClick={(evnet) => onClick(boxSizes * i, 36)}
-            className={styles.button_cell + ' ' + (i === 11 ? styles.bottom_radius : '')}
+            onClick={() => onClick(boxSizes * i, 36)}
+            className={styles.button_cell + ' ' + (i === 23 ? styles.bottom_radius : '')}
           >
             <Row className={'m-0'}>
               <Col className={'align-self-center pr-0'} xs="auto">
@@ -109,7 +114,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes }: any) => {
         <div className={styles.primaryLabel}>{primaryLabel}</div>
         <div className={styles.secondaryLabel}>{secondaryLabel}</div>
       </div>
-      <div className={styles.top_hours_grid}></div>
+      <div className={styles.top_hours_grid} />
       <div className={styles.hours_grid}>
         {hourButtonsGrid()}
         {calculateRanges()}

@@ -4,19 +4,15 @@ import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import { useDispatch } from 'react-redux';
-import LinearScaleQuestion from '../../model/survey/question/types/LinearScaleQuestion';
 import allActions from '../../actions';
 import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
+import { LinearScaleQuestion } from '../../model/survey/Question';
 
 const linearScaleFromOptions = Array.from({ length: 2 }, (_, i) => optionToValueLabelPair(i));
 
 const linearScaleToOptions = Array.from({ length: 9 }, (_, i) => optionToValueLabelPair(i + 2));
 
-interface IQuestionCreate {
-  id: number;
-}
-
-const LinearScaleQuestionCreate = ({ id }: IQuestionCreate) => {
+const LinearScaleQuestionCreate = ({ id }: { id: number }) => {
   const dispatch: Function = useDispatch();
   const [question, setQuestion] = useState('');
   const [fromValue, setFromValue] = useState(0);
@@ -53,7 +49,7 @@ const LinearScaleQuestionCreate = ({ id }: IQuestionCreate) => {
       </Col>
       <Col lg={5} className="text-center mt-5">
         <SingleDropdownButton
-          onchange={handleFromValueChange}
+          onChange={handleFromValueChange}
           options={linearScaleFromOptions}
           defaultValue={linearScaleFromOptions[0]}
           className="mx-auto"
@@ -67,7 +63,7 @@ const LinearScaleQuestionCreate = ({ id }: IQuestionCreate) => {
 
       <Col lg={5} className="text-center mt-5">
         <SingleDropdownButton
-          onchange={handleToValueChange}
+          onChange={handleToValueChange}
           options={linearScaleToOptions}
           defaultValue={linearScaleToOptions[8]}
           className="mx-auto"

@@ -1,16 +1,16 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import cx from 'classnames';
 import styles from './RoundButton.module.css';
 
-interface IButton {
+export type RoundButtonProps = {
   onclick: MouseEventHandler;
-  className?: any;
-  icon: any;
+  className?: string;
+  icon?: React.ReactElement;
   disabled?: boolean;
-}
+};
 
-const RoundButton = ({ onclick, className, icon, disabled }: IButton) => {
+const RoundButton = ({ onclick, className, icon, disabled }: RoundButtonProps) => {
   const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
 
   return (

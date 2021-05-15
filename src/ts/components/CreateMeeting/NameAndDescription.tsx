@@ -4,71 +4,13 @@ import PencilIcon from '../common/Icons/PencilIcon';
 import style from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
-import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import actions from '../../actions/meetingActions';
-import Meeting from '../../model/meeting/Meeting';
-import ProUser from '../../model/user/ProUser';
-import allActions from '../../actions';
 
-type meetingState = { messageStatus: string; message: string; meetings: Meeting[] };
-type messageState = { createMeetingMessageStatus: string; createMeetingMessage: string };
-interface RootState {
-  meetings: meetingState;
-  messages: messageState;
-}
+export type NameAndDescriptionProps = {
+  setName: (name: string) => void;
+  setDescription: (description: string) => void;
+};
 
-const NameAndDescription = () => {
-  const dispatch: Function = useDispatch();
-  const user: ProUser = useSelector((state: RootStateOrAny) => {
-    return state.userReducer;
-  });
-  const messageStatus = useSelector((state: RootState) => {
-    return state.messages.createMeetingMessageStatus;
-  });
-  const message = useSelector((state: RootState) => {
-    return state.messages.createMeetingMessage;
-  });
-
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-
-  const saveMeeting = () => {
-    dispatch(
-      actions.saveMeeting({
-        name: name,
-        description: description,
-        id: 0,
-        availableTimeRanges: [],
-        participants: [],
-        organizers: [],
-      })
-    );
-  };
-
-  useEffect(() => {
-    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
-    // eslint-disable-next-line
-  }, [messageStatus]);
-
-  useEffect(() => {
-    const createdMeeting: Meeting | undefined = user.organizedMeetings
-      .filter((meeting: Meeting) => meeting.name === name)
-      .pop();
-    dispatch(
-      allActions.surveyActions.setMeetingIdInSurveyWithQuestionsDTO(
-        createdMeeting === undefined ? 0 : createdMeeting.id
-      )
-    );
-    dispatch(
-      allActions.invitationActions.setMeetingIdInInvitations(
-        createdMeeting === undefined ? 0 : createdMeeting.id
-      )
-    );
-    // eslint-disable-next-line
-  }, [user.organizedMeetings]);
-
+const NameAndDescription = ({ setName, setDescription }: NameAndDescriptionProps) => {
   return (
     <div>
       <Row className="justify-content-center mt-5">
@@ -88,20 +30,6 @@ const NameAndDescription = () => {
           </div>
         </Col>
         <Col />
-      </Row>
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          <ActionButton text="Submit" onclick={saveMeeting} className="button" />
-        </Col>
-      </Row>
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          {messageStatus !== 'NO_DISPLAY' && (
-            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
-              {message}
-            </p>
-          )}
-        </Col>
       </Row>
     </div>
   );

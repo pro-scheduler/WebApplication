@@ -1,9 +1,10 @@
-.redirect {
+.redirectQuestion {
     font-size: 14px;
 }
 
 .link {
     color: var(--purple);
+    font-size: 14px;
 }
 
 .link:hover {

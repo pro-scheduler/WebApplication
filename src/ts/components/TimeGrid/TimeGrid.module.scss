@@ -1,7 +1,7 @@
 .titleRect {
   background-color: white;
   color: black;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   width: 100%;
   height: 100px;
   box-shadow: var(--shadow);
@@ -14,21 +14,21 @@
   }
 
   .secondaryLabel {
-    font-size: 18px;
+    font-size: var(--xs-font-size);
     font-weight: normal;
   }
 }
 
 .borderRadius {
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 .top_hours_grid {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  width: 90%;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  width: 100%;
   height: 10px;
-  position: absolute;
+  position: relative;
   background-color: white;
   bottom: 0;
 }
@@ -36,11 +36,11 @@
 .hours_grid {
   clip-path: inset(0px -20px -20px -20px);
   box-shadow: 4px 4px 8px -2px rgba(90, 70, 69, 0.5);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   padding-bottom: 10px;
-  width: 90%;
+  width: 100%;
   background-color: white;
-  position: absolute;
+  position: relative;
 }
 
 .button_cell {
@@ -48,7 +48,7 @@
   height: 36px;
   width: 100%;
   position: relative;
-  color: #707070;
+  color: var(--medium-grey);
 }
 
 .hrLine {
@@ -59,12 +59,12 @@
 }
 
 .bottom_radius {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
 .cell {
-  background-color: red;
+  background-color: var(--light-red);
   height: 30px;
   box-shadow: var(--shadow);
   border-width: 5px;
@@ -78,7 +78,7 @@
 }
 
 .rangeBox {
-  background-color: #4fe379;
+  background-color: var(--bright-green);
   height: 36px;
   box-shadow: var(--shadow);
   color: white;

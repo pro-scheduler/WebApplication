@@ -5,13 +5,13 @@ import { useState } from 'react';
 import cx from 'classnames';
 import styles from './SwitchButton.module.css';
 
-interface IButton {
+export type SwitchButtonProps = {
   onChange: Function;
   title: string;
-  className?: any;
-}
+  className?: string;
+};
 
-const SwitchButton = ({ onChange, title, className }: IButton) => {
+const SwitchButton = ({ onChange, title, className }: SwitchButtonProps) => {
   const [checked, setChecked] = useState(true);
 
   const buttonOnChange = () => {
@@ -28,8 +28,8 @@ const SwitchButton = ({ onChange, title, className }: IButton) => {
         className={buttonStyles}
         onChange={buttonOnChange}
         checked={checked}
-        onColor={'#7067CF'}
-        offColor={'#B1B1B1'}
+        onColor={'#B1B1B1'}
+        offColor={'#7067CF'}
         checkedIcon={false}
         uncheckedIcon={false}
         activeBoxShadow={'0 0 2px 3px #7067CF'}

@@ -1,14 +1,14 @@
 import Pagination from 'react-bootstrap/Pagination';
 import React, { useState } from 'react';
+import styles from './MeetingPagination.module.css';
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
   AiOutlineDoubleRight,
   AiOutlineDoubleLeft,
 } from 'react-icons/ai';
-import './MeetingPagination.css';
 
-interface IPagination {
+export type PaginationProps = {
   meetingsPerPage: number;
   totalMeetings: number;
   paginate: Function;
@@ -16,15 +16,29 @@ interface IPagination {
   prevPage: Function;
   firstPage: Function;
   lastPage: Function;
-  className: any;
-}
-const MeetingPagination = (pagination: IPagination) => {
+  className: (number: number) => 'paginationCurrentItem' | 'paginationItem';
+};
+
+const MeetingPagination = ({
+  meetingsPerPage,
+  totalMeetings,
+  paginate,
+  nextPage,
+  prevPage,
+  firstPage,
+  lastPage,
+  className,
+}: PaginationProps) => {
   const pageNumbers = [];
   const [currentPage, setCurrentPage] = useState(1);
 
-  for (let i = 1; i <= Math.ceil(pagination.totalMeetings / pagination.meetingsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalMeetings / meetingsPerPage); i++) {
     pageNumbers.push(i);
   }
+
+  const getStyle = (name: string) => {
+    return name === 'paginationCurrentItem' ? styles.paginationCurrentItem : styles.paginationItem;
+  };
 
   const paginationItems = pageNumbers
     .slice(currentPage - 3 < 0 ? 0 : currentPage - 3, currentPage + 2)
@@ -34,9 +48,9 @@ const MeetingPagination = (pagination: IPagination) => {
           key={number}
           onClick={() => {
             setCurrentPage(number);
-            pagination.paginate(number);
+            paginate(number);
           }}
-          className={pagination.className(number)}
+          className={getStyle(className(number))}
         >
           {number}
         </li>
@@ -48,21 +62,21 @@ const MeetingPagination = (pagination: IPagination) => {
       <li
         key={'first'}
         onClick={() => {
-          pagination.firstPage();
+          firstPage();
           setCurrentPage(1);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineDoubleLeft />}
       </li>
       <li
         key={'prev'}
         onClick={() => {
-          pagination.prevPage();
+          prevPage();
           setCurrentPage(currentPage - 1 < 1 ? currentPage : currentPage - 1);
           console.log(currentPage);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineArrowLeft />}
       </li>
@@ -70,25 +84,25 @@ const MeetingPagination = (pagination: IPagination) => {
       <li
         key={'next'}
         onClick={() => {
-          pagination.nextPage();
+          nextPage();
           setCurrentPage(
-            currentPage + 1 > Math.ceil(pagination.totalMeetings / pagination.meetingsPerPage)
+            currentPage + 1 > Math.ceil(totalMeetings / meetingsPerPage)
               ? currentPage
               : currentPage + 1
           );
           console.log(currentPage);
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineArrowRight />}
       </li>
       <li
         key={'last'}
         onClick={() => {
-          pagination.lastPage();
-          setCurrentPage(Math.ceil(pagination.totalMeetings / pagination.meetingsPerPage));
+          lastPage();
+          setCurrentPage(Math.ceil(totalMeetings / meetingsPerPage));
         }}
-        className="text-center paginationItem mx-auto"
+        className={styles.paginationItem}
       >
         {<AiOutlineDoubleRight />}
       </li>

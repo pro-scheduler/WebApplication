@@ -1,12 +1,8 @@
 import React from 'react';
 import QuestionWithOptionsCreate from './QuestionWithOptionsCreate';
-import { Type } from '../../model/survey/question/Question';
+import { Type } from '../../model/survey/Question';
 
-interface IQuestionCreate {
-  id: number;
-}
-
-const MultiChoiceQuestionCreate = ({ id }: IQuestionCreate) => {
+const MultiChoiceQuestionCreate = ({ id }: { id: number }) => {
   return <QuestionWithOptionsCreate id={id} type={Type.MULTI_CHOICE} />;
 };
 

@@ -3,17 +3,15 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from 'react-redux';
-import Question, { Type } from '../../model/survey/question/Question';
+import { OpenQuestion, Question, Type, YesOrNoQuestion } from '../../model/survey/Question';
 import allActions from '../../actions';
-import OpenQuestion from '../../model/survey/question/types/OpenQuestion';
-import YesOrNoQuestion from '../../model/survey/question/types/YesOrNoQuestion';
 
-interface IQuestionCreate {
+export type QuestionProps = {
   id: number;
   type: Type;
-}
+};
 
-const BasicQuestionCreate = ({ id, type }: IQuestionCreate) => {
+const BasicQuestionCreate = ({ id, type }: QuestionProps) => {
   const dispatch: Function = useDispatch();
 
   const saveQuestion = (question: string) => {

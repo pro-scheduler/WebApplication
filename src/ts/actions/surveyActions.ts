@@ -1,10 +1,7 @@
 import { Dispatch } from 'redux';
 import { getSurveyAnswersUrl, getSurveysUrl, getSurveyUrl } from '../API/survey/urls';
-import Survey from '../model/survey/Survey';
-import SurveyResultsDTO from '../model/survey/SurveyDTO/SurveyResultsDTO';
-import SurveyWithQuestionsDTO from '../model/survey/SurveyDTO/SurveyWithQuestionsDTO';
-import { createSurveyFailed, createSurveyReset, createSurveySuccess } from './messagesActions';
-import Question from '../model/survey/question/Question';
+import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
+import { Question } from '../model/survey/Question';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -22,50 +19,33 @@ const loadSurveyResults = (id: number) => (dispatch: Dispatch) => {
     });
 };
 
-const createSurvey = (surveyWithQuestions: SurveyWithQuestionsDTO) => (dispatch: Dispatch) => {
-  dispatch(createSurveyReset());
-
+const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => {
   surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
     question.id = null;
     return question;
   });
 
-  console.log(surveyWithQuestions);
+  surveyWithQuestions.meetingId = meetingId;
 
-  fetch(getSurveysUrl(), {
+  return fetch(getSurveysUrl(), {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(surveyWithQuestions),
-  }).then((response) => {
-    if (response.status === 201) {
-      return dispatch(createSurveySuccess('Survey has been created successfully :)'));
-    } else {
-      return dispatch(createSurveyFailed('Survey has not been created ;/'));
-    }
   });
 };
 
-const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => (
-  dispatch: Dispatch
-) => {
-  dispatch(createSurveyReset());
-
-  fetch(getSurveyUrl(surveyId), {
+// prettier-ignore
+const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => {
+  return fetch(getSurveyUrl(surveyId), {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(surveyWithQuestions),
-  }).then((response) => {
-    if (response.status === 201) {
-      return dispatch(createSurveySuccess('Questions has been added successfully to survey :)'));
-    } else {
-      return dispatch(createSurveyFailed('Questions has not been added to survey ;/'));
-    }
   });
 };
 

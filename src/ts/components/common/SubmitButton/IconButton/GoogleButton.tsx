@@ -1,21 +1,14 @@
-import './GoogleButton.css';
-import IconButton from './IconButton';
+import styles from './GoogleButton.module.css';
+import IconButton, { IconButtonProps } from './IconButton';
 import { FcGoogle } from 'react-icons/fc';
 
-interface IButton {
-  redirectTo: string;
-  text: string;
-  className?: any;
-  disabled?: boolean;
-}
-
-const GoogleButton = ({ redirectTo, text, className, disabled }: IButton) => {
+const GoogleButton = ({ redirectTo, text, className, disabled }: IconButtonProps) => {
   return (
     <div className={className}>
       <IconButton
-        redirectTO={redirectTo}
+        redirectTo={redirectTo}
         text={text}
-        icon={<FcGoogle className="mr-4 googleIcon" />}
+        icon={<FcGoogle className={styles.googleIcon} />}
         disabled={disabled}
       />
     </div>

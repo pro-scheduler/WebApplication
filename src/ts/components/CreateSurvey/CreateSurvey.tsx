@@ -6,9 +6,8 @@ import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
 import React, { useEffect, useState } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
-import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import allActions from '../../actions';
 import TextArea from '../common/forms/TextArea/TextArea';
 
@@ -16,16 +15,6 @@ const CreateSurvey = () => {
   const dispatch: Function = useDispatch();
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
-  const survey = useSelector((state: RootStateOrAny) => {
-    return state.surveyReducer;
-  });
-
-  const messageStatus = useSelector((state: RootStateOrAny) => {
-    return state.messages.createSurveyMessageStatus;
-  });
-  const message = useSelector((state: RootStateOrAny) => {
-    return state.messages.createSurveyMessage;
-  });
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -39,10 +28,6 @@ const CreateSurvey = () => {
 
   const saveSurveyDescription = (description: string) => {
     dispatch(allActions.surveyActions.addDescriptionToSurveyWithQuestionsDTO(description));
-  };
-
-  const saveSurvey = () => {
-    dispatch(allActions.surveyActions.createSurvey(survey.newSurvey));
   };
 
   useEffect(() => {
@@ -76,7 +61,7 @@ const CreateSurvey = () => {
               id={id}
               deleteButton={
                 <TiDelete
-                  className="ml-2 removeOptionButton"
+                  className={styles.removeQuestionButton}
                   onClick={() => deleteQuestion(id)}
                   key={id}
                 />
@@ -94,25 +79,7 @@ const CreateSurvey = () => {
           </div>
         </Col>
       </Row>
-      {questions.length > 0 && (
-        <Row className="justify-content-center mt-4">
-          <Col lg={12} className="text-center">
-            <ActionButton onclick={saveSurvey} text={'Save survey'} />
-          </Col>
-        </Row>
-      )}
-
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          {messageStatus === 'NO_DISPLAY' && (
-            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
-              {message}
-            </p>
-          )}
-        </Col>
-      </Row>
     </div>
   );
 };
-
 export default CreateSurvey;

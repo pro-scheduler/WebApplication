@@ -1,23 +1,19 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import style from './NameAndDesctiption.module.css';
-import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import React, { useState } from 'react';
 import { optionToValueLabelPair, ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import MultiValueInput from '../common/forms/Input/MultiValueInput';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import allActions from '../../actions';
 import FriendsIcon from '../common/Icons/FriendsIcon';
 
-interface ICreateInvitations {
+export type CreateInvitationsProps = {
   showIcon: boolean;
-}
-const CreateInvitations = ({ showIcon }: ICreateInvitations) => {
-  const [inputValue, setInputValue] = useState('');
-  const [emails, setEmails] = useState<ValueLabelPair[]>([]);
-  const invitations = useSelector((state: RootStateOrAny) => {
-    return state.invitationReducer;
-  });
+  emails: ValueLabelPair[];
+  setEmails: (newEmails: ValueLabelPair[]) => void;
+};
+
+const CreateInvitations = ({ showIcon, emails, setEmails }: CreateInvitationsProps) => {
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleKeyDown = (event: any) => {
     if (!inputValue) return;
@@ -33,21 +29,6 @@ const CreateInvitations = ({ showIcon }: ICreateInvitations) => {
         }
         setInputValue('');
         event.preventDefault();
-    }
-  };
-
-  const clearData = () => {
-    setEmails([]);
-    setInputValue('');
-  };
-
-  const sendInvitations = () => {
-    if (emails.length > 0) {
-      allActions.invitationActions
-        .createInvitations(invitations.meetingId, {
-          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        })
-        .then(clearData);
     }
   };
 
@@ -79,11 +60,6 @@ const CreateInvitations = ({ showIcon }: ICreateInvitations) => {
           />
         </Col>
         <Col />
-      </Row>
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          <ActionButton text="Invite" onclick={sendInvitations} className="button" />
-        </Col>
       </Row>
     </div>
   );

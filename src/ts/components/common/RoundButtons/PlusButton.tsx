@@ -1,15 +1,7 @@
-import { MouseEventHandler } from 'react';
-
 import { AiOutlinePlus } from 'react-icons/ai';
-import RoundButton from './RoundButton';
+import RoundButton, { RoundButtonProps } from './RoundButton';
 
-interface IButton {
-  onclick: MouseEventHandler;
-  className?: any;
-  disabled?: boolean;
-}
-
-const PlusButton = ({ onclick, className, disabled }: IButton) => {
+const PlusButton = ({ onclick, className, disabled }: RoundButtonProps) => {
   return (
     <RoundButton
       onclick={onclick}

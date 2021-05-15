@@ -9,9 +9,11 @@
     background-color: var(--bright-green);
     width: 34px;
     height: 34px;
-    font-size: 18px;
+    font-size: var(--xs-font-size);
+    margin-left: 20px;
 }
 
 .optionsText{
-    color: #707070;
+    color: var(--medium-grey);
+    margin-bottom: 20px;
 }

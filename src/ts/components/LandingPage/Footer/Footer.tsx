@@ -6,24 +6,24 @@ import Col from 'react-bootstrap/Col';
 
 import logo from '../../../../images/logo.svg';
 import { BiCopyright } from 'react-icons/bi';
-import './Footer.css';
+import styles from './Footer.module.css';
 
 const Footer = () => {
   return (
-    <Jumbotron fluid className="footer m-0 p-0">
+    <Jumbotron fluid className={styles.footer}>
       <Container fluid>
         <Row className="mt-5 mb-0 pt-2 pb-0 ml-0">
           <Col lg={12} className="my-0 py-0">
-            <hr className="footerLine" />
+            <hr className={styles.footerLine} />
           </Col>
           <Col lg={6} className="my-0 py-0">
-            <p>
-              <img src={logo} alt="logo" className="mt-2" />
+            <p className={styles.footerLogo}>
+              <img src={logo} alt="logo" className={styles.footerLogoImg} />
               ProScheduler
             </p>
           </Col>
           <Col lg={6} className="my-0 py-0 text-right">
-            <p className="copyright mt-3">
+            <p className={styles.copyright}>
               Copyright <BiCopyright /> 2021 ProScheduler
             </p>
           </Col>

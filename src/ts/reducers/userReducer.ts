@@ -1,4 +1,4 @@
-import ProUser from '../model/user/ProUser';
+import { ProUser } from '../model/user/ProUser';
 
 const defaultState: ProUser = {
   id: 2,

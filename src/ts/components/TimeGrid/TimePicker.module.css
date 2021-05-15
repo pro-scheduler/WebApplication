@@ -1,0 +1,8 @@
+.leftArrow{
+    position: absolute;
+    left: 250px;
+}
+.rightArrow{
+    position: absolute;
+    right: 250px;
+}

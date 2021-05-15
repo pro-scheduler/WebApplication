@@ -1,12 +1,8 @@
 import React from 'react';
 import BasicQuestionCreate from './BasicQuestionCreate';
-import { Type } from '../../model/survey/question/Question';
+import { Type } from '../../model/survey/Question';
 
-interface IQuestionCreate {
-  id: number;
-}
-
-const OpenQuestionCreate = ({ id }: IQuestionCreate) => {
+const OpenQuestionCreate = ({ id }: { id: number }) => {
   return <BasicQuestionCreate id={id} type={Type.OPEN} />;
 };
 

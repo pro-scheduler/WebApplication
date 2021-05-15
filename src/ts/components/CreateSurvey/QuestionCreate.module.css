@@ -1,7 +1,7 @@
 .questionField {
     text-align: right;
     background-color: white;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     margin: 2%;
     padding: 20px 20px 35px;

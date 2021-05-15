@@ -1,0 +1,21 @@
+.button {
+    width: 120px;
+    height: 120px;
+    border: none;
+    text-align: center;
+    color: black;
+    font-size: var(--s-font-size);
+    cursor: pointer;
+    border-radius: var(--circle-border-radius);
+    align-items: center;
+    display: flex;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:hover {
+    opacity: 0.6;
+    background-color: var(--purple);
+}

@@ -2,6 +2,19 @@ import React from 'react';
 import CreatableSelect from 'react-select/creatable';
 import cx from 'classnames';
 import styles from './MultiValueInput.module.css';
+import { KeyboardEventHandler } from 'react-select';
+
+export type MultiValueInputProps = {
+  inputValue: string;
+  value: any;
+  handleChange: any;
+  handleInputChange: any;
+  handleKeyDown: KeyboardEventHandler;
+  placeholder?: string;
+  className?: string;
+  invalid?: boolean;
+  invalidText?: string;
+};
 
 const MultiValueInput = ({
   inputValue,
@@ -13,7 +26,7 @@ const MultiValueInput = ({
   className,
   invalid,
   invalidText,
-}: any) => {
+}: MultiValueInputProps) => {
   const inputStyles = cx(styles.multiValueInput, className);
   const components = {
     DropdownIndicator: null,

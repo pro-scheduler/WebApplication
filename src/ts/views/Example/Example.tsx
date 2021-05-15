@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import MultiDropdownButton from '../../components/common/Dropdown/MultiDropdownButton';
 import SingleDropdownButton from '../../components/common/Dropdown/SingleDropdownButton';
@@ -27,7 +26,7 @@ const Example = () => {
     setSelectedValues(option);
   };
 
-  const handleSingleChoice = ({ value, label }: any) => {
+  const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
   };
 
@@ -63,12 +62,12 @@ const Example = () => {
       <SurveyIcon className={styles.icon} />
 
       <p>Multichoice</p>
-      <MultiDropdownButton onchange={handleMultiChoice} options={options} defaultValue={null} />
+      <MultiDropdownButton onChange={handleMultiChoice} options={options} />
       {values}
 
       <p className="mt-5">Singlechoice</p>
       <SingleDropdownButton
-        onchange={handleSingleChoice}
+        onChange={handleSingleChoice}
         options={options}
         defaultValue={options[0]}
       />
@@ -77,7 +76,7 @@ const Example = () => {
       <p>Text Input</p>
       <SingleValueInput label="textInputLabel" valueHandler={setTextInpuValue} />
       <p>Text Area</p>
-      <TextArea label="textAreaLabel" valueHandler={setTextInpuValue} className={null} />
+      <TextArea label="textAreaLabel" valueHandler={setTextInpuValue} />
     </div>
   );
 };

@@ -1,15 +1,15 @@
 import styles from './SingleValueInput.module.css';
 import { useState } from 'react';
 
-interface SingleValueInputProps {
-  label: string;
+export type SingleValueInputProps = {
+  label?: string;
   valueHandler: Function;
   invalid?: boolean;
   invalidText?: string;
-}
+};
 
 const SingleValueInput = ({ label, valueHandler, invalid, invalidText }: SingleValueInputProps) => {
-  const [state, setState] = useState('');
+  const [state, setState] = useState<string>('');
 
   const handleChange = (event: any) => {
     setState(event.target.value);

@@ -78,7 +78,7 @@ const Example = () => {
       <p />
       <p>Multichoice</p>
       <MultiDropdownButton
-        onchange={handleMultiChoice}
+        onChange={handleMultiChoice}
         options={options}
         defaultValue={null}
         invalid={true}
@@ -87,7 +87,7 @@ const Example = () => {
       {values}
       <p className="mt-5">Singlechoice</p>
       <SingleDropdownButton
-        onchange={handleSingleChoice}
+        onChange={handleSingleChoice}
         options={options}
         defaultValue={options[0]}
         invalid={true}
@@ -106,7 +106,6 @@ const Example = () => {
       <TextArea
         label="textAreaLabel"
         valueHandler={setTextInpuValue}
-        className={null}
         invalid={true}
         invalidText="You need apply 15-30 words"
       />

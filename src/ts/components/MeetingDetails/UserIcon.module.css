@@ -5,7 +5,7 @@
     display: inline-block;
     text-align: center;
     font-size: var(--s-font-size);
-    border-radius: 50%;
+    border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
     background-color: var(--purple);
 }
@@ -13,15 +13,13 @@
 .userIconParticipantName {
     font-size: var(--xs-font-size);
     display: inline;
-}
-
-.userIconOrganizerName {
-    font-weight: var(--bold-font-weight);
+    margin-left: 10px;
 }
 
 .deleteUserButton {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--light-red);
+    margin-left: 10px;
 }
 
 .deleteUserButton:hover {
@@ -29,16 +27,13 @@
 }
 
 .pendingStatus {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--purple);
-}
-
-.acceptedStatus {
-    font-size: 30px;
-    color: var(--bright-green);
+    margin-left: 10px;
 }
 
 .rejectedStatus {
-    font-size: 30px;
+    font-size: var(--m-font-size);
     color: var(--light-red);
+    margin-left: 10px;
 }
