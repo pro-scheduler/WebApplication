@@ -17,7 +17,6 @@ const CreateMeeting = () => {
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton
-            className={''}
             onChange={() => setShowInvitationModule(!showInvitationModule)}
             title={'Invite participants to your meeting'}
           />
@@ -27,7 +26,6 @@ const CreateMeeting = () => {
       <Row className="justify-content-center mt-5 pb-5">
         <Col className="text-center">
           <SwitchButton
-            className={''}
             onChange={() => setShowSurveyModule(!showSurveyModule)}
             title={'Add survey to your meeting'}
           />

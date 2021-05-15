@@ -97,7 +97,7 @@ const CreateSurvey = () => {
       {questions.length > 0 && (
         <Row className="justify-content-center mt-4">
           <Col lg={12} className="text-center">
-            <ActionButton className={''} onclick={saveSurvey} text={'Save survey'} />
+            <ActionButton onclick={saveSurvey} text={'Save survey'} />
           </Col>
         </Row>
       )}

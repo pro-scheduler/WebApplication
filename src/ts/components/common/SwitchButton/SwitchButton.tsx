@@ -8,7 +8,7 @@ import styles from './SwitchButton.module.css';
 interface IButton {
   onChange: Function;
   title: string;
-  className: any;
+  className?: any;
 }
 
 const SwitchButton = ({ onChange, title, className }: IButton) => {

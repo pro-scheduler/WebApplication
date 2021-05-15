@@ -84,7 +84,7 @@ const NameAndDescription = () => {
         <Col xs="auto">
           <SingleValueInput label="Name" valueHandler={setName} />
           <div className="mt-4">
-            <TextArea label="Description" valueHandler={setDescription} className={''} />
+            <TextArea label="Description" valueHandler={setDescription} />
           </div>
         </Col>
         <Col />

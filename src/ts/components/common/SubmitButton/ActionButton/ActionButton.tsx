@@ -6,7 +6,7 @@ import styles from './ActionButton.module.css';
 interface IButton {
   onclick: MouseEventHandler;
   text: any;
-  className: any;
+  className?: any;
   disabled?: boolean;
 }
 
