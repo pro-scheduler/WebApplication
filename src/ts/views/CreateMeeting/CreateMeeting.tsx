@@ -11,11 +11,13 @@ import style from '../../components/CreateMeeting/NameAndDesctiption.module.css'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
+import { required } from '../../tools/validator';
 
 const CreateMeeting = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [invalidNameDesc, setInvalidNameDesc] = useState(false);
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -49,13 +51,21 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <NameAndDescription setName={setName} setDescription={setDescription} />
+      <NameAndDescription
+        setName={setName}
+        setDescription={setDescription}
+        setInvalidNameDesc={setInvalidNameDesc}
+      />
       <ChooseTime />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
       <CreateSurvey />
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
-          <ActionButton text="Create meeting" onclick={saveMeeting} />
+          <ActionButton
+            text="Create meeting"
+            onclick={saveMeeting}
+            disabled={invalidNameDesc || !required()(name)}
+          />
         </Col>
       </Row>
       <Row className="justify-content-center mt-5">

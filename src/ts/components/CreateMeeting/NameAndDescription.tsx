@@ -4,13 +4,19 @@ import PencilIcon from '../common/Icons/PencilIcon';
 import style from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
+import { minSings, maxSings, required } from '../../tools/validator';
 
 export type NameAndDescriptionProps = {
   setName: (name: string) => void;
   setDescription: (description: string) => void;
+  setInvalidNameDesc: (invalid: boolean) => void;
 };
 
-const NameAndDescription = ({ setName, setDescription }: NameAndDescriptionProps) => {
+const NameAndDescription = ({
+  setName,
+  setDescription,
+  setInvalidNameDesc,
+}: NameAndDescriptionProps) => {
   return (
     <div>
       <Row className="justify-content-center mt-5">
@@ -24,9 +30,24 @@ const NameAndDescription = ({ setName, setDescription }: NameAndDescriptionProps
       <Row className="justify-content-center mt-4">
         <Col />
         <Col xs="auto">
-          <SingleValueInput label="Name" valueHandler={setName} />
+          <SingleValueInput
+            label="Name"
+            valueHandler={setName}
+            setInvalid={setInvalidNameDesc}
+            required={true}
+            validation={[
+              { validation: required, message: 'This field is required' },
+              { validation: minSings(5), message: 'Min 5 signs' },
+              { validation: maxSings(255), message: 'Max 255 signs' },
+            ]}
+          />
           <div className="mt-4">
-            <TextArea label="Description" valueHandler={setDescription} />
+            <TextArea
+              label="Description"
+              valueHandler={setDescription}
+              setInvalid={setInvalidNameDesc}
+              validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
+            />
           </div>
         </Col>
         <Col />
