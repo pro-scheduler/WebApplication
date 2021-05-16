@@ -12,6 +12,8 @@ export type MultiValueInputProps = {
   handleKeyDown: KeyboardEventHandler;
   placeholder?: string;
   className?: string;
+  invalid?: boolean;
+  invalidText?: string;
 };
 
 const MultiValueInput = ({
@@ -22,6 +24,8 @@ const MultiValueInput = ({
   handleKeyDown,
   placeholder,
   className,
+  invalid,
+  invalidText,
 }: MultiValueInputProps) => {
   const inputStyles = cx(styles.multiValueInput, className);
   const components = {
@@ -29,27 +33,30 @@ const MultiValueInput = ({
   };
 
   return (
-    <CreatableSelect
-      components={components}
-      inputValue={inputValue}
-      isClearable
-      isMulti
-      menuIsOpen={false}
-      onChange={handleChange}
-      onInputChange={handleInputChange}
-      onKeyDown={handleKeyDown}
-      placeholder={placeholder}
-      value={value}
-      className={inputStyles}
-      styles={{
-        multiValueLabel: (base) => ({
-          ...base,
-          backgroundColor: '#7067CF',
-          color: 'white',
-          padding: '4px',
-        }),
-      }}
-    />
+    <>
+      <CreatableSelect
+        components={components}
+        inputValue={inputValue}
+        isClearable
+        isMulti
+        menuIsOpen={false}
+        onChange={handleChange}
+        onInputChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+        value={value}
+        className={inputStyles}
+        styles={{
+          multiValueLabel: (base) => ({
+            ...base,
+            backgroundColor: invalid ? 'var(--medium-red)' : '#7067CF',
+            color: 'white',
+            padding: '4px',
+          }),
+        }}
+      />
+      {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
+    </>
   );
 };
 

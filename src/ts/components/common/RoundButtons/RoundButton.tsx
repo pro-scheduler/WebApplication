@@ -7,13 +7,14 @@ export type RoundButtonProps = {
   onclick: MouseEventHandler;
   className?: string;
   icon?: React.ReactElement;
+  disabled?: boolean;
 };
 
-const RoundButton = ({ onclick, className, icon }: RoundButtonProps) => {
-  const buttonStyles = cx(styles.button, className);
+const RoundButton = ({ onclick, className, icon, disabled }: RoundButtonProps) => {
+  const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
 
   return (
-    <button className={buttonStyles} type="submit" onClick={onclick}>
+    <button className={buttonStyles} type="submit" onClick={onclick} disabled={disabled}>
       {icon}
     </button>
   );

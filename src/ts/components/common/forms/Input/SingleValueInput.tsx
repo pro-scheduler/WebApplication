@@ -4,9 +4,11 @@ import { useState } from 'react';
 export type SingleValueInputProps = {
   label?: string;
   valueHandler: Function;
+  invalid?: boolean;
+  invalidText?: string;
 };
 
-const SingleValueInput = ({ label, valueHandler }: SingleValueInputProps) => {
+const SingleValueInput = ({ label, valueHandler, invalid, invalidText }: SingleValueInputProps) => {
   const [state, setState] = useState<string>('');
 
   const handleChange = (event: any) => {
@@ -16,7 +18,13 @@ const SingleValueInput = ({ label, valueHandler }: SingleValueInputProps) => {
   return (
     <>
       <div className={styles.label_classic}>{label}</div>
-      <input className={styles.input_classic} type="text" value={state} onChange={handleChange} />
+      <input
+        className={invalid ? styles.input_classic_invalid : styles.input_classic}
+        type="text"
+        value={state}
+        onChange={handleChange}
+      />
+      {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </>
   );
 };

@@ -1,7 +1,7 @@
-import React from 'react';
 import { useState } from 'react';
 import MultiDropdownButton from '../../components/common/Dropdown/MultiDropdownButton';
 import SingleDropdownButton from '../../components/common/Dropdown/SingleDropdownButton';
+import SingleValueInput from '../../components/common/forms/Input/SingleValueInput';
 import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 import LocationIcon from '../../components/common/Icons/LocationIcon';
 import PencilIcon from '../../components/common/Icons/PencilIcon';
@@ -11,7 +11,7 @@ import ArrowButton from '../../components/common/RoundButtons/ArrowButton';
 import CalendarButton from '../../components/common/RoundButtons/CalendarButton';
 import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
-
+import TextArea from '../../components/common/forms/TextArea/TextArea';
 import styles from './Example.module.css';
 
 const Example = () => {
@@ -19,6 +19,9 @@ const Example = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
 
+  const setTextInpuValue = (event: any) => {
+    return null;
+  };
   const handleMultiChoice = (option: any) => {
     setSelectedValues(option);
   };
@@ -70,6 +73,10 @@ const Example = () => {
       />
       {selectedValue}
       <p />
+      <p>Text Input</p>
+      <SingleValueInput label="textInputLabel" valueHandler={setTextInpuValue} />
+      <p>Text Area</p>
+      <TextArea label="textAreaLabel" valueHandler={setTextInpuValue} />
     </div>
   );
 };

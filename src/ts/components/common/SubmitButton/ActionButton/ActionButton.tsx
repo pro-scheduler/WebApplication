@@ -7,13 +7,13 @@ export type ActionButtonProps = {
   onclick: MouseEventHandler;
   text: string;
   className?: string;
+  disabled?: boolean;
 };
 
-const ActionButton = ({ onclick, text, className }: ActionButtonProps) => {
-  const buttonStyles = cx(styles.button, className);
-
+const ActionButton = ({ onclick, text, className, disabled }: ActionButtonProps) => {
+  const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
   return (
-    <button className={buttonStyles} type="submit" onClick={onclick}>
+    <button className={buttonStyles} type="submit" onClick={onclick} disabled={disabled}>
       {text}
     </button>
   );

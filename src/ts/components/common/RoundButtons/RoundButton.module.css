@@ -10,6 +10,26 @@
     border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
 }
+.button_disabled {
+    width: 40px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    color: white;
+    background-color: var(--light-grey) !important;
+    font-size: var(--s-font-size);
+    cursor: not-allowed;
+    border-radius: var(--circle-border-radius);
+    box-shadow: var(--shadow);
+    opacity: 0.8;
+}
+.button_disabled:focus {
+    outline: none;
+}
+
+.button_disabled:hover {
+    opacity: 0.8;
+}
 
 .button:focus {
     outline: none;

@@ -10,3 +10,17 @@
     border-radius: var(--border-radius);
 }
 
+.dropdown_invalid {
+    width: 320px;
+    background-color: var(--medium-red);
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    border-color: var(--medium-red);
+    text-align: center;
+    margin: auto;
+    padding: 1px;
+    border-radius: var(--border-radius);
+}
+.invalid_text {
+    color: var(--medium-red);
+}

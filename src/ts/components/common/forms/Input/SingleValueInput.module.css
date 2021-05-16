@@ -1,5 +1,5 @@
 .input_classic {
-    background-color: #FFFFFF;
+    background-color: white;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
     border-color: var(--medium-grey);
@@ -10,8 +10,21 @@
     padding: 7px;
     border-radius: var(--border-radius);
 }
-
+.input_classic_invalid {
+    background-color: white;
+    font-size: var(--button-font-size);
+    box-shadow: var(--shadow);
+    border-color: var(--medium-red);
+    border-width: 1px;
+    text-align: left;
+    color: var(--medium-grey);
+    margin: auto;
+    padding: 7px;
+    border-radius: var(--border-radius);
+}
 .label_classic {
     color: var(--medium-grey);
 }
-
+.invalid_text {
+    color: var(--medium-red);
+}

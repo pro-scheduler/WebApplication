@@ -1,4 +1,3 @@
-import React from 'react';
 import Select from 'react-select';
 import styles from './DropdownButton.module.css';
 import cx from 'classnames';
@@ -8,6 +7,8 @@ export type DropdownButtonProps = {
   onChange: any;
   defaultValue?: any;
   className?: string;
+  invalid?: boolean;
+  invalidText?: string;
 };
 
 const MultiDropdownButton = ({
@@ -15,33 +16,38 @@ const MultiDropdownButton = ({
   onChange,
   defaultValue,
   className,
+  invalid,
+  invalidText,
 }: DropdownButtonProps) => {
-  const dropdownStyles = cx(styles.dropdown, className);
+  const dropdownStyles = cx(invalid ? styles.dropdown_invalid : styles.dropdown, className);
 
   return (
-    <Select
-      defaultValue={defaultValue}
-      onChange={onChange}
-      options={options}
-      className={dropdownStyles}
-      theme={(theme) => ({
-        ...theme,
-        borderRadius: 10,
-        colors: {
-          ...theme.colors,
-          primary25: 'rgba(200, 197, 243, 0.788)',
-          primary: '#7067CF',
-        },
-      })}
-      isMulti
-      styles={{
-        multiValueLabel: (base) => ({
-          ...base,
-          backgroundColor: '#7067CF',
-          color: 'white',
-        }),
-      }}
-    />
+    <>
+      <Select
+        defaultValue={defaultValue}
+        onChange={onChange}
+        options={options}
+        className={dropdownStyles}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 10,
+          colors: {
+            ...theme.colors,
+            primary25: 'rgba(200, 197, 243, 0.788)',
+            primary: invalid ? 'var(--medium-red)' : '#7067CF',
+          },
+        })}
+        isMulti
+        styles={{
+          multiValueLabel: (base) => ({
+            ...base,
+            backgroundColor: '#7067CF',
+            color: 'white',
+          }),
+        }}
+      />
+      {invalid && invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
+    </>
   );
 };
 

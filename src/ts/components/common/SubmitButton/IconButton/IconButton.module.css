@@ -11,10 +11,33 @@
     box-shadow: var(--shadow);
 }
 
+.button_disabled {
+    width: 320px;
+    height: 45px;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    background-color: white;
+    font-size: var(--button-font-size);
+    cursor: not-allowed;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    opacity: 0.6;
+
+}
+
 .button:focus {
     outline: none;
 }
 
 .button:hover {
     opacity: 0.8;
+}
+
+.button_disabled:focus {
+    outline: none;
+}
+
+.button_disabled:hover {
+    opacity: 0.6;
 }
