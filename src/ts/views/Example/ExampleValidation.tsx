@@ -18,8 +18,9 @@ const ExampleValidation = () => {
         setInvalid={setIvalidName}
         required={true}
         validation={[
+          { validation: minSings(5), message: 'Min 3 signs required' },
+          { validation: minSings(5), message: 'Min 3 signs required' },
           { validation: required, message: 'This field is required' },
-          { validation: minSings(3), message: 'Min 3 signs required' },
         ]}
       />
       <TextArea
@@ -30,6 +31,7 @@ const ExampleValidation = () => {
         validation={[
           { validation: maxSings(256), message: 'Max 256 signs' },
           { validation: minSings(20), message: 'Min 20 signs' },
+          { validation: required, message: 'This field is required' },
         ]}
       />
       <div style={{ margin: 20 }}>
