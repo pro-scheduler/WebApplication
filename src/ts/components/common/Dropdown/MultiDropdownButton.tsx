@@ -34,7 +34,7 @@ const MultiDropdownButton = ({
           colors: {
             ...theme.colors,
             primary25: 'rgba(200, 197, 243, 0.788)',
-            primary: invalid ? '#d33a3a' : '#7067CF',
+            primary: invalid ? 'var(--medium-red)' : '#7067CF',
           },
         })}
         isMulti

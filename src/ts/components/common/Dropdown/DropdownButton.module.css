@@ -12,15 +12,15 @@
 
 .dropdown_invalid {
     width: 320px;
-    background-color: #d33a3a;
+    background-color: var(--medium-red);
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
-    border-color: #d33a3a;
+    border-color: var(--medium-red);
     text-align: center;
     margin: auto;
     padding: 1px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
 }
 .invalid_text {
-    color: #d33a3a;
+    color: var(--medium-red);
 }

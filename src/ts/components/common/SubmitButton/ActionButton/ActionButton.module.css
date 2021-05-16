@@ -20,7 +20,7 @@
     background-color: var(--light-grey);
     font-size: var(--button-font-size);
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     opacity: 0.8;
 }
