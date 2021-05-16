@@ -26,7 +26,7 @@ const SingleDropdownButton = ({
           colors: {
             ...theme.colors,
             primary25: 'rgba(200, 197, 243, 0.788)',
-            primary: '#7067CF',
+            primary: invalid ? 'var(--medium-red)' : 'var(--purple)',
           },
         })}
       />

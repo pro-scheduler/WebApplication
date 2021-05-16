@@ -10,6 +10,10 @@
     padding: 7px;
     border-radius: var(--border-radius);
 }
+.input_classic[type=text]:focus{
+    outline: none !important;
+    border: 2px solid var(--purple);
+}
 .input_classic_invalid {
     background-color: white;
     font-size: var(--button-font-size);

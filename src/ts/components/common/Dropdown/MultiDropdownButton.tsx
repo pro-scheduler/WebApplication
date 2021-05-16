@@ -34,14 +34,14 @@ const MultiDropdownButton = ({
           colors: {
             ...theme.colors,
             primary25: 'rgba(200, 197, 243, 0.788)',
-            primary: invalid ? 'var(--medium-red)' : '#7067CF',
+            primary: invalid ? 'var(--medium-red)' : 'var(--purple)',
           },
         })}
         isMulti
         styles={{
           multiValueLabel: (base) => ({
             ...base,
-            backgroundColor: '#7067CF',
+            backgroundColor: 'var(--purple)',
             color: 'white',
           }),
         }}

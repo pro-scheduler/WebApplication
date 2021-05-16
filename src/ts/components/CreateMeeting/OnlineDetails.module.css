@@ -1,0 +1,7 @@
+.onlineDetailsInput {
+    width: 100%;
+}
+
+.onlineMeetingHeader {
+    font-size: var(--s-font-size);
+}

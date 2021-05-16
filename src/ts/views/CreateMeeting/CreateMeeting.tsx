@@ -11,11 +11,14 @@ import style from '../../components/CreateMeeting/NameAndDesctiption.module.css'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
+import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 
 const CreateMeeting = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [onlineLink, setOnlineLink] = useState<string>('');
+  const [onlinePassword, setOnlinePassword] = useState<string>('');
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -52,6 +55,7 @@ const CreateMeeting = () => {
       <NameAndDescription setName={setName} setDescription={setDescription} />
       <ChooseTime />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
+      <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       <CreateSurvey />
       <Row className="justify-content-center mt-5">
         <Col xs="auto">

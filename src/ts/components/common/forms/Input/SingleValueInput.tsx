@@ -1,15 +1,24 @@
 import styles from './SingleValueInput.module.css';
 import { useState } from 'react';
+import cx from 'classnames';
 
 export type SingleValueInputProps = {
   label?: string;
   valueHandler: Function;
+  className?: string;
   invalid?: boolean;
   invalidText?: string;
 };
 
-const SingleValueInput = ({ label, valueHandler, invalid, invalidText }: SingleValueInputProps) => {
+const SingleValueInput = ({
+  label,
+  valueHandler,
+  className,
+  invalid,
+  invalidText,
+}: SingleValueInputProps) => {
   const [state, setState] = useState<string>('');
+  const inputStyles = cx(invalid ? styles.input_classic_invalid : styles.input_classic, className);
 
   const handleChange = (event: any) => {
     setState(event.target.value);
@@ -18,12 +27,7 @@ const SingleValueInput = ({ label, valueHandler, invalid, invalidText }: SingleV
   return (
     <>
       <div className={styles.label_classic}>{label}</div>
-      <input
-        className={invalid ? styles.input_classic_invalid : styles.input_classic}
-        type="text"
-        value={state}
-        onChange={handleChange}
-      />
+      <input className={inputStyles} type="text" value={state} onChange={handleChange} />
       {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </>
   );
