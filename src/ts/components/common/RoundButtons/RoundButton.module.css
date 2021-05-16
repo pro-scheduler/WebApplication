@@ -18,8 +18,8 @@
     color: white;
     background-color: var(--light-grey) !important;
     font-size: var(--s-font-size);
-    cursor: pointer;
-    border-radius: 50%;
+    cursor: not-allowed;
+    border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
     opacity: 0.8;
 }

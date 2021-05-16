@@ -18,13 +18,13 @@
 }
 
 .text_area_classic_invalid {
-    background-color: #FFFFFF;
+    background-color: white;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
     border-color: var(--medium-red);
     border-width: 1px;
     text-align: left;
-    color: #707070;
+    color: var(--medium-grey);
     margin: auto;
     padding: 7px;
     border-radius: var(--border-radius);

@@ -22,7 +22,7 @@ const SwitchButton = ({ onChange, title, className }: SwitchButtonProps) => {
   const buttonStyles = cx(styles.button, className);
 
   return (
-    <div>
+    <>
       <p>{title}</p>
       <Switch
         className={buttonStyles}
@@ -34,7 +34,7 @@ const SwitchButton = ({ onChange, title, className }: SwitchButtonProps) => {
         uncheckedIcon={false}
         activeBoxShadow={'0 0 2px 3px #7067CF'}
       />
-    </div>
+    </>
   );
 };
 

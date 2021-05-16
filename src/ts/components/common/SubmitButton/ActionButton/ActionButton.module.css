@@ -19,7 +19,7 @@
     color: white;
     background-color: var(--light-grey);
     font-size: var(--button-font-size);
-    cursor: pointer;
+    cursor: not-allowed;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     opacity: 0.8;

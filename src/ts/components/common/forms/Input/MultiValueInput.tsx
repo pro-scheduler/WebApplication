@@ -33,7 +33,7 @@ const MultiValueInput = ({
   };
 
   return (
-    <div>
+    <>
       <CreatableSelect
         components={components}
         inputValue={inputValue}
@@ -56,7 +56,7 @@ const MultiValueInput = ({
         }}
       />
       {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
-    </div>
+    </>
   );
 };
 

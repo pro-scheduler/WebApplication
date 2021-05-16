@@ -14,7 +14,7 @@ const SingleDropdownButton = ({
   const dropdownStyles = cx(invalid ? styles.dropdown_invalid : styles.dropdown, className);
 
   return (
-    <div>
+    <>
       <Select
         defaultValue={defaultValue}
         onChange={onChange}
@@ -31,7 +31,7 @@ const SingleDropdownButton = ({
         })}
       />
       {invalid && invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
-    </div>
+    </>
   );
 };
 

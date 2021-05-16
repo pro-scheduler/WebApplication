@@ -21,11 +21,11 @@ const TextArea = ({ label, valueHandler, className, invalid, invalidText }: Text
     valueHandler(event.target.value);
   };
   return (
-    <div>
+    <>
       <div className={styles.label_classic}>{label}</div>
       <textarea className={textAreaStyles} value={state} onChange={handleChange} />
       {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
-    </div>
+    </>
   );
 };
 
