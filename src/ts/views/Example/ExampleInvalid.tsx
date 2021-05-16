@@ -12,7 +12,6 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import FacebookButton from '../../components/common/SubmitButton/IconButton/FacebookButton';
 import GoogleButton from '../../components/common/SubmitButton/IconButton/GoogleButton';
 import { minSings } from '../../tools/validator';
-import { MdSettingsBrightness } from 'react-icons/md';
 
 const Example = () => {
   const [selectedValues, setSelectedValues] = useState([]);
