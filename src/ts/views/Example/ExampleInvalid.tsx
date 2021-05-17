@@ -11,11 +11,12 @@ import RedirectButton from '../../components/common/SubmitButton/RedirectButton/
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
 import FacebookButton from '../../components/common/SubmitButton/IconButton/FacebookButton';
 import GoogleButton from '../../components/common/SubmitButton/IconButton/GoogleButton';
+import { minSings } from '../../tools/validator';
 
 const Example = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
-  const setTextInpuValue = (event: any) => {
+  const setTextInputValue = (event: any) => {
     return null;
   };
 
@@ -98,16 +99,18 @@ const Example = () => {
       <p>Text Input</p>
       <SingleValueInput
         label="textInputLabel"
-        valueHandler={setTextInpuValue}
-        invalid={true}
-        invalidText="To short name"
+        valueHandler={setTextInputValue}
+        required={true}
+        validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
+        initialInvalidState={true}
       />
       <p>Text Area</p>
       <TextArea
         label="textAreaLabel"
-        valueHandler={setTextInpuValue}
-        invalid={true}
-        invalidText="You need apply 15-30 words"
+        valueHandler={setTextInputValue}
+        required={true}
+        validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
+        initialInvalidState={true}
       />
     </div>
   );

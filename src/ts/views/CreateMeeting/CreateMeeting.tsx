@@ -12,6 +12,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
+import { required } from '../../tools/validator';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -19,6 +20,7 @@ const CreateMeeting = () => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [onlineLink, setOnlineLink] = useState<string>('');
   const [onlinePassword, setOnlinePassword] = useState<string>('');
+  const [invalidNameDesc, setInvalidNameDesc] = useState(false);
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -52,14 +54,22 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <NameAndDescription setName={setName} setDescription={setDescription} />
+      <NameAndDescription
+        setName={setName}
+        setDescription={setDescription}
+        setInvalidNameDesc={setInvalidNameDesc}
+      />
       <ChooseTime />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       <CreateSurvey />
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
-          <ActionButton text="Create meeting" onclick={saveMeeting} />
+          <ActionButton
+            text="Create meeting"
+            onclick={saveMeeting}
+            disabled={invalidNameDesc || !required()(name)}
+          />
         </Col>
       </Row>
       <Row className="justify-content-center mt-5">

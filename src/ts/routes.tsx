@@ -10,6 +10,7 @@ import Meetings from './views/Meetings/Meetings';
 import MeetingDetails from './views/MeetingDetails/MeetingDetails';
 import Time from './views/Time/Time';
 import ExampleInvalid from './views/Example/ExampleInvalid';
+import ExampleValidation from './views/Example/ExampleValidation';
 
 const Routes = () => {
   return (
@@ -22,6 +23,10 @@ const Routes = () => {
         <Route path="/invalid">
           <Navbar />
           <ExampleInvalid />
+        </Route>
+        <Route path="/validation">
+          <Navbar />
+          <ExampleValidation />
         </Route>
         <Route path="/signin">
           <Navbar showDetails={false} />
