@@ -1,4 +1,4 @@
-import { Meeting } from '../model/meeting/Meeting';
+import { Meeting, MeetingType } from '../model/meeting/Meeting';
 
 type meetingState = { meetings: Meeting[]; meeting: Meeting };
 
@@ -9,6 +9,7 @@ const initialMeeting: Meeting = {
   availableTimeRanges: [],
   participants: [],
   organizers: [],
+  type: MeetingType.REAL,
 };
 
 const defaultState: meetingState = {

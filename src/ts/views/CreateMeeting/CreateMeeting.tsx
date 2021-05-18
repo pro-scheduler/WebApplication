@@ -13,6 +13,7 @@ import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
+import { Meeting, OnlineMeeting, RealMeeting } from '../../model/meeting/Meeting';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -34,16 +35,13 @@ const CreateMeeting = () => {
   });
 
   const saveMeeting = () => {
+    const meeting: Meeting =
+      onlineLink === ''
+        ? new RealMeeting(0, name, description, [], [], [])
+        : new OnlineMeeting(0, name, description, [], [], [], onlineLink, onlinePassword);
     dispatch(
       actions.saveMeeting(
-        {
-          name: name,
-          description: description,
-          id: 0,
-          availableTimeRanges: [],
-          participants: [],
-          organizers: [],
-        },
+        meeting,
         {
           emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
         },

@@ -11,6 +11,7 @@ export type MeetingDescriptionProps = {
   meetingId: number;
   organizers: ProUser[];
   description: string;
+  link?: string;
 };
 
 const MeetingDescription = ({
@@ -18,6 +19,7 @@ const MeetingDescription = ({
   meetingId,
   organizers,
   description,
+  link = '',
 }: MeetingDescriptionProps) => {
   const organizersIcons = organizers.map((organizer: ProUser) => {
     return (
@@ -44,6 +46,9 @@ const MeetingDescription = ({
       </Col>
       <Col md={8} lg={6} xl={4} className="text-left mt-5">
         {description}
+      </Col>
+      <Col lg={12} className="text-left mt-5">
+        {link}
       </Col>
     </Row>
   );

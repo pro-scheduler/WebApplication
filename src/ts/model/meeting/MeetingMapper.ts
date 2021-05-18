@@ -1,4 +1,4 @@
-import { Meeting, MeetingDTO } from './Meeting';
+import { Meeting, MeetingDTO, MeetingType, OnlineMeeting, RealMeeting } from './Meeting';
 import { ProUser } from '../user/ProUser';
 
 export const mapMeetingsDTOToMeetings = (meetingsDTO: MeetingDTO[]): Meeting[] => {
@@ -8,7 +8,7 @@ export const mapMeetingsDTOToMeetings = (meetingsDTO: MeetingDTO[]): Meeting[] =
 };
 
 // This is needed because due to the many-to-many relationship between user and meeting, we only get user id and email in json
-export const mapMeetingDTOToMeeting = (meetingDTO: MeetingDTO): Meeting => {
+export const mapMeetingDTOToMeeting = (meetingDTO: any): Meeting => {
   const organizers: ProUser[] = meetingDTO.organizers.map((id: number) => {
     return {
       id: id,
@@ -26,13 +26,23 @@ export const mapMeetingDTOToMeeting = (meetingDTO: MeetingDTO): Meeting => {
       participatedMeetings: [],
     };
   });
-
-  return {
-    name: meetingDTO.name,
-    description: meetingDTO.description,
-    id: meetingDTO.id,
-    availableTimeRanges: meetingDTO.availableTimeRanges,
-    participants: participants,
-    organizers: organizers,
-  };
+  if (meetingDTO.type === MeetingType.REAL)
+    return new RealMeeting(
+      meetingDTO.id,
+      meetingDTO.name,
+      meetingDTO.description,
+      meetingDTO.availableTimeRanges,
+      participants,
+      organizers
+    );
+  return new OnlineMeeting(
+    meetingDTO.id,
+    meetingDTO.name,
+    meetingDTO.description,
+    meetingDTO.availableTimeRanges,
+    participants,
+    organizers,
+    meetingDTO.link,
+    meetingDTO.password
+  );
 };
