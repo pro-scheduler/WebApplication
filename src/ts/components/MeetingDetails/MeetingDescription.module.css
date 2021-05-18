@@ -8,3 +8,11 @@
     display: inline;
     margin-right: 20px;
 }
+
+.onlineMeetingLink {
+    color: var(--purple);
+}
+
+.onlineMeetingLink:hover {
+    color: var(--purple);
+}

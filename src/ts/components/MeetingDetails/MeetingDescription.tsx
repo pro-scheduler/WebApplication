@@ -12,6 +12,7 @@ export type MeetingDescriptionProps = {
   organizers: ProUser[];
   description: string;
   link?: string;
+  password?: string;
 };
 
 const MeetingDescription = ({
@@ -20,6 +21,7 @@ const MeetingDescription = ({
   organizers,
   description,
   link = '',
+  password = '',
 }: MeetingDescriptionProps) => {
   const organizersIcons = organizers.map((organizer: ProUser) => {
     return (
@@ -47,11 +49,19 @@ const MeetingDescription = ({
       <Col md={8} lg={6} xl={4} className="text-left mt-5">
         {description}
       </Col>
-      <Col lg={12} className="text-left mt-5">
-        {link}
-      </Col>
+      {link && (
+        <Col lg={12} className="text-left mt-5">
+          <a href={link} className={styles.onlineMeetingLink}>
+            {link}
+          </a>
+        </Col>
+      )}
+      {password && (
+        <Col lg={12} className="text-left mt-2">
+          Password: {password}
+        </Col>
+      )}
     </Row>
   );
 };
-
 export default MeetingDescription;
