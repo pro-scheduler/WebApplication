@@ -7,19 +7,44 @@ const Time = () => {
     <Container fluid className="ml-5 ml-sm-auto">
       <Row className="justify-content-center mt-4">
         <Col>
-          <TimeGrid primaryLabel="23.04" secondaryLabel="Thursday" boxSizes={36} />
+          <TimeGrid
+            primaryLabel="23.04"
+            secondaryLabel="Thursday"
+            boxSizes={36}
+            addRanges={() => {}}
+          />
         </Col>
         <Col>
-          <TimeGrid primaryLabel="24.04" secondaryLabel="Friday" boxSizes={36} />
+          <TimeGrid
+            primaryLabel="24.04"
+            secondaryLabel="Friday"
+            boxSizes={36}
+            addRanges={() => {}}
+          />
         </Col>
         <Col>
-          <TimeGrid primaryLabel="25.04" secondaryLabel="Saturday" boxSizes={36} />
+          <TimeGrid
+            primaryLabel="25.04"
+            secondaryLabel="Saturday"
+            boxSizes={36}
+            addRanges={() => {}}
+          />
         </Col>
         <Col>
-          <TimeGrid primaryLabel="26.04" secondaryLabel="Sunday" boxSizes={36} />
+          <TimeGrid
+            primaryLabel="26.04"
+            secondaryLabel="Sunday"
+            boxSizes={36}
+            addRanges={() => {}}
+          />
         </Col>
         <Col>
-          <TimeGrid primaryLabel="27.04" secondaryLabel="Monday" boxSizes={36} />
+          <TimeGrid
+            primaryLabel="27.04"
+            secondaryLabel="Monday"
+            boxSizes={36}
+            addRanges={() => {}}
+          />
         </Col>
       </Row>
     </Container>

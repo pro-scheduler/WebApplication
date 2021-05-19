@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -22,6 +22,7 @@ const CreateMeeting = () => {
   const [onlineLink, setOnlineLink] = useState<string>('');
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
+  const [timeRanges, setTimeRanges] = useState([]);
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -33,7 +34,7 @@ const CreateMeeting = () => {
   const survey = useSelector((state: RootStateOrAny) => {
     return state.surveyReducer;
   });
-
+  useEffect(() => console.log(timeRanges), [timeRanges]);
   const saveMeeting = () => {
     const meeting: Meeting =
       onlineLink === ''
@@ -57,7 +58,7 @@ const CreateMeeting = () => {
         setDescription={setDescription}
         setInvalidNameDesc={setInvalidNameDesc}
       />
-      <ChooseTime />
+      <ChooseTime setSelectedRanges={setTimeRanges} />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       <CreateSurvey />

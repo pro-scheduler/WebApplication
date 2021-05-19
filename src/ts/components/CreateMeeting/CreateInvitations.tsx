@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import style from './NameAndDesctiption.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { optionToValueLabelPair, ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import MultiValueInput from '../common/forms/Input/MultiValueInput';
 import FriendsIcon from '../common/Icons/FriendsIcon';

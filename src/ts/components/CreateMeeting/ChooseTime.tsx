@@ -4,15 +4,16 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import style from './NameAndDesctiption.module.css';
 import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
+import { TimeRange } from '../../model/TimeRange';
 
-const ChooseTime = () => {
+const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
+  const [timeRanges, setTimeRanges] = useState<{ [key: string]: Array<TimeRange> }>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
-
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
     const days = selectedDays.concat();
     if (selected) {
@@ -25,6 +26,30 @@ const ChooseTime = () => {
     setSelectedDays(days);
   };
 
+  useEffect(() => {
+    let rangesFilltered: { [key: string]: Array<TimeRange> } = {};
+    for (let key in timeRanges) {
+      for (let day of selectedDays) {
+        if (
+          key ===
+          ('0' + day.getDate()).slice(-2) +
+            '.' +
+            ('0' + day.getMonth()).slice(-2) +
+            '.' +
+            day.getFullYear()
+        ) {
+          rangesFilltered[key] = timeRanges[key];
+        }
+      }
+    }
+    setSelectedRanges(rangesFilltered);
+  }, [timeRanges, selectedDays, setSelectedRanges]);
+
+  const setRanges = (date: string, ranges: Array<TimeRange>) => {
+    let ran: { [key: string]: Array<TimeRange> } = { ...timeRanges };
+    ran[date] = ranges;
+    setTimeRanges({ ...ran });
+  };
   return (
     <div style={{ marginLeft: width < 576 ? 0 : 45 }}>
       <Row className="justify-content-center mt-5">
@@ -47,6 +72,7 @@ const ChooseTime = () => {
         <TimePicker
           days={selectedDays}
           count={width > 1290 ? 4 : width > 991 ? 3 : width > 660 ? 2 : 1}
+          setRanges={setRanges}
         />
       </div>
     </div>
