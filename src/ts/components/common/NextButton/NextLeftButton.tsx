@@ -11,7 +11,7 @@ export type NextButtonProps = {
 };
 
 const NextLeftButton = ({ onclick, disabled, className }: NextButtonProps) => {
-  const buttonStyles = cx(styles.button, className);
+  const buttonStyles = cx(styles.button_left, className);
   return (
     <button className={buttonStyles} onClick={onclick} disabled={disabled}>
       <AiOutlineLeft style={{ fontSize: '400%', margin: '0 auto' }} />

@@ -1,6 +1,5 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import TimeGrid from '../../components/TimeGrid/TimeGrid';
 import { useEffect, useState } from 'react';
 import NextLeftButton from '../../components/common/NextButton/NextLeftButton';
@@ -30,24 +29,22 @@ const TimePicker = ({ days, count }: { days: Date[]; count: number }) => {
   }, [start, days, count]);
 
   return (
-    // <Container className="ml-5 ml-sm-auto">
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
-      {/* <div className={styles.leftArrow}>
-          {days.length > count && (
-            <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
-          )}
-        </div> */}
+      <div className={styles.leftArrow}>
+        {days.length > count && (
+          <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
+        )}
+      </div>
       {currentDays}
-      {/* <div className={styles.rightArrow}>
-          {days.length > count && (
-            <NextRightButton
-              onclick={() => setStart(start + 1)}
-              disabled={start >= days.length - count}
-            />
-          )}
-        </div> */}
+      <div className={styles.rightArrow}>
+        {days.length > count && (
+          <NextRightButton
+            onclick={() => setStart(start + 1)}
+            disabled={start >= days.length - count}
+          />
+        )}
+      </div>
     </Row>
-    // </Container>
   );
 };
 

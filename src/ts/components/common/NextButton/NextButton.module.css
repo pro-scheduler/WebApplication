@@ -1,21 +1,47 @@
-.button {
-    width: 120px;
-    height: 120px;
+.button_left {
+    width: 50px;
+    height: 100px;
     border: none;
     text-align: center;
     color: black;
     font-size: var(--s-font-size);
     cursor: pointer;
-    border-radius: var(--circle-border-radius);
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
     align-items: center;
     display: flex;
+    background-color: var(--purple);
 }
 
-.button:focus {
+.button_right {
+    width: 50px;
+    height: 100px;
+    border: none;
+    text-align: center;
+    color: black;
+    font-size: var(--s-font-size);
+    cursor: pointer;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    align-items: center;
+    display: flex;
+    background-color: var(--purple);
+}
+
+.button_left:focus {
     outline: none;
 }
 
-.button:hover {
+.button_left:hover {
+    opacity: 0.6;
+    background-color: var(--purple);
+}
+
+.button_right:focus {
+    outline: none;
+}
+
+.button_right:hover {
     opacity: 0.6;
     background-color: var(--purple);
 }

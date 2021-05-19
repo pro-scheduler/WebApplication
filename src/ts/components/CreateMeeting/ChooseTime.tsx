@@ -10,6 +10,7 @@ import useWindowDimensions from '../common/window/WindowDimension';
 
 const ChooseTime = () => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
+  // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
 
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
