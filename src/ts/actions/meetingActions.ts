@@ -2,7 +2,6 @@ import { Dispatch } from 'redux';
 import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
 import { DeepMeetingDetailsDTO, Meeting, MeetingDTO } from '../model/meeting/Meeting';
-import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 import { InvitationEmailsDTO } from '../model/invitation/Invitation';
 import allActions from './index';
 import { SurveyWithQuestionsDTO } from '../model/survey/Survey';
@@ -11,7 +10,7 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
   fetch(getMeetingsUrl())
     .then((response) => response.json())
     .then((meetingsDTO: MeetingDTO[]) => {
-      return dispatch({ type: 'LOAD_ALL', payload: mapMeetingsDTOToMeetings(meetingsDTO) });
+      return dispatch({ type: 'LOAD_ALL', payload: meetingsDTO });
     });
 };
 

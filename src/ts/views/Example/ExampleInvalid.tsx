@@ -16,7 +16,7 @@ import { minSings } from '../../tools/validator';
 const Example = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
-  const setTextInpuValue = (event: any) => {
+  const setTextInputValue = (event: any) => {
     return null;
   };
 
@@ -99,7 +99,7 @@ const Example = () => {
       <p>Text Input</p>
       <SingleValueInput
         label="textInputLabel"
-        valueHandler={setTextInpuValue}
+        valueHandler={setTextInputValue}
         required={true}
         validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
         initialInvalidState={true}
@@ -107,7 +107,7 @@ const Example = () => {
       <p>Text Area</p>
       <TextArea
         label="textAreaLabel"
-        valueHandler={setTextInpuValue}
+        valueHandler={setTextInputValue}
         required={true}
         validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
         initialInvalidState={true}

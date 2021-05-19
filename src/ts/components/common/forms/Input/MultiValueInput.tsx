@@ -49,11 +49,19 @@ const MultiValueInput = ({
         styles={{
           multiValueLabel: (base) => ({
             ...base,
-            backgroundColor: invalid ? 'var(--medium-red)' : '#7067CF',
+            backgroundColor: invalid ? 'var(--medium-red)' : 'var(--purple)',
             color: 'white',
             padding: '4px',
           }),
         }}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 10,
+          colors: {
+            ...theme.colors,
+            primary: 'var(--purple)',
+          },
+        })}
       />
       {invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </>

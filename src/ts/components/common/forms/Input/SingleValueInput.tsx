@@ -1,10 +1,12 @@
 import styles from './SingleValueInput.module.css';
 import { useState } from 'react';
+import cx from 'classnames';
 import { Validation, handleValidation } from '../../../../tools/validator';
 
 export type SingleValueInputProps = {
   label?: string;
   valueHandler: Function;
+  className?: string;
   setInvalid?: Function;
   required?: boolean;
   validation?: Validation[];
@@ -14,6 +16,7 @@ export type SingleValueInputProps = {
 const SingleValueInput = ({
   label,
   valueHandler,
+  className,
   required,
   setInvalid,
   validation,
@@ -22,6 +25,10 @@ const SingleValueInput = ({
   const [state, setState] = useState<string>('');
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
+  const inputStyles = cx(
+    invalidInner ? styles.input_classic_invalid : styles.input_classic,
+    className
+  );
 
   const handleChange = (event: any) => {
     setState(event.target.value);
@@ -41,12 +48,7 @@ const SingleValueInput = ({
       <div className={styles.label_classic}>
         {label} {required && '*'}
       </div>
-      <input
-        className={invalidInner ? styles.input_classic_invalid : styles.input_classic}
-        type="text"
-        value={state}
-        onChange={handleChange}
-      />
+      <input className={inputStyles} type="text" value={state} onChange={handleChange} />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>
       )}

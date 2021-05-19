@@ -11,12 +11,16 @@ import style from '../../components/CreateMeeting/NameAndDesctiption.module.css'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
+import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
+import { Meeting, OnlineMeeting, RealMeeting } from '../../model/meeting/Meeting';
 
 const CreateMeeting = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [onlineLink, setOnlineLink] = useState<string>('');
+  const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
 
   const dispatch: Function = useDispatch();
@@ -31,16 +35,13 @@ const CreateMeeting = () => {
   });
 
   const saveMeeting = () => {
+    const meeting: Meeting =
+      onlineLink === ''
+        ? new RealMeeting(0, name, description, [], [], [])
+        : new OnlineMeeting(0, name, description, [], [], [], onlineLink, onlinePassword);
     dispatch(
       actions.saveMeeting(
-        {
-          name: name,
-          description: description,
-          id: 0,
-          availableTimeRanges: [],
-          participants: [],
-          organizers: [],
-        },
+        meeting,
         {
           emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
         },
@@ -58,6 +59,7 @@ const CreateMeeting = () => {
       />
       <ChooseTime />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
+      <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       <CreateSurvey />
       <Row className="justify-content-center mt-5">
         <Col xs="auto">

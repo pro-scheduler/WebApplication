@@ -31,6 +31,8 @@ const MeetingDetails = () => {
         meetingId={id}
         description={meetingState.meeting.description}
         organizers={meetingState.meeting.organizers}
+        link={meetingState.meeting.link}
+        password={meetingState.meeting.password}
       />
       <MeetingParticipants
         meetingId={id}

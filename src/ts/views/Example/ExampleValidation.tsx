@@ -7,15 +7,15 @@ import TextArea from '../../components/common/forms/TextArea/TextArea';
 
 const ExampleValidation = () => {
   const [name, setName] = useState('');
-  const [descritpion, setDescription] = useState('');
-  const [invalidName, setIvalidName] = useState(false);
+  const [description, setDescription] = useState('');
+  const [invalidName, setInvalidName] = useState(false);
   const [invalidDescription, setInvalidDescription] = useState(false);
   return (
     <div className={styles.example} style={{ padding: 30 }}>
       <SingleValueInput
         label="Name"
         valueHandler={setName}
-        setInvalid={setIvalidName}
+        setInvalid={setInvalidName}
         required={true}
         validation={[
           { validation: minSings(5), message: 'Min 3 signs required' },
@@ -40,7 +40,7 @@ const ExampleValidation = () => {
           onclick={() => console.log('Action clicked')}
           className="button"
           disabled={
-            invalidName || invalidDescription || !required()(name) || !required()(descritpion)
+            invalidName || invalidDescription || !required()(name) || !required()(description)
           }
         />
       </div>

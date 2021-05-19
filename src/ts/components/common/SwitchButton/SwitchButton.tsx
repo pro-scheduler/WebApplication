@@ -7,7 +7,7 @@ import styles from './SwitchButton.module.css';
 
 export type SwitchButtonProps = {
   onChange: Function;
-  title: string;
+  title?: string;
   className?: string;
 };
 

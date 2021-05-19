@@ -6,3 +6,8 @@
     margin: auto;
     border-radius: var(--border-radius);
 }
+
+.multiValueInput:focus {
+    outline: none !important;
+    border: 2px solid var(--purple);
+}

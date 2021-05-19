@@ -1,7 +1,6 @@
 import { getUserOrganizedMeetingsUrl, getUserParticipatedMeetingsUrl } from '../API/user/urls';
 import { Dispatch } from 'redux';
 import { MeetingDTO } from '../model/meeting/Meeting';
-import { mapMeetingsDTOToMeetings } from '../model/meeting/MeetingMapper';
 
 const fetchUserOrganizedMeetings = (userId: number) => (dispatch: Dispatch) => {
   fetch(getUserOrganizedMeetingsUrl(userId))
@@ -9,7 +8,7 @@ const fetchUserOrganizedMeetings = (userId: number) => (dispatch: Dispatch) => {
     .then((organizedMeetingsDTO: MeetingDTO[]) => {
       return dispatch({
         type: 'LOAD_ORGANIZED_MEETINGS',
-        payload: mapMeetingsDTOToMeetings(organizedMeetingsDTO),
+        payload: organizedMeetingsDTO,
       });
     });
 };
@@ -17,10 +16,10 @@ const fetchUserOrganizedMeetings = (userId: number) => (dispatch: Dispatch) => {
 const fetchUserParticipatedMeetings = (userId: number) => (dispatch: Dispatch) => {
   return fetch(getUserParticipatedMeetingsUrl(userId))
     .then((response: Response) => response.json())
-    .then((participatedMeetings: MeetingDTO[]) => {
+    .then((participatedMeetingsDTO: MeetingDTO[]) => {
       return dispatch({
         type: 'LOAD_PARTICIPATED_MEETINGS',
-        payload: mapMeetingsDTOToMeetings(participatedMeetings),
+        payload: participatedMeetingsDTO,
       });
     });
 };
