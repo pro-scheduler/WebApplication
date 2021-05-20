@@ -8,17 +8,43 @@ export type TimeGridProps = {
   primaryLabel: string;
   secondaryLabel: string;
   boxSizes: number;
-  timeRanges?: any;
+  addRanges: Function;
 };
 
-const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, timeRanges = [] }: TimeGridProps) => {
+const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, addRanges }: TimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<any>({});
-
+  const step = 3;
   const changeParams = (id: number, top: number, height: number) => {
     let tmp = { ...rangesParams };
     tmp[id.toString()] = { top, height, id };
     setRangesParams({ ...tmp });
   };
+
+  const positionToTime = (position: number) => {
+    const hour: number = Math.floor((5 * (position / step)) / 60);
+    const min: number = (5 * (position / step)) % 60;
+    let hourStr: string = hour.toString();
+    let minStr: string = min.toString();
+    if (hour < 10) {
+      hourStr = '0' + hourStr;
+    }
+    if (min < 10) {
+      minStr = '0' + minStr;
+    }
+    return hourStr + ':' + minStr;
+  };
+
+  useEffect(() => {
+    let ranges = [];
+    for (let range in rangesParams) {
+      ranges.push({
+        from: positionToTime(rangesParams[range].top),
+        to: positionToTime(rangesParams[range].top + rangesParams[range].height),
+      });
+    }
+    addRanges(ranges);
+    // eslint-disable-next-line
+  }, [rangesParams]);
 
   const calculateRanges = () => {
     let ranges: any = [];
@@ -28,7 +54,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, timeRanges = [] }: T
           <RangeBox
             key={key}
             defaultHeight={rangesParams[key].height}
-            step={3}
+            step={step}
             max={432 * 2}
             boxSize={432 * 2}
             defaultTop={rangesParams[key].top}

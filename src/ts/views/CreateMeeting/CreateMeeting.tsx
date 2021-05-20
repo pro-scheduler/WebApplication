@@ -14,6 +14,7 @@ import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
 import { Meeting, OnlineMeeting, RealMeeting } from '../../model/meeting/Meeting';
+import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -22,6 +23,7 @@ const CreateMeeting = () => {
   const [onlineLink, setOnlineLink] = useState<string>('');
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
+  const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -33,12 +35,11 @@ const CreateMeeting = () => {
   const survey = useSelector((state: RootStateOrAny) => {
     return state.surveyReducer;
   });
-
   const saveMeeting = () => {
     const meeting: Meeting =
       onlineLink === ''
-        ? new RealMeeting(0, name, description, [], [], [])
-        : new OnlineMeeting(0, name, description, [], [], [], onlineLink, onlinePassword);
+        ? new RealMeeting(0, name, description, timeRanges, [], [])
+        : new OnlineMeeting(0, name, description, timeRanges, [], [], onlineLink, onlinePassword);
     dispatch(
       actions.saveMeeting(
         meeting,
@@ -57,7 +58,7 @@ const CreateMeeting = () => {
         setDescription={setDescription}
         setInvalidNameDesc={setInvalidNameDesc}
       />
-      <ChooseTime />
+      <ChooseTime setSelectedRanges={setTimeRanges} />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       <CreateSurvey />

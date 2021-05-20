@@ -1,8 +1,10 @@
 .leftArrow{
     position: absolute;
-    left: 250px;
+    left: 15px;
+    z-index: 5;
 }
 .rightArrow{
     position: absolute;
-    right: 250px;
+    right: 15px;
+    z-index: 5;
 }

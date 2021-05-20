@@ -133,7 +133,7 @@ const RangeBox = ({
       >
         <Resizable
           // responsive here later to do
-          size={{ width: '170px', height: height + delta + defaultHeight }}
+          size={{ width: '70%', height: height + delta + defaultHeight }}
           enable={{ top: true, bottom: true }}
           className={styles.rangeBox}
           // style={{ height: height + delta, top: top + topDelta }}

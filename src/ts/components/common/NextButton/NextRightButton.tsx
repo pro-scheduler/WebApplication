@@ -4,7 +4,7 @@ import { NextButtonProps } from './NextLeftButton';
 import cx from 'classnames';
 
 const NextRightButton = ({ onclick, disabled, className }: NextButtonProps) => {
-  const buttonStyles = cx(styles.button, className);
+  const buttonStyles = cx(styles.button_right, className);
   return (
     <button className={buttonStyles} onClick={onclick} disabled={disabled}>
       <AiOutlineRight style={{ fontSize: '400%', margin: '0 auto' }} />
