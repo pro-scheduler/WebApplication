@@ -25,7 +25,9 @@ const TimePicker = ({
     const tmp = days.map((day: Date, index: number) => (
       <Col hidden={!(index >= start && index < start + count)} key={index}>
         <TimeGrid
-          primaryLabel={('0' + day.getDate()).slice(-2) + '.' + ('0' + day.getMonth()).slice(-2)}
+          primaryLabel={
+            ('0' + day.getDate()).slice(-2) + '.' + ('0' + (day.getMonth() + 1)).slice(-2)
+          }
           secondaryLabel={weekDays[day.getDay()]}
           boxSizes={36}
           addRanges={(range: TimeRange) => {

@@ -42,7 +42,6 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, addRanges }: TimeGri
         to: positionToTime(rangesParams[range].top + rangesParams[range].height),
       });
     }
-    console.log(ranges);
     addRanges(ranges);
     // eslint-disable-next-line
   }, [rangesParams]);

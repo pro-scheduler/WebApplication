@@ -9,11 +9,12 @@ import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 
+interface rangesWithDay {
+  [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
+}
 const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [timeRanges, setTimeRanges] = useState<{
-    [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
-  }>({});
+  const [timeRanges, setTimeRanges] = useState<rangesWithDay>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
@@ -58,7 +59,7 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   }, [timeRanges, selectedDays, setSelectedRanges]);
 
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
-    let ran: { [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date } } = {
+    let ran: rangesWithDay = {
       ...timeRanges,
     };
     ran[date] = { ranges: ranges, date: day };
@@ -78,14 +79,13 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
         <Col />
         <Col className="text-center">
           <DayPicker selectedDays={selectedDays} onDayClick={handleDayClick} />
-          {width}
         </Col>
         <Col />
       </Row>
       <div style={{ marginRight: width < 576 ? 45 : 0 }}>
         <TimePicker
           days={selectedDays}
-          count={width > 1290 ? 4 : width > 991 ? 3 : width > 660 ? 2 : 1}
+          count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
           setRanges={setRanges}
         />
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -35,7 +35,6 @@ const CreateMeeting = () => {
   const survey = useSelector((state: RootStateOrAny) => {
     return state.surveyReducer;
   });
-  useEffect(() => console.log(timeRanges), [timeRanges]);
   const saveMeeting = () => {
     const meeting: Meeting =
       onlineLink === ''
