@@ -7,11 +7,13 @@ import 'react-day-picker/lib/style.css';
 import { useEffect, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
-import { TimeRange } from '../../model/TimeRange';
+import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 
 const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [timeRanges, setTimeRanges] = useState<{ [key: string]: Array<TimeRange> }>({});
+  const [timeRanges, setTimeRanges] = useState<{
+    [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
+  }>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
@@ -27,7 +29,7 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   };
 
   useEffect(() => {
-    let rangesFilltered: { [key: string]: Array<TimeRange> } = {};
+    let rangesFilltered: TimeRangeDTO[] = [];
     for (let key in timeRanges) {
       for (let day of selectedDays) {
         if (
@@ -38,16 +40,26 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
             '.' +
             day.getFullYear()
         ) {
-          rangesFilltered[key] = timeRanges[key];
+          if (timeRanges[key].ranges.length > 0) {
+            timeRanges[key].ranges.forEach((range) => {
+              let from: Date = new Date(timeRanges[key].date);
+              let to: Date = new Date(timeRanges[key].date);
+              from.setHours(parseInt(range.from.split(':')[0]), parseInt(range.from.split(':')[1]));
+              to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
+              rangesFilltered.push({ startDateTime: from, endDateTime: to });
+            });
+          }
         }
       }
     }
     setSelectedRanges(rangesFilltered);
   }, [timeRanges, selectedDays, setSelectedRanges]);
 
-  const setRanges = (date: string, ranges: Array<TimeRange>) => {
-    let ran: { [key: string]: Array<TimeRange> } = { ...timeRanges };
-    ran[date] = ranges;
+  const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
+    let ran: { [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date } } = {
+      ...timeRanges,
+    };
+    ran[date] = { ranges: ranges, date: day };
     setTimeRanges({ ...ran });
   };
   return (

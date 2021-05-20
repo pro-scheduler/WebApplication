@@ -35,7 +35,7 @@ const TimePicker = ({
               ('0' + day.getMonth()).slice(-2) +
               '.' +
               day.getFullYear();
-            setRanges(date, range);
+            setRanges(date, range, day);
           }}
         />
       </Col>
