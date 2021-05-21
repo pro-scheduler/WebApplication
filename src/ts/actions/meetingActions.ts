@@ -1,7 +1,12 @@
 import { Dispatch } from 'redux';
 import { createMeetingSuccess, createMeetingFailed, createMeetingReset } from './messagesActions';
 import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from '../API/meeting/urls';
-import { DeepMeetingDetailsDTO, Meeting, MeetingDTO } from '../model/meeting/Meeting';
+import {
+  DeepMeetingDetailsDTO,
+  Meeting,
+  MeetingDetailsDTO,
+  MeetingDTO,
+} from '../model/meeting/Meeting';
 import { InvitationEmailsDTO } from '../model/invitation/Invitation';
 import allActions from './index';
 import { SurveyWithQuestionsDTO } from '../model/survey/Survey';
@@ -16,7 +21,7 @@ const fetchAllMeetings = () => (dispatch: Dispatch) => {
 
 // prettier-ignore
 const saveMeeting = (
-  meeting: Meeting,
+  meeting: MeetingDetailsDTO,
   invitations: InvitationEmailsDTO,
   survey: SurveyWithQuestionsDTO
 ) => (dispatch: Dispatch) => {

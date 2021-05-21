@@ -13,7 +13,11 @@ import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
-import { Meeting, OnlineMeeting, RealMeeting } from '../../model/meeting/Meeting';
+import {
+  MeetingDetailsDTO,
+  OnlineMeetingDetailsDTO,
+  RealMeetingDetailsDTO,
+} from '../../model/meeting/Meeting';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 
 const CreateMeeting = () => {
@@ -36,10 +40,10 @@ const CreateMeeting = () => {
     return state.surveyReducer;
   });
   const saveMeeting = () => {
-    const meeting: Meeting =
+    const meeting: MeetingDetailsDTO =
       onlineLink === ''
-        ? new RealMeeting(0, name, description, timeRanges, [], [])
-        : new OnlineMeeting(0, name, description, timeRanges, [], [], onlineLink, onlinePassword);
+        ? new RealMeetingDetailsDTO(name, description, timeRanges)
+        : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
     dispatch(
       actions.saveMeeting(
         meeting,

@@ -117,8 +117,6 @@ export class RealMeetingDetailsDTO implements MeetingDetailsDTO {
     public name: string,
     public description: string,
     public availableTimeRanges: TimeRangeDTO[],
-    public link: string,
-    public password: string,
     public type: MeetingType = MeetingType.REAL
   ) {}
 }
