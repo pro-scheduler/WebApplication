@@ -20,6 +20,9 @@ import {
 } from '../../model/meeting/Meeting';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
+import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
+
+export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -43,7 +46,7 @@ const CreateMeeting = () => {
   const message = useSelector((state: RootStateOrAny) => {
     return state.messages.createMeetingMessage;
   });
-  const [state, setState] = useState<'name' | 'time' | 'invitations' | 'place' | 'survey'>('name');
+  const [state, setState] = useState<creatingMeetingState>('name');
 
   const saveMeeting = () => {
     const meeting: MeetingDetailsDTO =
@@ -63,45 +66,15 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto" style={{ display: 'flex' }}>
-          {!invalidNameDesc && required()(name) && (
-            <>
-              <button
-                className="mx-3"
-                onClick={() => setState('time')}
-                disabled={timeRanges.length !== 0}
-              >
-                Time
-              </button>
-
-              <button
-                className="mx-3"
-                onClick={() => setState('invitations')}
-                disabled={emails.length !== 0}
-              >
-                Participants
-              </button>
-
-              <button
-                className="mx-3"
-                onClick={() => setState('place')}
-                disabled={onlineLink !== ''}
-              >
-                Place
-              </button>
-
-              <button
-                className="mx-3"
-                onClick={() => setState('survey')}
-                disabled={survey.questions.length !== 0}
-              >
-                Survey
-              </button>
-            </>
-          )}
-        </Col>
-      </Row>
+      <MeetingNavbar
+        state={state}
+        setState={setState}
+        disabledName={!invalidNameDesc && required()(name)}
+        disabledTime={timeRanges.length !== 0}
+        disabledInvitations={emails.length !== 0}
+        disabledPlace={onlineLink !== ''}
+        disabledSurvey={survey.questions.length !== 0}
+      />
 
       {state === 'name' && (
         <NameAndDescription
