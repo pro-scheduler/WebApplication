@@ -5,6 +5,7 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
+import actions from '../../actions/meetingActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
 
@@ -19,7 +20,7 @@ const MeetingDetails = () => {
   });
 
   useEffect(() => {
-    dispatch(allActions.meetingActions.loadMeeting(id));
+    dispatch(actions.loadMeeting(id));
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     // eslint-disable-next-line
   }, []);
