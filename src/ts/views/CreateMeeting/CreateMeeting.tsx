@@ -43,6 +43,7 @@ const CreateMeeting = () => {
   const message = useSelector((state: RootStateOrAny) => {
     return state.messages.createMeetingMessage;
   });
+  const [state, setState] = useState<'name' | 'time' | 'invitations' | 'place' | 'survey'>('name');
 
   const saveMeeting = () => {
     const meeting: MeetingDetailsDTO =
@@ -62,19 +63,65 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <NameAndDescription
-        setName={setName}
-        setDescription={setDescription}
-        setInvalidNameDesc={setInvalidNameDesc}
-      />
-      <ChooseTime setSelectedRanges={setTimeRanges} />
-      <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
-      <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
-      <CreateSurvey survey={survey} />
+      <Row className="justify-content-center mt-5">
+        <Col xs="auto" style={{ display: 'flex' }}>
+          {!invalidNameDesc && required()(name) && (
+            <>
+              <button
+                className="mx-3"
+                onClick={() => setState('time')}
+                disabled={timeRanges.length !== 0}
+              >
+                Time
+              </button>
+
+              <button
+                className="mx-3"
+                onClick={() => setState('invitations')}
+                disabled={emails.length !== 0}
+              >
+                Participants
+              </button>
+
+              <button
+                className="mx-3"
+                onClick={() => setState('place')}
+                disabled={onlineLink !== ''}
+              >
+                Place
+              </button>
+
+              <button
+                className="mx-3"
+                onClick={() => setState('survey')}
+                disabled={survey.questions.length !== 0}
+              >
+                Survey
+              </button>
+            </>
+          )}
+        </Col>
+      </Row>
+
+      {state === 'name' && (
+        <NameAndDescription
+          setName={setName}
+          setDescription={setDescription}
+          setInvalidNameDesc={setInvalidNameDesc}
+        />
+      )}
+      {state === 'time' && <ChooseTime setSelectedRanges={setTimeRanges} />}
+      {state === 'invitations' && (
+        <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
+      )}
+      {state === 'place' && (
+        <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
+      )}
+      {state === 'survey' && <CreateSurvey survey={survey} />}
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <ActionButton
-            text="Create meeting"
+            text="Save meeting"
             onclick={saveMeeting}
             disabled={invalidNameDesc || !required()(name)}
           />

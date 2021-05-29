@@ -30,7 +30,7 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   };
 
   useEffect(() => {
-    let rangesFilltered: TimeRangeDTO[] = [];
+    let rangesFiltered: TimeRangeDTO[] = [];
     for (let key in timeRanges) {
       for (let day of selectedDays) {
         if (
@@ -49,13 +49,13 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
               to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
               from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
               to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
-              rangesFilltered.push({ startDateTime: from, endDateTime: to });
+              rangesFiltered.push({ startDateTime: from, endDateTime: to });
             });
           }
         }
       }
     }
-    setSelectedRanges(rangesFilltered);
+    setSelectedRanges(rangesFiltered);
   }, [timeRanges, selectedDays, setSelectedRanges]);
 
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
