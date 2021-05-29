@@ -6,13 +6,16 @@ import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { TiDelete } from 'react-icons/ti';
-import allActions from '../../actions';
 import TextArea from '../common/forms/TextArea/TextArea';
+import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
+import { Question } from '../../model/survey/Question';
 
-const CreateSurvey = () => {
-  const dispatch: Function = useDispatch();
+export type CreateSurveyProps = {
+  survey: SurveyWithQuestionsDTO;
+};
+
+const CreateSurvey = ({ survey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
 
@@ -21,13 +24,20 @@ const CreateSurvey = () => {
     setQuestionId(questionId + 1);
   };
 
+  const updateQuestion = (questionToUpdate: Question) => {
+    survey.questions = survey.questions.filter(
+      (question: Question) => question.id !== questionToUpdate.id
+    );
+    survey.questions.push(questionToUpdate);
+  };
+
   const deleteQuestion = (idToDelete: number) => {
-    dispatch(allActions.surveyActions.removeQuestionFromSurveyWithQuestionsDTO(idToDelete));
+    survey.questions = survey.questions.filter((question: Question) => question.id !== idToDelete);
     setQuestions(questions.filter((id: number) => idToDelete !== id));
   };
 
   const saveSurveyDescription = (description: string) => {
-    dispatch(allActions.surveyActions.addDescriptionToSurveyWithQuestionsDTO(description));
+    survey.description = description;
   };
 
   useEffect(() => {
@@ -59,6 +69,7 @@ const CreateSurvey = () => {
             <QuestionCreate
               key={id}
               id={id}
+              updateQuestion={updateQuestion}
               deleteButton={
                 <TiDelete
                   className={styles.removeQuestionButton}

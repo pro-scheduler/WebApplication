@@ -1,9 +1,9 @@
 import React from 'react';
-import BasicQuestionCreate from './BasicQuestionCreate';
+import BasicQuestionCreate, { BasicQuestionCreateProps } from './BasicQuestionCreate';
 import { Type } from '../../model/survey/Question';
 
-const OpenQuestionCreate = ({ id }: { id: number }) => {
-  return <BasicQuestionCreate id={id} type={Type.OPEN} />;
+const OpenQuestionCreate = ({ id, updateQuestion }: BasicQuestionCreateProps) => {
+  return <BasicQuestionCreate id={id} type={Type.OPEN} updateQuestion={updateQuestion} />;
 };
 
 export default OpenQuestionCreate;

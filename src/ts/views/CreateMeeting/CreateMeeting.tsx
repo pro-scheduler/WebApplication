@@ -19,6 +19,7 @@ import {
   RealMeetingDetailsDTO,
 } from '../../model/meeting/Meeting';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -28,6 +29,12 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
+    description: '',
+    meetingId: -1,
+    questions: [],
+  });
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -36,9 +43,7 @@ const CreateMeeting = () => {
   const message = useSelector((state: RootStateOrAny) => {
     return state.messages.createMeetingMessage;
   });
-  const survey = useSelector((state: RootStateOrAny) => {
-    return state.surveyReducer;
-  });
+
   const saveMeeting = () => {
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
@@ -50,7 +55,7 @@ const CreateMeeting = () => {
         {
           emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
         },
-        survey.newSurvey
+        survey
       )
     );
   };
@@ -65,7 +70,7 @@ const CreateMeeting = () => {
       <ChooseTime setSelectedRanges={setTimeRanges} />
       <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
-      <CreateSurvey />
+      <CreateSurvey survey={survey} />
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <ActionButton

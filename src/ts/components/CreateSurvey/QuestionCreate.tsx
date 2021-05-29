@@ -9,7 +9,7 @@ import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import { Type } from '../../model/survey/Question';
+import { Question, Type } from '../../model/survey/Question';
 
 const options = [
   new ValueLabelPair(Type.DROPDOWN, 'Dropdown'),
@@ -22,9 +22,10 @@ const options = [
 export type QuestionCreateProps = {
   id: number;
   deleteButton: JSX.Element;
+  updateQuestion: (question: Question) => void;
 };
 
-const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
+const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProps) => {
   const [selectedValue, setSelectedValue] = useState(Type.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
@@ -47,11 +48,21 @@ const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
             />
           </Col>
           <Col lg={11} className={styles.questionCreateFooter} />
-          {selectedValue === Type.DROPDOWN && <DropdownQuestionCreate id={id} />}
-          {selectedValue === Type.LINEAR_SCALE && <LinearScaleQuestionCreate id={id} />}
-          {selectedValue === Type.MULTI_CHOICE && <MultiChoiceQuestionCreate id={id} />}
-          {selectedValue === Type.OPEN && <OpenQuestionCreate id={id} />}
-          {selectedValue === Type.YES_OR_NO && <YesOrNoQuestionCreate id={id} />}
+          {selectedValue === Type.DROPDOWN && (
+            <DropdownQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === Type.LINEAR_SCALE && (
+            <LinearScaleQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === Type.MULTI_CHOICE && (
+            <MultiChoiceQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === Type.OPEN && (
+            <OpenQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === Type.YES_OR_NO && (
+            <YesOrNoQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
         </Row>
       </Col>
     </>
