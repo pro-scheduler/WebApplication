@@ -5,6 +5,11 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import styles from './MeetingSummary.module.css';
+import PencilIcon from '../common/Icons/PencilIcon';
+import CalendarIcon from '../common/Icons/CalendarIcon';
+import WorldIcon from '../common/Icons/WorldIcon';
+import SurveyIcon from '../common/Icons/SurveyIcon';
+import FriendsIcon from '../common/Icons/FriendsIcon';
 
 export type MeetingSummaryProps = {
   name: string;
@@ -26,14 +31,22 @@ const MeetingSummary = ({
   survey,
 }: MeetingSummaryProps) => {
   return (
-    <Row className="justify-content-center mt-5">
+    <Row className="justify-content-center mt-5 text-center">
       <Col xs="auto">
-        <p className={styles.summaryHeader}>What: </p>
+        <Row className="justify-content-center my-5">
+          <Col xs="auto">
+            <PencilIcon />
+          </Col>
+        </Row>
         <p>{name}</p>
         {description && <p>Description: {description}</p>}
         {timeRanges.length > 0 && (
           <>
-            <p className={styles.summaryHeader}>When: </p>
+            <Row className="justify-content-center my-5">
+              <Col xs="auto">
+                <CalendarIcon />
+              </Col>
+            </Row>
             {timeRanges.map((timeRange: TimeRangeDTO) => (
               <p>
                 {timeRange.startDateTime.getDay()}.{timeRange.startDateTime.getMonth()}.
@@ -46,22 +59,34 @@ const MeetingSummary = ({
         )}
         {emails.length > 0 && (
           <>
-            <p className={styles.summaryHeader}>Who: </p>
+            <Row className="justify-content-center my-5">
+              <Col xs="auto">
+                <FriendsIcon />
+              </Col>
+            </Row>
             {emails.map((email: string) => (
-              <p>- {email}</p>
+              <p>{email}</p>
             ))}
           </>
         )}
         {onlineLink && (
           <>
-            <p className={styles.summaryHeader}>Where:</p>
+            <Row className="justify-content-center my-5">
+              <Col xs="auto">
+                <WorldIcon />
+              </Col>
+            </Row>
             <p>{onlineLink}</p>
           </>
         )}
         {onlinePassword && <p>{onlinePassword}</p>}
         {survey.questions.length > 0 && (
           <>
-            <p className={styles.summaryHeader}>Why:</p>
+            <Row className="justify-content-center my-5">
+              <Col xs="auto">
+                <SurveyIcon />
+              </Col>
+            </Row>
             <p>{survey.description}</p>
             {survey.questions.map((question: Question) => (
               <p>
