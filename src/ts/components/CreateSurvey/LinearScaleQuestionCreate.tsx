@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
+import linearStyles from './LinearScaleQuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
@@ -48,7 +49,7 @@ const LinearScaleQuestionCreate = ({ id, updateQuestion }: BasicQuestionCreatePr
           onChange={handleFromValueChange}
           options={linearScaleFromOptions}
           defaultValue={linearScaleFromOptions[0]}
-          className="mx-auto"
+          className={linearStyles.dropdown}
         />
       </Col>
 
@@ -62,7 +63,7 @@ const LinearScaleQuestionCreate = ({ id, updateQuestion }: BasicQuestionCreatePr
           onChange={handleToValueChange}
           options={linearScaleToOptions}
           defaultValue={linearScaleToOptions[8]}
-          className="mx-auto"
+          className={linearStyles.dropdown}
         />
       </Col>
     </>

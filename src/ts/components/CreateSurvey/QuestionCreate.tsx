@@ -34,12 +34,12 @@ const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProp
 
   return (
     <>
-      <Col sm={8} lg={10} className={styles.questionField}>
+      <Col xs={8} sm={8} lg={10} className={styles.questionField}>
         <Row>
           <Col lg={12} className="text-right mt-sm-0">
             {deleteButton}
           </Col>
-          <Col sm={6} lg={12} className="text-right my-sm-4">
+          <Col xs={8} sm={6} lg={4} className="text-right mr-0 mt-4 mb-5">
             <SingleDropdownButton
               onChange={handleSingleChoice}
               options={options}

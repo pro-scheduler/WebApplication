@@ -33,7 +33,7 @@ const SingleValueInput = ({
   const handleChange = (event: any) => {
     setState(event.target.value);
     valueHandler(event.target.value);
-    let valid;
+    let valid = true;
     if (validation !== undefined) {
       valid = handleValidation(validation, event.target.value, setInvalidMessage);
     }
