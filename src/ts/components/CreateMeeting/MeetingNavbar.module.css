@@ -1,5 +1,5 @@
 .wrapper {
-    padding: 50px;
+    padding: 40px;
     text-align: center;
     width: auto;
     margin: 0 auto;
@@ -16,7 +16,7 @@
 }
 
 .item:last-child {
-    margin-right: -55px;
+    margin-right: -75px;
 }
 
 .item::after {
@@ -62,19 +62,41 @@
     }
 
     .item:last-child {
-        margin-right: -45px;
+        margin-right: -65px;
     }
 }
 
 @media (max-width: 720px) {
-    .itemButton {
-        margin: 0 10px;
+    .wrapper {
+        padding: 10px;
     }
+
+    .items {
+        display: block;
+        border-top: none;
+    }
+
+    .item {
+        margin-right: 10px;
+        margin-top: 5px;
+    }
+
+    .item::after {
+        left: 0;
+        top: 8px;
+    }
+
+    .item::before{
+        margin-right: 10px;
+    }
+
     .item:first-child {
-        margin-left: -35px;
+        top: 50%;
+        margin-left: 0;
     }
 
     .item:last-child {
-        margin-right: -35px;
+        top: -50%;
+        margin-right: 0;
     }
 }

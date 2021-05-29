@@ -13,6 +13,7 @@ export type MeetingNavbarProps = {
   disabledInvitations: boolean;
   disabledPlace: boolean;
   disabledSurvey: boolean;
+  disabledSummary: boolean;
 };
 
 const MeetingNavbar = ({
@@ -23,6 +24,7 @@ const MeetingNavbar = ({
   disabledInvitations,
   disabledPlace,
   disabledSurvey,
+  disabledSummary,
 }: MeetingNavbarProps) => {
   return (
     <Row className="justify-content-center mt-5">
@@ -72,6 +74,15 @@ const MeetingNavbar = ({
                 disabled={disabledSurvey}
               >
                 Why
+              </button>
+            </li>
+            <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
+              <button
+                className={styles.itemButton}
+                onClick={() => setState('summary')}
+                disabled={disabledSummary}
+              >
+                Summary
               </button>
             </li>
           </ul>

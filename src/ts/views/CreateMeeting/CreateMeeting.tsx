@@ -21,8 +21,9 @@ import {
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
+import MeetingSummary from '../../components/CreateMeeting/MeetingSummary';
 
-export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey';
+export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -74,6 +75,7 @@ const CreateMeeting = () => {
         disabledInvitations={emails.length !== 0}
         disabledPlace={onlineLink !== ''}
         disabledSurvey={survey.questions.length !== 0}
+        disabledSummary={invalidNameDesc || !required()(name)}
       />
 
       {state === 'name' && (
@@ -91,15 +93,28 @@ const CreateMeeting = () => {
         <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
       )}
       {state === 'survey' && <CreateSurvey survey={survey} />}
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          <ActionButton
-            text="Save meeting"
-            onclick={saveMeeting}
-            disabled={invalidNameDesc || !required()(name)}
+      {state === 'summary' && (
+        <>
+          <MeetingSummary
+            name={name}
+            description={description}
+            emails={emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString())}
+            onlineLink={onlineLink}
+            onlinePassword={onlinePassword}
+            timeRanges={timeRanges}
+            survey={survey}
           />
-        </Col>
-      </Row>
+          <Row className="justify-content-center mt-5">
+            <Col xs="auto">
+              <ActionButton
+                text="Save meeting"
+                onclick={saveMeeting}
+                disabled={invalidNameDesc || !required()(name)}
+              />
+            </Col>
+          </Row>
+        </>
+      )}
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           {messageStatus !== 'NO_DISPLAY' && (
