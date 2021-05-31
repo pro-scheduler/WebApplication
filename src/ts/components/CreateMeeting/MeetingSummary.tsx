@@ -4,7 +4,6 @@ import React from 'react';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
-import styles from './MeetingSummary.module.css';
 import PencilIcon from '../common/Icons/PencilIcon';
 import CalendarIcon from '../common/Icons/CalendarIcon';
 import WorldIcon from '../common/Icons/WorldIcon';
