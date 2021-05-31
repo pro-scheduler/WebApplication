@@ -43,7 +43,7 @@ const saveMeeting = (
             .then(() => void 0);
         }
         if (survey.questions.length > 0) {
-          allActions.surveyActions.createSurvey(meeting.id, survey).then(() => void 0);
+          allActions.surveyActions.createSurvey(meeting.id, survey).then((response) => response.json().then(console.log));
         }
         return dispatch(createMeetingSuccess('Meeting has been created successfully :)'));
       });

@@ -7,14 +7,15 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import { BsCircle } from 'react-icons/bs';
 import { TiDelete } from 'react-icons/ti';
 import PlusButton from '../common/RoundButtons/PlusButton';
-import { useDispatch } from 'react-redux';
-import { DropdownQuestion, MultiChoiceQuestion, Question, Type } from '../../model/survey/Question';
-import allActions from '../../actions';
-import { QuestionProps } from './BasicQuestionCreate';
+import { DropdownQuestion, MultiChoiceQuestion, Type } from '../../model/survey/Question';
+import { BasicQuestionCreateProps } from './BasicQuestionCreate';
 
-const QuestionWithOptionsCreate = ({ id, type }: QuestionProps) => {
-  const dispatch: Function = useDispatch();
-  const [question, setQuestion] = useState('');
+const QuestionWithOptionsCreate = ({ id, type, updateQuestion }: BasicQuestionCreateProps) => {
+  const [question, setQuestion] = useState<DropdownQuestion | MultiChoiceQuestion>(
+    type === Type.MULTI_CHOICE
+      ? new MultiChoiceQuestion('', [], id)
+      : new DropdownQuestion('', [], id)
+  );
   const [currentOption, setCurrentOption] = useState('');
   const [options, setOptions] = useState<any[]>([]);
 
@@ -22,7 +23,11 @@ const QuestionWithOptionsCreate = ({ id, type }: QuestionProps) => {
     if (currentOption !== '' && !options.includes(currentOption)) {
       const newOptions = [...options, currentOption];
       setOptions(newOptions);
-      save(question, newOptions);
+      if (question instanceof MultiChoiceQuestion) question.possibleChoices = newOptions;
+      else {
+        question.possibleOptions = newOptions;
+      }
+      setQuestion(question);
     }
     setCurrentOption('');
   };
@@ -30,20 +35,18 @@ const QuestionWithOptionsCreate = ({ id, type }: QuestionProps) => {
   const deleteOption = (optionToDelete: any) => {
     const newOptions = options.filter((option: any) => option !== optionToDelete);
     setOptions(newOptions);
-    save(question, newOptions);
+    if (question instanceof MultiChoiceQuestion) question.possibleChoices = newOptions;
+    else {
+      question.possibleOptions = newOptions;
+    }
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   const handleQuestionChange = (value: string) => {
-    setQuestion(value);
-    save(value, options);
-  };
-
-  const save = (value: string, possibleOptions: string[]) => {
-    const questionWithOptions: Question =
-      type === Type.MULTI_CHOICE
-        ? new MultiChoiceQuestion(value, possibleOptions, id)
-        : new DropdownQuestion(value, possibleOptions, id);
-    dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(questionWithOptions));
+    question.question = value;
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   return (

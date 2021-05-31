@@ -5,3 +5,7 @@
 .onlineMeetingHeader {
     font-size: var(--s-font-size);
 }
+
+.hidden {
+    display: none;
+}

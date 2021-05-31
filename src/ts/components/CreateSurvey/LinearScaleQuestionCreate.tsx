@@ -1,41 +1,38 @@
 import React, { useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
+import linearStyles from './LinearScaleQuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
-import { useDispatch } from 'react-redux';
-import allActions from '../../actions';
 import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
 import { LinearScaleQuestion } from '../../model/survey/Question';
+import { BasicQuestionCreateProps } from './BasicQuestionCreate';
 
 const linearScaleFromOptions = Array.from({ length: 2 }, (_, i) => optionToValueLabelPair(i));
 
 const linearScaleToOptions = Array.from({ length: 9 }, (_, i) => optionToValueLabelPair(i + 2));
 
-const LinearScaleQuestionCreate = ({ id }: { id: number }) => {
-  const dispatch: Function = useDispatch();
-  const [question, setQuestion] = useState('');
-  const [fromValue, setFromValue] = useState(0);
-  const [toValue, setToValue] = useState(10);
+const LinearScaleQuestionCreate = ({ id, updateQuestion }: BasicQuestionCreateProps) => {
+  const [question, setQuestion] = useState<LinearScaleQuestion>(
+    new LinearScaleQuestion('', 0, 10, id)
+  );
 
   const handleFromValueChange = ({ value, _ }: any) => {
-    setFromValue(value);
-    save(value, toValue, question);
+    question.fromValue = value;
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   const handleToValueChange = ({ value, _ }: any) => {
-    setToValue(value);
-    save(fromValue, value, question);
+    question.toValue = value;
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   const handleQuestionChange = (value: string) => {
-    setQuestion(value);
-    save(fromValue, toValue, value);
-  };
-
-  const save = (from: number, to: number, value: string) => {
-    const linearScaleQuestion = new LinearScaleQuestion(value, from, to, id);
-    dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(linearScaleQuestion));
+    question.question = value;
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   return (
@@ -52,7 +49,7 @@ const LinearScaleQuestionCreate = ({ id }: { id: number }) => {
           onChange={handleFromValueChange}
           options={linearScaleFromOptions}
           defaultValue={linearScaleFromOptions[0]}
-          className="mx-auto"
+          className={linearStyles.dropdown}
         />
       </Col>
 
@@ -66,7 +63,7 @@ const LinearScaleQuestionCreate = ({ id }: { id: number }) => {
           onChange={handleToValueChange}
           options={linearScaleToOptions}
           defaultValue={linearScaleToOptions[8]}
-          className="mx-auto"
+          className={linearStyles.dropdown}
         />
       </Col>
     </>

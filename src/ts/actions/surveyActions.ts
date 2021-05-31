@@ -37,43 +37,10 @@ const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestion
   });
 };
 
-// prettier-ignore
-const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => {
-  return fetch(getSurveyUrl(surveyId), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(surveyWithQuestions),
-  });
-};
-
-const addQuestionToSurveyWithQuestionsDTO = (question: Question) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'ADD_QUESTION', payload: { question } });
-};
-
-const removeQuestionFromSurveyWithQuestionsDTO = (id: number) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'REMOVE_QUESTION', payload: { id } });
-};
-
-const addDescriptionToSurveyWithQuestionsDTO = (description: string) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'ADD_DESCRIPTION', payload: { description } });
-};
-
-const setMeetingIdInSurveyWithQuestionsDTO = (meetingId: number) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'SET_MEETING_ID', payload: { meetingId } });
-};
-
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
-  addQuestionsToSurvey,
-  addQuestionToSurveyWithQuestionsDTO,
-  removeQuestionFromSurveyWithQuestionsDTO,
-  addDescriptionToSurveyWithQuestionsDTO,
-  setMeetingIdInSurveyWithQuestionsDTO,
 };
 
 export default actions;

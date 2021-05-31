@@ -1,31 +1,34 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PencilIcon from '../common/Icons/PencilIcon';
-import style from './NameAndDesctiption.module.css';
+import styles from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { minSings, maxSings, required } from '../../tools/validator';
+import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 export type NameAndDescriptionProps = {
+  state: creatingMeetingState;
   setName: (name: string) => void;
   setDescription: (description: string) => void;
   setInvalidNameDesc: (invalid: boolean) => void;
 };
 
 const NameAndDescription = ({
+  state,
   setName,
   setDescription,
   setInvalidNameDesc,
 }: NameAndDescriptionProps) => {
   return (
-    <div>
+    <div className={state !== 'name' && state !== 'summary' ? styles.hidden : ''}>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <PencilIcon />
         </Col>
       </Row>
       <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Describe Meeting</div>
+        <div className={styles.createHeader}>Describe Meeting</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col />

@@ -40,7 +40,7 @@ export class YesOrNoQuestion implements Question {
 export class DropdownQuestion implements Question {
   constructor(
     public question: string,
-    public possibleChoices: string[],
+    public possibleOptions: string[],
     public id: number | null = null,
     public type: Type = Type.DROPDOWN
   ) {}
@@ -65,7 +65,7 @@ export const getQuestionFromJson = (question: any): Question | undefined => {
     case Type.YES_OR_NO:
       return new YesOrNoQuestion(question.id, question.question);
     case Type.DROPDOWN:
-      return new DropdownQuestion(question.id, question.question, question.possibleChoices);
+      return new DropdownQuestion(question.id, question.question, question.possibleOptions);
     case Type.LINEAR_SCALE:
       return new LinearScaleQuestion(
         question.id,

@@ -1,18 +1,24 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CalendarIcon from '../common/Icons/CalendarIcon';
-import style from './NameAndDesctiption.module.css';
+import styles from './ChooseTime.module.css';
 import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { useEffect, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 interface rangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
 }
-const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
+
+export type ChooseTimeProps = {
+  state: creatingMeetingState;
+  setSelectedRanges: Function;
+};
+const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<rangesWithDay>({});
   // eslint-disable-next-line
@@ -30,7 +36,7 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
   };
 
   useEffect(() => {
-    let rangesFilltered: TimeRangeDTO[] = [];
+    let rangesFiltered: TimeRangeDTO[] = [];
     for (let key in timeRanges) {
       for (let day of selectedDays) {
         if (
@@ -49,13 +55,13 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
               to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
               from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
               to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
-              rangesFilltered.push({ startDateTime: from, endDateTime: to });
+              rangesFiltered.push({ startDateTime: from, endDateTime: to });
             });
           }
         }
       }
     }
-    setSelectedRanges(rangesFilltered);
+    setSelectedRanges(rangesFiltered);
   }, [timeRanges, selectedDays, setSelectedRanges]);
 
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
@@ -66,14 +72,19 @@ const ChooseTime = ({ setSelectedRanges }: { setSelectedRanges: Function }) => {
     setTimeRanges({ ...ran });
   };
   return (
-    <div style={{ marginLeft: width < 576 ? 0 : 45 }}>
+    <div
+      style={{ marginLeft: width < 576 ? 0 : 45 }}
+      className={
+        state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
+      }
+    >
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <CalendarIcon />
         </Col>
       </Row>
       <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Set time of the meeting</div>
+        <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col />

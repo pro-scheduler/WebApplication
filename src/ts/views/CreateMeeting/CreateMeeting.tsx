@@ -19,6 +19,10 @@ import {
   RealMeetingDetailsDTO,
 } from '../../model/meeting/Meeting';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
+import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
+
+export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -28,6 +32,12 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
+    description: '',
+    meetingId: -1,
+    questions: [],
+  });
 
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
@@ -36,9 +46,8 @@ const CreateMeeting = () => {
   const message = useSelector((state: RootStateOrAny) => {
     return state.messages.createMeetingMessage;
   });
-  const survey = useSelector((state: RootStateOrAny) => {
-    return state.surveyReducer;
-  });
+  const [state, setState] = useState<creatingMeetingState>('name');
+
   const saveMeeting = () => {
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
@@ -50,31 +59,44 @@ const CreateMeeting = () => {
         {
           emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
         },
-        survey.newSurvey
+        survey
       )
     );
   };
 
   return (
     <Container className="ml-5 ml-sm-auto">
+      <MeetingNavbar
+        state={state}
+        setState={setState}
+        disabledSummary={invalidNameDesc || !required()(name)}
+      />
       <NameAndDescription
+        state={state}
         setName={setName}
         setDescription={setDescription}
         setInvalidNameDesc={setInvalidNameDesc}
       />
-      <ChooseTime setSelectedRanges={setTimeRanges} />
-      <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
-      <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
-      <CreateSurvey />
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
-          <ActionButton
-            text="Create meeting"
-            onclick={saveMeeting}
-            disabled={invalidNameDesc || !required()(name)}
-          />
-        </Col>
-      </Row>
+      <ChooseTime state={state} setSelectedRanges={setTimeRanges} />
+      <CreateInvitations state={state} showIcon={true} emails={emails} setEmails={setEmails} />
+      <OnlineDetails
+        state={state}
+        onlineLink={onlineLink}
+        setOnlineLink={setOnlineLink}
+        setOnlinePassword={setOnlinePassword}
+      />
+      <CreateSurvey survey={survey} state={state} />
+      {state === 'summary' && (
+        <Row className="justify-content-center mt-5">
+          <Col xs="auto">
+            <ActionButton
+              text="Save meeting"
+              onclick={saveMeeting}
+              disabled={invalidNameDesc || !required()(name)}
+            />
+          </Col>
+        </Row>
+      )}
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           {messageStatus !== 'NO_DISPLAY' && (

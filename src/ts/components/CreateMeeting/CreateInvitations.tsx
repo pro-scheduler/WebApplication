@@ -1,18 +1,20 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import style from './NameAndDesctiption.module.css';
+import styles from './ChooseTime.module.css';
 import { useState } from 'react';
 import { optionToValueLabelPair, ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import MultiValueInput from '../common/forms/Input/MultiValueInput';
 import FriendsIcon from '../common/Icons/FriendsIcon';
+import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 export type CreateInvitationsProps = {
+  state: creatingMeetingState;
   showIcon: boolean;
   emails: ValueLabelPair[];
   setEmails: (newEmails: ValueLabelPair[]) => void;
 };
 
-const CreateInvitations = ({ showIcon, emails, setEmails }: CreateInvitationsProps) => {
+const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitationsProps) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleKeyDown = (event: any) => {
@@ -33,7 +35,11 @@ const CreateInvitations = ({ showIcon, emails, setEmails }: CreateInvitationsPro
   };
 
   return (
-    <div>
+    <div
+      className={
+        state !== 'invitations' && (state !== 'summary' || emails.length === 0) ? styles.hidden : ''
+      }
+    >
       {showIcon && (
         <>
           <Row className="justify-content-center mt-5">
@@ -43,7 +49,7 @@ const CreateInvitations = ({ showIcon, emails, setEmails }: CreateInvitationsPro
           </Row>
 
           <Row className="justify-content-center mt-4">
-            <div className={style.createHeader}>Invite participants</div>
+            <div className={styles.createHeader}>Invite participants</div>
           </Row>
         </>
       )}
