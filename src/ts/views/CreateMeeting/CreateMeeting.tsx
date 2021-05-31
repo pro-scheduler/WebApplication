@@ -70,29 +70,22 @@ const CreateMeeting = () => {
       <MeetingNavbar
         state={state}
         setState={setState}
-        disabledName={!invalidNameDesc && required()(name)}
-        disabledTime={timeRanges.length !== 0}
-        disabledInvitations={emails.length !== 0}
-        disabledPlace={onlineLink !== ''}
-        disabledSurvey={survey.questions.length !== 0}
         disabledSummary={invalidNameDesc || !required()(name)}
       />
-
-      {state === 'name' && (
-        <NameAndDescription
-          setName={setName}
-          setDescription={setDescription}
-          setInvalidNameDesc={setInvalidNameDesc}
-        />
-      )}
-      {state === 'time' && <ChooseTime setSelectedRanges={setTimeRanges} />}
-      {state === 'invitations' && (
-        <CreateInvitations showIcon={true} emails={emails} setEmails={setEmails} />
-      )}
-      {state === 'place' && (
-        <OnlineDetails setOnlineLink={setOnlineLink} setOnlinePassword={setOnlinePassword} />
-      )}
-      {state === 'survey' && <CreateSurvey survey={survey} />}
+      <NameAndDescription
+        state={state}
+        setName={setName}
+        setDescription={setDescription}
+        setInvalidNameDesc={setInvalidNameDesc}
+      />
+      <ChooseTime state={state} setSelectedRanges={setTimeRanges} />
+      <CreateInvitations state={state} showIcon={true} emails={emails} setEmails={setEmails} />
+      <OnlineDetails
+        state={state}
+        setOnlineLink={setOnlineLink}
+        setOnlinePassword={setOnlinePassword}
+      />
+      <CreateSurvey survey={survey} state={state} />
       {state === 'summary' && (
         <>
           <MeetingSummary

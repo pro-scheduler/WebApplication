@@ -4,15 +4,17 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import WorldIcon from '../common/Icons/WorldIcon';
 import styles from './OnlineDetails.module.css';
 import React from 'react';
+import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 export type OnlineDetailsProps = {
+  state: creatingMeetingState;
   setOnlineLink: (name: string) => void;
   setOnlinePassword: (description: string) => void;
 };
 
-const OnlineDetails = ({ setOnlineLink, setOnlinePassword }: OnlineDetailsProps) => {
+const OnlineDetails = ({ state, setOnlineLink, setOnlinePassword }: OnlineDetailsProps) => {
   return (
-    <div>
+    <div className={state !== 'place' ? styles.hidden : ''}>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <WorldIcon />

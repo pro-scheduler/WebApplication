@@ -8,71 +8,37 @@ import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 export type MeetingNavbarProps = {
   state: creatingMeetingState;
   setState: (state: creatingMeetingState) => void;
-  disabledName: boolean;
-  disabledTime: boolean;
-  disabledInvitations: boolean;
-  disabledPlace: boolean;
-  disabledSurvey: boolean;
   disabledSummary: boolean;
 };
 
-const MeetingNavbar = ({
-  state,
-  setState,
-  disabledName,
-  disabledTime,
-  disabledInvitations,
-  disabledPlace,
-  disabledSurvey,
-  disabledSummary,
-}: MeetingNavbarProps) => {
+const MeetingNavbar = ({ state, setState, disabledSummary }: MeetingNavbarProps) => {
   return (
     <Row className="justify-content-center mt-5">
       <Col xs="auto" style={{ display: 'flex' }}>
         <div className={styles.wrapper}>
           <ul className={styles.items}>
             <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
-              <button
-                className={styles.itemButton}
-                onClick={() => setState('name')}
-                disabled={disabledName}
-              >
+              <button className={styles.itemButton} onClick={() => setState('name')}>
                 What
               </button>
             </li>
             <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
-              <button
-                className={styles.itemButton}
-                onClick={() => setState('time')}
-                disabled={disabledTime}
-              >
+              <button className={styles.itemButton} onClick={() => setState('time')}>
                 When
               </button>
             </li>
             <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
-              <button
-                className={styles.itemButton}
-                onClick={() => setState('invitations')}
-                disabled={disabledInvitations}
-              >
+              <button className={styles.itemButton} onClick={() => setState('invitations')}>
                 Who
               </button>
             </li>
             <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
-              <button
-                className={styles.itemButton}
-                onClick={() => setState('place')}
-                disabled={disabledPlace}
-              >
+              <button className={styles.itemButton} onClick={() => setState('place')}>
                 Where
               </button>
             </li>
             <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
-              <button
-                className={styles.itemButton}
-                onClick={() => setState('survey')}
-                disabled={disabledSurvey}
-              >
+              <button className={styles.itemButton} onClick={() => setState('survey')}>
                 Why
               </button>
             </li>

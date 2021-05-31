@@ -10,12 +10,14 @@ import { TiDelete } from 'react-icons/ti';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
+import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 export type CreateSurveyProps = {
+  state: creatingMeetingState;
   survey: SurveyWithQuestionsDTO;
 };
 
-const CreateSurvey = ({ survey }: CreateSurveyProps) => {
+const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
 
@@ -45,7 +47,7 @@ const CreateSurvey = ({ survey }: CreateSurveyProps) => {
   }, []);
 
   return (
-    <div className="mb-5">
+    <div className={state !== 'survey' ? styles.hidden : ''}>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <SurveyIcon />
