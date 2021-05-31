@@ -1,6 +1,5 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import style from './NameAndDesctiption.module.css';
 import styles from './ChooseTime.module.css';
 import { useState } from 'react';
 import { optionToValueLabelPair, ValueLabelPair } from '../../model/utils/ValueLabelPair';
@@ -50,7 +49,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
           </Row>
 
           <Row className="justify-content-center mt-4">
-            <div className={style.createHeader}>Invite participants</div>
+            <div className={styles.createHeader}>Invite participants</div>
           </Row>
         </>
       )}

@@ -1,7 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CalendarIcon from '../common/Icons/CalendarIcon';
-import style from './NameAndDesctiption.module.css';
 import styles from './ChooseTime.module.css';
 import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -85,7 +84,7 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
         </Col>
       </Row>
       <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Set time of the meeting</div>
+        <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col />

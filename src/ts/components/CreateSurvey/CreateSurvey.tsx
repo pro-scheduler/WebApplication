@@ -1,7 +1,6 @@
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import SurveyIcon from '../common/Icons/SurveyIcon';
-import style from '../CreateMeeting/NameAndDesctiption.module.css';
 import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
@@ -59,7 +58,7 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
       </Row>
 
       <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Create survey</div>
+        <div className={styles.createHeader}>Create survey</div>
       </Row>
 
       <Row className="justify-content-center mt-4">

@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PencilIcon from '../common/Icons/PencilIcon';
-import style from './NameAndDesctiption.module.css';
+import styles from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { minSings, maxSings, required } from '../../tools/validator';
@@ -21,14 +21,14 @@ const NameAndDescription = ({
   setInvalidNameDesc,
 }: NameAndDescriptionProps) => {
   return (
-    <div className={state !== 'name' && state !== 'summary' ? style.hidden : ''}>
+    <div className={state !== 'name' && state !== 'summary' ? styles.hidden : ''}>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <PencilIcon />
         </Col>
       </Row>
       <Row className="justify-content-center mt-4">
-        <div className={style.createHeader}>Describe Meeting</div>
+        <div className={styles.createHeader}>Describe Meeting</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col />
