@@ -75,7 +75,9 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
   return (
     <div
       style={{ marginLeft: width < 576 ? 0 : 45 }}
-      className={state !== 'time' ? styles.hidden : ''}
+      className={
+        state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
+      }
     >
       <Row className="justify-content-center mt-5">
         <Col xs="auto">

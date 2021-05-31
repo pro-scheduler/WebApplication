@@ -21,7 +21,7 @@ const NameAndDescription = ({
   setInvalidNameDesc,
 }: NameAndDescriptionProps) => {
   return (
-    <div className={state !== 'name' ? style.hidden : ''}>
+    <div className={state !== 'name' && state !== 'summary' ? style.hidden : ''}>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <PencilIcon />

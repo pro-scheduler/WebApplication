@@ -47,7 +47,11 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   }, []);
 
   return (
-    <div className={state !== 'survey' ? styles.hidden : ''}>
+    <div
+      className={
+        state !== 'survey' && (state !== 'summary' || questions.length === 0) ? styles.hidden : ''
+      }
+    >
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <SurveyIcon />

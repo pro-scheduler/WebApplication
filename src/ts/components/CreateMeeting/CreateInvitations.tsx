@@ -36,7 +36,11 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
   };
 
   return (
-    <div className={state !== 'invitations' ? styles.hidden : ''}>
+    <div
+      className={
+        state !== 'invitations' && (state !== 'summary' || emails.length === 0) ? styles.hidden : ''
+      }
+    >
       {showIcon && (
         <>
           <Row className="justify-content-center mt-5">

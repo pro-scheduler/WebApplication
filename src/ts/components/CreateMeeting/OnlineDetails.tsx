@@ -8,13 +8,23 @@ import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
 export type OnlineDetailsProps = {
   state: creatingMeetingState;
+  onlineLink: string;
   setOnlineLink: (name: string) => void;
   setOnlinePassword: (description: string) => void;
 };
 
-const OnlineDetails = ({ state, setOnlineLink, setOnlinePassword }: OnlineDetailsProps) => {
+const OnlineDetails = ({
+  state,
+  onlineLink,
+  setOnlineLink,
+  setOnlinePassword,
+}: OnlineDetailsProps) => {
   return (
-    <div className={state !== 'place' ? styles.hidden : ''}>
+    <div
+      className={
+        state !== 'place' && (state !== 'summary' || onlineLink === '') ? styles.hidden : ''
+      }
+    >
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
           <WorldIcon />

@@ -21,7 +21,6 @@ import {
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
-import MeetingSummary from '../../components/CreateMeeting/MeetingSummary';
 
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
@@ -82,31 +81,21 @@ const CreateMeeting = () => {
       <CreateInvitations state={state} showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails
         state={state}
+        onlineLink={onlineLink}
         setOnlineLink={setOnlineLink}
         setOnlinePassword={setOnlinePassword}
       />
       <CreateSurvey survey={survey} state={state} />
       {state === 'summary' && (
-        <>
-          <MeetingSummary
-            name={name}
-            description={description}
-            emails={emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString())}
-            onlineLink={onlineLink}
-            onlinePassword={onlinePassword}
-            timeRanges={timeRanges}
-            survey={survey}
-          />
-          <Row className="justify-content-center mt-5">
-            <Col xs="auto">
-              <ActionButton
-                text="Save meeting"
-                onclick={saveMeeting}
-                disabled={invalidNameDesc || !required()(name)}
-              />
-            </Col>
-          </Row>
-        </>
+        <Row className="justify-content-center mt-5">
+          <Col xs="auto">
+            <ActionButton
+              text="Save meeting"
+              onclick={saveMeeting}
+              disabled={invalidNameDesc || !required()(name)}
+            />
+          </Col>
+        </Row>
       )}
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
