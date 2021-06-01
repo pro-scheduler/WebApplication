@@ -1,0 +1,136 @@
+.titleRect {
+  background-color: white;
+  color: black;
+  border-radius: var(--border-radius);
+  width: 100%;
+  height: 100px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  margin-bottom: 20px;
+
+  .primaryLabel {
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  .secondaryLabel {
+    font-size: var(--xs-font-size);
+    font-weight: normal;
+  }
+}
+
+.borderRadius {
+  border-radius: var(--border-radius);
+}
+
+.top_hours_grid {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  width: 100%;
+  height: 10px;
+  position: relative;
+  background-color: white;
+  bottom: 0;
+}
+
+.hours_grid {
+  clip-path: inset(0px -20px -20px -20px);
+  box-shadow: 4px 4px 8px -2px rgba(90, 70, 69, 0.5);
+  border-radius: var(--border-radius);
+  padding-bottom: 10px;
+  width: 100%;
+  background-color: white;
+  position: relative;
+}
+
+.button_cell {
+  background-color: white;
+  height: 36px;
+  width: 100%;
+  position: relative;
+  color: var(--medium-grey);
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.hrLine {
+  color: #EBEBEB;
+  height: 1.5px;
+  margin: 0;
+  border-top: 1.5px solid rgba(0, 0, 0, .1) !important;
+}
+
+.bottom_radius {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.cell {
+  background-color: var(--light-red);
+  height: 30px;
+  box-shadow: var(--shadow);
+  border-width: 5px;
+  border-color: black;
+  position: absolute;
+}
+
+.rangeBoxContainer {
+  position: absolute;
+  width: 100%;
+}
+
+.rangeBox {
+  background-color: var(--bright-green);
+  height: 36px;
+  box-shadow: var(--shadow);
+  color: white;
+  width: 100%;
+}
+
+.hourLabel {
+  font-size: 12px;
+}
+
+.handle-wrapper {
+  z-index: var(--z-index-handle-wrapper);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  background-position: center;
+  padding: 0 3px 3px 0;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  box-sizing: border-box;
+  color: var(--color-handle-wrapper-text);
+  vertical-align: middle;
+  cursor: grabbing;
+
+  .handle.top {
+    top: -5px !important;
+    cursor: n-resize !important;
+  }
+
+  .handle.bottom {
+    bottom: 8px !important;
+    cursor: s-resize !important;
+  }
+
+  .handle.top,
+  .handle.bottom {
+    &::after {
+      display: block;
+      text-align: center;
+      content: '═';
+    }
+  }
+}
+
+.locked_cell {
+  position: absolute;
+  background-color: gray;
+  width: 80%;
+  transform: translate(62px);
+  border-radius: var(--border-radius);
+}
