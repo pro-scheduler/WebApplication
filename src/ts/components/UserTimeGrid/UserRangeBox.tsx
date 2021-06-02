@@ -12,6 +12,7 @@ export type RangeBoxProps = {
   defaultTop: any;
   id: number;
   changeParams: any;
+  lockedRanges: Array<{ top: number; bottom: number }>;
 };
 const UserRangeBox = ({
   step,
@@ -21,6 +22,7 @@ const UserRangeBox = ({
   defaultTop,
   id,
   changeParams,
+  lockedRanges,
 }: RangeBoxProps) => {
   const [top, setTop] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
@@ -28,6 +30,16 @@ const UserRangeBox = ({
   const [topDelta, setTopDelta] = useState<number>(0);
   const [delta, setDelta] = useState<number>(0);
   const [draggingDelta, setDraggingDelta] = useState<number>(0);
+
+  const findNearestTopLocked = (height: number, whichNeares: string) => {
+    for (let range of lockedRanges) {
+      if (range.top <= height && range.bottom >= height) {
+        if (whichNeares === 'top') return range.top;
+        if (whichNeares === 'bottom') return range.bottom;
+      }
+    }
+    return 0;
+  };
 
   const positionToTime = (position: number) => {
     const hour: number = Math.floor((5 * (position / step)) / 60);
@@ -60,31 +72,82 @@ const UserRangeBox = ({
   };
 
   const handleStop = () => {
+    // console.log(topDelta, delta, defaultTop, defaultHeight, top, height, draggingDelta);
+
+    // let currentTop = topDelta + defaultTop;
+    // let currentBottom = defaultHeight + delta;
+    // let currentHeight = currentBottom - currentTop;
+
+    // let toChangeHeight: number = currentHeight;
+    // let toChangeTop: number = top + defaultTop;
+
+    // console.log('currentTop', currentTop, 'currentBottom', currentBottom, 'height', currentHeight);
+    // if (changeDirection.includes('top')) {
+    //   let nearestTop = findNearestTopLocked(currentBottom, 'top');
+    //   console.log('nearest top', nearestTop, currentBottom);
+    //   if (currentTop < nearestTop) {
+    //     console.log('change top');
+    //     toChangeTop = nearestTop;
+    //   }
+    // } else {
+    //   let nearestBottom = findNearestTopLocked(currentTop, 'bottom');
+    //   console.log('nearest bottom', nearestBottom);
+    //   if (currentBottom > nearestBottom) {
+    //     console.log('change bottom');
+    //     toChangeHeight = currentHeight - (currentBottom - nearestBottom);
+    //   }
+    // }
+    // // if (changeDirection.includes('top')) {
+    // //   console.log('Here');
+    // //   let nearesTop = findNearestTopLocked(toChangeHeight + topDelta + defaultTop, 'top');
+    // //   if (topDelta + defaultTop <= nearesTop) {
+    // //     setTop(nearesTop);
+    // //     toChangeTop = topDelta + defaultTop;
+    // //   }
+    // // }
+    // setTop(0);
+    // setTopDelta(0);
+    // setDelta(0);
+    // setHeight(0);
+    // changeParams(id, toChangeTop, toChangeHeight);
+
+    //  ---------
+
     let toChangeHeight: number;
     let toChangeTop: number = top + defaultTop;
 
-    if (top + topDelta + draggingDelta + height + delta + defaultTop + defaultHeight > boxSize) {
-      setHeight(boxSize - top - topDelta - draggingDelta - defaultTop);
-      toChangeHeight = boxSize - top - topDelta - draggingDelta - defaultTop;
-    } else if (top + topDelta + defaultTop + draggingDelta < 0) {
-      setHeight(height + top + defaultTop);
-      toChangeHeight = height + defaultHeight + top + defaultTop;
-      toChangeTop = 0;
-      setTopDelta(0);
-      setDraggingDelta(0);
+    let currentBottom =
+      top + topDelta + draggingDelta + height + delta + defaultTop + defaultHeight;
+    let currentTop = top + topDelta + defaultTop + draggingDelta;
+    console.log(changeDirection);
+    if (!changeDirection.includes('top')) {
+      let nearestBottom = findNearestTopLocked(currentTop, 'bottom');
+      if (currentBottom > nearestBottom) {
+        setHeight(nearestBottom - top - topDelta - draggingDelta - defaultTop);
+        toChangeHeight = nearestBottom - top - topDelta - draggingDelta - defaultTop;
+      } else {
+        setHeight(height + delta);
+        toChangeHeight = height + delta + defaultHeight;
+      }
     } else {
-      setHeight(height + delta);
-      toChangeHeight = height + delta + defaultHeight;
-    }
-    setDelta(0);
-
-    if (changeDirection.includes('top')) {
-      if (top + topDelta + defaultTop + draggingDelta >= 0) {
+      let nearestTop = findNearestTopLocked(currentBottom, 'top');
+      console.log(nearestTop);
+      if (currentTop < nearestTop) {
+        setHeight(height + top + defaultTop);
+        toChangeHeight = currentBottom - nearestTop;
+        toChangeTop = nearestTop;
+        setTopDelta(0);
+        setDraggingDelta(0);
+      } else {
+        setHeight(height + delta);
         setTop(top + topDelta);
+        toChangeHeight = height + delta + defaultHeight;
         toChangeTop = top + topDelta + defaultTop + draggingDelta;
         setTopDelta(0);
       }
     }
+
+    setDelta(0);
     setTop(0);
     setHeight(0);
     changeParams(id, toChangeTop, toChangeHeight);

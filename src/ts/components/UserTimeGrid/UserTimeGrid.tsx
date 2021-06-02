@@ -21,7 +21,8 @@ const UserTimeGrid = ({
   lockedRanges,
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<any>({});
-  const [calculatedRanges, setCalculatedRanges] = useState<any>([]);
+  const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<any>([]);
+  const [mappedLocked, setMappedLocked] = useState<any>([]);
   const step = 3;
   const changeParams = (id: number, top: number, height: number) => {
     let tmp = { ...rangesParams };
@@ -83,6 +84,7 @@ const UserTimeGrid = ({
             defaultTop={rangesParams[key].top}
             id={rangesParams[key].id}
             changeParams={changeParams}
+            lockedRanges={mappedLocked}
           />
         );
       }
@@ -95,9 +97,20 @@ const UserTimeGrid = ({
     for (let key of lockedRanges) {
       let tmp = mapHourToPosition(key);
       ranges.push(<LockedCell top={tmp.top} height={tmp.height} />);
-      console.log(key);
     }
-    setCalculatedRanges(ranges);
+    setCalculatedLockedRanges(ranges);
+  }, [lockedRanges]);
+
+  useEffect(() => {
+    setMappedLocked(
+      lockedRanges.map((range) => {
+        let tmp = mapHourToPosition(range);
+        return {
+          top: tmp.top,
+          bottom: tmp.top + tmp.height,
+        };
+      })
+    );
   }, [lockedRanges]);
 
   const onClick = (y: number, height: number) => {
@@ -175,7 +188,7 @@ const UserTimeGrid = ({
       </div>
       <div className={styles.top_hours_grid} />
       <div className={styles.hours_grid}>
-        {calculatedRanges}
+        {calculatedLockedRanges}
         {hourButtonsGrid()}
         {calculateRanges()}
       </div>
