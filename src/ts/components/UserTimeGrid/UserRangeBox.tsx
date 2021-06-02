@@ -182,8 +182,16 @@ const UserRangeBox = ({
       <Draggable
         axis={'y'}
         bounds={{
-          top: -top - defaultTop,
-          bottom: boxSize - top - height - defaultTop - defaultHeight,
+          top:
+            -top -
+            defaultTop +
+            findNearestTopLocked(top + defaultTop + height + defaultHeight, 'top'),
+          bottom:
+            findNearestTopLocked(top + defaultTop, 'bottom') -
+            top -
+            height -
+            defaultTop -
+            defaultHeight,
           left: 0,
           right: 0,
         }}
