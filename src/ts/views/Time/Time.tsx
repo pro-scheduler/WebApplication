@@ -55,7 +55,12 @@ const Time = () => {
             secondaryLabel="Thursday"
             boxSizes={36}
             addRanges={() => {}}
-            lockedRanges={[]}
+            lockedRanges={[
+              {
+                from: '00:00',
+                to: '23:50',
+              },
+            ]}
           />
         </Col>
         <Col>
@@ -76,6 +81,46 @@ const Time = () => {
               {
                 from: '16:00',
                 to: '18:00',
+              },
+            ]}
+          />
+        </Col>
+        <Col>
+          <UserTimeGrid
+            primaryLabel="24.04"
+            secondaryLabel="Friday"
+            boxSizes={36}
+            addRanges={() => {}}
+            lockedRanges={[
+              {
+                from: '01:00',
+                to: '14:00',
+              },
+              {
+                from: '15:00',
+                to: '19:30',
+              },
+            ]}
+          />
+        </Col>
+        <Col>
+          <UserTimeGrid
+            primaryLabel="24.04"
+            secondaryLabel="Friday"
+            boxSizes={36}
+            addRanges={() => {}}
+            lockedRanges={[
+              {
+                from: '01:00',
+                to: '01:15',
+              },
+              {
+                from: '01:45',
+                to: '01:55',
+              },
+              {
+                from: '14:15',
+                to: '14:45',
               },
             ]}
           />

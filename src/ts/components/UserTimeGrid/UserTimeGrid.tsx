@@ -114,9 +114,17 @@ const UserTimeGrid = ({
   }, [lockedRanges]);
 
   const onClick = (y: number, height: number) => {
-    let randId = Math.floor(Math.random() * 10000);
-    rangesParams[randId.toString()] = { top: y, height: height, id: randId };
-    setRangesParams({ ...rangesParams });
+    let bottom = y + height;
+    let commonRanges = getAllCommonRanges(y, bottom);
+    if (commonRanges.length > 0) {
+      for (let range of commonRanges) {
+        let randId = Math.floor(Math.random() * 10000);
+        let top = range.top > y ? range.top : y;
+        let bot = range.bottom < bottom ? range.bottom : bottom;
+        rangesParams[randId.toString()] = { top: top, height: bot - top, id: randId };
+      }
+      setRangesParams({ ...rangesParams });
+    }
   };
 
   useEffect(() => {
@@ -156,6 +164,25 @@ const UserTimeGrid = ({
     mergeCallback();
   }, [rangesParams]);
 
+  const hasCommonRange = (top: number, bottom: number) => {
+    for (let range of mappedLocked) {
+      if (range.top < bottom && top < range.bottom) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const getAllCommonRanges = (top: number, bottom: number) => {
+    let ranges = [];
+    for (let range of mappedLocked) {
+      if (range.top < bottom && top < range.bottom) {
+        ranges.push(range);
+      }
+    }
+    return ranges;
+  };
+
   const hourButtonsGrid = () => {
     let buttons = [];
     for (let i = 0; i < 24; i++) {
@@ -164,7 +191,15 @@ const UserTimeGrid = ({
           <div
             role="button"
             onClick={() => onClick(boxSizes * i, 36)}
-            className={styles.button_cell + ' ' + (i === 23 ? styles.bottom_radius : '')}
+            className={
+              styles.button_cell +
+              ' ' +
+              (i === 23 ? styles.bottom_radius : '') +
+              ' ' +
+              (!hasCommonRange(i * step * 12, i * step * 12 + step * 12)
+                ? styles.button_dissabled
+                : '')
+            }
           >
             <Row className={'m-0'}>
               <Col className={'align-self-center pr-0'} xs="auto">
