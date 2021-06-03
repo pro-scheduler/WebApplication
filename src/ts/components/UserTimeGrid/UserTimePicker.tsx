@@ -9,59 +9,67 @@ import { TimeRange } from '../../model/TimeRange';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+interface RangesWithDay {
+  [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
+}
+
 const UserTimePicker = ({
-  days,
   count,
   setRanges,
+  avaiableRanegs,
 }: {
-  days: Date[];
   count: number;
   setRanges: Function;
+  avaiableRanegs: RangesWithDay;
 }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
   const [start, setStart] = useState<number>(0);
 
   useEffect(() => {
-    const tmp = days.map((day: Date, index: number) => (
-      <Col hidden={!(index >= start && index < start + count)} key={index}>
-        <UserTimeGrid
-          primaryLabel={
-            ('0' + day.getDate()).slice(-2) + '.' + ('0' + (day.getMonth() + 1)).slice(-2)
-          }
-          secondaryLabel={weekDays[day.getDay()]}
-          boxSizes={36}
-          addRanges={(range: TimeRange) => {
-            const date =
-              ('0' + day.getDate()).slice(-2) +
+    const tmp = Object.values(avaiableRanegs).map(
+      (value: { ranges: Array<{ from: string; to: string }>; date: Date }, index: number) => (
+        <Col hidden={!(index >= start && index < start + count)} key={index}>
+          <UserTimeGrid
+            primaryLabel={
+              ('0' + value.date.getDate()).slice(-2) +
               '.' +
-              ('0' + day.getMonth()).slice(-2) +
-              '.' +
-              day.getFullYear();
-            setRanges(date, range, day);
-          }}
-          lockedRanges={[]}
-        />
-      </Col>
-    ));
+              ('0' + (value.date.getMonth() + 1)).slice(-2)
+            }
+            secondaryLabel={weekDays[value.date.getDay()]}
+            boxSizes={36}
+            addRanges={(range: TimeRange) => {
+              const date =
+                ('0' + value.date.getDate()).slice(-2) +
+                '.' +
+                ('0' + value.date.getMonth()).slice(-2) +
+                '.' +
+                value.date.getFullYear();
+              setRanges(date, range, value.date);
+            }}
+            lockedRanges={value.ranges}
+          />
+        </Col>
+      )
+    );
     while (tmp.length < count) {
       tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
-  }, [start, days, count, setRanges]);
+  }, [start, avaiableRanegs, count, setRanges]);
 
   return (
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
       <div className={styles.leftArrow}>
-        {days.length > count && (
+        {Object.values(avaiableRanegs).length > count && (
           <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
         )}
       </div>
       {currentDays}
       <div className={styles.rightArrow}>
-        {days.length > count && (
+        {Object.values(avaiableRanegs).length > count && (
           <NextRightButton
             onclick={() => setStart(start + 1)}
-            disabled={start >= days.length - count}
+            disabled={start >= Object.values(avaiableRanegs).length - count}
           />
         )}
       </div>

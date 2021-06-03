@@ -96,7 +96,9 @@ const UserTimeGrid = ({
     let ranges: any = [];
     for (let key of lockedRanges) {
       let tmp = mapHourToPosition(key);
-      ranges.push(<LockedCell top={tmp.top} height={tmp.height} />);
+      ranges.push(
+        <LockedCell top={tmp.top} height={tmp.height} key={tmp.top + ' ' + tmp.height} />
+      );
     }
     setCalculatedLockedRanges(ranges);
   }, [lockedRanges]);

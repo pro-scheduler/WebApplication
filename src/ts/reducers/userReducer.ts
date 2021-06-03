@@ -2,7 +2,7 @@ import { ProUser } from '../model/user/ProUser';
 
 const defaultState: ProUser = {
   id: 2,
-  email: 'ola@gmail.com',
+  email: 'ala@gmail.com',
   organizedMeetings: [],
   participatedMeetings: [],
 };
