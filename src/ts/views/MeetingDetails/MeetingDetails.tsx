@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
+import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import actions from '../../actions/meetingActions';
@@ -43,6 +44,7 @@ const MeetingDetails = () => {
           undefined
         }
       />
+      <MeetingTime meetingId={id} timeRanges={meetingState.meeting.availableTimeRanges} />
     </Container>
   );
 };

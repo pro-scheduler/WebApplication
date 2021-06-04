@@ -10,7 +10,7 @@ import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 
-interface rangesWithDay {
+interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
 }
 
@@ -20,7 +20,7 @@ export type ChooseTimeProps = {
 };
 const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
-  const [timeRanges, setTimeRanges] = useState<rangesWithDay>({});
+  const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
@@ -65,7 +65,7 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
   }, [timeRanges, selectedDays, setSelectedRanges]);
 
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
-    let ran: rangesWithDay = {
+    let ran: RangesWithDay = {
       ...timeRanges,
     };
     ran[date] = { ranges: ranges, date: day };
