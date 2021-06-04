@@ -13,6 +13,10 @@ export type UserTimeGridProps = {
   lockedRanges: Array<{ from: string; to: string }>;
 };
 
+interface Ranges {
+  [key: string]: { top: number; height: number; id: number };
+}
+
 const UserTimeGrid = ({
   primaryLabel,
   secondaryLabel,
@@ -20,9 +24,9 @@ const UserTimeGrid = ({
   addRanges,
   lockedRanges,
 }: UserTimeGridProps) => {
-  const [rangesParams, setRangesParams] = useState<any>({});
-  const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<any>([]);
-  const [mappedLocked, setMappedLocked] = useState<any>([]);
+  const [rangesParams, setRangesParams] = useState<Ranges>({});
+  const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
+  const [mappedLocked, setMappedLocked] = useState<Array<{ top: number; bottom: number }>>([]);
   const step = 3;
   const changeParams = (id: number, top: number, height: number) => {
     let tmp = { ...rangesParams };
@@ -71,7 +75,7 @@ const UserTimeGrid = ({
   }, [rangesParams]);
 
   const calculateRanges = () => {
-    let ranges: any = [];
+    let ranges: Array<JSX.Element> = [];
     for (const key in rangesParams) {
       if (rangesParams.hasOwnProperty(key)) {
         ranges.push(
@@ -93,7 +97,7 @@ const UserTimeGrid = ({
   };
 
   useEffect(() => {
-    let ranges: any = [];
+    let ranges: Array<JSX.Element> = [];
     for (let key of lockedRanges) {
       let tmp = mapHourToPosition(key);
       ranges.push(
@@ -199,7 +203,7 @@ const UserTimeGrid = ({
               (i === 23 ? styles.bottom_radius : '') +
               ' ' +
               (!hasCommonRange(i * step * 12, i * step * 12 + step * 12)
-                ? styles.button_dissabled
+                ? styles.button_disabled
                 : '')
             }
           >

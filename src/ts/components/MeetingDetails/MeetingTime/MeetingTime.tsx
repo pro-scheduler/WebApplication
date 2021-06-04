@@ -30,7 +30,6 @@ const MeetingTime = ({ meetingId, timeRanges }: MeetingTimeProps) => {
 
   useEffect(() => {
     let ranges: RangesWithDay = {};
-    console.log(timeRanges);
     timeRanges
       .map((range) => {
         const start = new Date(range.startDateTime);
@@ -52,18 +51,13 @@ const MeetingTime = ({ meetingId, timeRanges }: MeetingTimeProps) => {
     setAvaiableRanges(ranges);
   }, [timeRanges, setAvaiableRanges]);
 
-  useEffect(() => {
-    // we can use this then to save preferences
-    console.log('Selected Ranges:', selectedRanges);
-  }, [selectedRanges]);
-
   return (
     <Row className="justify-content mt-5 ml-5 mb-5 pl-5">
       <Col>
         <LineWithHeader header={'When'} />
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
           <UserTimePicker
-            avaiableRanegs={avaiableRanges}
+            availableRanegs={avaiableRanges}
             count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
             setRanges={setRanges}
           />

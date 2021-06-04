@@ -5,7 +5,7 @@ export type LockCellProps = {
   top: any;
 };
 const LockedCell = ({ height, top }: LockCellProps) => {
-  return <div className={styles.locked_cell} style={{ top: top, height: height }}></div>;
+  return <div className={styles.locked_cell} style={{ top: top, height: height }} />;
 };
 
 export default LockedCell;

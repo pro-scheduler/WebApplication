@@ -18,7 +18,6 @@ const UserRangeBox = ({
   step,
   defaultHeight,
   max,
-  boxSize,
   defaultTop,
   id,
   changeParams,
@@ -72,54 +71,12 @@ const UserRangeBox = ({
   };
 
   const handleStop = () => {
-    // console.log(topDelta, delta, defaultTop, defaultHeight, top, height, draggingDelta);
-
-    // let currentTop = topDelta + defaultTop;
-    // let currentBottom = defaultHeight + delta;
-    // let currentHeight = currentBottom - currentTop;
-
-    // let toChangeHeight: number = currentHeight;
-    // let toChangeTop: number = top + defaultTop;
-
-    // console.log('currentTop', currentTop, 'currentBottom', currentBottom, 'height', currentHeight);
-    // if (changeDirection.includes('top')) {
-    //   let nearestTop = findNearestTopLocked(currentBottom, 'top');
-    //   console.log('nearest top', nearestTop, currentBottom);
-    //   if (currentTop < nearestTop) {
-    //     console.log('change top');
-    //     toChangeTop = nearestTop;
-    //   }
-    // } else {
-    //   let nearestBottom = findNearestTopLocked(currentTop, 'bottom');
-    //   console.log('nearest bottom', nearestBottom);
-    //   if (currentBottom > nearestBottom) {
-    //     console.log('change bottom');
-    //     toChangeHeight = currentHeight - (currentBottom - nearestBottom);
-    //   }
-    // }
-    // // if (changeDirection.includes('top')) {
-    // //   console.log('Here');
-    // //   let nearesTop = findNearestTopLocked(toChangeHeight + topDelta + defaultTop, 'top');
-    // //   if (topDelta + defaultTop <= nearesTop) {
-    // //     setTop(nearesTop);
-    // //     toChangeTop = topDelta + defaultTop;
-    // //   }
-    // // }
-    // setTop(0);
-    // setTopDelta(0);
-    // setDelta(0);
-    // setHeight(0);
-    // changeParams(id, toChangeTop, toChangeHeight);
-
-    //  ---------
-
     let toChangeHeight: number;
     let toChangeTop: number = top + defaultTop;
 
     let currentBottom =
       top + topDelta + draggingDelta + height + delta + defaultTop + defaultHeight;
     let currentTop = top + topDelta + defaultTop + draggingDelta;
-    console.log(changeDirection);
     if (!changeDirection.includes('top')) {
       let nearestBottom = findNearestTopLocked(currentTop, 'bottom');
       if (currentBottom > nearestBottom) {
@@ -131,7 +88,6 @@ const UserRangeBox = ({
       }
     } else {
       let nearestTop = findNearestTopLocked(currentBottom, 'top');
-      console.log(nearestTop);
       if (currentTop < nearestTop) {
         setHeight(height + top + defaultTop);
         toChangeHeight = currentBottom - nearestTop;

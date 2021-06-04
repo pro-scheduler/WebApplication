@@ -26,9 +26,6 @@ const MeetingDetails = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    console.log('Meeting:', meetingState);
-  }, [meetingState]);
   return (
     <Container fluid className="ml-5 ml-sm-auto">
       <MeetingDescription
