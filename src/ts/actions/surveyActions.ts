@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import {
+  getFillSurveyUrl,
   getSurveyAnswersUrl,
   getSurveyForMeetingUrl,
   getSurveysUrl,
@@ -12,6 +13,7 @@ import {
   UserSurvey,
 } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
+import { Answer } from '../model/survey/Answer';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -56,11 +58,33 @@ const getSurveyForMeeting = async (meetingId: number): Promise<UserSurvey | unde
   }
 };
 
+const fillSurvey = async (
+  id: number,
+  questionsAndAnswers: { question: Question; answer: Answer | null }[]
+) => {
+  const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
+
+  try {
+    const response = await fetch(getFillSurveyUrl(), {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(survey),
+    });
+    return response.json();
+  } catch (error) {
+    return undefined;
+  }
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
   getSurveyForMeeting,
+  fillSurvey,
 };
 
 export default actions;

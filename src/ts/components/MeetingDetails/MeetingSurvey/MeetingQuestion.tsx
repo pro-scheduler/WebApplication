@@ -2,30 +2,65 @@ import { Question, Type } from '../../../model/survey/Question';
 import TextArea from '../../common/forms/TextArea/TextArea';
 import styles from './MeetingQuestion.module.css';
 import SingleDropdownButton from '../../common/Dropdown/SingleDropdownButton';
-import { optionToValueLabelPair } from '../../../model/utils/ValueLabelPair';
+import {
+  optionToValueLabelPair,
+  ValueLabelPair,
+  valueLabelPairsToOptions,
+} from '../../../model/utils/ValueLabelPair';
 import MultiDropdownButton from '../../common/Dropdown/MultiDropdownButton';
 import { useState } from 'react';
+import { Answer } from '../../../model/survey/Answer';
 
 export type MeetingQuestionProps = {
   question: Question;
+  answer: Answer | null;
+  setAnswer: (questionId: number | null, newAnswer: Answer) => void;
 };
 
-const MeetingQuestion = ({ question }: MeetingQuestionProps) => {
+const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) => {
   const yesOrNoOptions = [
     { value: true, label: 'Yes' },
     { value: false, label: 'No' },
   ];
   const [value, setValue] = useState(question.fromValue ? question.fromValue : 0);
+
   return (
     <div className={styles.meetingQuestion}>
       <p className={styles.questionLabel}>{question.question}</p>
       {question.type === Type.OPEN && (
-        <TextArea valueHandler={(e: string) => console.log(e)} className={styles.textArea} />
+        <TextArea
+          valueHandler={(e: string) => {
+            if (answer === null) {
+              answer = {
+                id: null,
+                question: question,
+                type: question.type,
+                text: e,
+              };
+            } else {
+              answer.text = e;
+            }
+            setAnswer(question.id, answer);
+          }}
+          className={styles.textArea}
+        />
       )}
       {question.type === Type.YES_OR_NO && (
         <SingleDropdownButton
           options={yesOrNoOptions}
-          onChange={(e: string) => console.log(e)}
+          onChange={(e: ValueLabelPair) => {
+            if (answer == null) {
+              answer = {
+                id: null,
+                question: question,
+                type: question.type,
+                decision: e.value === true,
+              };
+            } else {
+              answer.decision = e.value === true;
+            }
+            setAnswer(question.id, answer);
+          }}
           className={styles.dropdown}
         />
       )}
@@ -34,7 +69,19 @@ const MeetingQuestion = ({ question }: MeetingQuestionProps) => {
           options={question.possibleOptions?.map((option: string) =>
             optionToValueLabelPair(option)
           )}
-          onChange={(e: string) => console.log(e)}
+          onChange={(e: ValueLabelPair) => {
+            if (answer == null) {
+              answer = {
+                id: null,
+                question: question,
+                type: question.type,
+                dropdownChoice: e.value.toString(),
+              };
+            } else {
+              answer.dropdownChoice = e.value.toString();
+            }
+            setAnswer(question.id, answer);
+          }}
           className={styles.dropdown}
         />
       )}
@@ -43,7 +90,20 @@ const MeetingQuestion = ({ question }: MeetingQuestionProps) => {
           options={question.possibleChoices?.map((choice: string) =>
             optionToValueLabelPair(choice)
           )}
-          onChange={(e: string) => console.log(e)}
+          onChange={(e: ValueLabelPair[]) => {
+            const choices = valueLabelPairsToOptions(e);
+            if (answer == null) {
+              answer = {
+                id: null,
+                question: question,
+                type: question.type,
+                choices: choices,
+              };
+            } else {
+              answer.choices = choices;
+            }
+            setAnswer(question.id, answer);
+          }}
           className={styles.dropdown}
         />
       )}
@@ -54,7 +114,20 @@ const MeetingQuestion = ({ question }: MeetingQuestionProps) => {
             min={question.fromValue}
             max={question.toValue}
             defaultValue={value}
-            onChange={(event) => setValue(parseInt(event.target.value))}
+            onChange={(event) => {
+              setValue(parseInt(event.target.value));
+              if (answer == null) {
+                answer = {
+                  id: null,
+                  question: question,
+                  type: question.type,
+                  rating: parseInt(event.target.value),
+                };
+              } else {
+                answer.rating = parseInt(event.target.value);
+              }
+              setAnswer(question.id, answer);
+            }}
             className={styles.linear}
           />
           {value}
