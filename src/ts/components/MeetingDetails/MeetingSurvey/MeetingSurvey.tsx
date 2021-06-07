@@ -6,7 +6,7 @@ import MeetingQuestion from './MeetingQuestion';
 
 const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
   const questions = survey.questionsAndAnswers.map((value) => {
-    return <MeetingQuestion question={value.question} />;
+    return <MeetingQuestion key={value.question.id} question={value.question} />;
   });
   return (
     <Row className="justify-content my-5 ml-5 pl-5">

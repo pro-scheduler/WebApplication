@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Validation, handleValidation } from '../../../../tools/validator';
 
 export type TextAreaProps = {
-  label: string;
+  label?: string;
   valueHandler: Function;
   className?: string;
   setInvalid?: Function;
