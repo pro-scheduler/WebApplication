@@ -16,7 +16,7 @@ interface RangesWithDay {
 
 const MeetingTime = ({ meetingId, timeRanges }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
-  const [avaiableRanges, setAvaiableRanges] = useState<RangesWithDay>({});
+  const [availableRanges, setAvailableRanges] = useState<RangesWithDay>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
 
@@ -48,8 +48,8 @@ const MeetingTime = ({ meetingId, timeRanges }: MeetingTimeProps) => {
       .forEach((range) => {
         ranges[range.day].ranges.push({ from: range.from, to: range.to });
       });
-    setAvaiableRanges(ranges);
-  }, [timeRanges, setAvaiableRanges]);
+    setAvailableRanges(ranges);
+  }, [timeRanges, setAvailableRanges]);
 
   return (
     <Row className="justify-content mt-5 ml-5 mb-5 pl-5">
@@ -57,7 +57,7 @@ const MeetingTime = ({ meetingId, timeRanges }: MeetingTimeProps) => {
         <LineWithHeader header={'When'} />
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
           <UserTimePicker
-            availableRanegs={avaiableRanges}
+            availableRanegs={availableRanges}
             count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
             setRanges={setRanges}
           />

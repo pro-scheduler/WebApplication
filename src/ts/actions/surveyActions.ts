@@ -1,6 +1,16 @@
 import { Dispatch } from 'redux';
-import { getSurveyAnswersUrl, getSurveysUrl, getSurveyUrl } from '../API/survey/urls';
-import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
+import {
+  getSurveyAnswersUrl,
+  getSurveyForMeetingUrl,
+  getSurveysUrl,
+  getSurveyUrl,
+} from '../API/survey/urls';
+import {
+  Survey,
+  SurveyResultsDTO,
+  SurveyWithQuestionsDTO,
+  UserSurvey,
+} from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
@@ -37,10 +47,20 @@ const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestion
   });
 };
 
+const getSurveyForMeeting = async (meetingId: number): Promise<UserSurvey | undefined> => {
+  try {
+    const response = await fetch(getSurveyForMeetingUrl(meetingId));
+    return response.json();
+  } catch (error) {
+    return undefined;
+  }
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
+  getSurveyForMeeting,
 };
 
 export default actions;

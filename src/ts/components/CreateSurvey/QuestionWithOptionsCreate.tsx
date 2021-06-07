@@ -7,14 +7,24 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import { BsCircle } from 'react-icons/bs';
 import { TiDelete } from 'react-icons/ti';
 import PlusButton from '../common/RoundButtons/PlusButton';
-import { DropdownQuestion, MultiChoiceQuestion, Type } from '../../model/survey/Question';
+import { Question, Type } from '../../model/survey/Question';
 import { BasicQuestionCreateProps } from './BasicQuestionCreate';
 
 const QuestionWithOptionsCreate = ({ id, type, updateQuestion }: BasicQuestionCreateProps) => {
-  const [question, setQuestion] = useState<DropdownQuestion | MultiChoiceQuestion>(
+  const [question, setQuestion] = useState<Question>(
     type === Type.MULTI_CHOICE
-      ? new MultiChoiceQuestion('', [], id)
-      : new DropdownQuestion('', [], id)
+      ? {
+          id: id,
+          question: '',
+          type: type,
+          possibleChoices: [],
+        }
+      : {
+          id: id,
+          question: '',
+          type: type,
+          possibleOptions: [],
+        }
   );
   const [currentOption, setCurrentOption] = useState('');
   const [options, setOptions] = useState<any[]>([]);
@@ -23,7 +33,7 @@ const QuestionWithOptionsCreate = ({ id, type, updateQuestion }: BasicQuestionCr
     if (currentOption !== '' && !options.includes(currentOption)) {
       const newOptions = [...options, currentOption];
       setOptions(newOptions);
-      if (question instanceof MultiChoiceQuestion) question.possibleChoices = newOptions;
+      if (type === Type.MULTI_CHOICE) question.possibleChoices = newOptions;
       else {
         question.possibleOptions = newOptions;
       }
@@ -35,7 +45,7 @@ const QuestionWithOptionsCreate = ({ id, type, updateQuestion }: BasicQuestionCr
   const deleteOption = (optionToDelete: any) => {
     const newOptions = options.filter((option: any) => option !== optionToDelete);
     setOptions(newOptions);
-    if (question instanceof MultiChoiceQuestion) question.possibleChoices = newOptions;
+    if (type === Type.MULTI_CHOICE) question.possibleChoices = newOptions;
     else {
       question.possibleOptions = newOptions;
     }

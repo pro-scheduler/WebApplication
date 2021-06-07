@@ -9,20 +9,29 @@ export type Survey = {
   answers: Answer[];
 };
 
-export type QuestionWithAnswers = {
-  question: Question;
-  answers: Answer[];
-};
-
 export type SurveyResultsDTO = {
   id: number;
   meetingId: number;
   description: string;
-  questionsAndAnswers: QuestionWithAnswers[];
+  questionsAndAnswers: {
+    question: Question;
+    answers: Answer[];
+  }[];
 };
 
 export type SurveyWithQuestionsDTO = {
   meetingId: number;
   description: string;
   questions: Question[];
+};
+
+export type UserSurvey = {
+  id: number;
+  meetingId: number;
+  description: string;
+  questionsAndAnswers: {
+    question: Question;
+    answer: Answer | null;
+  }[];
+  state: 'INCOMPLETE' | 'COMPLETE';
 };
