@@ -34,7 +34,7 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
             : value.question.type === Type.MULTI_CHOICE
             ? value.answer.choices && value.answer.choices.length > 0
             : true)
-      ).length === questionsAndAnswers.length
+      ).length === questionsAndAnswers.length && questionsAndAnswers !== survey.questionsAndAnswers
     );
   };
 

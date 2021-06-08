@@ -28,7 +28,6 @@ const MeetingDetails = () => {
     const fetchSurvey = async () => {
       const userSurvey = await surveyActions.getSurveyForMeeting(id);
       setSurvey(userSurvey);
-      console.log(userSurvey);
     };
     dispatch(actions.loadMeeting(id));
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));

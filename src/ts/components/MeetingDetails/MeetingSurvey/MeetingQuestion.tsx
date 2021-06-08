@@ -8,7 +8,7 @@ import {
   valueLabelPairsToOptions,
 } from '../../../model/utils/ValueLabelPair';
 import MultiDropdownButton from '../../common/Dropdown/MultiDropdownButton';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Answer } from '../../../model/survey/Answer';
 import SliderInput from '../../common/forms/Input/SliderInput';
 
@@ -23,13 +23,21 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
     { value: true, label: 'Yes' },
     { value: false, label: 'No' },
   ];
-  const [value, setValue] = useState(question.fromValue ? question.fromValue : 0);
+  const [rating, setRating] = useState(question.fromValue ? question.fromValue : 0);
+
+  useEffect(() => {
+    if (question.type === Type.LINEAR_SCALE && answer && answer.rating) {
+      setRating(answer.rating);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={styles.meetingQuestion}>
       <p className={styles.questionLabel}>{question.question}</p>
       {question.type === Type.OPEN && (
         <TextArea
+          defaultValue={answer ? answer.text : ''}
           valueHandler={(e: string) => {
             if (answer === null) {
               answer = {
@@ -48,6 +56,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
       )}
       {question.type === Type.YES_OR_NO && (
         <SingleDropdownButton
+          defaultValue={answer ? (answer.decision ? yesOrNoOptions[0] : yesOrNoOptions[1]) : null}
           options={yesOrNoOptions}
           onChange={(e: ValueLabelPair) => {
             if (answer == null) {
@@ -67,6 +76,9 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
       )}
       {question.type === Type.DROPDOWN && (
         <SingleDropdownButton
+          defaultValue={
+            answer && answer.dropdownChoice ? optionToValueLabelPair(answer.dropdownChoice) : null
+          }
           options={question.possibleOptions?.map((option: string) =>
             optionToValueLabelPair(option)
           )}
@@ -88,6 +100,9 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
       )}
       {question.type === Type.MULTI_CHOICE && (
         <MultiDropdownButton
+          defaultValue={
+            answer ? answer.choices?.map((choice: string) => optionToValueLabelPair(choice)) : null
+          }
           options={question.possibleChoices?.map((choice: string) =>
             optionToValueLabelPair(choice)
           )}
@@ -110,11 +125,11 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
       )}
       {question.type === Type.LINEAR_SCALE && (
         <SliderInput
-          value={value}
+          value={rating}
           min={question.fromValue}
           max={question.toValue}
           onChange={(event: ChangeEvent<HTMLInputElement>, value: number) => {
-            setValue(value);
+            setRating(value);
             if (answer == null) {
               answer = {
                 id: null,
