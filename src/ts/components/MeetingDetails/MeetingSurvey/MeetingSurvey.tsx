@@ -5,7 +5,7 @@ import { UserSurvey } from '../../../model/survey/Survey';
 import MeetingQuestion from './MeetingQuestion';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { useState } from 'react';
-import { Question } from '../../../model/survey/Question';
+import { Question, Type } from '../../../model/survey/Question';
 import { Answer } from '../../../model/survey/Answer';
 import surveyActions from '../../../actions/surveyActions';
 
@@ -24,6 +24,20 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
     setQuestionsAndAnswers(data);
   };
 
+  const filledAnswers = () => {
+    return (
+      questionsAndAnswers.filter(
+        (value) =>
+          value.answer !== null &&
+          (value.question.type === Type.OPEN
+            ? value.answer.text !== ''
+            : value.question.type === Type.MULTI_CHOICE
+            ? value.answer.choices && value.answer.choices.length > 0
+            : true)
+      ).length === questionsAndAnswers.length
+    );
+  };
+
   const questions = questionsAndAnswers.map((value) => {
     return (
       <MeetingQuestion
@@ -34,9 +48,11 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
       />
     );
   });
+
   const saveSurvey = () => {
     surveyActions.fillSurvey(survey.id, questionsAndAnswers);
   };
+
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <Col>
@@ -45,7 +61,13 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
           <p>{survey.description}</p>
           {questions}
         </div>
-        <ActionButton onclick={saveSurvey} text={'Save'} />
+        <div className="text-center">
+          <ActionButton
+            onclick={saveSurvey}
+            text={survey.state === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            disabled={!filledAnswers()}
+          />
+        </div>
       </Col>
     </Row>
   );

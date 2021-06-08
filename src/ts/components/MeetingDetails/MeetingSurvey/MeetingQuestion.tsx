@@ -8,8 +8,9 @@ import {
   valueLabelPairsToOptions,
 } from '../../../model/utils/ValueLabelPair';
 import MultiDropdownButton from '../../common/Dropdown/MultiDropdownButton';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Answer } from '../../../model/survey/Answer';
+import SliderInput from '../../common/forms/Input/SliderInput';
 
 export type MeetingQuestionProps = {
   question: Question;
@@ -108,30 +109,25 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
         />
       )}
       {question.type === Type.LINEAR_SCALE && (
-        <>
-          <input
-            type="range"
-            min={question.fromValue}
-            max={question.toValue}
-            defaultValue={value}
-            onChange={(event) => {
-              setValue(parseInt(event.target.value));
-              if (answer == null) {
-                answer = {
-                  id: null,
-                  question: question,
-                  type: question.type,
-                  rating: parseInt(event.target.value),
-                };
-              } else {
-                answer.rating = parseInt(event.target.value);
-              }
-              setAnswer(question.id, answer);
-            }}
-            className={styles.linear}
-          />
-          {value}
-        </>
+        <SliderInput
+          value={value}
+          min={question.fromValue}
+          max={question.toValue}
+          onChange={(event: ChangeEvent<HTMLInputElement>, value: number) => {
+            setValue(value);
+            if (answer == null) {
+              answer = {
+                id: null,
+                question: question,
+                type: question.type,
+                rating: value,
+              };
+            } else {
+              answer.rating = value;
+            }
+            setAnswer(question.id, answer);
+          }}
+        />
       )}
     </div>
   );
