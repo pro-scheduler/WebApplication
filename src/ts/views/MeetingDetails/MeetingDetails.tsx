@@ -25,13 +25,9 @@ const MeetingDetails = () => {
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
 
   useEffect(() => {
-    const fetchSurvey = async () => {
-      const userSurvey = await surveyActions.getSurveyForMeeting(id);
-      setSurvey(userSurvey);
-    };
     dispatch(actions.loadMeeting(id));
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
-    fetchSurvey();
+    surveyActions.getSurveyForMeeting(id).then((value) => setSurvey(value));
     // eslint-disable-next-line
   }, []);
 

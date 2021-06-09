@@ -6,12 +6,7 @@ import {
   getSurveysUrl,
   getSurveyUrl,
 } from '../API/survey/urls';
-import {
-  Survey,
-  SurveyResultsDTO,
-  SurveyWithQuestionsDTO,
-  UserSurvey,
-} from '../model/survey/Survey';
+import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
 import { Answer } from '../model/survey/Answer';
 
@@ -49,34 +44,24 @@ const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestion
   });
 };
 
-const getSurveyForMeeting = async (meetingId: number): Promise<UserSurvey | undefined> => {
-  try {
-    const response = await fetch(getSurveyForMeetingUrl(meetingId));
-    return response.json();
-  } catch (error) {
-    return undefined;
-  }
+const getSurveyForMeeting = (meetingId: number) => {
+  return fetch(getSurveyForMeetingUrl(meetingId)).then((response) => response.json());
 };
 
-const fillSurvey = async (
+const fillSurvey = (
   id: number,
   questionsAndAnswers: { question: Question; answer: Answer | null }[]
 ) => {
   const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
 
-  try {
-    const response = await fetch(getFillSurveyUrl(), {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(survey),
-    });
-    return response.json();
-  } catch (error) {
-    return undefined;
-  }
+  return fetch(getFillSurveyUrl(), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(survey),
+  });
 };
 
 const actions = {
