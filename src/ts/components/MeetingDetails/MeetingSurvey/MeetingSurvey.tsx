@@ -13,6 +13,8 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
+  const [dataUpdated, setDataUpdated] = useState(true);
+  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
 
   const setAnswer = (questionId: number | null, answer: Answer) => {
     const data = questionsAndAnswers.map((value) => {
@@ -22,6 +24,7 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
       return value;
     });
     setQuestionsAndAnswers(data);
+    setDataUpdated(true);
   };
 
   const filledAnswers = () => {
@@ -34,7 +37,9 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
             : value.question.type === Type.MULTI_CHOICE
             ? value.answer.choices && value.answer.choices.length > 0
             : true)
-      ).length === questionsAndAnswers.length && questionsAndAnswers !== survey.questionsAndAnswers
+      ).length === questionsAndAnswers.length &&
+      questionsAndAnswers !== survey.questionsAndAnswers &&
+      dataUpdated
     );
   };
 
@@ -50,7 +55,10 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
   });
 
   const saveSurvey = () => {
-    surveyActions.fillSurvey(survey.id, questionsAndAnswers);
+    surveyActions.fillSurvey(survey.id, questionsAndAnswers).then(() => {
+      setDataUpdated(false);
+      setButtonText('COMPLETE');
+    });
   };
 
   return (
@@ -64,7 +72,7 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
         <div className="text-center">
           <ActionButton
             onclick={saveSurvey}
-            text={survey.state === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
             disabled={!filledAnswers()}
           />
         </div>
