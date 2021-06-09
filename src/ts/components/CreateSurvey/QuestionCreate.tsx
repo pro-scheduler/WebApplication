@@ -9,14 +9,14 @@ import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import { Question, Type } from '../../model/survey/Question';
+import { Question, QuestionType } from '../../model/survey/Question';
 
 const options = [
-  new ValueLabelPair(Type.DROPDOWN, 'Dropdown'),
-  new ValueLabelPair(Type.LINEAR_SCALE, 'Linear Scale'),
-  new ValueLabelPair(Type.MULTI_CHOICE, 'MultiChoice'),
-  new ValueLabelPair(Type.OPEN, 'Open'),
-  new ValueLabelPair(Type.YES_OR_NO, 'Yes or No'),
+  new ValueLabelPair(QuestionType.DROPDOWN, 'Dropdown'),
+  new ValueLabelPair(QuestionType.LINEAR_SCALE, 'Linear Scale'),
+  new ValueLabelPair(QuestionType.MULTI_CHOICE, 'MultiChoice'),
+  new ValueLabelPair(QuestionType.OPEN, 'Open'),
+  new ValueLabelPair(QuestionType.YES_OR_NO, 'Yes or No'),
 ];
 
 export type QuestionCreateProps = {
@@ -26,7 +26,7 @@ export type QuestionCreateProps = {
 };
 
 const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProps) => {
-  const [selectedValue, setSelectedValue] = useState(Type.OPEN);
+  const [selectedValue, setSelectedValue] = useState(QuestionType.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
@@ -48,19 +48,19 @@ const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProp
             />
           </Col>
           <Col lg={11} className={styles.questionCreateFooter} />
-          {selectedValue === Type.DROPDOWN && (
+          {selectedValue === QuestionType.DROPDOWN && (
             <DropdownQuestionCreate id={id} updateQuestion={updateQuestion} />
           )}
-          {selectedValue === Type.LINEAR_SCALE && (
+          {selectedValue === QuestionType.LINEAR_SCALE && (
             <LinearScaleQuestionCreate id={id} updateQuestion={updateQuestion} />
           )}
-          {selectedValue === Type.MULTI_CHOICE && (
+          {selectedValue === QuestionType.MULTI_CHOICE && (
             <MultiChoiceQuestionCreate id={id} updateQuestion={updateQuestion} />
           )}
-          {selectedValue === Type.OPEN && (
+          {selectedValue === QuestionType.OPEN && (
             <OpenQuestionCreate id={id} updateQuestion={updateQuestion} />
           )}
-          {selectedValue === Type.YES_OR_NO && (
+          {selectedValue === QuestionType.YES_OR_NO && (
             <YesOrNoQuestionCreate id={id} updateQuestion={updateQuestion} />
           )}
         </Row>

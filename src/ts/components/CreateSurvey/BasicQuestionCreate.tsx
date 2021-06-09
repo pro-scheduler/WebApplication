@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
-import { Question, Type } from '../../model/survey/Question';
+import { Question, QuestionType } from '../../model/survey/Question';
 import { TypedQuestionCreateProps } from './DropdownQuestionCreate';
 
 export type BasicQuestionCreateProps = {
-  type: Type;
+  type: QuestionType;
 } & TypedQuestionCreateProps;
 
 const BasicQuestionCreate = ({ id, type, updateQuestion }: BasicQuestionCreateProps) => {

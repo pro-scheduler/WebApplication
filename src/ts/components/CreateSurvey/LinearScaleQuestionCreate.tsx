@@ -5,7 +5,7 @@ import linearStyles from './LinearScaleQuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
-import { Question, Type } from '../../model/survey/Question';
+import { Question, QuestionType } from '../../model/survey/Question';
 import { TypedQuestionCreateProps } from './DropdownQuestionCreate';
 
 const linearScaleFromOptions = Array.from({ length: 2 }, (_, i) => optionToValueLabelPair(i));
@@ -15,7 +15,7 @@ const linearScaleToOptions = Array.from({ length: 9 }, (_, i) => optionToValueLa
 const LinearScaleQuestionCreate = ({ id, updateQuestion }: TypedQuestionCreateProps) => {
   const [question, setQuestion] = useState<Question>({
     id: id,
-    type: Type.LINEAR_SCALE,
+    type: QuestionType.LINEAR_SCALE,
     question: '',
     fromValue: 0,
     toValue: 10,

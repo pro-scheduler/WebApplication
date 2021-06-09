@@ -1,4 +1,4 @@
-export enum Type {
+export enum QuestionType {
   OPEN = 'OPEN',
   MULTI_CHOICE = 'MULTI_CHOICE',
   YES_OR_NO = 'YES_OR_NO',
@@ -9,7 +9,7 @@ export enum Type {
 export type Question = {
   id: number | null;
   question: string;
-  type: Type;
+  type: QuestionType;
   possibleChoices?: string[]; // for multiChoice
   possibleOptions?: string[]; // for dropdown
   fromValue?: number; // for linear

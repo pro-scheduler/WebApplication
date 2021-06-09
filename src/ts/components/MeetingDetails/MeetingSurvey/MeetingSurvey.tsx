@@ -5,7 +5,7 @@ import { UserSurvey } from '../../../model/survey/Survey';
 import MeetingQuestion from './MeetingQuestion';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { useState } from 'react';
-import { Question, Type } from '../../../model/survey/Question';
+import { Question, QuestionType } from '../../../model/survey/Question';
 import { Answer } from '../../../model/survey/Answer';
 import surveyActions from '../../../actions/surveyActions';
 
@@ -32,9 +32,9 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
       questionsAndAnswers.filter(
         (value) =>
           value.answer !== null &&
-          (value.question.type === Type.OPEN
+          (value.question.type === QuestionType.OPEN
             ? value.answer.text !== ''
-            : value.question.type === Type.MULTI_CHOICE
+            : value.question.type === QuestionType.MULTI_CHOICE
             ? value.answer.choices && value.answer.choices.length > 0
             : true)
       ).length === questionsAndAnswers.length &&

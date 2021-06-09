@@ -1,4 +1,4 @@
-import { Question, Type } from '../../../model/survey/Question';
+import { Question, QuestionType } from '../../../model/survey/Question';
 import TextArea from '../../common/forms/TextArea/TextArea';
 import styles from './MeetingQuestion.module.css';
 import SingleDropdownButton from '../../common/Dropdown/SingleDropdownButton';
@@ -26,7 +26,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
   const [rating, setRating] = useState(question.fromValue ? question.fromValue : 0);
 
   useEffect(() => {
-    if (question.type === Type.LINEAR_SCALE && answer && answer.rating) {
+    if (question.type === QuestionType.LINEAR_SCALE && answer && answer.rating) {
       setRating(answer.rating);
     }
     // eslint-disable-next-line
@@ -35,7 +35,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
   return (
     <div className={styles.meetingQuestion}>
       <p className={styles.questionLabel}>{question.question}</p>
-      {question.type === Type.OPEN && (
+      {question.type === QuestionType.OPEN && (
         <TextArea
           defaultValue={answer ? answer.text : ''}
           valueHandler={(e: string) => {
@@ -54,7 +54,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           className={styles.textArea}
         />
       )}
-      {question.type === Type.YES_OR_NO && (
+      {question.type === QuestionType.YES_OR_NO && (
         <SingleDropdownButton
           defaultValue={answer ? (answer.decision ? yesOrNoOptions[0] : yesOrNoOptions[1]) : null}
           options={yesOrNoOptions}
@@ -74,7 +74,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           className={styles.dropdown}
         />
       )}
-      {question.type === Type.DROPDOWN && (
+      {question.type === QuestionType.DROPDOWN && (
         <SingleDropdownButton
           defaultValue={
             answer && answer.dropdownChoice ? optionToValueLabelPair(answer.dropdownChoice) : null
@@ -98,7 +98,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           className={styles.dropdown}
         />
       )}
-      {question.type === Type.MULTI_CHOICE && (
+      {question.type === QuestionType.MULTI_CHOICE && (
         <MultiDropdownButton
           defaultValue={
             answer ? answer.choices?.map((choice: string) => optionToValueLabelPair(choice)) : null
@@ -123,7 +123,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           className={styles.dropdown}
         />
       )}
-      {question.type === Type.LINEAR_SCALE && (
+      {question.type === QuestionType.LINEAR_SCALE && (
         <SliderInput
           value={rating}
           min={question.fromValue}
