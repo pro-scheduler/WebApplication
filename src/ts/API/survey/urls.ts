@@ -1,4 +1,4 @@
-export const getSurveysUrl = () => `${process.env.REACT_APP_API_URL}survey`;
+export const getSurveysUrl = () => `${process.env.REACT_APP_SURVEY_SERVICE_URL}surveys`;
 
 export const getSurveyUrl = (surveyId: number) => getSurveysUrl() + `/${surveyId}`;
 
