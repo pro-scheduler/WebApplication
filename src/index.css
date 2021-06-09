@@ -18,3 +18,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* for Firefox */
+input[type="range"].range-slider.range-slider--secondary::-moz-range-thumb {
+  background: var(--light-purple) !important;
+}
+
+input[type="range"].range-slider::-moz-range-track {
+  background: var(--purple) !important;
+}
+
+/* for Chrome and Edge*/
+input[type="range"].range-slider.range-slider--secondary::-webkit-slider-runnable-track {
+  background: var(--light-purple) !important;
+}
+
+input[type="range"].range-slider::-webkit-slider-thumb {
+  background: var(--purple) !important;
+}
