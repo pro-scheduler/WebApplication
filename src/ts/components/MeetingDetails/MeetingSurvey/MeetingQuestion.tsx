@@ -39,7 +39,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
         <TextArea
           defaultValue={answer ? answer.text : ''}
           valueHandler={(e: string) => {
-            if (answer === null) {
+            if (!answer) {
               answer = {
                 id: null,
                 question: question,
@@ -59,7 +59,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           defaultValue={answer ? (answer.decision ? yesOrNoOptions[0] : yesOrNoOptions[1]) : null}
           options={yesOrNoOptions}
           onChange={(e: ValueLabelPair) => {
-            if (answer == null) {
+            if (!answer) {
               answer = {
                 id: null,
                 question: question,
@@ -83,7 +83,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
             optionToValueLabelPair(option)
           )}
           onChange={(e: ValueLabelPair) => {
-            if (answer == null) {
+            if (!answer) {
               answer = {
                 id: null,
                 question: question,
@@ -108,7 +108,7 @@ const MeetingQuestion = ({ question, answer, setAnswer }: MeetingQuestionProps) 
           )}
           onChange={(e: ValueLabelPair[]) => {
             const choices = valueLabelPairsToOptions(e);
-            if (answer == null) {
+            if (!answer) {
               answer = {
                 id: null,
                 question: question,
