@@ -36,3 +36,12 @@ input[type="range"].range-slider.range-slider--secondary::-webkit-slider-runnabl
 input[type="range"].range-slider::-webkit-slider-thumb {
   background: var(--purple) !important;
 }
+
+/* for Internet Explorer */
+input[type=range].range-slider.range-slider--secondary::-ms-thumb {
+  background: var(--light-purple) !important;
+}
+
+input[type=range].range-slider::-ms-fill-lower {
+  background: var(--purple) !important;
+}
