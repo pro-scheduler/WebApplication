@@ -5,6 +5,7 @@
     color: var(--purple);
     margin: auto;
     border-radius: var(--border-radius);
+    border: 1px solid var(--purple);
 }
 
 .multiValueInput:focus {

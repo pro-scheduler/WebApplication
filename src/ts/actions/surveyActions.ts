@@ -1,7 +1,14 @@
 import { Dispatch } from 'redux';
-import { getSurveyAnswersUrl, getSurveysUrl, getSurveyUrl } from '../API/survey/urls';
+import {
+  getFillSurveyUrl,
+  getSurveyAnswersUrl,
+  getSurveyForMeetingUrl,
+  getSurveysUrl,
+  getSurveyUrl,
+} from '../API/survey/urls';
 import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
+import { Answer } from '../model/survey/Answer';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -37,10 +44,32 @@ const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestion
   });
 };
 
+const getSurveyForMeeting = (meetingId: number) => {
+  return fetch(getSurveyForMeetingUrl(meetingId)).then((response) => response.json());
+};
+
+const fillSurvey = (
+  id: number,
+  questionsAndAnswers: { question: Question; answer: Answer | null }[]
+) => {
+  const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
+
+  return fetch(getFillSurveyUrl(), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(survey),
+  });
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
+  getSurveyForMeeting,
+  fillSurvey,
 };
 
 export default actions;

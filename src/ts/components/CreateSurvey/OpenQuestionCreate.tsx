@@ -1,9 +1,10 @@
 import React from 'react';
-import BasicQuestionCreate, { BasicQuestionCreateProps } from './BasicQuestionCreate';
-import { Type } from '../../model/survey/Question';
+import BasicQuestionCreate from './BasicQuestionCreate';
+import { QuestionType } from '../../model/survey/Question';
+import { TypedQuestionCreateProps } from './DropdownQuestionCreate';
 
-const OpenQuestionCreate = ({ id, updateQuestion }: BasicQuestionCreateProps) => {
-  return <BasicQuestionCreate id={id} type={Type.OPEN} updateQuestion={updateQuestion} />;
+const OpenQuestionCreate = ({ id, updateQuestion }: TypedQuestionCreateProps) => {
+  return <BasicQuestionCreate id={id} type={QuestionType.OPEN} updateQuestion={updateQuestion} />;
 };
 
 export default OpenQuestionCreate;

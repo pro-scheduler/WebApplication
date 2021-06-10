@@ -2,8 +2,7 @@
     background-color: white;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
-    border-color: var(--medium-grey);
-    border-width: 1px;
+    border: 1px solid var(--purple);
     text-align: left;
     color: var(--medium-grey);
     margin: auto;
