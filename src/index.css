@@ -2,6 +2,7 @@
 @import './css/tokens/fonts.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 
 body {
   margin: 0;
@@ -16,4 +17,31 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* for Firefox */
+input[type="range"].range-slider.range-slider--secondary::-moz-range-thumb {
+  background: var(--light-purple) !important;
+}
+
+input[type="range"].range-slider::-moz-range-track {
+  background: var(--purple) !important;
+}
+
+/* for Chrome and Edge*/
+input[type="range"].range-slider.range-slider--secondary::-webkit-slider-runnable-track {
+  background: var(--light-purple) !important;
+}
+
+input[type="range"].range-slider::-webkit-slider-thumb {
+  background: var(--purple) !important;
+}
+
+/* for Internet Explorer */
+input[type=range].range-slider.range-slider--secondary::-ms-thumb {
+  background: var(--light-purple) !important;
+}
+
+input[type=range].range-slider::-ms-fill-lower {
+  background: var(--purple) !important;
 }

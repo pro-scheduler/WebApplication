@@ -11,3 +11,7 @@
     color: var(--light-red);
     font-size: medium;
 }
+
+.hidden {
+    display: none;
+}

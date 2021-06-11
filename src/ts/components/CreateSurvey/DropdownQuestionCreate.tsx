@@ -1,9 +1,20 @@
 import React from 'react';
 import QuestionWithOptionsCreate from './QuestionWithOptionsCreate';
-import { Type } from '../../model/survey/Question';
+import { Question, QuestionType } from '../../model/survey/Question';
 
-const DropdownQuestionCreate = ({ id }: { id: number }) => {
-  return <QuestionWithOptionsCreate id={id} type={Type.DROPDOWN} />;
+export type TypedQuestionCreateProps = {
+  id: number;
+  updateQuestion: (question: Question) => void;
+};
+
+const DropdownQuestionCreate = ({ id, updateQuestion }: TypedQuestionCreateProps) => {
+  return (
+    <QuestionWithOptionsCreate
+      id={id}
+      type={QuestionType.DROPDOWN}
+      updateQuestion={updateQuestion}
+    />
+  );
 };
 
 export default DropdownQuestionCreate;

@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import styles from './QuestionCreate.module.css';
 import Col from 'react-bootstrap/Col';
-import { useDispatch } from 'react-redux';
-import { OpenQuestion, Question, Type, YesOrNoQuestion } from '../../model/survey/Question';
-import allActions from '../../actions';
+import { Question, QuestionType } from '../../model/survey/Question';
+import { TypedQuestionCreateProps } from './DropdownQuestionCreate';
 
-export type QuestionProps = {
-  id: number;
-  type: Type;
-};
+export type BasicQuestionCreateProps = {
+  type: QuestionType;
+} & TypedQuestionCreateProps;
 
-const BasicQuestionCreate = ({ id, type }: QuestionProps) => {
-  const dispatch: Function = useDispatch();
+const BasicQuestionCreate = ({ id, type, updateQuestion }: BasicQuestionCreateProps) => {
+  const [question, setQuestion] = useState<Question>({
+    id: id,
+    question: '',
+    type: type,
+  });
 
-  const saveQuestion = (question: string) => {
-    const basicQuestion: Question =
-      type === Type.OPEN ? new OpenQuestion(question, id) : new YesOrNoQuestion(question, id);
-    dispatch(allActions.surveyActions.addQuestionToSurveyWithQuestionsDTO(basicQuestion));
+  const saveQuestion = (value: string) => {
+    question.question = value;
+    setQuestion(question);
+    updateQuestion(question);
   };
 
   return (

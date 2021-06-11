@@ -1,7 +1,14 @@
 import { Dispatch } from 'redux';
-import { getSurveyAnswersUrl, getSurveysUrl, getSurveyUrl } from '../API/survey/urls';
+import {
+  getFillSurveyUrl,
+  getSurveyAnswersUrl,
+  getSurveyForMeetingUrl,
+  getSurveysUrl,
+  getSurveyUrl,
+} from '../API/survey/urls';
 import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
+import { Answer } from '../model/survey/Answer';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
   fetch(getSurveyUrl(id))
@@ -37,43 +44,32 @@ const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestion
   });
 };
 
-// prettier-ignore
-const addQuestionsToSurvey = (surveyId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => {
-  return fetch(getSurveyUrl(surveyId), {
+const getSurveyForMeeting = (meetingId: number) => {
+  return fetch(getSurveyForMeetingUrl(meetingId)).then((response) => response.json());
+};
+
+const fillSurvey = (
+  id: number,
+  questionsAndAnswers: { question: Question; answer: Answer | null }[]
+) => {
+  const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
+
+  return fetch(getFillSurveyUrl(), {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(surveyWithQuestions),
+    body: JSON.stringify(survey),
   });
-};
-
-const addQuestionToSurveyWithQuestionsDTO = (question: Question) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'ADD_QUESTION', payload: { question } });
-};
-
-const removeQuestionFromSurveyWithQuestionsDTO = (id: number) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'REMOVE_QUESTION', payload: { id } });
-};
-
-const addDescriptionToSurveyWithQuestionsDTO = (description: string) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'ADD_DESCRIPTION', payload: { description } });
-};
-
-const setMeetingIdInSurveyWithQuestionsDTO = (meetingId: number) => (dispatch: Dispatch) => {
-  return dispatch({ type: 'SET_MEETING_ID', payload: { meetingId } });
 };
 
 const actions = {
   loadSurvey,
   loadSurveyResults,
   createSurvey,
-  addQuestionsToSurvey,
-  addQuestionToSurveyWithQuestionsDTO,
-  removeQuestionFromSurveyWithQuestionsDTO,
-  addDescriptionToSurveyWithQuestionsDTO,
-  setMeetingIdInSurveyWithQuestionsDTO,
+  getSurveyForMeeting,
+  fillSurvey,
 };
 
 export default actions;

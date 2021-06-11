@@ -1,0 +1,23 @@
+.meetingQuestion {
+    width: 60%;
+    text-align: center;
+    margin: 40px auto;
+}
+
+.textArea {
+    width: 100%;
+    height: 40px;
+}
+
+.questionLabel {
+    margin-bottom: 0;
+    color: var(--medium-grey);
+}
+
+.linear {
+    width: 100%;
+}
+
+.dropdown {
+    width: 100%;
+}

@@ -9,23 +9,24 @@ import YesOrNoQuestionCreate from './YesOrNoQuestionCreate';
 import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import { Type } from '../../model/survey/Question';
+import { Question, QuestionType } from '../../model/survey/Question';
 
 const options = [
-  new ValueLabelPair(Type.DROPDOWN, 'Dropdown'),
-  new ValueLabelPair(Type.LINEAR_SCALE, 'Linear Scale'),
-  new ValueLabelPair(Type.MULTI_CHOICE, 'MultiChoice'),
-  new ValueLabelPair(Type.OPEN, 'Open'),
-  new ValueLabelPair(Type.YES_OR_NO, 'Yes or No'),
+  new ValueLabelPair(QuestionType.DROPDOWN, 'Dropdown'),
+  new ValueLabelPair(QuestionType.LINEAR_SCALE, 'Linear Scale'),
+  new ValueLabelPair(QuestionType.MULTI_CHOICE, 'MultiChoice'),
+  new ValueLabelPair(QuestionType.OPEN, 'Open'),
+  new ValueLabelPair(QuestionType.YES_OR_NO, 'Yes or No'),
 ];
 
 export type QuestionCreateProps = {
   id: number;
   deleteButton: JSX.Element;
+  updateQuestion: (question: Question) => void;
 };
 
-const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
-  const [selectedValue, setSelectedValue] = useState(Type.OPEN);
+const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProps) => {
+  const [selectedValue, setSelectedValue] = useState(QuestionType.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
     setSelectedValue(value);
@@ -33,12 +34,12 @@ const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
 
   return (
     <>
-      <Col sm={8} lg={10} className={styles.questionField}>
+      <Col xs={8} sm={8} lg={10} className={styles.questionField}>
         <Row>
           <Col lg={12} className="text-right mt-sm-0">
             {deleteButton}
           </Col>
-          <Col sm={6} lg={12} className="text-right my-sm-4">
+          <Col xs={8} sm={6} lg={4} className="text-right mr-0 mt-4 mb-5">
             <SingleDropdownButton
               onChange={handleSingleChoice}
               options={options}
@@ -47,11 +48,21 @@ const QuestionCreate = ({ id, deleteButton }: QuestionCreateProps) => {
             />
           </Col>
           <Col lg={11} className={styles.questionCreateFooter} />
-          {selectedValue === Type.DROPDOWN && <DropdownQuestionCreate id={id} />}
-          {selectedValue === Type.LINEAR_SCALE && <LinearScaleQuestionCreate id={id} />}
-          {selectedValue === Type.MULTI_CHOICE && <MultiChoiceQuestionCreate id={id} />}
-          {selectedValue === Type.OPEN && <OpenQuestionCreate id={id} />}
-          {selectedValue === Type.YES_OR_NO && <YesOrNoQuestionCreate id={id} />}
+          {selectedValue === QuestionType.DROPDOWN && (
+            <DropdownQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === QuestionType.LINEAR_SCALE && (
+            <LinearScaleQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === QuestionType.MULTI_CHOICE && (
+            <MultiChoiceQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === QuestionType.OPEN && (
+            <OpenQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
+          {selectedValue === QuestionType.YES_OR_NO && (
+            <YesOrNoQuestionCreate id={id} updateQuestion={updateQuestion} />
+          )}
         </Row>
       </Col>
     </>

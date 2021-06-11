@@ -84,7 +84,12 @@ const MeetingParticipants = ({
           </Col>
           {invitationsIcons}
           <Col lg={12} className="text-center mx-auto">
-            <CreateInvitations showIcon={false} emails={emails} setEmails={setEmails} />
+            <CreateInvitations
+              state="invitations"
+              showIcon={false}
+              emails={emails}
+              setEmails={setEmails}
+            />
             <ActionButton
               text="Invite"
               onclick={sendInvitations}
