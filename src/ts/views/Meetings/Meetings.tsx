@@ -16,11 +16,16 @@ const Meetings = () => {
   const dispatch: Function = useDispatch();
 
   useEffect(() => {
+    console.log('fetch user');
+    dispatch(allActions.userActions.fetchCurrentUser());
+  }, []);
+
+  useEffect(() => {
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
     dispatch(allActions.invitationActions.fetchUserPendingInvitations(user.id));
     // eslint-disable-next-line
-  }, []);
+  }, [user.id]);
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">

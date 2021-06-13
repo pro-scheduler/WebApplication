@@ -7,3 +7,5 @@ export const getUserParticipatedMeetingsUrl = (userId: number) =>
 
 export const getUserOrganizedMeetingsUrl = (userId: number) =>
   getUserUrl(userId) + '/meetings?organized=true';
+
+export const getCurrentUserUrl = () => `${getUsersUrl()}/me`;

@@ -3,6 +3,7 @@ import { Meeting } from '../meeting/Meeting';
 export type ProUser = {
   id: number;
   email: string;
+  nickname: string;
   organizedMeetings: Meeting[];
   participatedMeetings: Meeting[];
 };
@@ -10,4 +11,10 @@ export type ProUser = {
 export type BasicUserInfoDTO = {
   id: number;
   email: string;
+};
+
+export type UserResponse = {
+  id: number;
+  email: string;
+  nickname: string;
 };
