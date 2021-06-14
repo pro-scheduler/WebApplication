@@ -59,7 +59,9 @@ const getSurveyForMeeting = (meetingId: number) => {
     headers: {
       Authorization: `Bearer ${Cookies.get('access_token')}`,
     },
-  }).then((response) => response.json());
+  }).then((response) => {
+    return response.status === 200 ? response.json() : undefined;
+  });
 };
 
 const fillSurvey = (
