@@ -35,7 +35,6 @@ const fetchUserParticipatedMeetings = (userId: number) => (dispatch: Dispatch) =
 };
 
 const fetchCurrentUser = () => (dispatch: Dispatch) => {
-  console.log(`Cookies: ${document.cookie}`);
   return fetch(getCurrentUserUrl(), {
     headers: {
       Authorization: `Bearer ${Cookies.get('access_token')}`,
