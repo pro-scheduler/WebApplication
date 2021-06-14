@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import styles from './IconButton.module.css';
 
@@ -14,11 +13,11 @@ const IconButton = ({ redirectTo, text, className, icon, disabled }: IconButtonP
   const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
 
   return (
-    <Link to={redirectTo}>
+    <a href={redirectTo}>
       <button className={buttonStyles} type="submit" disabled={disabled}>
         {icon} {text}
       </button>
-    </Link>
+    </a>
   );
 };
 

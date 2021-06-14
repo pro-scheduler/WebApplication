@@ -10,9 +10,14 @@ import {
 import { InvitationEmailsDTO } from '../model/invitation/Invitation';
 import allActions from './index';
 import { SurveyWithQuestionsDTO } from '../model/survey/Survey';
+import Cookies from 'js-cookie';
 
 const fetchAllMeetings = () => (dispatch: Dispatch) => {
-  fetch(getMeetingsUrl())
+  fetch(getMeetingsUrl(), {
+    headers: {
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
+    },
+  })
     .then((response) => response.json())
     .then((meetingsDTO: MeetingDTO[]) => {
       return dispatch({ type: 'LOAD_ALL', payload: meetingsDTO });
@@ -32,6 +37,7 @@ const saveMeeting = (
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
     },
     body: JSON.stringify(meeting),
   }).then((response) => {
@@ -54,7 +60,13 @@ const saveMeeting = (
 };
 
 const loadMeeting = (id: number) => (dispatch: Dispatch) => {
-  fetch(getMeetingUrl(id))
+  fetch(getMeetingUrl(id), {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
+    },
+  })
     .then((response: Response) => response.json())
     .then((deepMeetingDetailsDTO: DeepMeetingDetailsDTO) => {
       return dispatch({ type: 'LOAD_ONE', payload: deepMeetingDetailsDTO });
@@ -67,6 +79,7 @@ const removeUserFromMeeting = (meetingId: number, userId: number) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
     },
     body: JSON.stringify({
       id: userId,
