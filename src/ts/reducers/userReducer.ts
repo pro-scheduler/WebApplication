@@ -28,8 +28,6 @@ const userReducer = (state: ProUser = defaultState, action: { type: string; payl
         id: action.payload.id,
         email: action.payload.email,
         nickname: action.payload.nickname,
-        organizedMeetings: [],
-        participatedMeetings: [],
       };
     default:
       return state;

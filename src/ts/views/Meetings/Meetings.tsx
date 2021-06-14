@@ -18,6 +18,7 @@ const Meetings = () => {
   useEffect(() => {
     console.log('fetch user');
     dispatch(allActions.userActions.fetchCurrentUser());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
