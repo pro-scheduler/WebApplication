@@ -11,18 +11,18 @@ import RedirectButton from '../../common/SubmitButton/RedirectButton/RedirectBut
 const Header = () => {
   return (
     <Jumbotron fluid className={styles.headerJumbotron}>
-      <Container fluid className="ml-2 mt-2">
+      <Container fluid className="ml-lg-2 mt-lg-2">
         <h1 className={styles.headerLogo}>
           <img src={purpleLogo} alt="logo" />
           ProScheduler
         </h1>
         <h2 className={styles.headerMotto}>Schedule meetings like a pro</h2>
         <Row className={styles.headerRow}>
-          <Col md={12} lg={6} className="mt-5 pt-5 px-0">
-            <RedirectButton text="Sign In" redirectTO="/signin" className="m-4" />
+          <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0">
+            <RedirectButton text="Sign In" redirectTO="/signin" className={styles.redirectButton} />
           </Col>
           <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0">
-            <RedirectButton text="Sign Up" redirectTO="/signup" className="m-4" />
+            <RedirectButton text="Sign Up" redirectTO="/signup" className={styles.redirectButton} />
           </Col>
         </Row>
       </Container>

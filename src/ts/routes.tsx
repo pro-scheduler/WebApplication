@@ -29,11 +29,9 @@ const Routes = () => {
           <ExampleValidation />
         </Route>
         <Route path="/signin">
-          <Navbar showDetails={false} />
           <SignIn />
         </Route>
         <Route path="/signup">
-          <Navbar showDetails={false} />
           <SignUp />
         </Route>
         <Route path="/create">

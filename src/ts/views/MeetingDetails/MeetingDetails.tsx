@@ -32,7 +32,7 @@ const MeetingDetails = () => {
   }, []);
 
   return (
-    <Container fluid className="ml-5 ml-sm-auto">
+    <Container fluid className="ml-lg-5 ml-sm-auto">
       <MeetingDescription
         name={meetingState.meeting.name}
         meetingId={id}

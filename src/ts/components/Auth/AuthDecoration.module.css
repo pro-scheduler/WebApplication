@@ -25,3 +25,23 @@
 .personIcon3 {
     background-color: var(--purple);
 }
+
+.additionalIcons {
+    display: inline-block;
+}
+
+@media only screen and (max-width: 992px) {
+    .additionalIcons {
+        display: none;
+    }
+
+    .personIcon {
+        margin: 0 30px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .personIcon {
+        margin: 0 15px;
+    }
+}

@@ -6,7 +6,7 @@ import FacebookButton from '../../../components/common/SubmitButton/IconButton/F
 
 const SignUp = () => {
   return (
-    <Container className="ml-5 ml-sm-auto">
+    <Container className="my-0">
       <AuthView
         title="Create an account"
         question="Already have an account?"

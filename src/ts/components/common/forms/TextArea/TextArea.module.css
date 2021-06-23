@@ -44,3 +44,13 @@
 .invalid_text {
     color: var(--medium-red);
 }
+
+@media only screen and (max-width: 600px) {
+    .text_area_classic {
+        width: 220px;
+    }
+
+    .text_area_classic_invalid {
+        width: 220px;
+    }
+}

@@ -74,7 +74,11 @@ const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => 
       ) : (
         <div className="text-center mt-3">
           <div>{noMeetingsInfo}</div>
-          <RedirectButton className="mt-4" redirectTO="/create" text="Add new meeting" />
+          <RedirectButton
+            className={styles.noMeetingButton}
+            redirectTO="/create"
+            text="Add new meeting"
+          />
         </div>
       )}
     </Row>

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Question, QuestionType } from '../../../model/survey/Question';
 import { Answer } from '../../../model/survey/Answer';
 import surveyActions from '../../../actions/surveyActions';
+import styles from './MeetingSurvey.module.css';
 
 const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
@@ -74,6 +75,7 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
             onclick={saveSurvey}
             text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
             disabled={!filledAnswers()}
+            className={styles.saveAnswersButton}
           />
         </div>
       </Col>

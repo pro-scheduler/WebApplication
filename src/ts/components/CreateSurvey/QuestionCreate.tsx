@@ -44,7 +44,7 @@ const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProp
               onChange={handleSingleChoice}
               options={options}
               defaultValue={options[3]}
-              className="mr-0"
+              className={styles.dropdownButton}
             />
           </Col>
           <Col lg={11} className={styles.questionCreateFooter} />

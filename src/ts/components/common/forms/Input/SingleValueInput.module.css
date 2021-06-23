@@ -34,3 +34,10 @@
 .invalid_text {
     color: var(--medium-red);
 }
+
+@media only screen and (max-width: 600px) {
+    .input_classic,
+    .input_classic_invalid {
+        width: 210px;
+    }
+}
