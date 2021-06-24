@@ -7,7 +7,7 @@ import googleUrl from '../../../auth/AuthCredentials';
 
 const SignIn = () => {
   return (
-    <Container className="ml-5 ml-sm-auto">
+    <Container className="my-0">
       <AuthView
         title="Sign In"
         question="Don't have an account yet?"

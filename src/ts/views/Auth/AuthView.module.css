@@ -5,3 +5,9 @@
     box-shadow: var(--shadow);
     border-radius: 5%;
 }
+
+@media only screen and (max-width: 600px) {
+    .authView {
+        width: 320px;
+    }
+}

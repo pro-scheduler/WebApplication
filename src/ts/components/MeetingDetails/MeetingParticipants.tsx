@@ -74,7 +74,7 @@ const MeetingParticipants = ({
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Who'} />
       <Col lg={12} className={styles.meetingParticipantsTotalMembers}>
-        Total {participants.length} members
+        Total {participants.length} {participants.length === 1 ? 'member' : 'members'}
       </Col>
       {participantsIcons}
       {isOrganizer && (

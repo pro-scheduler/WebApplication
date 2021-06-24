@@ -21,6 +21,7 @@ import {
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
+import styles from './CreateMeeting.module.css';
 
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
@@ -93,6 +94,7 @@ const CreateMeeting = () => {
               text="Save meeting"
               onclick={saveMeeting}
               disabled={invalidNameDesc || !required()(name)}
+              className={styles.saveMeetingButton}
             />
           </Col>
         </Row>
