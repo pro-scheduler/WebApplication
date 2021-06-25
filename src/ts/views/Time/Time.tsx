@@ -3,7 +3,92 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import TimeGrid from '../../components/TimeGrid/TimeGrid';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
+import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
+import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+
 const Time = () => {
+  let now = new Date().getTime();
+  let tomorow = new Date().getTime() + 1000 * 60 * 60 * 24;
+  let timeRanges: TimeRangeDTO[] = [
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    { startDateTime: new Date(now - 1000 * 60 * 60), endDateTime: new Date(now) },
+    { startDateTime: new Date(now - 5000 * 60 * 60), endDateTime: new Date(now - 3000 * 60 * 60) },
+    { startDateTime: new Date(now - 10000 * 60 * 60), endDateTime: new Date(now - 8500 * 60 * 60) },
+    { startDateTime: new Date(tomorow - 1000 * 60 * 60), endDateTime: new Date(tomorow) },
+    {
+      startDateTime: new Date(tomorow - 5000 * 60 * 60),
+      endDateTime: new Date(tomorow - 3000 * 60 * 60),
+    },
+    {
+      startDateTime: new Date(tomorow - 10000 * 60 * 60),
+      endDateTime: new Date(tomorow - 8500 * 60 * 60),
+    },
+  ];
+  let timeAnswers: TimeRangeDTO[] = [
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    {
+      startDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 - 1000 * 60 * 60 * 14),
+      endDateTime: new Date(now - 1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 3),
+    },
+    { startDateTime: new Date(now - 500 * 60 * 60), endDateTime: new Date(now) },
+    { startDateTime: new Date(now - 500 * 60 * 60), endDateTime: new Date(now) },
+    { startDateTime: new Date(now - 4500 * 60 * 60), endDateTime: new Date(now - 3500 * 60 * 60) },
+    { startDateTime: new Date(now - 10000 * 60 * 60), endDateTime: new Date(now - 9000 * 60 * 60) },
+    { startDateTime: new Date(now - 400 * 60 * 60), endDateTime: new Date(now) },
+    { startDateTime: new Date(now - 4500 * 60 * 60), endDateTime: new Date(now - 3500 * 60 * 60) },
+    { startDateTime: new Date(now - 10000 * 60 * 60), endDateTime: new Date(now - 9000 * 60 * 60) },
+    { startDateTime: new Date(tomorow - 500 * 60 * 60), endDateTime: new Date(tomorow) },
+    {
+      startDateTime: new Date(tomorow - 4500 * 60 * 60),
+      endDateTime: new Date(tomorow - 3500 * 60 * 60),
+    },
+    {
+      startDateTime: new Date(tomorow - 10000 * 60 * 60),
+      endDateTime: new Date(tomorow - 9000 * 60 * 60),
+    },
+  ];
   return (
     <Container fluid className="ml-5 ml-sm-auto">
       <Row className="justify-content-center mt-4">
@@ -52,6 +137,7 @@ const Time = () => {
         <Col>
           <UserTimeGrid
             primaryLabel="23.04"
+            disabled={false}
             secondaryLabel="Thursday"
             boxSizes={36}
             addRanges={() => {}}
@@ -65,6 +151,7 @@ const Time = () => {
         </Col>
         <Col>
           <UserTimeGrid
+            disabled={false}
             primaryLabel="24.04"
             secondaryLabel="Friday"
             boxSizes={36}
@@ -87,6 +174,7 @@ const Time = () => {
         </Col>
         <Col>
           <UserTimeGrid
+            disabled={false}
             primaryLabel="24.04"
             secondaryLabel="Friday"
             boxSizes={36}
@@ -105,6 +193,7 @@ const Time = () => {
         </Col>
         <Col>
           <UserTimeGrid
+            disabled={false}
             primaryLabel="24.04"
             secondaryLabel="Friday"
             boxSizes={36}
@@ -123,6 +212,22 @@ const Time = () => {
                 to: '14:45',
               },
             ]}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <MeetingTime meetingId={0} timeRanges={timeRanges} answers={timeAnswers} />
+        </Col>
+      </Row>
+      <h3>Disabled</h3>
+      <Row>
+        <Col>
+          <MeetingTime
+            meetingId={0}
+            timeRanges={timeRanges}
+            answers={timeAnswers}
+            disabled={true}
           />
         </Col>
       </Row>
