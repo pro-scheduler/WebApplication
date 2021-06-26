@@ -56,7 +56,7 @@ const saveMeeting = (
     } else {
       return dispatch(createMeetingFailed('Meeting has not been created ;/'));
     }
-  });
+  })
 };
 
 const loadMeeting = (id: number) => (dispatch: Dispatch) => {

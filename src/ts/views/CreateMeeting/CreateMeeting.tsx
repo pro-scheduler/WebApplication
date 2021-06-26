@@ -10,6 +10,7 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import style from '../../components/CreateMeeting/NameAndDesctiption.module.css';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
+// eslint-disable-next-line
 import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
@@ -22,7 +23,8 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
 import styles from './CreateMeeting.module.css';
-
+import { saveMeeting } from '../../API/meeting/meetinService';
+import { ApiCall } from '../../API/genericApiCalls';
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
@@ -33,6 +35,7 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  const [saveResponse, setSaveResponse] = useState<ApiCall<any>>(new ApiCall<any>());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
@@ -40,6 +43,7 @@ const CreateMeeting = () => {
     questions: [],
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dispatch: Function = useDispatch();
   const messageStatus = useSelector((state: RootStateOrAny) => {
     return state.messages.createMeetingMessageStatus;
@@ -49,20 +53,21 @@ const CreateMeeting = () => {
   });
   const [state, setState] = useState<creatingMeetingState>('name');
 
-  const saveMeeting = () => {
+  const saveThisMeeting = () => {
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
         ? new RealMeetingDetailsDTO(name, description, timeRanges)
         : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
-    dispatch(
-      actions.saveMeeting(
-        meeting,
-        {
-          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        },
-        survey
-      )
-    );
+    // dispatch(
+    //   actions.saveMeeting(
+    //     meeting,
+    //     {
+    //       emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+    //     },
+    //     survey
+    //   )
+    // );
+    saveMeeting(meeting, setSaveResponse, 'Meeting created successfully');
   };
 
   return (
@@ -92,7 +97,7 @@ const CreateMeeting = () => {
           <Col xs="auto">
             <ActionButton
               text="Save meeting"
-              onclick={saveMeeting}
+              onclick={saveThisMeeting}
               disabled={invalidNameDesc || !required()(name)}
               className={styles.saveMeetingButton}
             />
@@ -106,6 +111,9 @@ const CreateMeeting = () => {
               {message}
             </p>
           )}
+          {saveResponse.isSuccess && 'Success'}
+          {saveResponse.isFailed && 'Failed'}
+          {saveResponse.isLoading && 'Loading'}
         </Col>
       </Row>
     </Container>
