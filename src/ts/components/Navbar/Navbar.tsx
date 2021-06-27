@@ -94,8 +94,10 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
         {showDetails ? (
           <SidebarFooter>
             <Menu iconShape="circle">
-              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
-              <Link to="/" />
+              <MenuItem icon={<FiLogOut />}>
+                Logout
+                <Link to="/" />
+              </MenuItem>
             </Menu>
           </SidebarFooter>
         ) : (
