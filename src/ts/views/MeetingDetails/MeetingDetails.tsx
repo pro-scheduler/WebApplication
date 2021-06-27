@@ -31,9 +31,7 @@ const MeetingDetails = () => {
   useEffect(() => {
     dispatch(actions.loadMeeting(id));
     dispatch(userActions.fetchUserOrganizedMeetings(user.id));
-    surveyActions.getSurveyForMeeting(id).then((value) => {
-      setSurvey(value);
-    });
+    surveyActions.getSurveyForMeeting(id).then(setSurvey);
     // eslint-disable-next-line
   }, []);
   useEffect(() => {

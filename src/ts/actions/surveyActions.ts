@@ -87,8 +87,8 @@ const fillSurvey = (
   });
 };
 
-const getSurveySummary = (surveyId: number): Promise<SurveySummary | undefined> => {
-  return fetch(getSurveySummaryUrl(surveyId), {
+const getSurveySummary = (meetingId: number): Promise<SurveySummary | undefined> => {
+  return fetch(getSurveySummaryUrl(meetingId), {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

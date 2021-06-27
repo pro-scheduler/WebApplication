@@ -8,4 +8,4 @@ export const getSurveyForMeetingUrl = (meetingId: number) => getSurveysUrl() + `
 
 export const getFillSurveyUrl = () => getSurveysUrl() + '/fill';
 
-export const getSurveySummaryUrl = (surveyId: number) => getSurveysUrl() + `/${surveyId}/summary`;
+export const getSurveySummaryUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/summary`;
