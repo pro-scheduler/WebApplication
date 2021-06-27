@@ -24,6 +24,7 @@ import { saveMeeting } from '../../API/meeting/meetinService';
 import { ApiCall } from '../../API/genericApiCalls';
 import { createInvitations } from '../../API/invitation/invitationService';
 import { createSurvey } from '../../API/survey/surveyService';
+import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
@@ -99,10 +100,15 @@ const CreateMeeting = () => {
               onclick={saveThisMeeting}
               disabled={invalidNameDesc || !required()(name)}
               className={styles.saveMeetingButton}
-            />
+            ></ActionButton>
           </Col>
         </Row>
       )}
+      <Row className="justify-content-center mt-2">
+        <Col xs="auto">
+          <LoadingSpinner acitve={saveMeetingResponse.isLoading} />
+        </Col>
+      </Row>
     </Container>
   );
 };
