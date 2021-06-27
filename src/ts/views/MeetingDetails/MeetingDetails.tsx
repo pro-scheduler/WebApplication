@@ -26,15 +26,13 @@ const MeetingDetails = () => {
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
+  const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
 
   useEffect(() => {
     dispatch(actions.loadMeeting(id));
     dispatch(userActions.fetchUserOrganizedMeetings(user.id));
     surveyActions.getSurveyForMeeting(id).then((value) => {
       setSurvey(value);
-      if (value !== undefined) {
-        surveyActions.getSurveySummary(id).then(setSurveySummary);
-      }
     });
     // eslint-disable-next-line
   }, []);
@@ -45,6 +43,11 @@ const MeetingDetails = () => {
     );
     // eslint-disable-next-line
   }, [user.organizedMeetings]);
+
+  useEffect(() => {
+    surveyActions.getSurveySummary(id).then(setSurveySummary);
+    // eslint-disable-next-line
+  }, [survey, refreshSurveySummary]);
 
   return (
     <Container fluid className="ml-xs-5">
@@ -64,7 +67,9 @@ const MeetingDetails = () => {
       {meetingState.meeting.availableTimeRanges.length > 0 && (
         <MeetingTime meetingId={id} timeRanges={meetingState.meeting.availableTimeRanges} />
       )}
-      {survey && <MeetingSurvey survey={survey} />}
+      {survey && (
+        <MeetingSurvey survey={survey} setRefreshSurveySummary={setRefreshSurveySummary} />
+      )}
       {surveySummary && isOrganizer && (
         <MeetingSurveyResults
           surveySummary={surveySummary}

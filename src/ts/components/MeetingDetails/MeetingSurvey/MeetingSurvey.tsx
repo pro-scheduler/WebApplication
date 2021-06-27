@@ -10,7 +10,13 @@ import { Answer } from '../../../model/survey/Answer';
 import surveyActions from '../../../actions/surveyActions';
 import styles from './MeetingSurvey.module.css';
 
-const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
+const MeetingSurvey = ({
+  survey,
+  setRefreshSurveySummary,
+}: {
+  survey: UserSurvey;
+  setRefreshSurveySummary: (value: number) => void;
+}) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
@@ -59,6 +65,7 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
     surveyActions.fillSurvey(survey.id, questionsAndAnswers).then(() => {
       setDataUpdated(false);
       setButtonText('COMPLETE');
+      setRefreshSurveySummary(Math.random());
     });
   };
 
