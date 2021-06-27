@@ -16,19 +16,49 @@ const headers = {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${Cookies.get('access_token')}`,
 };
+
+const setLoading = (setResponse?: Function) => {
+  if (setResponse) {
+    setResponse({
+      isSuccess: false,
+      isFailed: false,
+      isLoading: true,
+      faildMessage: '',
+      data: null,
+    });
+  }
+};
+
+const setFailed = (message: string, setResponse?: Function) => {
+  if (setResponse) {
+    setResponse({
+      isSuccess: false,
+      isFailed: true,
+      isLoading: false,
+      faildMessage: message,
+      data: null,
+    });
+  }
+};
+
+const setSuccess = (result: any, setResponse?: Function) => {
+  if (setResponse) {
+    setResponse({
+      isSuccess: true,
+      isFailed: false,
+      isLoading: false,
+      faildMessage: '',
+      data: result,
+    });
+  }
+};
 export const post = (
   data: any,
   apiLink: string,
-  setResponse: Function,
+  setResponse?: Function,
   successMessage?: string
 ) => {
-  setResponse({
-    isSuccess: false,
-    isFailed: false,
-    isLoading: true,
-    faildMessage: '',
-    data: null,
-  });
+  setLoading(setResponse);
   fetch(apiLink, {
     method: 'POST',
     headers,
@@ -38,32 +68,20 @@ export const post = (
     .then((result) => {
       console.log(result);
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
-        setResponse({
-          isSuccess: false,
-          isFailed: true,
-          isLoading: false,
-          faildMessage: result.detail,
-          data: null,
-        });
-        toastError(result.title + ' ' + result.detail);
+        if (result.status === 401) {
+          setFailed('Not Authorized', setResponse);
+          toastError('You are not Authorized, please log in.');
+        } else {
+          setFailed(result.detail, setResponse);
+          toastError(result.title + ' ' + result.detail);
+        }
       } else {
-        setResponse({
-          isSuccess: true,
-          isFailed: false,
-          isLoading: false,
-          faildMessage: '',
-          data: result,
-        });
+        setSuccess(result, setResponse);
         if (successMessage) toastSuccess(successMessage);
       }
     })
     .catch((error) => {
-      setResponse({
-        isSuccess: false,
-        isFailed: true,
-        isLoading: false,
-        faildMessage: error.reason,
-        data: null,
-      });
+      setFailed(error, setResponse);
+      toastError(error);
     });
 };
