@@ -7,3 +7,5 @@ export const getSurveyAnswersUrl = (surveyId: number) => getSurveyUrl(surveyId) 
 export const getSurveyForMeetingUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/user`;
 
 export const getFillSurveyUrl = () => getSurveysUrl() + '/fill';
+
+export const getSurveySummaryUrl = (surveyId: number) => getSurveysUrl() + `/${surveyId}/summary`;

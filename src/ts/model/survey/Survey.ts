@@ -1,5 +1,5 @@
 import { Answer } from './Answer';
-import { Question } from './Question';
+import { Question, QuestionType } from './Question';
 
 export type Survey = {
   id: number;
@@ -34,4 +34,37 @@ export type UserSurvey = {
     answer: Answer | null;
   }[];
   state: 'INCOMPLETE' | 'COMPLETE';
+};
+
+export type SurveySummary = {
+  finishedParticipantsCount: number;
+  questionSummaries: {
+    question: string;
+    type: QuestionType;
+    entries?: ChoiceInfo[];
+    answers?: Entry[];
+    avg?: number;
+    yes?: {
+      percentage: number;
+    };
+    no?: {
+      percentage: number;
+    };
+  }[];
+};
+
+export type Entry = {
+  email: string;
+  answer: string;
+};
+
+export type EntryInfo = {
+  percentage: number;
+  attendeesCount?: number;
+};
+
+export type ChoiceInfo = {
+  choice: string;
+  point?: number;
+  info: EntryInfo;
 };

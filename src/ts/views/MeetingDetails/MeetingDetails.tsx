@@ -5,13 +5,14 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import allActions from '../../actions';
 import actions from '../../actions/meetingActions';
 import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
-import { UserSurvey } from '../../model/survey/Survey';
+import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
+import MeetingSurveyResults from '../../components/MeetingDetails/MeetingSurvey/MeetingSurveyResults';
+import userActions from '../../actions/userActions';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -23,16 +24,30 @@ const MeetingDetails = () => {
     return state.userReducer;
   });
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
+  const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
+  const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(actions.loadMeeting(id));
-    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
-    surveyActions.getSurveyForMeeting(id).then((value) => setSurvey(value));
+    dispatch(userActions.fetchUserOrganizedMeetings(user.id));
+    surveyActions.getSurveyForMeeting(id).then((value) => {
+      setSurvey(value);
+      if (value !== undefined) {
+        surveyActions.getSurveySummary(id).then(setSurveySummary);
+      }
+    });
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    setIsOrganizer(
+      user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
+        undefined
+    );
+    // eslint-disable-next-line
+  }, [user.organizedMeetings]);
 
   return (
-    <Container fluid className="ml-lg-5 ml-sm-auto">
+    <Container fluid className="ml-xs-5">
       <MeetingDescription
         name={meetingState.meeting.name}
         meetingId={id}
@@ -44,15 +59,18 @@ const MeetingDetails = () => {
       <MeetingParticipants
         meetingId={id}
         participants={meetingState.meeting.participants}
-        isOrganizer={
-          user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
-          undefined
-        }
+        isOrganizer={isOrganizer}
       />
       {meetingState.meeting.availableTimeRanges.length > 0 && (
         <MeetingTime meetingId={id} timeRanges={meetingState.meeting.availableTimeRanges} />
       )}
       {survey && <MeetingSurvey survey={survey} />}
+      {surveySummary && isOrganizer && (
+        <MeetingSurveyResults
+          surveySummary={surveySummary}
+          numberOfParticipants={meetingState.meeting.participants.length}
+        />
+      )}
     </Container>
   );
 };
