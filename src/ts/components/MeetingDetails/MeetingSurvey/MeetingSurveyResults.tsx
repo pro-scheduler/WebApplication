@@ -49,11 +49,8 @@ const MeetingSurveyResults = ({
       </Col>
       <Col lg={5} className="text-center mx-auto mt-3">
         <TotalPieChart
-          percentage={
-            numberOfParticipants === 0
-              ? 0
-              : Math.round((surveySummary.finishedParticipantsCount * 100) / numberOfParticipants)
-          }
+          filled={surveySummary.finishedParticipantsCount}
+          total={numberOfParticipants}
         />
         {charts}
       </Col>

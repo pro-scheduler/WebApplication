@@ -2,10 +2,14 @@ import styles from './TotalPieChart.module.css';
 import { PieChart } from 'react-minimal-pie-chart';
 import React from 'react';
 
-const TotalPieChart = ({ percentage }: { percentage: number }) => {
+const TotalPieChart = ({ filled, total }: { filled: number; total: number }) => {
+  const percentage: number = total === 0 ? 0 : Math.round((filled * 100) / total);
+
   return (
     <div>
-      <p>Completed surveys</p>
+      <p>
+        Survey completed by {filled} {filled === 1 ? 'participant' : 'participants'}
+      </p>
       {percentage ? (
         <div className={styles.chartContainer}>
           <PieChart
