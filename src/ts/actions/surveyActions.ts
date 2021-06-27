@@ -3,10 +3,9 @@ import {
   getFillSurveyUrl,
   getSurveyAnswersUrl,
   getSurveyForMeetingUrl,
-  getSurveysUrl,
   getSurveyUrl,
 } from '../API/survey/urls';
-import { Survey, SurveyResultsDTO, SurveyWithQuestionsDTO } from '../model/survey/Survey';
+import { Survey, SurveyResultsDTO } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
 import { Answer } from '../model/survey/Answer';
 import Cookies from 'js-cookie';
@@ -33,25 +32,6 @@ const loadSurveyResults = (id: number) => (dispatch: Dispatch) => {
     .then((surveyResultsDTO: SurveyResultsDTO) => {
       return dispatch({ type: 'LOAD_RESULTS', payload: surveyResultsDTO });
     });
-};
-
-const createSurvey = (meetingId: number, surveyWithQuestions: SurveyWithQuestionsDTO) => {
-  surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
-    question.id = null;
-    return question;
-  });
-
-  surveyWithQuestions.meetingId = meetingId;
-
-  return fetch(getSurveysUrl(), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('access_token')}`,
-    },
-    body: JSON.stringify(surveyWithQuestions),
-  });
 };
 
 const getSurveyForMeeting = (meetingId: number) => {
@@ -84,7 +64,6 @@ const fillSurvey = (
 const actions = {
   loadSurvey,
   loadSurveyResults,
-  createSurvey,
   getSurveyForMeeting,
   fillSurvey,
 };
