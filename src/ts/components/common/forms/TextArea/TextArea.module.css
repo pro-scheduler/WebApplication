@@ -47,10 +47,10 @@
 
 @media only screen and (max-width: 600px) {
     .text_area_classic {
-        width: 220px;
+        width: 210px;
     }
 
     .text_area_classic_invalid {
-        width: 220px;
+        width: 210px;
     }
 }

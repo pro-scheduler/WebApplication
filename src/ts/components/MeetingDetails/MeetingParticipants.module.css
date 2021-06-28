@@ -11,3 +11,13 @@
     margin-top: 80px;
     margin-bottom: 40px;
 }
+
+.inviteButton {
+    margin-top: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .inviteButton {
+        width: 210px;
+    }
+}

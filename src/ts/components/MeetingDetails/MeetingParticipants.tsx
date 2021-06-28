@@ -93,11 +93,7 @@ const MeetingParticipants = ({
               emails={emails}
               setEmails={setEmails}
             />
-            <ActionButton
-              text="Invite"
-              onclick={sendInvitations}
-              className="text-center mx-auto mt-5"
-            />
+            <ActionButton text="Invite" onclick={sendInvitations} className={styles.inviteButton} />
           </Col>
         </>
       )}

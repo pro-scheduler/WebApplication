@@ -3,9 +3,10 @@ import {
   getFillSurveyUrl,
   getSurveyAnswersUrl,
   getSurveyForMeetingUrl,
+  getSurveySummaryUrl,
   getSurveyUrl,
 } from '../API/survey/urls';
-import { Survey, SurveyResultsDTO } from '../model/survey/Survey';
+import { Survey, SurveyResultsDTO, SurveySummary } from '../model/survey/Survey';
 import { Question } from '../model/survey/Question';
 import { Answer } from '../model/survey/Answer';
 import Cookies from 'js-cookie';
@@ -61,11 +62,24 @@ const fillSurvey = (
   });
 };
 
+const getSurveySummary = (meetingId: number): Promise<SurveySummary | undefined> => {
+  return fetch(getSurveySummaryUrl(meetingId), {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
+    },
+  }).then((response) => {
+    return response.status === 200 ? response.json() : undefined;
+  });
+};
+
 const actions = {
   loadSurvey,
   loadSurveyResults,
   getSurveyForMeeting,
   fillSurvey,
+  getSurveySummary,
 };
 
 export default actions;
