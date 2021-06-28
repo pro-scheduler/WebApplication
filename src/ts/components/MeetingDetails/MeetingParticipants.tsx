@@ -6,8 +6,6 @@ import UserIcon from './UserIcon';
 import LineWithHeader from './LineWithHeader';
 import styles from './MeetingParticipants.module.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
-import allActions from '../../actions';
-import { useDispatch } from 'react-redux';
 import UserInvitationIcon from './UserInvitationIcon';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
@@ -28,12 +26,10 @@ const MeetingParticipants = ({
   isOrganizer,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
-  const dispatch: Function = useDispatch();
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const [saveResopnse, setSaveResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {
-    dispatch(allActions.invitationActions.setMeetingIdInInvitations(meetingId));
     fetchMeetingInvitations(meetingId, setInvitations);
     // eslint-disable-next-line
   }, []);
