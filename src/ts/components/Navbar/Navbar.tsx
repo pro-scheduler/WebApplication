@@ -43,7 +43,6 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
                 onClick={() => setActiveIcon('Home')}
               >
                 Home
-                <Link to="/" />
               </MenuItem>
 
               <MenuItem
@@ -79,7 +78,6 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
                 onClick={() => setActiveIcon('Settings')}
               >
                 Settings
-                <Link to="/" />
               </MenuItem>
 
               <MenuItem
@@ -96,7 +94,10 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
         {showDetails ? (
           <SidebarFooter>
             <Menu iconShape="circle">
-              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+              <MenuItem icon={<FiLogOut />}>
+                Logout
+                <Link to="/" />
+              </MenuItem>
             </Menu>
           </SidebarFooter>
         ) : (
