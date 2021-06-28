@@ -6,7 +6,8 @@ import { getSurveysUrl } from './urls';
 export const createSurvey = (
   meetingId: number,
   surveyWithQuestions: SurveyWithQuestionsDTO,
-  setResponse?: Function
+  setResponse?: Function,
+  setData?: Function
 ) => {
   surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
     question.id = null;
@@ -17,6 +18,7 @@ export const createSurvey = (
   post(
     surveyWithQuestions,
     getSurveysUrl(),
+    setData,
     setResponse,
     true,
     'Surveys has beedn added succesfully'

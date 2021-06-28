@@ -1,13 +1,11 @@
 import Cookies from 'js-cookie';
 import { toastError, toastSuccess } from '../tools/messagesInvocator';
 
-export class ApiCall<ResponseType> {
+export class ApiCall {
   constructor(
     public isSuccess: boolean = false,
     public isFailed: boolean = false,
-    public isLoading: boolean = false,
-    public faildMessage: string = '',
-    public data?: ResponseType
+    public isLoading: boolean = false
   ) {}
 }
 
@@ -23,41 +21,37 @@ const setLoading = (setResponse?: Function) => {
       isSuccess: false,
       isFailed: false,
       isLoading: true,
-      faildMessage: '',
-      data: null,
     });
   }
 };
 
-const setFailed = (message: string, setResponse?: Function) => {
+const setFailed = (setResponse?: Function) => {
   if (setResponse) {
     setResponse({
       isSuccess: false,
       isFailed: true,
       isLoading: false,
-      faildMessage: message,
-      data: null,
     });
   }
 };
 
-const setSuccess = (result: any, setResponse?: Function) => {
+const setSuccess = (setResponse?: Function) => {
   if (setResponse) {
     setResponse({
       isSuccess: true,
       isFailed: false,
       isLoading: false,
-      faildMessage: '',
-      data: result,
     });
   }
 };
 export const post = (
   data: any,
   apiLink: string,
+  setData?: Function,
   setResponse?: Function,
   showFailed?: boolean,
-  successMessage?: string
+  successMessage?: string,
+  onSuccess?: Function
 ) => {
   setLoading(setResponse);
   fetch(apiLink, {
@@ -65,57 +59,73 @@ export const post = (
     headers,
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status !== undefined && (response.status < 200 || response.status >= 300)) {
+        setFailed(setResponse);
+      } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
+        setSuccess(setResponse);
+        if (successMessage) toastSuccess(successMessage);
+        if (onSuccess) onSuccess();
+      }
+      return response.json();
+    })
     .then((result) => {
       console.log(result);
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
         if (result.status === 401) {
-          setFailed('Not Authorized', setResponse);
           if (showFailed) toastError('You are not Authorized, please log in.');
         } else {
-          setFailed(result.detail, setResponse);
           if (showFailed) toastError(result.title + ' ' + result.detail);
         }
       } else {
-        setSuccess(result, setResponse);
-        if (successMessage) toastSuccess(successMessage);
+        if (setData) setData(result);
       }
     })
     .catch((error) => {
-      setFailed(error, setResponse);
+      setFailed(setResponse);
       if (showFailed) toastError(error);
     });
 };
 
 export const get = (
   apiLink: string,
+  setResponseData: Function,
   setResponse?: Function,
   showFailed?: boolean,
-  successMessage?: string
+  successMessage?: string,
+  onSuccess?: Function
 ) => {
   setLoading(setResponse);
   fetch(apiLink, {
     method: 'GET',
     headers,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status !== undefined && (response.status < 200 || response.status >= 300)) {
+        setFailed(setResponse);
+      } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
+        setSuccess(setResponse);
+        if (successMessage) toastSuccess(successMessage);
+        if (onSuccess) onSuccess();
+      }
+      return response.json();
+    })
     .then((result) => {
       console.log(result);
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
         if (result.status === 401) {
-          setFailed('Not Authorized', setResponse);
           if (showFailed) toastError('You are not Authorized, please log in.');
         } else {
-          setFailed(result.detail, setResponse);
           if (showFailed) toastError(result.title + ' ' + result.detail);
         }
       } else {
-        setSuccess(result, setResponse);
+        setResponseData(result);
         if (successMessage) toastSuccess(successMessage);
+        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
-      setFailed(error, setResponse);
+      setFailed(setResponse);
       if (showFailed) toastError(error);
     });
 };

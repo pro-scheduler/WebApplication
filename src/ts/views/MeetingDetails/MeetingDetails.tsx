@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
@@ -18,48 +18,42 @@ import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
   const { id }: any = useParams();
-  // const meetingState = useSelector((state: RootStateOrAny) => {
-  //   return state.meetings;
-  // });
-  const [meetingResponse, setMettingResponse] = useState<ApiCall<any>>(new ApiCall<any>());
+  const [meetingResponse, setMettingResponse] = useState<ApiCall>(new ApiCall());
+  const [meeting, setMeeting] = useState<any>();
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
   });
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
 
   useEffect(() => {
-    // dispatch(actions.loadMeeting(id));
-    loadMeeting(id, setMettingResponse);
+    loadMeeting(id, setMeeting, setMettingResponse);
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     surveyActions.getSurveyForMeeting(id).then((value) => setSurvey(value));
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    console.log(meetingResponse);
-  }, [meetingResponse]);
-  return meetingResponse.isSuccess ? (
+  return meeting ? (
     <div>
       <Container fluid className="ml-lg-5 ml-sm-auto">
         <MeetingDescription
-          name={meetingResponse.data.name}
+          name={meeting.name}
           meetingId={id}
-          description={meetingResponse.data.description}
-          organizers={meetingResponse.data.organizers}
-          link={meetingResponse.data.link}
-          password={meetingResponse.data.password}
+          description={meeting.description}
+          organizers={meeting.organizers}
+          link={meeting.link}
+          password={meeting.password}
         />
         <MeetingParticipants
           meetingId={id}
-          participants={meetingResponse.data.participants}
+          participants={meeting.participants}
           isOrganizer={
             user.organizedMeetings
               .filter((meeting: Meeting) => meeting.id === parseInt(id))
               .pop() !== undefined
           }
         />
-        {meetingResponse.data.availableTimeRanges.length > 0 && (
-          <MeetingTime meetingId={id} timeRanges={meetingResponse.data.availableTimeRanges} />
+        {meeting.availableTimeRanges.length > 0 && (
+          <MeetingTime meetingId={id} timeRanges={meeting.availableTimeRanges} />
         )}
         {survey && <MeetingSurvey survey={survey} />}
       </Container>

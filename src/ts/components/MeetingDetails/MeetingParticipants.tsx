@@ -7,13 +7,15 @@ import LineWithHeader from './LineWithHeader';
 import styles from './MeetingParticipants.module.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
 import allActions from '../../actions';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import UserInvitationIcon from './UserInvitationIcon';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import { createInvitations } from '../../API/invitation/invitationService';
 import { ApiCall } from '../../API/genericApiCalls';
+import { fetchMeetingInvitations } from '../../API/invitation/invitationService';
+
 export type MeetingParticipantsProps = {
   participants: ProUser[];
   meetingId: number;
@@ -27,14 +29,12 @@ const MeetingParticipants = ({
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const dispatch: Function = useDispatch();
-  const invitations = useSelector((state: RootStateOrAny) => {
-    return state.invitationReducer;
-  });
-  const [saveResopnse, setSaveResponse] = useState<ApiCall<any>>(new ApiCall());
+  const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
+  const [saveResopnse, setSaveResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {
     dispatch(allActions.invitationActions.setMeetingIdInInvitations(meetingId));
-    dispatch(allActions.invitationActions.fetchMeetingInvitations(meetingId));
+    fetchMeetingInvitations(meetingId, setInvitations);
     // eslint-disable-next-line
   }, []);
 
@@ -67,18 +67,16 @@ const MeetingParticipants = ({
     );
   });
 
-  const invitationsIcons = invitations.basicInvitationInfos.map(
-    (basicInvitationInfo: BasicInvitationInfo) => {
-      return (
-        <Col lg={3} className="my-1 mx-auto text-center" key={basicInvitationInfo.invitationId}>
-          <UserInvitationIcon
-            email={basicInvitationInfo.basicUserInfoDTO.email}
-            state={basicInvitationInfo.state}
-          />
-        </Col>
-      );
-    }
-  );
+  const invitationsIcons = invitations.map((basicInvitationInfo: BasicInvitationInfo) => {
+    return (
+      <Col lg={3} className="my-1 mx-auto text-center" key={basicInvitationInfo.invitationId}>
+        <UserInvitationIcon
+          email={basicInvitationInfo.basicUserInfoDTO.email}
+          state={basicInvitationInfo.state}
+        />
+      </Col>
+    );
+  });
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Who'} />

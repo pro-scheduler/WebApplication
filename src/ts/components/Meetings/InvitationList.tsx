@@ -1,7 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EnvelopIcon from '../common/Icons/EnvelopIcon';
-import React from 'react';
 import styles from './MeetingList.module.css';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import InvitationCard from './InvitationCard';

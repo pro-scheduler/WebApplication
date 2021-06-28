@@ -4,19 +4,27 @@ import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from './ur
 
 export const saveMeeting = (
   meeting: MeetingDetailsDTO,
+  setMeetingId: Function,
   setResponse?: Function,
   successMessage?: string
-) => post(meeting, getMeetingsUrl(), setResponse, true, successMessage);
+) => post(meeting, getMeetingsUrl(), setMeetingId, setResponse, true, successMessage);
 
-export const loadMeeting = (id: number, setResponse?: Function) =>
-  get(getMeetingUrl(id), setResponse);
+export const loadMeeting = (id: number, setMeeting: Function, setResponse?: Function) =>
+  get(getMeetingUrl(id), setMeeting, setResponse);
 
-export const fetchAllMeetings = (setResponse?: Function) => get(getMeetingsUrl(), setResponse);
+export const fetchAllMeetings = (setMeetings: Function, setResponse?: Function) =>
+  get(getMeetingsUrl(), setMeetings, setResponse);
 
-export const removeUserFromMeeting = (meetingId: number, userId: number, setResponse?: Function) =>
+export const removeUserFromMeeting = (
+  meetingId: number,
+  userId: number,
+  setData?: Function,
+  setResponse?: Function
+) =>
   post(
     { id: userId },
     getRemoveUserFromMeetingUrl(meetingId),
+    setData,
     setResponse,
     true,
     'User succesfully removed from the meeting'

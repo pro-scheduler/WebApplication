@@ -37,11 +37,10 @@ const CreateMeeting = () => {
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
   let history = useHistory();
-  const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall<any>>(new ApiCall<any>());
-  const [saveInvitationsResonse, setSetInvitationsResponse] = useState<ApiCall<any>>(
-    new ApiCall<any>()
-  );
-  const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall<any>>(new ApiCall<any>());
+  const [meetingId, setMeetingId] = useState<any>({});
+  const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
+  const [saveInvitationsResonse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
@@ -56,35 +55,38 @@ const CreateMeeting = () => {
       onlineLink === ''
         ? new RealMeetingDetailsDTO(name, description, timeRanges)
         : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
-    saveMeeting(meeting, setSaveMeetingResponse, 'Meeting created successfully');
+    saveMeeting(meeting, setMeetingId, setSaveMeetingResponse, 'Meeting created successfully');
   };
 
   useEffect(() => {
-    if (saveMeetingResponse.isSuccess) {
-      setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
-      let invitations = {
-        emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-      };
-      if (invitations.emails.length > 0) {
-        createInvitations(saveMeetingResponse.data.id, invitations, setSetInvitationsResponse);
-      }
-      if (survey.questions.length > 0) {
-        createSurvey(saveMeetingResponse.data.id, survey, setSaveSurveyResponse);
+    if (meetingId.id) {
+      if (saveMeetingResponse.isSuccess) {
+        setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
+        let invitations = {
+          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+        };
+        if (invitations.emails.length > 0) {
+          console.log(meetingId);
+          createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
+        }
+        if (survey.questions.length > 0) {
+          createSurvey(meetingId.id, survey, setSaveSurveyResponse);
+        }
       }
     }
     // eslint-disable-next-line
-  }, [saveMeetingResponse]);
+  }, [saveMeetingResponse, meetingId]);
 
   // redirect
   useEffect(() => {
     if (survey.questions.length > 0) {
       if (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
-        history.push('/meetings/' + saveMeetingResponse.data.id);
+        history.push('/meetings/' + meetingId.id);
     } else if (emails.length > 0) {
       if (saveInvitationsResonse.isSuccess || saveInvitationsResonse.isFailed)
-        history.push('/meetings/' + saveMeetingResponse.data.id);
+        history.push('/meetings/' + meetingId.id);
     } else {
-      if (saveMeetingResponse.isSuccess) history.push('/meetings/' + saveMeetingResponse.data.id);
+      if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
     }
     // eslint-disable-next-line
   }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResonse]);
