@@ -1,5 +1,10 @@
 import { get, post } from '../genericApiCalls';
-import { getMeetingInvitationsUrl, getAcceptInvitationUrl, getRejectInvitationUrl } from './urls';
+import {
+  getMeetingInvitationsUrl,
+  getAcceptInvitationUrl,
+  getRejectInvitationUrl,
+  getUserPendingInvitationsUrl,
+} from './urls';
 import { InvitationEmailsDTO } from '../../model/invitation/Invitation';
 
 export const createInvitations = (
@@ -19,6 +24,9 @@ export const createInvitations = (
 
 export const fetchMeetingInvitations = (meetingId: number, setResponse: Function) =>
   get(getMeetingInvitationsUrl(meetingId), setResponse);
+
+export const fetchUserPendingInvitations = (userId: number, setData: Function) =>
+  get(getUserPendingInvitationsUrl(userId), setData);
 
 export const acceptInvitation = (
   invitationId: number,

@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
 import { ProUser } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import InvitationList from '../../components/Meetings/InvitationList';
+import { useState } from 'react';
+import { fetchUserPendingInvitations } from '../../API/invitation/invitationService';
+import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
   });
-  const invitations = useSelector((state: RootStateOrAny) => {
-    return state.invitationReducer;
-  });
+  const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const dispatch: Function = useDispatch();
 
   useEffect(() => {
@@ -24,15 +25,13 @@ const Meetings = () => {
   useEffect(() => {
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
-    dispatch(allActions.invitationActions.fetchUserPendingInvitations(user.id));
+    fetchUserPendingInvitations(user.id, setInvitations);
     // eslint-disable-next-line
   }, [user.id]);
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      {invitations.basicInvitationInfos.length > 0 && (
-        <InvitationList invitations={invitations.basicInvitationInfos} />
-      )}
+      {invitations.length > 0 && <InvitationList invitations={invitations} />}
       <MeetingList
         meetings={user.organizedMeetings}
         header={'Meetings you organize'}
