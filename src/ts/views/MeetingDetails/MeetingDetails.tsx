@@ -6,7 +6,6 @@ import MeetingParticipants from '../../components/MeetingDetails/MeetingParticip
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
-// import actions from '../../actions/meetingActions';
 import { loadMeeting } from '../../API/meeting/meetinService';
 import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';

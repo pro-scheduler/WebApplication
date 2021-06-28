@@ -90,8 +90,8 @@ export const post = (
 export const get = (
   apiLink: string,
   setResponse?: Function,
-  successMessage?: string,
-  showFailed?: boolean
+  showFailed?: boolean,
+  successMessage?: string
 ) => {
   setLoading(setResponse);
   fetch(apiLink, {
