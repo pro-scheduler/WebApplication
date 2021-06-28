@@ -6,54 +6,67 @@ import MeetingParticipants from '../../components/MeetingDetails/MeetingParticip
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
-import actions from '../../actions/meetingActions';
+// import actions from '../../actions/meetingActions';
+import { loadMeeting } from '../../API/meeting/meetinService';
 import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
 import { UserSurvey } from '../../model/survey/Survey';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
+import { ApiCall } from '../../API/genericApiCalls';
+import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
   const { id }: any = useParams();
-  const meetingState = useSelector((state: RootStateOrAny) => {
-    return state.meetings;
-  });
+  // const meetingState = useSelector((state: RootStateOrAny) => {
+  //   return state.meetings;
+  // });
+  const [meetingResponse, setMettingResponse] = useState<ApiCall<any>>(new ApiCall<any>());
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
   });
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
 
   useEffect(() => {
-    dispatch(actions.loadMeeting(id));
+    // dispatch(actions.loadMeeting(id));
+    loadMeeting(id, setMettingResponse);
     dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
     surveyActions.getSurveyForMeeting(id).then((value) => setSurvey(value));
     // eslint-disable-next-line
   }, []);
 
-  return (
-    <Container fluid className="ml-lg-5 ml-sm-auto">
-      <MeetingDescription
-        name={meetingState.meeting.name}
-        meetingId={id}
-        description={meetingState.meeting.description}
-        organizers={meetingState.meeting.organizers}
-        link={meetingState.meeting.link}
-        password={meetingState.meeting.password}
-      />
-      <MeetingParticipants
-        meetingId={id}
-        participants={meetingState.meeting.participants}
-        isOrganizer={
-          user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
-          undefined
-        }
-      />
-      {meetingState.meeting.availableTimeRanges.length > 0 && (
-        <MeetingTime meetingId={id} timeRanges={meetingState.meeting.availableTimeRanges} />
-      )}
-      {survey && <MeetingSurvey survey={survey} />}
-    </Container>
+  useEffect(() => {
+    console.log(meetingResponse);
+  }, [meetingResponse]);
+  return meetingResponse.isSuccess ? (
+    <div>
+      <Container fluid className="ml-lg-5 ml-sm-auto">
+        <MeetingDescription
+          name={meetingResponse.data.name}
+          meetingId={id}
+          description={meetingResponse.data.description}
+          organizers={meetingResponse.data.organizers}
+          link={meetingResponse.data.link}
+          password={meetingResponse.data.password}
+        />
+        <MeetingParticipants
+          meetingId={id}
+          participants={meetingResponse.data.participants}
+          isOrganizer={
+            user.organizedMeetings
+              .filter((meeting: Meeting) => meeting.id === parseInt(id))
+              .pop() !== undefined
+          }
+        />
+        {meetingResponse.data.availableTimeRanges.length > 0 && (
+          <MeetingTime meetingId={id} timeRanges={meetingResponse.data.availableTimeRanges} />
+        )}
+        {survey && <MeetingSurvey survey={survey} />}
+      </Container>
+    </div>
+  ) : (
+    <LoadingSpinner acitve={meetingResponse.isLoading} />
   );
 };
 

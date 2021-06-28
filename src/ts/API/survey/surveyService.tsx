@@ -14,5 +14,11 @@ export const createSurvey = (
   });
 
   surveyWithQuestions.meetingId = meetingId;
-  post(surveyWithQuestions, getSurveysUrl(), setResponse, 'Surveys has beedn added succesfully');
+  post(
+    surveyWithQuestions,
+    getSurveysUrl(),
+    setResponse,
+    true,
+    'Surveys has beedn added succesfully'
+  );
 };

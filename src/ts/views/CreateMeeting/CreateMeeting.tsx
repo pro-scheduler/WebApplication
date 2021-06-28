@@ -25,6 +25,7 @@ import { ApiCall } from '../../API/genericApiCalls';
 import { createInvitations } from '../../API/invitation/invitationService';
 import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
+import { useHistory } from 'react-router';
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
@@ -35,7 +36,12 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  let history = useHistory();
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall<any>>(new ApiCall<any>());
+  const [saveInvitationsResonse, setSetInvitationsResponse] = useState<ApiCall<any>>(
+    new ApiCall<any>()
+  );
+  const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall<any>>(new ApiCall<any>());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
@@ -55,20 +61,33 @@ const CreateMeeting = () => {
 
   useEffect(() => {
     if (saveMeetingResponse.isSuccess) {
-      console.log(saveMeetingResponse);
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
       let invitations = {
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
       };
       if (invitations.emails.length > 0) {
-        createInvitations(saveMeetingResponse.data.id, invitations);
+        createInvitations(saveMeetingResponse.data.id, invitations, setSetInvitationsResponse);
       }
       if (survey.questions.length > 0) {
-        createSurvey(saveMeetingResponse.data.id, survey);
+        createSurvey(saveMeetingResponse.data.id, survey, setSaveSurveyResponse);
       }
     }
     // eslint-disable-next-line
   }, [saveMeetingResponse]);
+
+  // redirect
+  useEffect(() => {
+    if (survey.questions.length > 0) {
+      if (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
+        history.push('/meetings/' + saveMeetingResponse.data.id);
+    } else if (emails.length > 0) {
+      if (saveInvitationsResonse.isSuccess || saveInvitationsResonse.isFailed)
+        history.push('/meetings/' + saveMeetingResponse.data.id);
+    } else {
+      if (saveMeetingResponse.isSuccess) history.push('/meetings/' + saveMeetingResponse.data.id);
+    }
+    // eslint-disable-next-line
+  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResonse]);
 
   return (
     <Container className="ml-5 ml-sm-auto">
@@ -106,7 +125,13 @@ const CreateMeeting = () => {
       )}
       <Row className="justify-content-center mt-2">
         <Col xs="auto">
-          <LoadingSpinner acitve={saveMeetingResponse.isLoading} />
+          <LoadingSpinner
+            acitve={
+              saveMeetingResponse.isLoading ||
+              saveInvitationsResonse.isLoading ||
+              saveSurveyResponse.isLoading
+            }
+          />
         </Col>
       </Row>
     </Container>

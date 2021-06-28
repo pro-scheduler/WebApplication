@@ -11,5 +11,6 @@ export const createInvitations = (
     invitationEmailsDTO,
     getMeetingInvitationsUrl(meetingId),
     setResponse,
+    true,
     'Ivitations has beed added succefully'
   );
