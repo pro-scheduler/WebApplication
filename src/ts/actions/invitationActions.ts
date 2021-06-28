@@ -5,7 +5,7 @@ import {
   getRejectInvitationUrl,
   getUserPendingInvitationsUrl,
 } from '../API/invitation/urls';
-import { BasicInvitationInfo, InvitationEmailsDTO } from '../model/invitation/Invitation';
+import { BasicInvitationInfo } from '../model/invitation/Invitation';
 import Cookies from 'js-cookie';
 
 const fetchUserPendingInvitations = (userId: number) => (dispatch: Dispatch) => {
@@ -54,18 +54,6 @@ const rejectInvitation = (invitationId: number) => {
   });
 };
 
-const createInvitations = (meetingId: number, invitationEmailsDTO: InvitationEmailsDTO) => {
-  return fetch(getMeetingInvitationsUrl(meetingId), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('access_token')}`,
-    },
-    body: JSON.stringify(invitationEmailsDTO),
-  });
-};
-
 const setMeetingIdInInvitations = (meetingId: number) => (dispatch: Dispatch) => {
   return dispatch({ type: 'SET_MEETING_ID', payload: { meetingId } });
 };
@@ -75,7 +63,6 @@ const actions = {
   fetchMeetingInvitations,
   acceptInvitation,
   rejectInvitation,
-  createInvitations,
   setMeetingIdInInvitations,
 };
 

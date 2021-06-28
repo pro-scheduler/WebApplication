@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ProUser } from '../../model/user/ProUser';
@@ -12,7 +12,8 @@ import UserInvitationIcon from './UserInvitationIcon';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-
+import { createInvitations } from '../../API/invitation/invitationService';
+import { ApiCall } from '../../API/genericApiCalls';
 export type MeetingParticipantsProps = {
   participants: ProUser[];
   meetingId: number;
@@ -29,6 +30,7 @@ const MeetingParticipants = ({
   const invitations = useSelector((state: RootStateOrAny) => {
     return state.invitationReducer;
   });
+  const [saveResopnse, setSaveResponse] = useState<ApiCall<any>>(new ApiCall());
 
   useEffect(() => {
     dispatch(allActions.invitationActions.setMeetingIdInInvitations(meetingId));
@@ -37,12 +39,19 @@ const MeetingParticipants = ({
   }, []);
 
   const sendInvitations = () => {
-    allActions.invitationActions
-      .createInvitations(meetingId, {
+    createInvitations(
+      meetingId,
+      {
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-      })
-      .then(() => setEmails([]));
+      },
+      setSaveResponse
+    );
   };
+  useEffect(() => {
+    if (saveResopnse.isSuccess) {
+      setEmails([]);
+    }
+  }, [saveResopnse]);
 
   const participantsIcons = participants.map((participant: ProUser) => {
     return (
