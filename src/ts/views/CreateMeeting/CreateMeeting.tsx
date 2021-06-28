@@ -70,6 +70,7 @@ const CreateMeeting = () => {
           createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
         }
         if (survey.questions.length > 0) {
+          console.log(meetingId);
           createSurvey(meetingId.id, survey, setSaveSurveyResponse);
         }
       }
@@ -79,17 +80,19 @@ const CreateMeeting = () => {
 
   // redirect
   useEffect(() => {
-    if (survey.questions.length > 0) {
-      if (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
-        history.push('/meetings/' + meetingId.id);
-    } else if (emails.length > 0) {
-      if (saveInvitationsResonse.isSuccess || saveInvitationsResonse.isFailed)
-        history.push('/meetings/' + meetingId.id);
-    } else {
-      if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
+    if (meetingId.id) {
+      if (survey.questions.length > 0) {
+        if (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
+          history.push('/meetings/' + meetingId.id);
+      } else if (emails.length > 0) {
+        if (saveInvitationsResonse.isSuccess || saveInvitationsResonse.isFailed)
+          history.push('/meetings/' + meetingId.id);
+      } else {
+        if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
+      }
     }
     // eslint-disable-next-line
-  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResonse]);
+  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResonse, meetingId]);
 
   return (
     <Container className="ml-5 ml-sm-auto">
