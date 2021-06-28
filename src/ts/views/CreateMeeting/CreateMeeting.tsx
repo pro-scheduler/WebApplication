@@ -74,7 +74,7 @@ const CreateMeeting = () => {
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
     }
     // eslint-disable-next-line
-  }, [meetingId.id, saveSurveyResponse]);
+  }, [meetingId.id]);
 
   // redirect
   useEffect(() => {
