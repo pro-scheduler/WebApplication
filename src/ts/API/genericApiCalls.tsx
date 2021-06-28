@@ -65,7 +65,6 @@ export const post = (
       } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
         setSuccess(setResponse);
         if (successMessage) toastSuccess(successMessage);
-        if (onSuccess) onSuccess();
       }
       return response.json();
     })
@@ -79,6 +78,7 @@ export const post = (
         }
       } else {
         if (setData) setData(result);
+        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {

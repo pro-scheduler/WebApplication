@@ -59,24 +59,22 @@ const CreateMeeting = () => {
   };
 
   useEffect(() => {
-    if (meetingId.id) {
-      if (saveMeetingResponse.isSuccess) {
-        setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
-        let invitations = {
-          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        };
-        if (invitations.emails.length > 0) {
-          console.log(meetingId);
-          createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
-        }
-        if (survey.questions.length > 0) {
-          console.log(meetingId);
-          createSurvey(meetingId.id, survey, setSaveSurveyResponse);
-        }
+    if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
+      let invitations = {
+        emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+      };
+      if (invitations.emails.length > 0) {
+        console.log(meetingId);
+        createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
       }
+      if (survey.questions.length > 0) {
+        console.log(meetingId);
+        createSurvey(meetingId.id, survey, setSaveSurveyResponse);
+      }
+      setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
     }
     // eslint-disable-next-line
-  }, [saveMeetingResponse, meetingId]);
+  }, [meetingId.id, saveSurveyResponse]);
 
   // redirect
   useEffect(() => {
