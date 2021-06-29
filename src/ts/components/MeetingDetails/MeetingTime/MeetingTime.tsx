@@ -9,7 +9,7 @@ import SwitchButton from '../../common/SwitchButton/SwitchButton';
 import AnswersTimePicker from '../../UserTimeGrid/AnswersTimePicker';
 import styles from './MeetingTime.module.css';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { getAllUsersTimeAnswers, saveUserTimeRanges } from '../../../API/meeting/meetingService';
+import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 export type MeetingTimeProps = {
   meetingId: number;
   timeRanges: TimeRangeDTO[];
@@ -28,7 +28,6 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
-  const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
@@ -36,14 +35,6 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
     ran[date] = { ranges: ranges, date: day };
     setSelectedRanges({ ...ran });
   };
-
-  useEffect(() => {
-    getAllUsersTimeAnswers(meetingId, setAllUsersAnswers);
-  }, [meetingId]);
-
-  useEffect(() => {
-    console.log(allUsersAnswers);
-  }, [allUsersAnswers]);
 
   const saveTime = () => {
     let rangesFiltered: TimeRangeDTO[] = [];
@@ -116,7 +107,7 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
         <LineWithHeader header={'When'} />
         <div>
           <SwitchButton
-            title="Currnet answers"
+            title="Current answers"
             onChange={() => setDisplayAnswers(!displayAnswers)}
           />
         </div>
