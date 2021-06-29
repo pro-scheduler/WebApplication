@@ -4,11 +4,12 @@ import LineWithHeader from '../LineWithHeader';
 import { UserSurvey } from '../../../model/survey/Survey';
 import MeetingQuestion from './MeetingQuestion';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Question, QuestionType } from '../../../model/survey/Question';
 import { Answer } from '../../../model/survey/Answer';
-import surveyActions from '../../../actions/surveyActions';
 import styles from './MeetingSurvey.module.css';
+import { fillSurvey } from '../../../API/survey/surveyService';
+import { ApiCall } from '../../../API/genericApiCalls';
 
 const MeetingSurvey = ({
   survey,
@@ -22,6 +23,16 @@ const MeetingSurvey = ({
   >(survey.questionsAndAnswers);
   const [dataUpdated, setDataUpdated] = useState(true);
   const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
+  const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+
+  useEffect(() => {
+    if (saveResponse.isSuccess) {
+      setDataUpdated(false);
+      setButtonText('COMPLETE');
+      setRefreshSurveySummary(Math.random());
+    }
+    // eslint-disable-next-line
+  }, [saveResponse]);
 
   const setAnswer = (questionId: number | null, answer: Answer) => {
     const data = questionsAndAnswers.map((value) => {
@@ -62,11 +73,7 @@ const MeetingSurvey = ({
   });
 
   const saveSurvey = () => {
-    surveyActions.fillSurvey(survey.id, questionsAndAnswers).then(() => {
-      setDataUpdated(false);
-      setButtonText('COMPLETE');
-      setRefreshSurveySummary(Math.random());
-    });
+    fillSurvey(survey.id, questionsAndAnswers, setSaveResponse);
   };
 
   return (

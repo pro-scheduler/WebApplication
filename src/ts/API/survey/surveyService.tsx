@@ -1,7 +1,8 @@
 import { Question } from '../../model/survey/Question';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { post } from '../genericApiCalls';
-import { getSurveysUrl } from './urls';
+import { getFillSurveyUrl, getSurveysUrl } from './urls';
+import { Answer } from '../../model/survey/Answer';
 
 export const createSurvey = (
   meetingId: number,
@@ -22,5 +23,23 @@ export const createSurvey = (
     setResponse,
     true,
     'Surveys has been added successfully'
+  );
+};
+
+export const fillSurvey = (
+  id: number,
+  questionsAndAnswers: { question: Question; answer: Answer | null }[],
+  setResponse?: Function,
+  setData?: Function
+) => {
+  const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
+
+  post(
+    survey,
+    getFillSurveyUrl(),
+    setData,
+    setResponse,
+    true,
+    'Answers has been saved successfully'
   );
 };

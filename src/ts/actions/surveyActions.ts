@@ -1,14 +1,11 @@
 import { Dispatch } from 'redux';
 import {
-  getFillSurveyUrl,
   getSurveyAnswersUrl,
   getSurveyForMeetingUrl,
   getSurveySummaryUrl,
   getSurveyUrl,
 } from '../API/survey/urls';
 import { Survey, SurveyResultsDTO, SurveySummary } from '../model/survey/Survey';
-import { Question } from '../model/survey/Question';
-import { Answer } from '../model/survey/Answer';
 import Cookies from 'js-cookie';
 
 const loadSurvey = (id: number) => (dispatch: Dispatch) => {
@@ -45,23 +42,6 @@ const getSurveyForMeeting = (meetingId: number) => {
   });
 };
 
-const fillSurvey = (
-  id: number,
-  questionsAndAnswers: { question: Question; answer: Answer | null }[]
-) => {
-  const survey = { id: id, questionsAndAnswers: questionsAndAnswers };
-
-  return fetch(getFillSurveyUrl(), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('access_token')}`,
-    },
-    body: JSON.stringify(survey),
-  });
-};
-
 const getSurveySummary = (meetingId: number): Promise<SurveySummary | undefined> => {
   return fetch(getSurveySummaryUrl(meetingId), {
     headers: {
@@ -78,7 +58,6 @@ const actions = {
   loadSurvey,
   loadSurveyResults,
   getSurveyForMeeting,
-  fillSurvey,
   getSurveySummary,
 };
 
