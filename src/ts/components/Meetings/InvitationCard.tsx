@@ -6,19 +6,21 @@ import Container from 'react-bootstrap/Container';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 import { acceptInvitation, rejectInvitation } from '../../API/invitation/invitationService';
-import { useHistory } from 'react-router';
 
-const InvitationCard = (invitation: BasicInvitationInfo) => {
-  const history = useHistory();
+export type InvitationCardProps = {
+  invitation: BasicInvitationInfo;
+  refreshMeetings: (value: number) => void;
+};
 
+const InvitationCard = ({ invitation, refreshMeetings }: InvitationCardProps) => {
   const acceptInvitationLocal = (invitationId: number) => {
     acceptInvitation(invitationId, () => {
-      history.go(0);
+      refreshMeetings(Math.random());
     });
   };
   const rejectInvitationLocal = (invitationId: number) => {
     rejectInvitation(invitationId, () => {
-      history.go(0);
+      refreshMeetings(Math.random());
     });
   };
 

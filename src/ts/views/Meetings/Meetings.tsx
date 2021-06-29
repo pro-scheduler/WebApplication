@@ -15,6 +15,7 @@ const Meetings = () => {
   });
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const dispatch: Function = useDispatch();
+  const [refreshMeetings, setRefreshMeetings] = useState<number>(0);
 
   useEffect(() => {
     console.log('fetch user');
@@ -27,11 +28,13 @@ const Meetings = () => {
     dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
     fetchUserPendingInvitations(user.id, setInvitations);
     // eslint-disable-next-line
-  }, [user.id]);
+  }, [user.id, refreshMeetings]);
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
-      {invitations.length > 0 && <InvitationList invitations={invitations} />}
+      {invitations.length > 0 && (
+        <InvitationList invitations={invitations} refreshMeetings={setRefreshMeetings} />
+      )}
       <MeetingList
         meetings={user.organizedMeetings}
         header={'Meetings you organize'}

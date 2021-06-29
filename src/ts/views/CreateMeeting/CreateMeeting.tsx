@@ -76,7 +76,6 @@ const CreateMeeting = () => {
   // redirect
   useEffect(() => {
     if (meetingId.id) {
-      console.log('Pushing');
       if (
         survey.questions.length > 0 &&
         (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)

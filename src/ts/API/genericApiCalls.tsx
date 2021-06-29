@@ -44,6 +44,22 @@ const setSuccess = (setResponse?: Function) => {
     });
   }
 };
+
+const handleResponse = (
+  response: Response,
+  setResponse?: Function,
+  successMessage?: string,
+  onSuccess?: Function
+) => {
+  if (response.status !== undefined && (response.status < 200 || response.status >= 300)) {
+    setFailed(setResponse);
+  } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
+    setSuccess(setResponse);
+    if (successMessage) toastSuccess(successMessage);
+    if (onSuccess) onSuccess();
+  }
+  return response.json();
+};
 export const post = (
   data: any,
   apiLink: string,
@@ -59,14 +75,8 @@ export const post = (
     headers,
     body: JSON.stringify(data),
   })
-    .then((response) => {
-      if (response.status !== undefined && (response.status < 200 || response.status >= 300)) {
-        setFailed(setResponse);
-      } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
-        setSuccess(setResponse);
-        if (successMessage) toastSuccess(successMessage);
-      }
-      return response.json();
+    .then((response: Response) => {
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -97,15 +107,8 @@ export const get = (
     method: 'GET',
     headers,
   })
-    .then((response) => {
-      if (response.status !== undefined && (response.status < 200 || response.status >= 300)) {
-        setFailed(setResponse);
-      } else if (response.status !== undefined && response.status >= 200 && response.status < 300) {
-        setSuccess(setResponse);
-        if (successMessage) toastSuccess(successMessage);
-        if (onSuccess) onSuccess();
-      }
-      return response.json();
+    .then((response: Response) => {
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
