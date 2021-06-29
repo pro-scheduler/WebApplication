@@ -16,9 +16,11 @@ const MeetingCard = (meeting: Meeting) => {
         <Container className="container-fluid pt-0 mt-0 pl-0">
           <Row className="mt-0 mx-0 pl-0">
             <Col lg={12} className="text-left pl-0 ml-0">
-              <div className={styles.meetingCardDescription}>
-                {meeting.description.slice(0, 50)} {meeting.description.length > 50 && '...'}
-              </div>
+              {meeting.description && (
+                <div className={styles.meetingCardDescription}>
+                  {meeting.description.slice(0, 50)} {meeting.description.length > 50 && '...'}
+                </div>
+              )}
             </Col>
             <Col lg={12} className="pr-0">
               <div className="text-right">

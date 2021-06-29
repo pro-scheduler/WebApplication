@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,10 +7,7 @@ import CreateSurvey from '../../components/CreateSurvey/CreateSurvey';
 import CreateInvitations from '../../components/CreateMeeting/CreateInvitations';
 import ChooseTime from '../../components/CreateMeeting/ChooseTime';
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
-import style from '../../components/CreateMeeting/NameAndDesctiption.module.css';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import actions from '../../actions/meetingActions';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
 import {
@@ -22,7 +19,12 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
 import styles from './CreateMeeting.module.css';
-
+import { saveMeeting } from '../../API/meeting/meetingService';
+import { ApiCall } from '../../API/genericApiCalls';
+import { createInvitations } from '../../API/invitation/invitationService';
+import { createSurvey } from '../../API/survey/surveyService';
+import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
+import { useHistory } from 'react-router';
 export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
 
 const CreateMeeting = () => {
@@ -33,6 +35,11 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  const history = useHistory();
+  const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
+  const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
+  const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
@@ -40,30 +47,32 @@ const CreateMeeting = () => {
     questions: [],
   });
 
-  const dispatch: Function = useDispatch();
-  const messageStatus = useSelector((state: RootStateOrAny) => {
-    return state.messages.createMeetingMessageStatus;
-  });
-  const message = useSelector((state: RootStateOrAny) => {
-    return state.messages.createMeetingMessage;
-  });
   const [state, setState] = useState<creatingMeetingState>('name');
 
-  const saveMeeting = () => {
+  const saveThisMeeting = () => {
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
         ? new RealMeetingDetailsDTO(name, description, timeRanges)
         : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
-    dispatch(
-      actions.saveMeeting(
-        meeting,
-        {
-          emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        },
-        survey
-      )
-    );
+    saveMeeting(meeting, setMeetingId, setSaveMeetingResponse, 'Meeting created successfully');
   };
+
+  useEffect(() => {
+    if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
+      const invitations = {
+        emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+      };
+      if (invitations.emails.length > 0) {
+        createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
+      }
+      if (survey.questions.length > 0) {
+        createSurvey(meetingId.id, survey, setSaveSurveyResponse);
+      }
+      setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
+      history.push('/meetings/' + meetingId.id);
+    }
+    // eslint-disable-next-line
+  }, [meetingId.id]);
 
   return (
     <Container className="ml-5 ml-sm-auto">
@@ -92,20 +101,22 @@ const CreateMeeting = () => {
           <Col xs="auto">
             <ActionButton
               text="Save meeting"
-              onclick={saveMeeting}
+              onclick={saveThisMeeting}
               disabled={invalidNameDesc || !required()(name)}
               className={styles.saveMeetingButton}
             />
           </Col>
         </Row>
       )}
-      <Row className="justify-content-center mt-5">
+      <Row className="justify-content-center mt-2">
         <Col xs="auto">
-          {messageStatus !== 'NO_DISPLAY' && (
-            <p className={messageStatus === 'SUCCESS' ? style.messageSuccess : style.messageFailed}>
-              {message}
-            </p>
-          )}
+          <LoadingSpinner
+            active={
+              saveMeetingResponse.isLoading ||
+              saveInvitationsResponse.isLoading ||
+              saveSurveyResponse.isLoading
+            }
+          />
         </Col>
       </Row>
     </Container>

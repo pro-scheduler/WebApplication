@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './MeetingCard.module.css';
 import invitationStyles from './InvitationCard.module.css';
 import Row from 'react-bootstrap/Row';
@@ -7,26 +5,23 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
-import allActions from '../../actions';
-import { ProUser } from '../../model/user/ProUser';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { acceptInvitation, rejectInvitation } from '../../API/invitation/invitationService';
 
-const InvitationCard = (invitation: BasicInvitationInfo) => {
-  const user: ProUser = useSelector((state: RootStateOrAny) => {
-    return state.userReducer;
-  });
-  const dispatch: Function = useDispatch();
+export type InvitationCardProps = {
+  invitation: BasicInvitationInfo;
+  refreshMeetings: (value: number) => void;
+};
 
-  const refreshMeetings = () => {
-    dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
-    dispatch(allActions.invitationActions.fetchUserPendingInvitations(user.id));
+const InvitationCard = ({ invitation, refreshMeetings }: InvitationCardProps) => {
+  const acceptInvitationLocal = (invitationId: number) => {
+    acceptInvitation(invitationId, () => {
+      refreshMeetings(Math.random());
+    });
   };
-
-  const acceptInvitation = (invitationId: number) => {
-    allActions.invitationActions.acceptInvitation(invitationId).then(refreshMeetings);
-  };
-  const rejectInvitation = (invitationId: number) => {
-    allActions.invitationActions.rejectInvitation(invitationId).then(refreshMeetings);
+  const rejectInvitationLocal = (invitationId: number) => {
+    rejectInvitation(invitationId, () => {
+      refreshMeetings(Math.random());
+    });
   };
 
   return (
@@ -43,11 +38,11 @@ const InvitationCard = (invitation: BasicInvitationInfo) => {
             <Col lg={12} className="text-center mx-auto mt-4">
               <AiFillPlusCircle
                 className={invitationStyles.acceptInvitationButton}
-                onClick={() => acceptInvitation(invitation.invitationId)}
+                onClick={() => acceptInvitationLocal(invitation.invitationId)}
               />
               <AiFillMinusCircle
                 className={invitationStyles.rejectInvitationButton}
-                onClick={() => rejectInvitation(invitation.invitationId)}
+                onClick={() => rejectInvitationLocal(invitation.invitationId)}
               />
             </Col>
           </Row>

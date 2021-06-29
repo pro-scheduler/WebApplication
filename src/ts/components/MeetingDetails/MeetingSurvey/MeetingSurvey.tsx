@@ -4,18 +4,35 @@ import LineWithHeader from '../LineWithHeader';
 import { UserSurvey } from '../../../model/survey/Survey';
 import MeetingQuestion from './MeetingQuestion';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Question, QuestionType } from '../../../model/survey/Question';
 import { Answer } from '../../../model/survey/Answer';
-import surveyActions from '../../../actions/surveyActions';
 import styles from './MeetingSurvey.module.css';
+import { fillSurvey } from '../../../API/survey/surveyService';
+import { ApiCall } from '../../../API/genericApiCalls';
 
-const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
+const MeetingSurvey = ({
+  survey,
+  setRefreshSurveySummary,
+}: {
+  survey: UserSurvey;
+  setRefreshSurveySummary: (value: number) => void;
+}) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
   const [dataUpdated, setDataUpdated] = useState(true);
   const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
+  const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+
+  useEffect(() => {
+    if (saveResponse.isSuccess) {
+      setDataUpdated(false);
+      setButtonText('COMPLETE');
+      setRefreshSurveySummary(Math.random());
+    }
+    // eslint-disable-next-line
+  }, [saveResponse]);
 
   const setAnswer = (questionId: number | null, answer: Answer) => {
     const data = questionsAndAnswers.map((value) => {
@@ -56,16 +73,13 @@ const MeetingSurvey = ({ survey }: { survey: UserSurvey }) => {
   });
 
   const saveSurvey = () => {
-    surveyActions.fillSurvey(survey.id, questionsAndAnswers).then(() => {
-      setDataUpdated(false);
-      setButtonText('COMPLETE');
-    });
+    fillSurvey(survey.id, questionsAndAnswers, setSaveResponse);
   };
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <Col>
-        <LineWithHeader header={'Why'} />
+        <LineWithHeader header={'Survey'} />
         <div className="ml-3">
           <p>{survey.description}</p>
           {questions}

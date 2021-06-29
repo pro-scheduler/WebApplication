@@ -4,6 +4,15 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import { useState } from 'react';
 import { minSings, maxSings, required } from '../../tools/validator';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
+import { Row, Col } from 'react-bootstrap';
+import {
+  toastDark,
+  toastDefault,
+  toastError,
+  toastInfo,
+  toastSuccess,
+  toastWarning,
+} from '../../tools/messagesInvocator';
 
 const ExampleValidation = () => {
   const [name, setName] = useState('');
@@ -43,6 +52,99 @@ const ExampleValidation = () => {
             invalidName || invalidDescription || !required()(name) || !required()(description)
           }
         />
+      </div>
+      <div style={{ margin: 20 }}>
+        <h3>Messages</h3>
+        <Row>
+          <Col></Col>
+          <Col>
+            <div
+              role="button"
+              onClick={() => toastSuccess('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Success
+            </div>
+            <br></br>
+            <div
+              role="button"
+              onClick={() => toastError('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Error
+            </div>
+            <br></br>
+            <div
+              role="button"
+              onClick={() => toastDark('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Dark
+            </div>
+            <br></br>
+            <div
+              role="button"
+              onClick={() => toastDefault('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Success
+            </div>
+            <br></br>
+            <div
+              role="button"
+              onClick={() => toastInfo('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Info
+            </div>
+            <br></br>
+            <div
+              role="button"
+              onClick={() => toastWarning('This is an example massage')}
+              style={{
+                width: 200,
+                height: 40,
+                color: 'white',
+                borderRadius: 10,
+                backgroundColor: 'var(--purple)',
+              }}
+            >
+              Warning{' '}
+            </div>
+            <br></br>
+          </Col>
+          <Col></Col>
+        </Row>
       </div>
     </div>
   );

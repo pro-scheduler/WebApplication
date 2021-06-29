@@ -45,7 +45,7 @@ const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => 
     });
 
   return (
-    <Row className="justify-content-center mt-4 mr-5" style={{ marginLeft: '6%' }}>
+    <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
       <Col lg={12} className="text-center mt-5">
         <CalendarIcon className={styles.meetingListIcon} />
       </Col>

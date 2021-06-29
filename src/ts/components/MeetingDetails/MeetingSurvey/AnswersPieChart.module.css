@@ -1,0 +1,44 @@
+.answersPieChartContainer {
+    margin-top: 50px;
+}
+
+.chartWithLegendContainer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+.chartContainer {
+    width: 250px;
+    height: 250px;
+    align-items: center;
+    margin: auto;
+}
+
+.legendContainer {
+    display: block;
+    margin: auto;
+    text-align: left;
+}
+
+.questionLine {
+    border-top: 1px solid var(--medium-grey);
+}
+
+@media only screen and (max-width: 600px) {
+    .chartWithLegendContainer {
+        display: block;
+    }
+
+    .legendContainer {
+        display: inline-block;
+        text-align: left;
+        margin: auto;
+    }
+
+    .chartContainer {
+        width: 200px;
+        height: 200px;
+    }
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import SignIn from './views/Auth/Login/SignIn';
@@ -11,10 +10,23 @@ import MeetingDetails from './views/MeetingDetails/MeetingDetails';
 import Time from './views/Time/Time';
 import ExampleInvalid from './views/Example/ExampleInvalid';
 import ExampleValidation from './views/Example/ExampleValidation';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Routes = () => {
   return (
     <Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Switch>
         <Route path="/example">
           <Navbar />

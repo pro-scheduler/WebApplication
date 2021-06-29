@@ -74,7 +74,6 @@ const MeetingPagination = ({
         onClick={() => {
           prevPage();
           setCurrentPage(currentPage - 1 < 1 ? currentPage : currentPage - 1);
-          console.log(currentPage);
         }}
         className={styles.paginationItem}
       >
@@ -90,7 +89,6 @@ const MeetingPagination = ({
               ? currentPage
               : currentPage + 1
           );
-          console.log(currentPage);
         }}
         className={styles.paginationItem}
       >

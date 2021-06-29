@@ -39,7 +39,7 @@ const MeetingNavbar = ({ state, setState, disabledSummary }: MeetingNavbarProps)
             </li>
             <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
               <button className={styles.itemButton} onClick={() => setState('survey')}>
-                Why
+                Survey
               </button>
             </li>
             <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
