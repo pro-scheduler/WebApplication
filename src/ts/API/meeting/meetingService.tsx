@@ -1,7 +1,12 @@
 import { post, get } from '../genericApiCalls';
 import { MeetingDetailsDTO } from '../../model/meeting/Meeting';
-import { getMeetingsUrl, getMeetingUrl, getRemoveUserFromMeetingUrl } from './urls';
-
+import {
+  getMeetingsUrl,
+  getMeetingUrl,
+  getRemoveUserFromMeetingUrl,
+  getSaveUserTimeUrl,
+} from './urls';
+import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 export const saveMeeting = (
   meeting: MeetingDetailsDTO,
   setMeetingId: Function,
@@ -28,4 +33,14 @@ export const removeUserFromMeeting = (
     setResponse,
     true,
     'User successfully removed from the meeting'
+  );
+
+export const saveUserTimeRanges = (meetingId: number, userMarkedTimeRanges: TimeRangeDTO[]) =>
+  post(
+    userMarkedTimeRanges,
+    getSaveUserTimeUrl(meetingId),
+    () => {},
+    () => {},
+    true,
+    'time saved successfully'
   );

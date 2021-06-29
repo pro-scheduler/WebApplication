@@ -7,7 +7,9 @@ import { useEffect, useState } from 'react';
 import useWindowDimensions from '../../common/window/WindowDimension';
 import SwitchButton from '../../common/SwitchButton/SwitchButton';
 import AnswersTimePicker from '../../UserTimeGrid/AnswersTimePicker';
-
+import styles from './MeetingTime.module.css';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 export type MeetingTimeProps = {
   meetingId: number;
   timeRanges: TimeRangeDTO[];
@@ -26,7 +28,6 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
-
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
@@ -35,6 +36,23 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
     setSelectedRanges({ ...ran });
   };
 
+  const saveTime = () => {
+    let rangesFiltered: TimeRangeDTO[] = [];
+    for (let key in selectedRanges) {
+      if (selectedRanges[key].ranges.length > 0) {
+        selectedRanges[key].ranges.forEach((range) => {
+          let from: Date = new Date(selectedRanges[key].date);
+          let to: Date = new Date(selectedRanges[key].date);
+          from.setHours(parseInt(range.from.split(':')[0]), parseInt(range.from.split(':')[1]));
+          to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
+          from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
+          to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
+          rangesFiltered.push({ startDateTime: from, endDateTime: to });
+        });
+      }
+    }
+    saveUserTimeRanges(meetingId, rangesFiltered);
+  };
   useEffect(() => {
     let ranges: RangesWithDay = {};
     timeRanges
@@ -112,6 +130,13 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
             />
           )}
         </div>
+      </Col>
+      <Col lg={12} className="text-center mx-auto">
+        <ActionButton
+          text="Save time preferences"
+          onclick={saveTime}
+          className={styles.saveButton}
+        />
       </Col>
     </Row>
   );
