@@ -1,14 +1,23 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EnvelopIcon from '../common/Icons/EnvelopIcon';
-import React from 'react';
 import styles from './MeetingList.module.css';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import InvitationCard from './InvitationCard';
 
-const InvitationList = ({ invitations }: { invitations: BasicInvitationInfo[] }) => {
+export type InvitationListProps = {
+  invitations: BasicInvitationInfo[];
+  refreshMeetings: (value: number) => void;
+};
+const InvitationList = ({ invitations, refreshMeetings }: InvitationListProps) => {
   const invitationCards = invitations.map((invitation: BasicInvitationInfo) => {
-    return <InvitationCard key={invitation.invitationId} {...invitation} />;
+    return (
+      <InvitationCard
+        key={invitation.invitationId}
+        refreshMeetings={refreshMeetings}
+        invitation={invitation}
+      />
+    );
   });
 
   return (
