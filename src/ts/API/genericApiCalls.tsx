@@ -69,13 +69,10 @@ export const post = (
       return response.json();
     })
     .then((result) => {
-      console.log(result);
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
-        if (result.status === 401) {
-          if (showFailed) toastError('You are not Authorized, please log in.');
-        } else {
-          if (showFailed) toastError(result.title + ' ' + result.detail);
-        }
+        if (result.status === 401 && showFailed)
+          toastError('You are not Authorized, please log in.');
+        else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
         if (onSuccess) onSuccess();
@@ -111,13 +108,10 @@ export const get = (
       return response.json();
     })
     .then((result) => {
-      console.log(result);
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
-        if (result.status === 401) {
-          if (showFailed) toastError('You are not Authorized, please log in.');
-        } else {
-          if (showFailed) toastError(result.title + ' ' + result.detail);
-        }
+        if (result.status === 401 && showFailed)
+          toastError('You are not Authorized, please log in.');
+        else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         setResponseData(result);
         if (successMessage) toastSuccess(successMessage);

@@ -40,7 +40,7 @@ const NameAndDescription = ({
             required={true}
             validation={[
               { validation: required, message: 'This field is required' },
-              { validation: minSings(2), message: 'Min 5 signs' },
+              { validation: minSings(5), message: 'Min 5 signs' },
               { validation: maxSings(255), message: 'Max 255 signs' },
             ]}
           />

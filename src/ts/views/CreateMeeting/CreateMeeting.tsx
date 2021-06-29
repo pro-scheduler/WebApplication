@@ -8,7 +8,6 @@ import CreateInvitations from '../../components/CreateMeeting/CreateInvitations'
 import ChooseTime from '../../components/CreateMeeting/ChooseTime';
 import ActionButton from '../../components/common/SubmitButton/ActionButton/ActionButton';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
-// eslint-disable-next-line
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
 import {
@@ -36,10 +35,10 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
-  let history = useHistory();
-  const [meetingId, setMeetingId] = useState<any>({});
+  const history = useHistory();
+  const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
-  const [saveInvitationsResonse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
@@ -60,15 +59,13 @@ const CreateMeeting = () => {
 
   useEffect(() => {
     if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
-      let invitations = {
+      const invitations = {
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
       };
       if (invitations.emails.length > 0) {
-        console.log(meetingId);
         createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
       }
       if (survey.questions.length > 0) {
-        console.log(meetingId);
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
@@ -79,18 +76,21 @@ const CreateMeeting = () => {
   // redirect
   useEffect(() => {
     if (meetingId.id) {
-      if (survey.questions.length > 0) {
-        if (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
-          history.push('/meetings/' + meetingId.id);
-      } else if (emails.length > 0) {
-        if (saveInvitationsResonse.isSuccess || saveInvitationsResonse.isFailed)
-          history.push('/meetings/' + meetingId.id);
-      } else {
-        if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
-      }
+      console.log('Pushing');
+      if (
+        survey.questions.length > 0 &&
+        (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
+      ) {
+        history.push('/meetings/' + meetingId.id);
+      } else if (
+        emails.length > 0 &&
+        (saveInvitationsResponse.isSuccess || saveInvitationsResponse.isFailed)
+      ) {
+        history.push('/meetings/' + meetingId.id);
+      } else if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
     }
     // eslint-disable-next-line
-  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResonse, meetingId]);
+  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResponse, meetingId]);
 
   return (
     <Container className="ml-5 ml-sm-auto">
@@ -122,16 +122,16 @@ const CreateMeeting = () => {
               onclick={saveThisMeeting}
               disabled={invalidNameDesc || !required()(name)}
               className={styles.saveMeetingButton}
-            ></ActionButton>
+            />
           </Col>
         </Row>
       )}
       <Row className="justify-content-center mt-2">
         <Col xs="auto">
           <LoadingSpinner
-            acitve={
+            active={
               saveMeetingResponse.isLoading ||
-              saveInvitationsResonse.isLoading ||
+              saveInvitationsResponse.isLoading ||
               saveSurveyResponse.isLoading
             }
           />

@@ -19,7 +19,7 @@ import userActions from '../../actions/userActions';
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
   const { id }: any = useParams();
-  const [meetingResponse, setMettingResponse] = useState<ApiCall>(new ApiCall());
+  const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
@@ -31,7 +31,7 @@ const MeetingDetails = () => {
   const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
 
   useEffect(() => {
-    loadMeeting(id, setMeeting, setMettingResponse);
+    loadMeeting(id, setMeeting, setMeetingResponse);
     // eslint-disable-next-line
   }, [refreshParticipants]);
 
@@ -85,7 +85,7 @@ const MeetingDetails = () => {
       </Container>
     </div>
   ) : (
-    <LoadingSpinner acitve={meetingResponse.isLoading} />
+    <LoadingSpinner active={meetingResponse.isLoading} />
   );
 };
 

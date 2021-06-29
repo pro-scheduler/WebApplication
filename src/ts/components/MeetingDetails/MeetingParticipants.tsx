@@ -29,7 +29,7 @@ const MeetingParticipants = ({
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
-  const [saveResopnse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+  const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
 
   useEffect(() => {
@@ -48,12 +48,12 @@ const MeetingParticipants = ({
   };
 
   useEffect(() => {
-    if (saveResopnse.isSuccess) {
+    if (saveResponse.isSuccess) {
       setEmails([]);
       setInvitationsChanged(!invitationsChanged);
     }
     // eslint-disable-next-line
-  }, [saveResopnse]);
+  }, [saveResponse]);
 
   const participantsIcons = participants.map((participant: ProUser) => {
     return (

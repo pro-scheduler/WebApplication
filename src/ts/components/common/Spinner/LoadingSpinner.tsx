@@ -1,11 +1,11 @@
 import { Spinner } from 'react-bootstrap';
 
 export type LoadingSpinnerProps = {
-  acitve: Boolean;
+  active: Boolean;
 };
-const LoadingSpinner = ({ acitve }: LoadingSpinnerProps) => {
-  return acitve ? (
-    <Spinner animation="border" role="status" style={{ color: 'var(--purple)' }}></Spinner>
+const LoadingSpinner = ({ active }: LoadingSpinnerProps) => {
+  return active ? (
+    <Spinner animation="border" role="status" style={{ color: 'var(--purple)' }} />
   ) : (
     <></>
   );
