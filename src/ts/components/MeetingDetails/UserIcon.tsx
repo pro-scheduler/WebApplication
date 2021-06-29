@@ -11,13 +11,15 @@ export type UserIconProps = {
   meetingId: number;
   userId: number;
   canDelete: boolean;
+  refreshParticipants?: (value: number) => void;
 };
 
-const UserIcon = ({ name, meetingId, userId, canDelete }: UserIconProps) => {
+const UserIcon = ({ name, meetingId, userId, canDelete, refreshParticipants }: UserIconProps) => {
   const [modalShow, setModalShow] = useState(false);
   const deleteParticipant = () => {
     meetingActions.removeUserFromMeeting(meetingId, userId);
     setModalShow(false);
+    if (refreshParticipants) refreshParticipants(Math.random());
   };
   return (
     <>

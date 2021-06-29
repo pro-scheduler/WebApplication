@@ -17,14 +17,17 @@ export type MeetingParticipantsProps = {
   participants: ProUser[];
   meetingId: number;
   isOrganizer: boolean;
+  refreshParticipants: (value: number) => void;
 };
 
 const MeetingParticipants = ({
   participants,
   meetingId,
   isOrganizer,
+  refreshParticipants,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const dispatch: Function = useDispatch();
   const invitations = useSelector((state: RootStateOrAny) => {
     return state.invitationReducer;
@@ -34,14 +37,17 @@ const MeetingParticipants = ({
     dispatch(allActions.invitationActions.setMeetingIdInInvitations(meetingId));
     dispatch(allActions.invitationActions.fetchMeetingInvitations(meetingId));
     // eslint-disable-next-line
-  }, []);
+  }, [invitationsChanged]);
 
   const sendInvitations = () => {
     allActions.invitationActions
       .createInvitations(meetingId, {
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
       })
-      .then(() => setEmails([]));
+      .then(() => {
+        setEmails([]);
+        setInvitationsChanged(!invitationsChanged);
+      });
   };
 
   const participantsIcons = participants.map((participant: ProUser) => {
@@ -53,6 +59,7 @@ const MeetingParticipants = ({
           userId={participant.id}
           canDelete={isOrganizer}
           key={'Participant' + participant.id}
+          refreshParticipants={refreshParticipants}
         />
       </Col>
     );
