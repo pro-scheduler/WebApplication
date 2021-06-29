@@ -128,7 +128,7 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
               setRanges={setRanges}
               answers={userAnswers}
-              disabled={disabled ? disabled : false}
+              disabled={true}
             />
           )}
         </div>
