@@ -114,17 +114,16 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
           </div>
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-          {displayAnswers && (
+          {displayAnswers ? (
             <UserTimePicker
               disabled={disabled ? disabled : false}
-              availableRanegs={availableRanges}
+              availableRanges={availableRanges}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
               setRanges={setRanges}
             />
-          )}
-          {!displayAnswers && (
+          ) : (
             <AnswersTimePicker
-              availableRanegs={availableRanges}
+              availableRanges={availableRanges}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
               setRanges={setRanges}
               answers={userAnswers}

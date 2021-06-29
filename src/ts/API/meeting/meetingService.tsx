@@ -43,7 +43,7 @@ export const saveUserTimeRanges = (meetingId: number, userMarkedTimeRanges: Time
     () => {},
     () => {},
     true,
-    'time saved successfully'
+    'Time saved successfully'
   );
 
 export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Function) =>

@@ -16,13 +16,13 @@ interface RangesWithDay {
 const AnswersTimePicker = ({
   count,
   setRanges,
-  availableRanegs,
+  availableRanges,
   answers,
   disabled,
 }: {
   count: number;
   setRanges: Function;
-  availableRanegs: RangesWithDay;
+  availableRanges: RangesWithDay;
   answers: RangesWithDay;
   disabled?: Boolean;
 }) => {
@@ -30,7 +30,7 @@ const AnswersTimePicker = ({
   const [start, setStart] = useState<number>(0);
 
   useEffect(() => {
-    const tmp = Object.entries(availableRanegs).map(
+    const tmp = Object.entries(availableRanges).map(
       (
         [key, value]: [string, { ranges: { from: string; to: string }[]; date: Date }],
         index: number
@@ -64,21 +64,21 @@ const AnswersTimePicker = ({
       tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
-  }, [start, availableRanegs, count, setRanges, answers, disabled]);
+  }, [start, availableRanges, count, setRanges, answers, disabled]);
 
   return (
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
       <div className={styles.leftArrow}>
-        {Object.values(availableRanegs).length > count && (
+        {Object.values(availableRanges).length > count && (
           <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
         )}
       </div>
       {currentDays}
       <div className={styles.rightArrow}>
-        {Object.values(availableRanegs).length > count && (
+        {Object.values(availableRanges).length > count && (
           <NextRightButton
             onclick={() => setStart(start + 1)}
-            disabled={start >= Object.values(availableRanegs).length - count}
+            disabled={start >= Object.values(availableRanges).length - count}
           />
         )}
       </div>

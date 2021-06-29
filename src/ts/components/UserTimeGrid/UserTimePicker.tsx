@@ -16,19 +16,19 @@ interface RangesWithDay {
 const UserTimePicker = ({
   count,
   setRanges,
-  availableRanegs,
+  availableRanges,
   disabled,
 }: {
   count: number;
   setRanges: Function;
-  availableRanegs: RangesWithDay;
+  availableRanges: RangesWithDay;
   disabled: Boolean;
 }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
   const [start, setStart] = useState<number>(0);
 
   useEffect(() => {
-    const tmp = Object.values(availableRanegs).map(
+    const tmp = Object.values(availableRanges).map(
       (value: { ranges: Array<{ from: string; to: string }>; date: Date }, index: number) => (
         <Col hidden={!(index >= start && index < start + count)} key={index}>
           <UserTimeGrid
@@ -58,21 +58,21 @@ const UserTimePicker = ({
       tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
-  }, [start, availableRanegs, count, setRanges, disabled]);
+  }, [start, availableRanges, count, setRanges, disabled]);
 
   return (
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
       <div className={styles.leftArrow}>
-        {Object.values(availableRanegs).length > count && (
+        {Object.values(availableRanges).length > count && (
           <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />
         )}
       </div>
       {currentDays}
       <div className={styles.rightArrow}>
-        {Object.values(availableRanegs).length > count && (
+        {Object.values(availableRanges).length > count && (
           <NextRightButton
             onclick={() => setStart(start + 1)}
-            disabled={start >= Object.values(availableRanegs).length - count}
+            disabled={start >= Object.values(availableRanges).length - count}
           />
         )}
       </div>
