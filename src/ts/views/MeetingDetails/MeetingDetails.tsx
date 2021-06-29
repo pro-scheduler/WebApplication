@@ -68,6 +68,7 @@ const MeetingDetails = () => {
           meetingId={id}
           participants={meeting.participants}
           isOrganizer={isOrganizer}
+          refreshParticipants={setRefreshParticipants}
         />
         {meeting.availableTimeRanges.length > 0 && (
           <MeetingTime meetingId={id} timeRanges={meeting.availableTimeRanges} />

@@ -46,12 +46,13 @@ const MeetingParticipants = ({
       setSaveResponse
     );
   };
-  
+
   useEffect(() => {
     if (saveResopnse.isSuccess) {
       setEmails([]);
       setInvitationsChanged(!invitationsChanged);
     }
+    // eslint-disable-next-line
   }, [saveResopnse]);
 
   const participantsIcons = participants.map((participant: ProUser) => {
