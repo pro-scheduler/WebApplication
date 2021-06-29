@@ -105,12 +105,14 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
     <Row className="justify-content mt-5 ml-5 mb-5 pl-5">
       <Col>
         <LineWithHeader header={'When'} />
-        <div>
-          <SwitchButton
-            title="Current answers"
-            onChange={() => setDisplayAnswers(!displayAnswers)}
-          />
-        </div>
+        <Col lg={12} className="text-center mx-auto">
+          <div className={styles.switchTime}>
+            <SwitchButton
+              title="Current answers"
+              onChange={() => setDisplayAnswers(!displayAnswers)}
+            />
+          </div>
+        </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
           {displayAnswers && (
             <UserTimePicker
