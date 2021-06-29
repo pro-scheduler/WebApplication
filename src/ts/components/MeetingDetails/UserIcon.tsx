@@ -3,7 +3,7 @@ import { FcManager } from 'react-icons/fc';
 import { TiDelete } from 'react-icons/ti';
 import styles from './UserIcon.module.css';
 import Popup from '../common/Popup/Popup';
-import { removeUserFromMeeting } from '../../API/meeting/meetinService';
+import { removeUserFromMeeting } from '../../API/meeting/meetingService';
 export type UserIconProps = {
   name: String;
   meetingId: number;

@@ -5,7 +5,7 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { loadMeeting } from '../../API/meeting/meetinService';
+import { loadMeeting } from '../../API/meeting/meetingService';
 import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
@@ -15,6 +15,7 @@ import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import MeetingSurveyResults from '../../components/MeetingDetails/MeetingSurvey/MeetingSurveyResults';
 import userActions from '../../actions/userActions';
+import allActions from '../../actions';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -36,10 +37,16 @@ const MeetingDetails = () => {
   }, [refreshParticipants]);
 
   useEffect(() => {
-    dispatch(userActions.fetchUserOrganizedMeetings(user.id));
+    dispatch(allActions.userActions.fetchCurrentUser());
     surveyActions.getSurveyForMeeting(id).then(setSurvey);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    dispatch(userActions.fetchUserOrganizedMeetings(user.id));
+    // eslint-disable-next-line
+  }, [user.id]);
+
   useEffect(() => {
     setIsOrganizer(
       user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==

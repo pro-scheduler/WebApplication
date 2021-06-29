@@ -19,7 +19,7 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
 import styles from './CreateMeeting.module.css';
-import { saveMeeting } from '../../API/meeting/meetinService';
+import { saveMeeting } from '../../API/meeting/meetingService';
 import { ApiCall } from '../../API/genericApiCalls';
 import { createInvitations } from '../../API/invitation/invitationService';
 import { createSurvey } from '../../API/survey/surveyService';
@@ -69,27 +69,10 @@ const CreateMeeting = () => {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
+      history.push('/meetings/' + meetingId.id);
     }
     // eslint-disable-next-line
   }, [meetingId.id]);
-
-  // redirect
-  useEffect(() => {
-    if (meetingId.id) {
-      if (
-        survey.questions.length > 0 &&
-        (saveSurveyResponse.isSuccess || saveSurveyResponse.isFailed)
-      ) {
-        history.push('/meetings/' + meetingId.id);
-      } else if (
-        emails.length > 0 &&
-        (saveInvitationsResponse.isSuccess || saveInvitationsResponse.isFailed)
-      ) {
-        history.push('/meetings/' + meetingId.id);
-      } else if (saveMeetingResponse.isSuccess) history.push('/meetings/' + meetingId.id);
-    }
-    // eslint-disable-next-line
-  }, [saveMeetingResponse, saveSurveyResponse, saveInvitationsResponse, meetingId]);
 
   return (
     <Container className="ml-5 ml-sm-auto">

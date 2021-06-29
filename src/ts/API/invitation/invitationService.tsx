@@ -19,7 +19,7 @@ export const createInvitations = (
     setData,
     setResponse,
     true,
-    'Ivitations has beed added succefully'
+    'Invitations has been send successfully'
   );
 
 export const fetchMeetingInvitations = (meetingId: number, setResponse: Function) =>
@@ -40,7 +40,7 @@ export const acceptInvitation = (
     setData,
     setResponse,
     true,
-    'Invitation accepted successfully',
+    'Invitation has been accepted successfully',
     onSuccess
   );
 
@@ -56,6 +56,6 @@ export const rejectInvitation = (
     setData,
     setResponse,
     true,
-    'Invitation rejected successfully',
+    'Invitation has been rejected successfully',
     onSuccess
   );

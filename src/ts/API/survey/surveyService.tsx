@@ -21,6 +21,6 @@ export const createSurvey = (
     setData,
     setResponse,
     true,
-    'Surveys has beedn added succesfully'
+    'Surveys has been added successfully'
   );
 };

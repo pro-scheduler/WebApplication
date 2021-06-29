@@ -27,5 +27,5 @@ export const removeUserFromMeeting = (
     setData,
     setResponse,
     true,
-    'User succesfully removed from the meeting'
+    'User successfully removed from the meeting'
   );

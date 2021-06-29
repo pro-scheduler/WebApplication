@@ -18,7 +18,6 @@ const Meetings = () => {
   const [refreshMeetings, setRefreshMeetings] = useState<number>(0);
 
   useEffect(() => {
-    console.log('fetch user');
     dispatch(allActions.userActions.fetchCurrentUser());
     // eslint-disable-next-line
   }, []);
