@@ -18,21 +18,24 @@ export type MeetingParticipantsProps = {
   participants: ProUser[];
   meetingId: number;
   isOrganizer: boolean;
+  refreshParticipants: (value: number) => void;
 };
 
 const MeetingParticipants = ({
   participants,
   meetingId,
   isOrganizer,
+  refreshParticipants,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const [saveResopnse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+  const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
     // eslint-disable-next-line
-  }, []);
+  }, [invitationsChanged]);
 
   const sendInvitations = () => {
     createInvitations(
@@ -43,9 +46,11 @@ const MeetingParticipants = ({
       setSaveResponse
     );
   };
+  
   useEffect(() => {
     if (saveResopnse.isSuccess) {
       setEmails([]);
+      setInvitationsChanged(!invitationsChanged);
     }
   }, [saveResopnse]);
 
@@ -58,6 +63,7 @@ const MeetingParticipants = ({
           userId={participant.id}
           canDelete={isOrganizer}
           key={'Participant' + participant.id}
+          refreshParticipants={refreshParticipants}
         />
       </Col>
     );

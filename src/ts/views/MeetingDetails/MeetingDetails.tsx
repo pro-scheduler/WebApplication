@@ -28,9 +28,14 @@ const MeetingDetails = () => {
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
+  const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
 
   useEffect(() => {
     loadMeeting(id, setMeeting, setMettingResponse);
+    // eslint-disable-next-line
+  }, [refreshParticipants]);
+
+  useEffect(() => {
     dispatch(userActions.fetchUserOrganizedMeetings(user.id));
     surveyActions.getSurveyForMeeting(id).then(setSurvey);
     // eslint-disable-next-line

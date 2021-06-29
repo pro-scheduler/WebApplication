@@ -12,7 +12,7 @@ export const getUserPendingInvitationsUrl = (userId: number) =>
   getInvitationsUrl() + `/user/${userId}`;
 
 export const getMeetingInvitationsUrl = (meetingId: number) =>
-  getInvitationsUrl() + `/meeting/${meetingId}`;
+  getInvitationsUrl() + `/meeting/${meetingId}?states=PENDING,REJECTED`;
 
 export const getRemoveUserInvitationUrl = (meetingId: number) =>
   getInvitationsUrl() + `/meeting/${meetingId}/remove`;
