@@ -30,11 +30,11 @@ const UserRangeBox = ({
   const [delta, setDelta] = useState<number>(0);
   const [draggingDelta, setDraggingDelta] = useState<number>(0);
 
-  const findNearestTopLocked = (height: number, whichNeares: string) => {
+  const findNearestTopLocked = (height: number, whichNearest: string) => {
     for (let range of lockedRanges) {
       if (range.top <= height && range.bottom >= height) {
-        if (whichNeares === 'top') return range.top;
-        if (whichNeares === 'bottom') return range.bottom;
+        if (whichNearest === 'top') return range.top;
+        if (whichNearest === 'bottom') return range.bottom;
       }
     }
     return 0;

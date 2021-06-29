@@ -5,27 +5,32 @@ import { useState, useEffect } from 'react';
 import UserRangeBox from './UserRangeBox';
 import LockedCell from './LockedCell';
 
-export type UserTimeGridProps = {
+export type AnswerTimeGridProps = {
   primaryLabel: string;
   secondaryLabel: string;
   boxSizes: number;
   addRanges: Function;
   lockedRanges: Array<{ from: string; to: string }>;
+  answers: { ranges: Array<{ from: string; to: string }>; date: Date };
   disabled: Boolean;
 };
 
 interface Ranges {
   [key: string]: { top: number; height: number; id: number };
 }
+interface Pixel {
+  [key: string]: number;
+}
 
-const UserTimeGrid = ({
+const AnswerTimeGrid = ({
   primaryLabel,
   secondaryLabel,
   boxSizes,
   addRanges,
   lockedRanges,
+  answers,
   disabled,
-}: UserTimeGridProps) => {
+}: AnswerTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>({});
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
   const [mappedLocked, setMappedLocked] = useState<Array<{ top: number; bottom: number }>>([]);
@@ -56,8 +61,8 @@ const UserTimeGrid = ({
     let toH = parseInt(position.to.split(':')[0]);
     let toM = parseInt(position.to.split(':')[1]);
 
-    let top = fromH * 12 * step + (fromM / 5) * step;
-    let height = toH * 12 * step + (toM / 5) * step - top;
+    let top = Math.round(fromH * 12 * step + (fromM / 5) * step);
+    let height = Math.round(toH * 12 * step + (toM / 5) * step - top);
     return {
       top: top,
       height: height,
@@ -100,14 +105,34 @@ const UserTimeGrid = ({
 
   useEffect(() => {
     let ranges: Array<JSX.Element> = [];
+    let collected: Pixel = {};
+    if (answers) {
+      answers.ranges.forEach((range) => {
+        let tmp = mapHourToPosition(range);
+        for (let i = tmp.top; i < tmp.top + tmp.height; i++) {
+          if (!collected[i]) collected[i] = 0;
+          collected[i] += 1;
+        }
+      });
+    }
     for (let key of lockedRanges) {
       let tmp = mapHourToPosition(key);
       ranges.push(
         <LockedCell top={tmp.top} height={tmp.height} key={tmp.top + ' ' + tmp.height} />
       );
     }
+    for (let [pixel, color] of Object.entries(collected)) {
+      ranges.push(
+        <LockedCell
+          top={parseInt(pixel)}
+          height={1}
+          key={pixel + ' 1'}
+          color={'var(--purple-' + Math.min(color, 7).toString() + ')'}
+        />
+      );
+    }
     setCalculatedLockedRanges(ranges);
-  }, [lockedRanges]);
+  }, [lockedRanges, answers]);
 
   useEffect(() => {
     setMappedLocked(
@@ -214,7 +239,7 @@ const UserTimeGrid = ({
             }
           >
             <Row className={'m-0'}>
-              <Col className={'align-self-center pr-0'} xs="auto">
+              <Col className={'align-self-center pr-0'} xs="auto" style={{ zIndex: 999 }}>
                 {i}:00{' '}
               </Col>
               <Col>
@@ -243,4 +268,4 @@ const UserTimeGrid = ({
   );
 };
 
-export default UserTimeGrid;
+export default AnswerTimeGrid;

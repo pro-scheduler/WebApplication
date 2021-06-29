@@ -1,6 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import UserTimeGrid from './UserTimeGrid';
+import AnswerTimeGrid from './AnswerTimeGrid';
 import { useEffect, useState } from 'react';
 import NextLeftButton from '../common/NextButton/NextLeftButton';
 import NextRightButton from '../common/NextButton/NextRightButton';
@@ -13,25 +13,30 @@ interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
 }
 
-const UserTimePicker = ({
+const AnswersTimePicker = ({
   count,
   setRanges,
   availableRanges,
+  answers,
   disabled,
 }: {
   count: number;
   setRanges: Function;
   availableRanges: RangesWithDay;
-  disabled: Boolean;
+  answers: RangesWithDay;
+  disabled?: Boolean;
 }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
   const [start, setStart] = useState<number>(0);
 
   useEffect(() => {
-    const tmp = Object.values(availableRanges).map(
-      (value: { ranges: Array<{ from: string; to: string }>; date: Date }, index: number) => (
+    const tmp = Object.entries(availableRanges).map(
+      (
+        [key, value]: [string, { ranges: { from: string; to: string }[]; date: Date }],
+        index: number
+      ) => (
         <Col hidden={!(index >= start && index < start + count)} key={index}>
-          <UserTimeGrid
+          <AnswerTimeGrid
             primaryLabel={
               ('0' + value.date.getDate()).slice(-2) +
               '.' +
@@ -39,7 +44,7 @@ const UserTimePicker = ({
             }
             secondaryLabel={weekDays[value.date.getDay()]}
             boxSizes={36}
-            disabled={disabled}
+            disabled={disabled ? disabled : false}
             addRanges={(range: TimeRange) => {
               const date =
                 ('0' + value.date.getDate()).slice(-2) +
@@ -50,6 +55,7 @@ const UserTimePicker = ({
               setRanges(date, range, value.date);
             }}
             lockedRanges={value.ranges}
+            answers={answers[key]}
           />
         </Col>
       )
@@ -58,7 +64,7 @@ const UserTimePicker = ({
       tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
-  }, [start, availableRanges, count, setRanges, disabled]);
+  }, [start, availableRanges, count, setRanges, answers, disabled]);
 
   return (
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
@@ -80,4 +86,4 @@ const UserTimePicker = ({
   );
 };
 
-export default UserTimePicker;
+export default AnswersTimePicker;
