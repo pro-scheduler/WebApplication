@@ -9,9 +9,19 @@ export type MeetingNavbarProps = {
   state: creatingMeetingState;
   setState: (state: creatingMeetingState) => void;
   disabledSummary: boolean;
+  surveyModule?: boolean;
+  timeModule?: boolean;
+  placeModule?: boolean;
 };
 
-const MeetingNavbar = ({ state, setState, disabledSummary }: MeetingNavbarProps) => {
+const MeetingNavbar = ({
+  state,
+  setState,
+  disabledSummary,
+  surveyModule = true,
+  timeModule = true,
+  placeModule = true,
+}: MeetingNavbarProps) => {
   return (
     <Row className="justify-content-center mt-5">
       <Col xs="auto" style={{ display: 'flex' }}>
@@ -19,29 +29,35 @@ const MeetingNavbar = ({ state, setState, disabledSummary }: MeetingNavbarProps)
           <ul className={styles.items}>
             <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
               <button className={styles.itemButton} onClick={() => setState('name')}>
-                What
-              </button>
-            </li>
-            <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
-              <button className={styles.itemButton} onClick={() => setState('time')}>
-                When
+                Name
               </button>
             </li>
             <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
               <button className={styles.itemButton} onClick={() => setState('invitations')}>
-                Who
+                Participants
               </button>
             </li>
-            <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
-              <button className={styles.itemButton} onClick={() => setState('place')}>
-                Where
-              </button>
-            </li>
-            <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
-              <button className={styles.itemButton} onClick={() => setState('survey')}>
-                Survey
-              </button>
-            </li>
+            {timeModule && (
+              <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
+                <button className={styles.itemButton} onClick={() => setState('time')}>
+                  Time
+                </button>
+              </li>
+            )}
+            {placeModule && (
+              <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
+                <button className={styles.itemButton} onClick={() => setState('place')}>
+                  Place
+                </button>
+              </li>
+            )}
+            {surveyModule && (
+              <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
+                <button className={styles.itemButton} onClick={() => setState('survey')}>
+                  Survey
+                </button>
+              </li>
+            )}
             <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
               <button
                 className={styles.itemButton}

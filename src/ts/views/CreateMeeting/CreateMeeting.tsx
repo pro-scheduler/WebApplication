@@ -25,7 +25,15 @@ import { createInvitations } from '../../API/invitation/invitationService';
 import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
-export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
+import ChooseModules from '../../components/CreateMeeting/ChooseModules';
+export type creatingMeetingState =
+  | 'modules'
+  | 'name'
+  | 'time'
+  | 'invitations'
+  | 'place'
+  | 'survey'
+  | 'summary';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -47,7 +55,11 @@ const CreateMeeting = () => {
     questions: [],
   });
 
-  const [state, setState] = useState<creatingMeetingState>('name');
+  const [state, setState] = useState<creatingMeetingState>('modules');
+
+  const [surveyModule, setSurveyModule] = useState<boolean>(true);
+  const [timeModule, setTimeModule] = useState<boolean>(true);
+  const [placeModule, setPlaceModule] = useState<boolean>(true);
 
   const saveThisMeeting = () => {
     const meeting: MeetingDetailsDTO =
@@ -76,11 +88,24 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <MeetingNavbar
-        state={state}
-        setState={setState}
-        disabledSummary={invalidNameDesc || !required()(name)}
-      />
+      {state !== 'modules' && (
+        <MeetingNavbar
+          state={state}
+          setState={setState}
+          disabledSummary={invalidNameDesc || !required()(name)}
+          surveyModule={surveyModule}
+          timeModule={timeModule}
+          placeModule={placeModule}
+        />
+      )}
+      {state === 'modules' && (
+        <ChooseModules
+          showModules={() => setState('name')}
+          setSurveyModule={() => setSurveyModule(!surveyModule)}
+          setTimeModule={() => setTimeModule(!timeModule)}
+          setPlaceModule={() => setPlaceModule(!placeModule)}
+        />
+      )}
       <NameAndDescription
         state={state}
         setName={setName}

@@ -1,0 +1,21 @@
+.modulesHeader {
+    font-size: var(--s-font-size);
+}
+
+.moduleLegend {
+    color: var(--gray);
+    font-size: 12px;
+    margin: 10px 100px 20px;
+}
+
+.legendIcon {
+    margin-left: 10px;
+    color: var(--purple);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .chooseModulesButton {
+        width: 210px;
+    }
+}

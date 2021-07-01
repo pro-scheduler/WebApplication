@@ -9,10 +9,11 @@ export type SwitchButtonProps = {
   onChange: Function;
   title?: string;
   className?: string;
+  defaultValue?: boolean;
 };
 
-const SwitchButton = ({ onChange, title, className }: SwitchButtonProps) => {
-  const [checked, setChecked] = useState(true);
+const SwitchButton = ({ onChange, title, className, defaultValue = true }: SwitchButtonProps) => {
+  const [checked, setChecked] = useState(defaultValue);
 
   const buttonOnChange = () => {
     setChecked(!checked);
@@ -28,8 +29,8 @@ const SwitchButton = ({ onChange, title, className }: SwitchButtonProps) => {
         className={buttonStyles}
         onChange={buttonOnChange}
         checked={checked}
-        onColor={'#B1B1B1'}
-        offColor={'#7067CF'}
+        onColor={'#7067CF'}
+        offColor={'#B1B1B1'}
         checkedIcon={false}
         uncheckedIcon={false}
         activeBoxShadow={'0 0 2px 3px #7067CF'}
