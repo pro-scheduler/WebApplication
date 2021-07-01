@@ -10,14 +10,13 @@ import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
-import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import MeetingSurveyResults from '../../components/MeetingDetails/MeetingSurvey/MeetingSurveyResults';
 import userActions from '../../actions/userActions';
 import allActions from '../../actions';
 import { getAllUsersTimeAnswers } from '../../API/meeting/meetingService';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -89,10 +88,9 @@ const MeetingDetails = () => {
           />
         )}
         {survey && (
-          <MeetingSurvey survey={survey} setRefreshSurveySummary={setRefreshSurveySummary} />
-        )}
-        {surveySummary && isOrganizer && (
-          <MeetingSurveyResults
+          <MeetingSurvey
+            survey={survey}
+            setRefreshSurveySummary={setRefreshSurveySummary}
             surveySummary={surveySummary}
             numberOfParticipants={meeting.participants.length}
           />

@@ -1,5 +1,9 @@
-@media only screen and (max-width: 600px) {
-    .saveAnswersButton {
-        width: 210px;
-    }
+.switchIcon {
+    color: white;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100%;
+    margin: auto;
+    text-align: center;
 }

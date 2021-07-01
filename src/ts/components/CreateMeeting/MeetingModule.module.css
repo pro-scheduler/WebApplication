@@ -1,0 +1,26 @@
+.meetingModuleContainer {
+    display: block;
+    width: 250px;
+    height: 300px;
+    background-color: white;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+}
+
+.moduleDescription {
+    color: var(--gray);
+    font-size: 14px;
+    margin: 5px;
+}
+
+.tick {
+    color: var(--bright-green);
+    height: 30px;
+    width: 30px;
+    margin-top: 10px;
+}

@@ -12,7 +12,7 @@
 }
 
 .item:first-child {
-    margin-left: -55px;
+    margin-left: -60px;
 }
 
 .item:last-child {
@@ -49,7 +49,17 @@
 .itemButton {
     border: none;
     background-color: var(--background-color);
-    margin: 0 30px;
+    margin: 0 25px;
+}
+
+.itemContainer {
+    display: flex;
+    align-items: center;
+}
+
+.filledIcon {
+    color: var(--bright-green);
+    margin-left: 5px;
 }
 
 @media (max-width: 980px) {

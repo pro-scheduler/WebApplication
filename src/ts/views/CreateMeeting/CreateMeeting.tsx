@@ -25,7 +25,16 @@ import { createInvitations } from '../../API/invitation/invitationService';
 import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
-export type creatingMeetingState = 'name' | 'time' | 'invitations' | 'place' | 'survey' | 'summary';
+import ChooseModules from '../../components/CreateMeeting/ChooseModules';
+import { FaQuestionCircle } from 'react-icons/fa';
+export type creatingMeetingState =
+  | 'modules'
+  | 'name'
+  | 'time'
+  | 'invitations'
+  | 'place'
+  | 'survey'
+  | 'summary';
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -47,7 +56,13 @@ const CreateMeeting = () => {
     questions: [],
   });
 
-  const [state, setState] = useState<creatingMeetingState>('name');
+  const [state, setState] = useState<creatingMeetingState>('modules');
+
+  const [surveyModule, setSurveyModule] = useState<boolean>(false);
+  const [timeModule, setTimeModule] = useState<boolean>(false);
+  const [placeModule, setPlaceModule] = useState<boolean>(false);
+
+  const [showNavbarLegend, setShowNavbarLegend] = useState<boolean>(false);
 
   const saveThisMeeting = () => {
     const meeting: MeetingDetailsDTO =
@@ -76,11 +91,32 @@ const CreateMeeting = () => {
 
   return (
     <Container className="ml-5 ml-sm-auto">
-      <MeetingNavbar
-        state={state}
-        setState={setState}
-        disabledSummary={invalidNameDesc || !required()(name)}
-      />
+      {state !== 'modules' && (
+        <MeetingNavbar
+          state={state}
+          setState={setState}
+          disabledSummary={invalidNameDesc || !required()(name)}
+          surveyModule={surveyModule}
+          timeModule={timeModule}
+          placeModule={placeModule}
+          nameFilled={name.length >= 5}
+          participantsFilled={emails.length > 0}
+          surveyFilled={survey.questions.length > 0}
+          timeFilled={timeRanges.length > 0}
+          placeFilled={onlineLink !== ''}
+        />
+      )}
+      {state === 'modules' && (
+        <ChooseModules
+          showModules={() => setState('name')}
+          surveyModule={surveyModule}
+          timeModule={timeModule}
+          placeModule={placeModule}
+          setSurveyModule={setSurveyModule}
+          setTimeModule={setTimeModule}
+          setPlaceModule={setPlaceModule}
+        />
+      )}
       <NameAndDescription
         state={state}
         setName={setName}
@@ -119,6 +155,18 @@ const CreateMeeting = () => {
           />
         </Col>
       </Row>
+      {showNavbarLegend && (
+        <div className={styles.navbarLegend}>
+          To navigate between different modules, click on the module name in the navbar.
+        </div>
+      )}
+      {state !== 'modules' && (
+        <FaQuestionCircle
+          onMouseEnter={() => setShowNavbarLegend(true)}
+          onMouseLeave={() => setShowNavbarLegend(false)}
+          className={styles.legendIcon}
+        />
+      )}
     </Container>
   );
 };
