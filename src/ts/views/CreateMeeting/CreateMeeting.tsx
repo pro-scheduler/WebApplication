@@ -96,6 +96,11 @@ const CreateMeeting = () => {
           surveyModule={surveyModule}
           timeModule={timeModule}
           placeModule={placeModule}
+          nameFilled={name.length >= 5}
+          participantsFilled={emails.length > 0}
+          surveyFilled={survey.questions.length > 0}
+          timeFilled={timeRanges.length > 0}
+          placeFilled={onlineLink !== ''}
         />
       )}
       {state === 'modules' && (
