@@ -74,7 +74,7 @@ const ChooseModules = ({
           />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-5">
+      <Row className="justify-content-center mt-5 pt-4">
         <Col xs="auto">
           <ActionButton text="Next" onclick={showModules} className={styles.chooseModulesButton} />
         </Col>
