@@ -10,6 +10,9 @@ import AnswersTimePicker from '../../UserTimeGrid/AnswersTimePicker';
 import styles from './MeetingTime.module.css';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
+import { RiPencilFill } from 'react-icons/ri';
+import { BsFillPieChartFill } from 'react-icons/bs';
+
 export type MeetingTimeProps = {
   meetingId: number;
   timeRanges: TimeRangeDTO[];
@@ -27,7 +30,7 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
+  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
@@ -108,8 +111,9 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
         <Col lg={12} className="text-center mx-auto">
           <div className={styles.switchTime}>
             <SwitchButton
-              title="Current answers"
               onChange={() => setDisplayAnswers(!displayAnswers)}
+              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
             />
           </div>
         </Col>

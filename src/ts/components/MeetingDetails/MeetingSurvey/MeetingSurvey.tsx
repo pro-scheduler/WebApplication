@@ -1,97 +1,55 @@
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LineWithHeader from '../LineWithHeader';
-import { UserSurvey } from '../../../model/survey/Survey';
-import MeetingQuestion from './MeetingQuestion';
-import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { useEffect, useState } from 'react';
-import { Question, QuestionType } from '../../../model/survey/Question';
-import { Answer } from '../../../model/survey/Answer';
+import Row from 'react-bootstrap/Row';
 import styles from './MeetingSurvey.module.css';
-import { fillSurvey } from '../../../API/survey/surveyService';
-import { ApiCall } from '../../../API/genericApiCalls';
+import SwitchButton from '../../common/SwitchButton/SwitchButton';
+import { RiPencilFill } from 'react-icons/ri';
+import { BsFillPieChartFill } from 'react-icons/bs';
+import { useState } from 'react';
+import MeetingSurveyQuestions from './MeetingSurveyQuestions';
+import MeetingSurveyResults from './MeetingSurveyResults';
+import { SurveySummary, UserSurvey } from '../../../model/survey/Survey';
 
+export type MeetingSurveyProps = {
+  survey: UserSurvey;
+  setRefreshSurveySummary: (value: number) => void;
+  surveySummary: SurveySummary | undefined;
+  numberOfParticipants: number;
+};
 const MeetingSurvey = ({
   survey,
   setRefreshSurveySummary,
-}: {
-  survey: UserSurvey;
-  setRefreshSurveySummary: (value: number) => void;
-}) => {
-  const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
-    { question: Question; answer: Answer | null }[]
-  >(survey.questionsAndAnswers);
-  const [dataUpdated, setDataUpdated] = useState(true);
-  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
-  const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
-
-  useEffect(() => {
-    if (saveResponse.isSuccess) {
-      setDataUpdated(false);
-      setButtonText('COMPLETE');
-      setRefreshSurveySummary(Math.random());
-    }
-    // eslint-disable-next-line
-  }, [saveResponse]);
-
-  const setAnswer = (questionId: number | null, answer: Answer) => {
-    const data = questionsAndAnswers.map((value) => {
-      if (value.question.id === questionId) {
-        return { question: value.question, answer: answer };
-      }
-      return value;
-    });
-    setQuestionsAndAnswers(data);
-    setDataUpdated(true);
-  };
-
-  const filledAnswers = () => {
-    return (
-      questionsAndAnswers.filter(
-        (value) =>
-          value.answer !== null &&
-          (value.question.type === QuestionType.OPEN
-            ? value.answer.text !== ''
-            : value.question.type === QuestionType.MULTI_CHOICE
-            ? value.answer.choices && value.answer.choices.length > 0
-            : true)
-      ).length === questionsAndAnswers.length &&
-      questionsAndAnswers !== survey.questionsAndAnswers &&
-      dataUpdated
-    );
-  };
-
-  const questions = questionsAndAnswers.map((value) => {
-    return (
-      <MeetingQuestion
-        key={value.question.id}
-        question={value.question}
-        answer={value.answer}
-        setAnswer={setAnswer}
-      />
-    );
-  });
-
-  const saveSurvey = () => {
-    fillSurvey(survey.id, questionsAndAnswers, setSaveResponse);
-  };
+  surveySummary,
+  numberOfParticipants,
+}: MeetingSurveyProps) => {
+  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <Col>
         <LineWithHeader header={'Survey'} />
-        <div className="ml-3">
-          <p>{survey.description}</p>
-          {questions}
-        </div>
-        <div className="text-center">
-          <ActionButton
-            onclick={saveSurvey}
-            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
-            disabled={!filledAnswers()}
-            className={styles.saveAnswersButton}
+        <Col lg={12} className="text-center mx-auto">
+          <div className={styles.switchTime}>
+            <SwitchButton
+              onChange={() => setDisplayAnswers(!displayAnswers)}
+              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+            />
+          </div>
+        </Col>
+        {displayAnswers ? (
+          <MeetingSurveyQuestions
+            survey={survey}
+            setRefreshSurveySummary={setRefreshSurveySummary}
           />
-        </div>
+        ) : (
+          surveySummary && (
+            <MeetingSurveyResults
+              surveySummary={surveySummary}
+              numberOfParticipants={numberOfParticipants}
+            />
+          )
+        )}
       </Col>
     </Row>
   );

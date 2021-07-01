@@ -22,7 +22,7 @@ export const createSurvey = (
     setData,
     setResponse,
     true,
-    'Surveys has been added successfully'
+    'Survey has been added successfully'
   );
 };
 
