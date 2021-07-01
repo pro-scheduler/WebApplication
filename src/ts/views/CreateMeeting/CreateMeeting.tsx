@@ -58,9 +58,9 @@ const CreateMeeting = () => {
 
   const [state, setState] = useState<creatingMeetingState>('modules');
 
-  const [surveyModule, setSurveyModule] = useState<boolean>(true);
-  const [timeModule, setTimeModule] = useState<boolean>(true);
-  const [placeModule, setPlaceModule] = useState<boolean>(true);
+  const [surveyModule, setSurveyModule] = useState<boolean>(false);
+  const [timeModule, setTimeModule] = useState<boolean>(false);
+  const [placeModule, setPlaceModule] = useState<boolean>(false);
 
   const [showNavbarLegend, setShowNavbarLegend] = useState<boolean>(false);
 
@@ -109,9 +109,12 @@ const CreateMeeting = () => {
       {state === 'modules' && (
         <ChooseModules
           showModules={() => setState('name')}
-          setSurveyModule={() => setSurveyModule(!surveyModule)}
-          setTimeModule={() => setTimeModule(!timeModule)}
-          setPlaceModule={() => setPlaceModule(!placeModule)}
+          surveyModule={surveyModule}
+          timeModule={timeModule}
+          placeModule={placeModule}
+          setSurveyModule={setSurveyModule}
+          setTimeModule={setTimeModule}
+          setPlaceModule={setPlaceModule}
         />
       )}
       <NameAndDescription

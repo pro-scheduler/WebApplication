@@ -3,12 +3,17 @@ import Col from 'react-bootstrap/Col';
 import ModuleIcon from '../common/Icons/ModuleIcon';
 import styles from './ChooseModules.module.css';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import { MouseEventHandler, useState } from 'react';
-import SwitchButton from '../common/SwitchButton/SwitchButton';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { MouseEventHandler } from 'react';
+import MeetingModule from './MeetingModule';
+import CalendarIcon from '../common/Icons/CalendarIcon';
+import WorldIcon from '../common/Icons/WorldIcon';
+import SurveyIcon from '../common/Icons/SurveyIcon';
 
 export type ChooseModulesProps = {
   showModules: MouseEventHandler;
+  surveyModule: boolean;
+  timeModule: boolean;
+  placeModule: boolean;
   setSurveyModule: (value: boolean) => void;
   setTimeModule: (value: boolean) => void;
   setPlaceModule: (value: boolean) => void;
@@ -16,14 +21,13 @@ export type ChooseModulesProps = {
 
 const ChooseModules = ({
   showModules,
+  surveyModule,
+  timeModule,
+  placeModule,
   setSurveyModule,
   setTimeModule,
   setPlaceModule,
 }: ChooseModulesProps) => {
-  const [showSurveyLegend, setShowSurveyLegend] = useState<boolean>(false);
-  const [showTimeLegend, setShowTimeLegend] = useState<boolean>(false);
-  const [showPlaceLegend, setShowPlaceLegend] = useState<boolean>(false);
-
   return (
     <>
       <Row className="justify-content-center mt-5">
@@ -35,67 +39,40 @@ const ChooseModules = ({
         <div className={styles.modulesHeader}>Choose modules</div>
       </Row>
       <Row className="justify-content-center mt-5">
-        <Col lg={6} className="text-center text-lg-right mt-lg-3">
-          <div>
-            Time
-            <FaQuestionCircle
-              onMouseEnter={() => setShowTimeLegend(true)}
-              onMouseLeave={() => setShowTimeLegend(false)}
-              className={styles.legendIcon}
-            />
-          </div>
+        <Col md={6} lg={4} className="text-center mx-auto mt-4">
+          <MeetingModule
+            header={'Time'}
+            icon={<CalendarIcon />}
+            description={
+              'The time module allows you to select the possible time slots for the meeting.'
+            }
+            onClick={() => setTimeModule(!timeModule)}
+            chosen={timeModule}
+          />
         </Col>
-        <Col lg={6} className="text-center text-lg-left">
-          <SwitchButton onChange={setTimeModule} />
+        <Col md={6} lg={4} className="text-center mx-auto mt-4">
+          <MeetingModule
+            header={'Place'}
+            icon={<WorldIcon />}
+            description={
+              'The place module allows you to enter a link and an optional password for the online\n' +
+              '              meeting.'
+            }
+            onClick={() => setPlaceModule(!placeModule)}
+            chosen={placeModule}
+          />
         </Col>
-        {showTimeLegend && (
-          <Col lg={12} className="text-center">
-            <div className={styles.moduleLegend}>
-              The time module allows you to select the possible time slots for the meeting.
-            </div>
-          </Col>
-        )}
-        <Col lg={6} className="text-center text-lg-right mt-lg-3">
-          <div>
-            Place
-            <FaQuestionCircle
-              onMouseEnter={() => setShowPlaceLegend(true)}
-              onMouseLeave={() => setShowPlaceLegend(false)}
-              className={styles.legendIcon}
-            />
-          </div>
+        <Col md={6} lg={4} className="text-center mx-auto mt-4">
+          <MeetingModule
+            header={'Survey'}
+            icon={<SurveyIcon />}
+            description={
+              'The survey module allows you to create a poll with various types of questions.'
+            }
+            onClick={() => setSurveyModule(!surveyModule)}
+            chosen={surveyModule}
+          />
         </Col>
-        <Col lg={6} className="text-center text-lg-left">
-          <SwitchButton onChange={setPlaceModule} />
-        </Col>
-        {showPlaceLegend && (
-          <Col lg={12} className="text-center">
-            <div className={styles.moduleLegend}>
-              The place module allows you to enter a link and an optional password for the online
-              meeting.
-            </div>
-          </Col>
-        )}
-        <Col lg={6} className="text-center text-lg-right mt-lg-3">
-          <div>
-            Survey
-            <FaQuestionCircle
-              onMouseEnter={() => setShowSurveyLegend(true)}
-              onMouseLeave={() => setShowSurveyLegend(false)}
-              className={styles.legendIcon}
-            />
-          </div>
-        </Col>
-        <Col lg={6} className="text-center text-lg-left">
-          <SwitchButton onChange={setSurveyModule} />
-        </Col>
-        {showSurveyLegend && (
-          <Col lg={12} className="text-center">
-            <div className={styles.moduleLegend}>
-              The survey module allows you to create a poll with various types of questions.
-            </div>
-          </Col>
-        )}
       </Row>
       <Row className="justify-content-center mt-5">
         <Col xs="auto">
