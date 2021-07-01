@@ -26,6 +26,7 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
+import { FaQuestionCircle } from 'react-icons/fa';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -60,6 +61,8 @@ const CreateMeeting = () => {
   const [surveyModule, setSurveyModule] = useState<boolean>(true);
   const [timeModule, setTimeModule] = useState<boolean>(true);
   const [placeModule, setPlaceModule] = useState<boolean>(true);
+
+  const [showNavbarLegend, setShowNavbarLegend] = useState<boolean>(false);
 
   const saveThisMeeting = () => {
     const meeting: MeetingDetailsDTO =
@@ -149,6 +152,18 @@ const CreateMeeting = () => {
           />
         </Col>
       </Row>
+      {showNavbarLegend && (
+        <div className={styles.navbarLegend}>
+          To navigate between different modules, click on the module name in the navbar.
+        </div>
+      )}
+      {state !== 'modules' && (
+        <FaQuestionCircle
+          onMouseEnter={() => setShowNavbarLegend(true)}
+          onMouseLeave={() => setShowNavbarLegend(false)}
+          className={styles.legendIcon}
+        />
+      )}
     </Container>
   );
 };
