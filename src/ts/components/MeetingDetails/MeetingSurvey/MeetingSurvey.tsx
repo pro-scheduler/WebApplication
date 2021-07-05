@@ -26,31 +26,26 @@ const MeetingSurvey = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <Col>
-        <LineWithHeader header={'Survey'} />
-        <Col lg={12} className="text-center mx-auto">
-          <div className={styles.switchTime}>
-            <SwitchButton
-              onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-            />
-          </div>
-        </Col>
-        {displayAnswers ? (
-          <MeetingSurveyQuestions
-            survey={survey}
-            setRefreshSurveySummary={setRefreshSurveySummary}
+      <LineWithHeader header={'Survey'} />
+      <Col lg={12} className="text-center mx-auto">
+        <div className={styles.switchTime}>
+          <SwitchButton
+            onChange={() => setDisplayAnswers(!displayAnswers)}
+            checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+            unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
           />
-        ) : (
-          surveySummary && (
-            <MeetingSurveyResults
-              surveySummary={surveySummary}
-              numberOfParticipants={numberOfParticipants}
-            />
-          )
-        )}
+        </div>
       </Col>
+      {displayAnswers ? (
+        <MeetingSurveyQuestions survey={survey} setRefreshSurveySummary={setRefreshSurveySummary} />
+      ) : (
+        surveySummary && (
+          <MeetingSurveyResults
+            surveySummary={surveySummary}
+            numberOfParticipants={numberOfParticipants}
+          />
+        )
+      )}
     </Row>
   );
 };

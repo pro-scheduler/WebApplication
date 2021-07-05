@@ -6,7 +6,7 @@ import UserIcon from './UserIcon';
 import LineWithHeader from './LineWithHeader';
 import styles from './MeetingParticipants.module.css';
 import CreateInvitations from '../CreateMeeting/CreateInvitations';
-import UserInvitationIcon from './UserInvitationIcon';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
@@ -73,7 +73,7 @@ const MeetingParticipants = ({
   const invitationsIcons = invitations.map((basicInvitationInfo: BasicInvitationInfo) => {
     return (
       <Col lg={3} className="my-1 mx-auto text-center" key={basicInvitationInfo.invitationId}>
-        <UserInvitationIcon
+        <UserNameIcon
           email={basicInvitationInfo.basicUserInfoDTO.email}
           state={basicInvitationInfo.state}
         />
