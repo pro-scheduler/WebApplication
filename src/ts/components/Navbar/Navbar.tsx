@@ -29,7 +29,7 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
           <Menu iconShape="circle">
             <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
               ProScheduler
-              <Link to="/" />
+              <Link to="/meetings" />
             </MenuItem>
           </Menu>
         </SidebarHeader>
@@ -51,7 +51,6 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
                 onClick={() => setActiveIcon('Dashboard')}
               >
                 Dashboard
-                <Link to="/example" />
               </MenuItem>
 
               <MenuItem
