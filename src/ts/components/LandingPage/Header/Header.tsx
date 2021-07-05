@@ -18,11 +18,8 @@ const Header = () => {
         </h1>
         <h2 className={styles.headerMotto}>Schedule meetings like a pro</h2>
         <Row className={styles.headerRow}>
-          <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0">
+          <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0 mx-auto text-center">
             <RedirectButton text="Sign In" redirectTO="/signin" className={styles.redirectButton} />
-          </Col>
-          <Col md={12} lg={6} className="mt-lg-5 pt-lg-5 px-0">
-            <RedirectButton text="Sign Up" redirectTO="/signup" className={styles.redirectButton} />
           </Col>
         </Row>
       </Container>

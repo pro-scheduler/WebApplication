@@ -1,7 +1,7 @@
 .authView {
     background-color: white;
     width: 360px;
-    height: 380px;
+    height: 300px;
     box-shadow: var(--shadow);
     border-radius: 5%;
 }
