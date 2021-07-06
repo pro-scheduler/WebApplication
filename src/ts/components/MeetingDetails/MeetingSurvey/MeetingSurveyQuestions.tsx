@@ -7,6 +7,7 @@ import { Answer } from '../../../model/survey/Answer';
 import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
+import Col from 'react-bootstrap/Col';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -74,8 +75,8 @@ const MeetingSurveyQuestions = ({
   };
 
   return (
-    <>
-      <div className="ml-3">
+    <Col>
+      <div className="mx-auto text-center mt-5">
         <p>{survey.description}</p>
         {questions}
       </div>
@@ -87,7 +88,7 @@ const MeetingSurveyQuestions = ({
           className={styles.saveAnswersButton}
         />
       </div>
-    </>
+    </Col>
   );
 };
 

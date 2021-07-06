@@ -4,6 +4,7 @@ import React from 'react';
 import TotalPieChart from './TotalPieChart';
 import OpenAnswers from './OpenAnswers';
 import { ChoiceInfo, SurveySummary } from '../../../model/survey/Survey';
+import UserNameIcon from '../../common/Icons/UserNameIcon';
 
 export type MeetingSurveyResultsProps = {
   surveySummary: SurveySummary;
@@ -40,14 +41,31 @@ const MeetingSurveyResults = ({
     );
   });
 
-  return (
-    <Col lg={5} className="text-center mx-auto mt-5">
-      <TotalPieChart
-        filled={surveySummary.finishedParticipantsCount}
-        total={numberOfParticipants}
-      />
-      {charts}
+  const emails = surveySummary.users.map((email: string, index: number) => (
+    <Col lg={3} className="my-1 mx-auto text-center" key={index}>
+      <UserNameIcon email={email} key={index} />
     </Col>
+  ));
+
+  return (
+    <>
+      <Col lg={5} className="text-center mx-auto mt-5 mb-5">
+        <p>
+          Survey completed by {surveySummary.finishedParticipantsCount}{' '}
+          {surveySummary.finishedParticipantsCount === 1 ? 'participant' : 'participants'}
+        </p>
+      </Col>
+      <Col lg={12} />
+      {emails}
+      <Col lg={12} />
+      <Col lg={5} className="text-center mx-auto mt-5">
+        <TotalPieChart
+          filled={surveySummary.finishedParticipantsCount}
+          total={numberOfParticipants}
+        />
+        {charts}
+      </Col>
+    </>
   );
 };
 

@@ -1,25 +1,23 @@
 import React from 'react';
 import { VscLoading, VscClose } from 'react-icons/vsc';
 
-import styles from './UserIcon.module.css';
-import { State } from '../../model/invitation/Invitation';
-import { FcManager } from 'react-icons/fc';
+import styles from './UserNameIcon.module.css';
+import { State } from '../../../model/invitation/Invitation';
+import LetterIcon from './LetterIcon';
 
 export type UserInvitationIconProps = {
   email: string;
-  state: State;
+  state?: State;
 };
 
-const UserInvitationIcon = ({ email, state }: UserInvitationIconProps) => {
+const UserNameIcon = ({ email, state }: UserInvitationIconProps) => {
   return (
     <>
-      <div className={styles.userIcon}>
-        <FcManager />
-      </div>
+      <LetterIcon firstLetter={email.charAt(0)} />
       <div className={styles.userIconParticipantName}>{email}</div>
       {state === State.PENDING && <VscLoading className={styles.pendingStatus} />}
       {state === State.REJECTED && <VscClose className={styles.rejectedStatus} />}
     </>
   );
 };
-export default UserInvitationIcon;
+export default UserNameIcon;

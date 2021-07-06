@@ -1,17 +1,4 @@
-.userIcon {
-    width: 34px;
-    height: 34px;
-    border: none;
-    display: inline-block;
-    text-align: center;
-    font-size: var(--s-font-size);
-    border-radius: var(--circle-border-radius);
-    box-shadow: var(--shadow);
-    background-color: var(--purple);
-}
-
 .userIconParticipantName {
-    font-size: var(--xs-font-size);
     display: inline;
     margin-left: 10px;
 }
@@ -24,16 +11,4 @@
 
 .deleteUserButton:hover {
     cursor: pointer;
-}
-
-.pendingStatus {
-    font-size: var(--m-font-size);
-    color: var(--purple);
-    margin-left: 10px;
-}
-
-.rejectedStatus {
-    font-size: var(--m-font-size);
-    color: var(--light-red);
-    margin-left: 10px;
 }

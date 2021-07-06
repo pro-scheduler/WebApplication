@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { FcManager } from 'react-icons/fc';
 import { TiDelete } from 'react-icons/ti';
 import styles from './UserIcon.module.css';
 import Popup from '../common/Popup/Popup';
 import { removeUserFromMeeting } from '../../API/meeting/meetingService';
+import LetterIcon from '../common/Icons/LetterIcon';
 export type UserIconProps = {
   name: String;
   meetingId: number;
@@ -21,9 +21,7 @@ const UserIcon = ({ name, meetingId, userId, canDelete, refreshParticipants }: U
   };
   return (
     <>
-      <div className={styles.userIcon}>
-        <FcManager />
-      </div>
+      <LetterIcon firstLetter={name.charAt(0)} />
       <div className={styles.userIconParticipantName}>{name}</div>
       {canDelete && (
         <TiDelete className={styles.deleteUserButton} onClick={() => setModalShow(true)} />
