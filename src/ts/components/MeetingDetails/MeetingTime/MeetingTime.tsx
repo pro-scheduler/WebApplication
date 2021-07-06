@@ -66,6 +66,9 @@ const MeetingTime = ({
   };
   useEffect(() => {
     let ranges: RangesWithDay = {};
+    timeRanges.sort((range1: TimeRangeDTO, range2: TimeRangeDTO) => {
+      return new Date(range1.startDateTime).getTime() - new Date(range2.startDateTime).getTime();
+    });
     timeRanges
       .map((range) => {
         const start = new Date(range.startDateTime);
