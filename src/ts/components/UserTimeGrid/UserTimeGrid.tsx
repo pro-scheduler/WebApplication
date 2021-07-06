@@ -37,7 +37,11 @@ const UserTimeGrid = ({
     tmp[id.toString()] = { top, height, id };
     setRangesParams({ ...tmp });
   };
-
+  const removeRange = (id: number) => {
+    let tmp = { ...rangesParams };
+    delete tmp[id.toString()];
+    setRangesParams({ ...tmp });
+  };
   const positionToTime = (position: number) => {
     const hour: number = Math.floor((5 * (position / step)) / 60);
     const min: number = (5 * (position / step)) % 60;
@@ -93,6 +97,7 @@ const UserTimeGrid = ({
             id={rangesParams[key].id}
             changeParams={changeParams}
             lockedRanges={mappedLocked}
+            removeRange={removeRange}
           />
         );
       }

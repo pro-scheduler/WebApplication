@@ -173,7 +173,7 @@ const MeetingTime = ({
       </Col>
       <Col lg={12} className="text-center mx-auto">
         <ActionButton
-          text={userRanges === [] ? 'Save time preferences' : 'Edit time preferences'}
+          text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
           onclick={saveTime}
           className={styles.saveButton}
         />

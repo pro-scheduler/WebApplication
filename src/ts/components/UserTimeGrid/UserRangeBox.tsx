@@ -3,6 +3,7 @@ import styles from './UserTimeGrid.module.scss';
 import classcat from 'classcat';
 import { useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
+import { TiDelete } from 'react-icons/ti';
 
 export type RangeBoxProps = {
   step: number;
@@ -13,6 +14,7 @@ export type RangeBoxProps = {
   id: number;
   changeParams: any;
   lockedRanges: Array<{ top: number; bottom: number }>;
+  removeRange?: Function;
 };
 const UserRangeBox = ({
   step,
@@ -22,6 +24,7 @@ const UserRangeBox = ({
   id,
   changeParams,
   lockedRanges,
+  removeRange = () => {},
 }: RangeBoxProps) => {
   const [top, setTop] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
@@ -189,6 +192,12 @@ const UserRangeBox = ({
             {positionToTime(
               top + topDelta + draggingDelta + defaultTop + height + delta + defaultHeight
             )}
+            <TiDelete
+              className={styles.exitButton}
+              onClick={() => {
+                removeRange(id);
+              }}
+            />
           </div>
         </Resizable>
       </Draggable>

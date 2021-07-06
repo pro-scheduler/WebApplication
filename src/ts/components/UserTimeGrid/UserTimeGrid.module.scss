@@ -136,3 +136,13 @@
   width: 75%;
   transform: translate(62px);
 }
+
+.exitButton {
+  color: var(--very-light-red);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  z-index: 4;
+  position: absolute;
+  right: 0;
+}
