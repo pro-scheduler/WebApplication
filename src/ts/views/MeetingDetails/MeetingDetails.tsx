@@ -48,7 +48,6 @@ const MeetingDetails = () => {
   const refreshTimeData = () => {
     getAllUsersTimeAnswers(id, setAllUsersAnswers);
     getUserTimeAnswers(id, setUserTimeAnswers);
-    console.log('refresh');
   };
 
   useEffect(() => {
