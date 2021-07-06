@@ -15,8 +15,8 @@ import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import userActions from '../../actions/userActions';
 import allActions from '../../actions';
 import { getAllUsersTimeAnswers } from '../../API/meeting/meetingService';
-import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
+import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -31,7 +31,10 @@ const MeetingDetails = () => {
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
   const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
-  const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
+  const [allUsersAnswers, setAllUsersAnswers] = useState<MeetingTimeSummary>({
+    availableTimeRanges: [],
+    timeRangesEnteredByAllUsers: [],
+  });
 
   useEffect(() => {
     loadMeeting(id, setMeeting, setMeetingResponse);
@@ -84,7 +87,7 @@ const MeetingDetails = () => {
           <MeetingTime
             meetingId={id}
             timeRanges={meeting.availableTimeRanges}
-            answers={allUsersAnswers}
+            answers={allUsersAnswers.timeRangesEnteredByAllUsers}
           />
         )}
         {survey && (
