@@ -37,14 +37,19 @@ export const removeUserFromMeeting = (
     'User successfully removed from the meeting'
   );
 
-export const saveUserTimeRanges = (meetingId: number, userMarkedTimeRanges: TimeRangeDTO[]) =>
+export const saveUserTimeRanges = (
+  meetingId: number,
+  userMarkedTimeRanges: TimeRangeDTO[],
+  refreshTimeData: Function
+) =>
   post(
     userMarkedTimeRanges,
     getSaveUserTimeUrl(meetingId),
     () => {},
     () => {},
     true,
-    'Time saved successfully'
+    'Time saved successfully',
+    refreshTimeData
   );
 
 export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Function) =>

@@ -45,11 +45,16 @@ const MeetingDetails = () => {
     // eslint-disable-next-line
   }, [refreshParticipants]);
 
+  const refreshTimeData = () => {
+    getAllUsersTimeAnswers(id, setAllUsersAnswers);
+    getUserTimeAnswers(id, setUserTimeAnswers);
+    console.log('refresh');
+  };
+
   useEffect(() => {
     dispatch(allActions.userActions.fetchCurrentUser());
     surveyActions.getSurveyForMeeting(id).then(setSurvey);
-    getAllUsersTimeAnswers(id, setAllUsersAnswers);
-    getUserTimeAnswers(id, setUserTimeAnswers);
+    refreshTimeData();
     // eslint-disable-next-line
   }, []);
 
@@ -94,6 +99,7 @@ const MeetingDetails = () => {
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers.timeRangesEnteredByAllUsers}
             userRanges={userTimeAnswers}
+            refreshTimeData={refreshTimeData}
           />
         )}
         {survey && (

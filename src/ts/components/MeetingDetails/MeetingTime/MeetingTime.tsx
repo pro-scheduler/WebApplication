@@ -19,6 +19,7 @@ export type MeetingTimeProps = {
   answers?: TimeRangeDTO[];
   disabled?: Boolean;
   userRanges?: TimeRangeDTO[];
+  refreshTimeData?: Function;
 };
 
 interface RangesWithDay {
@@ -31,6 +32,7 @@ const MeetingTime = ({
   timeRanges,
   disabled,
   userRanges = [],
+  refreshTimeData = () => {},
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -62,7 +64,7 @@ const MeetingTime = ({
         });
       }
     }
-    saveUserTimeRanges(meetingId, rangesFiltered);
+    saveUserTimeRanges(meetingId, rangesFiltered, refreshTimeData);
   };
   useEffect(() => {
     let ranges: RangesWithDay = {};
