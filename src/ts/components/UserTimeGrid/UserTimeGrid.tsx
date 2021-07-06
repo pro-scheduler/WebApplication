@@ -13,6 +13,7 @@ export type UserTimeGridProps = {
   lockedRanges: Array<{ from: string; to: string }>;
   disabled: Boolean;
   userRanges?: Ranges;
+  setIsDirty?: Function;
 };
 
 interface Ranges {
@@ -27,6 +28,7 @@ const UserTimeGrid = ({
   lockedRanges,
   disabled,
   userRanges = {},
+  setIsDirty = () => {},
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
@@ -36,11 +38,13 @@ const UserTimeGrid = ({
     let tmp = { ...rangesParams };
     tmp[id.toString()] = { top, height, id };
     setRangesParams({ ...tmp });
+    setIsDirty(true);
   };
   const removeRange = (id: number) => {
     let tmp = { ...rangesParams };
     delete tmp[id.toString()];
     setRangesParams({ ...tmp });
+    setIsDirty(true);
   };
   const positionToTime = (position: number) => {
     const hour: number = Math.floor((5 * (position / step)) / 60);

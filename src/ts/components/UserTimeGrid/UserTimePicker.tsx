@@ -21,12 +21,14 @@ const UserTimePicker = ({
   availableRanges,
   disabled,
   selectedRanges = {},
+  setIsDirty = () => {},
 }: {
   count: number;
   setRanges: Function;
   availableRanges: RangesWithDay;
   disabled: Boolean;
   selectedRanges?: RangesWithDay;
+  setIsDirty?: Function;
 }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
   const [start, setStart] = useState<number>(0);
@@ -94,6 +96,7 @@ const UserTimePicker = ({
                 : []
             )}
             lockedRanges={value.ranges}
+            setIsDirty={setIsDirty}
           />
         </Col>
       )

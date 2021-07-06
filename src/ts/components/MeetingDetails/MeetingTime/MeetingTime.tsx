@@ -38,6 +38,7 @@ const MeetingTime = ({
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
   const [availableRanges, setAvailableRanges] = useState<RangesWithDay>({});
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
+  const [isDirty, setIsDirty] = useState<Boolean>(false);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
@@ -64,7 +65,10 @@ const MeetingTime = ({
         });
       }
     }
-    saveUserTimeRanges(meetingId, rangesFiltered, refreshTimeData);
+    saveUserTimeRanges(meetingId, rangesFiltered, () => {
+      refreshTimeData();
+      setIsDirty(false);
+    });
   };
   useEffect(() => {
     let ranges: RangesWithDay = {};
@@ -164,6 +168,7 @@ const MeetingTime = ({
               selectedRanges={userDefaultAnswers}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
               setRanges={setRanges}
+              setIsDirty={setIsDirty}
             />
           ) : (
             <AnswersTimePicker
@@ -181,6 +186,7 @@ const MeetingTime = ({
           text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
           onclick={saveTime}
           className={styles.saveButton}
+          disabled={!isDirty}
         />
       </Col>
     </Row>
