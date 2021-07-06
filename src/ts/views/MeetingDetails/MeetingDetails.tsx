@@ -5,7 +5,11 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { loadMeeting } from '../../API/meeting/meetingService';
+import {
+  loadMeeting,
+  getAllUsersTimeAnswers,
+  getUserTimeAnswers,
+} from '../../API/meeting/meetingService';
 import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
@@ -14,9 +18,9 @@ import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import userActions from '../../actions/userActions';
 import allActions from '../../actions';
-import { getAllUsersTimeAnswers } from '../../API/meeting/meetingService';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
+import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -35,7 +39,7 @@ const MeetingDetails = () => {
     availableTimeRanges: [],
     timeRangesEnteredByAllUsers: [],
   });
-
+  const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
   useEffect(() => {
     loadMeeting(id, setMeeting, setMeetingResponse);
     // eslint-disable-next-line
@@ -45,6 +49,7 @@ const MeetingDetails = () => {
     dispatch(allActions.userActions.fetchCurrentUser());
     surveyActions.getSurveyForMeeting(id).then(setSurvey);
     getAllUsersTimeAnswers(id, setAllUsersAnswers);
+    getUserTimeAnswers(id, setUserTimeAnswers);
     // eslint-disable-next-line
   }, []);
 
@@ -88,6 +93,7 @@ const MeetingDetails = () => {
             meetingId={id}
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers.timeRangesEnteredByAllUsers}
+            userRanges={userTimeAnswers}
           />
         )}
         {survey && (

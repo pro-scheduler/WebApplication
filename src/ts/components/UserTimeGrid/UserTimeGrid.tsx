@@ -12,6 +12,7 @@ export type UserTimeGridProps = {
   addRanges: Function;
   lockedRanges: Array<{ from: string; to: string }>;
   disabled: Boolean;
+  userRanges?: Ranges;
 };
 
 interface Ranges {
@@ -25,8 +26,9 @@ const UserTimeGrid = ({
   addRanges,
   lockedRanges,
   disabled,
+  userRanges = {},
 }: UserTimeGridProps) => {
-  const [rangesParams, setRangesParams] = useState<Ranges>({});
+  const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
   const [mappedLocked, setMappedLocked] = useState<Array<{ top: number; bottom: number }>>([]);
   const step = 3;

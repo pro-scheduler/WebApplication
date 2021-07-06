@@ -21,3 +21,6 @@ export const getRemoveUserFromMeetingUrl = (meetingId: number) =>
 export const getSaveUserTimeUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/timeranges';
 
 export const getAllUsersTimesUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/timeranges';
+
+export const getUserTimeAnswersUrl = (meetingId: number) =>
+  getMeetingUrl(meetingId) + '/user/timeranges';
