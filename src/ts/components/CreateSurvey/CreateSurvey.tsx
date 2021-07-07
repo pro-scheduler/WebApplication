@@ -87,7 +87,7 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
         })}
       </Row>
 
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center my-4">
         <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-7">
           <div className={styles.addQuestionButton}>
             Add question
