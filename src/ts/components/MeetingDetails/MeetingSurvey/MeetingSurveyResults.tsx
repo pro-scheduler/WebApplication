@@ -49,7 +49,7 @@ const MeetingSurveyResults = ({
 
   return (
     <>
-      <Col lg={5} className="text-center mx-auto mt-5 mb-5">
+      <Col lg={5} className="text-center mx-auto mt-5">
         <p>
           Survey completed by {surveySummary.finishedParticipantsCount}{' '}
           {surveySummary.finishedParticipantsCount === 1 ? 'participant' : 'participants'}

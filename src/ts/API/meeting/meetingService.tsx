@@ -6,6 +6,7 @@ import {
   getRemoveUserFromMeetingUrl,
   getSaveUserTimeUrl,
   getAllUsersTimesUrl,
+  getUserTimeAnswersUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 export const saveMeeting = (
@@ -36,15 +37,23 @@ export const removeUserFromMeeting = (
     'User successfully removed from the meeting'
   );
 
-export const saveUserTimeRanges = (meetingId: number, userMarkedTimeRanges: TimeRangeDTO[]) =>
+export const saveUserTimeRanges = (
+  meetingId: number,
+  userMarkedTimeRanges: TimeRangeDTO[],
+  refreshTimeData: Function
+) =>
   post(
     userMarkedTimeRanges,
     getSaveUserTimeUrl(meetingId),
     () => {},
     () => {},
     true,
-    'Time saved successfully'
+    'Time saved successfully',
+    refreshTimeData
   );
 
 export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Function) =>
   get(getAllUsersTimesUrl(meetingId), setResponseData);
+
+export const getUserTimeAnswers = (meetingId: number, setResponseData: Function) =>
+  get(getUserTimeAnswersUrl(meetingId), setResponseData);

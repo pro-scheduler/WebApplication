@@ -22,7 +22,7 @@ const MeetingSurvey = ({
   surveySummary,
   numberOfParticipants,
 }: MeetingSurveyProps) => {
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
+  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
@@ -31,8 +31,8 @@ const MeetingSurvey = ({
         <div className={styles.switchTime}>
           <SwitchButton
             onChange={() => setDisplayAnswers(!displayAnswers)}
-            checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-            unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+            checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+            unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
           />
         </div>
       </Col>

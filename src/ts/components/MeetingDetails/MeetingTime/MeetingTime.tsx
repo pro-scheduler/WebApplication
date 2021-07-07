@@ -18,16 +18,27 @@ export type MeetingTimeProps = {
   timeRanges: TimeRangeDTO[];
   answers?: TimeRangeDTO[];
   disabled?: Boolean;
+  userRanges?: TimeRangeDTO[];
+  refreshTimeData?: Function;
 };
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
 }
 
-const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimeProps) => {
+const MeetingTime = ({
+  meetingId,
+  answers,
+  timeRanges,
+  disabled,
+  userRanges = [],
+  refreshTimeData = () => {},
+}: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
+  const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
   const [availableRanges, setAvailableRanges] = useState<RangesWithDay>({});
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
+  const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
@@ -54,10 +65,16 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
         });
       }
     }
-    saveUserTimeRanges(meetingId, rangesFiltered);
+    saveUserTimeRanges(meetingId, rangesFiltered, () => {
+      refreshTimeData();
+      setPreferencesChanged(false);
+    });
   };
   useEffect(() => {
     let ranges: RangesWithDay = {};
+    timeRanges.sort((range1: TimeRangeDTO, range2: TimeRangeDTO) => {
+      return new Date(range1.startDateTime).getTime() - new Date(range2.startDateTime).getTime();
+    });
     timeRanges
       .map((range) => {
         const start = new Date(range.startDateTime);
@@ -104,6 +121,32 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
     }
   }, [answers, setUserAnswers]);
 
+  useEffect(() => {
+    let ranges: RangesWithDay = {};
+    if (userRanges) {
+      userRanges
+        .map((range) => {
+          const start = new Date(range.startDateTime);
+          const end = new Date(range.endDateTime);
+          const day =
+            ('0' + start.getDate()).slice(-2) +
+            '.' +
+            ('0' + start.getMonth()).slice(-2) +
+            '.' +
+            start.getFullYear();
+          ranges[day] = { ranges: [], date: start };
+          const from = start.getHours() + ':' + start.getMinutes();
+          const to = end.getHours() + ':' + end.getMinutes();
+          return { day: day, from: from, to: to };
+        })
+        .forEach((range) => {
+          ranges[range.day].ranges.push({ from: range.from, to: range.to });
+        });
+      setUserDefaultAnswers(ranges);
+      setSelectedRanges(ranges);
+    }
+  }, [userRanges, setUserDefaultAnswers]);
+
   return (
     <Row className="justify-content mt-5 ml-5 mb-5 pl-5">
       <Col>
@@ -112,18 +155,20 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
           <div className={styles.switchTime}>
             <SwitchButton
               onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
             />
           </div>
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-          {displayAnswers ? (
+          {!displayAnswers ? (
             <UserTimePicker
               disabled={disabled ? disabled : false}
               availableRanges={availableRanges}
+              selectedRanges={userDefaultAnswers}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
               setRanges={setRanges}
+              setPreferencesChanged={setPreferencesChanged}
             />
           ) : (
             <AnswersTimePicker
@@ -136,13 +181,16 @@ const MeetingTime = ({ meetingId, answers, timeRanges, disabled }: MeetingTimePr
           )}
         </div>
       </Col>
-      <Col lg={12} className="text-center mx-auto">
-        <ActionButton
-          text="Save time preferences"
-          onclick={saveTime}
-          className={styles.saveButton}
-        />
-      </Col>
+      {!displayAnswers && (
+        <Col lg={12} className="text-center mx-auto">
+          <ActionButton
+            text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
+            onclick={saveTime}
+            className={styles.saveButton}
+            disabled={!preferencesChanged}
+          />
+        </Col>
+      )}
     </Row>
   );
 };

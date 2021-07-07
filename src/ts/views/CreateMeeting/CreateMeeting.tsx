@@ -133,7 +133,7 @@ const CreateMeeting = () => {
       />
       <CreateSurvey survey={survey} state={state} />
       {state === 'summary' && (
-        <Row className="justify-content-center mt-5">
+        <Row className="justify-content-center mt-5 mb-4">
           <Col xs="auto">
             <ActionButton
               text="Save meeting"

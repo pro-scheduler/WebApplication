@@ -12,7 +12,7 @@ const TotalPieChart = ({ filled, total }: TotalPieChartProps) => {
 
   return (
     <div>
-      {percentage ? (
+      {percentage > 0 && (
         <div className={styles.chartContainer}>
           <PieChart
             data={[{ value: percentage, color: 'var(--bright-green)' }]}
@@ -29,8 +29,6 @@ const TotalPieChart = ({ filled, total }: TotalPieChartProps) => {
             lineWidth={30}
           />
         </div>
-      ) : (
-        <p>0%</p>
       )}
     </div>
   );

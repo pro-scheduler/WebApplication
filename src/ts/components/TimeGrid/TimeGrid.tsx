@@ -20,6 +20,11 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, addRanges }: TimeGri
     setRangesParams({ ...tmp });
   };
 
+  const removeRange = (id: number) => {
+    let tmp = { ...rangesParams };
+    delete tmp[id.toString()];
+    setRangesParams({ ...tmp });
+  };
   const positionToTime = (position: number) => {
     const hour: number = Math.floor((5 * (position / step)) / 60);
     const min: number = (5 * (position / step)) % 60;
@@ -60,6 +65,7 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, addRanges }: TimeGri
             defaultTop={rangesParams[key].top}
             id={rangesParams[key].id}
             changeParams={changeParams}
+            removeRange={removeRange}
           />
         );
       }

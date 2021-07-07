@@ -12,6 +12,8 @@ export type UserTimeGridProps = {
   addRanges: Function;
   lockedRanges: Array<{ from: string; to: string }>;
   disabled: Boolean;
+  userRanges?: Ranges;
+  setPreferencesChanged?: (value: boolean) => void;
 };
 
 interface Ranges {
@@ -25,8 +27,10 @@ const UserTimeGrid = ({
   addRanges,
   lockedRanges,
   disabled,
+  userRanges = {},
+  setPreferencesChanged = () => {},
 }: UserTimeGridProps) => {
-  const [rangesParams, setRangesParams] = useState<Ranges>({});
+  const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
   const [mappedLocked, setMappedLocked] = useState<Array<{ top: number; bottom: number }>>([]);
   const step = 3;
@@ -34,8 +38,14 @@ const UserTimeGrid = ({
     let tmp = { ...rangesParams };
     tmp[id.toString()] = { top, height, id };
     setRangesParams({ ...tmp });
+    setPreferencesChanged(true);
   };
-
+  const removeRange = (id: number) => {
+    let tmp = { ...rangesParams };
+    delete tmp[id.toString()];
+    setRangesParams({ ...tmp });
+    setPreferencesChanged(true);
+  };
   const positionToTime = (position: number) => {
     const hour: number = Math.floor((5 * (position / step)) / 60);
     const min: number = (5 * (position / step)) % 60;
@@ -91,6 +101,7 @@ const UserTimeGrid = ({
             id={rangesParams[key].id}
             changeParams={changeParams}
             lockedRanges={mappedLocked}
+            removeRange={removeRange}
           />
         );
       }
