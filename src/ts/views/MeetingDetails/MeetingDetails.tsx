@@ -15,12 +15,12 @@ import { Meeting } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import userActions from '../../actions/userActions';
 import allActions from '../../actions';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
+import { loadUserOrganizedMeetings } from '../../API/user/userService';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -30,6 +30,7 @@ const MeetingDetails = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
   });
+  const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
@@ -58,17 +59,17 @@ const MeetingDetails = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(userActions.fetchUserOrganizedMeetings(user.id));
+    loadUserOrganizedMeetings(user.id, setOrganizedMeetings);
     // eslint-disable-next-line
   }, [user.id]);
 
   useEffect(() => {
     setIsOrganizer(
-      user.organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
+      organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
         undefined
     );
     // eslint-disable-next-line
-  }, [user.organizedMeetings]);
+  }, [organizedMeetings]);
 
   useEffect(() => {
     getSurveySummary(id, setSurveySummary);

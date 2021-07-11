@@ -8,6 +8,11 @@ import InvitationList from '../../components/Meetings/InvitationList';
 import { useState } from 'react';
 import { fetchUserPendingInvitations } from '../../API/invitation/invitationService';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
+import {
+  loadUserOrganizedMeetings,
+  loadUserParticipatedMeetings,
+} from '../../API/user/userService';
+import { Meeting } from '../../model/meeting/Meeting';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -16,6 +21,8 @@ const Meetings = () => {
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const dispatch: Function = useDispatch();
   const [refreshMeetings, setRefreshMeetings] = useState<number>(0);
+  const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
+  const [participatedMeetings, setParticipatedMeetings] = useState<Meeting[]>([]);
 
   useEffect(() => {
     dispatch(allActions.userActions.fetchCurrentUser());
@@ -23,8 +30,8 @@ const Meetings = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(allActions.userActions.fetchUserOrganizedMeetings(user.id));
-    dispatch(allActions.userActions.fetchUserParticipatedMeetings(user.id));
+    loadUserOrganizedMeetings(user.id, setOrganizedMeetings);
+    loadUserParticipatedMeetings(user.id, setParticipatedMeetings);
     fetchUserPendingInvitations(user.id, setInvitations);
     // eslint-disable-next-line
   }, [user.id, refreshMeetings]);
@@ -35,12 +42,12 @@ const Meetings = () => {
         <InvitationList invitations={invitations} refreshMeetings={setRefreshMeetings} />
       )}
       <MeetingList
-        meetings={user.organizedMeetings}
+        meetings={organizedMeetings}
         header={'Meetings you organize'}
         noMeetingsInfo={"You don't organize any meeting"}
       />
       <MeetingList
-        meetings={user.participatedMeetings}
+        meetings={participatedMeetings}
         header={'Meetings you participate in'}
         noMeetingsInfo={"You don't participate in any meeting"}
       />
