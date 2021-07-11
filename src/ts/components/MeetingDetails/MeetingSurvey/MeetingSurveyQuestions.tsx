@@ -8,6 +8,7 @@ import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
 import Col from 'react-bootstrap/Col';
+import { BsClockFill } from 'react-icons/bs';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -77,7 +78,18 @@ const MeetingSurveyQuestions = ({
   return (
     <Col>
       <div className="mx-auto text-center mt-5">
-        <p>{survey.description}</p>
+        {survey.surveyEndDate && (
+          <p>
+            <BsClockFill className={styles.clockIcon} />
+            {survey.state === 'OPEN'
+              ? 'The survey will close at ' +
+                survey.surveyEndDate?.split('T')[1] +
+                ' on ' +
+                survey.surveyEndDate?.split('T')[0]
+              : 'The survey is closed'}
+          </p>
+        )}
+        <p className="mt-3">{survey.description}</p>
         {questions}
       </div>
       <div className="text-center">

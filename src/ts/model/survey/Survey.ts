@@ -38,7 +38,7 @@ export type UserSurvey = {
   }[];
   userState: 'INCOMPLETE' | 'COMPLETE';
   state: 'OPEN' | 'CLOSED';
-  surveyEndDate: Date | null;
+  surveyEndDate: string | undefined;
 };
 
 export type SurveySummary = {
