@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import allActions from '../../actions';
 import { ProUser } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import InvitationList from '../../components/Meetings/InvitationList';
@@ -17,6 +16,7 @@ import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import userActions from '../../actions/userActions';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -35,7 +35,7 @@ const Meetings = () => {
   );
 
   useEffect(() => {
-    dispatch(allActions.userActions.fetchCurrentUser());
+    dispatch(userActions.fetchCurrentUser());
     // eslint-disable-next-line
   }, []);
 

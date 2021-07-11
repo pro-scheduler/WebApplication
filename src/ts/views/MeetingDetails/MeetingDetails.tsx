@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
@@ -15,12 +15,14 @@ import { Meeting } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import allActions from '../../actions';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import { loadUserOrganizedMeetings } from '../../API/user/userService';
+import userActions from '../../actions/userActions';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -52,7 +54,7 @@ const MeetingDetails = () => {
   };
 
   useEffect(() => {
-    dispatch(allActions.userActions.fetchCurrentUser());
+    dispatch(userActions.fetchCurrentUser());
     getSurveyForMeeting(id, setSurvey);
     refreshTimeData();
     // eslint-disable-next-line
@@ -113,7 +115,13 @@ const MeetingDetails = () => {
       </Container>
     </div>
   ) : (
-    <LoadingSpinner active={meetingResponse.isLoading} />
+    <Container fluid className="ml-xs-5">
+      <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+        <Col className="text-center mt-5">
+          <LoadingSpinner active={meetingResponse.isLoading} />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
