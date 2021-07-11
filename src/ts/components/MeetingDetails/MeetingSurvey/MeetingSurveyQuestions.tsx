@@ -81,12 +81,14 @@ const MeetingSurveyQuestions = ({
         {questions}
       </div>
       <div className="text-center">
-        <ActionButton
-          onclick={saveSurvey}
-          text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
-          disabled={!filledAnswers()}
-          className={styles.saveAnswersButton}
-        />
+        {survey.state === 'OPEN' && (
+          <ActionButton
+            onclick={saveSurvey}
+            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            disabled={!filledAnswers()}
+            className={styles.saveAnswersButton}
+          />
+        )}
       </div>
     </Col>
   );
