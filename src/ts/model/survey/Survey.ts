@@ -7,6 +7,8 @@ export type Survey = {
   description: string;
   questions: Question[];
   answers: Answer[];
+  surveyEndDate?: Date;
+  state: 'OPEN' | 'CLOSED';
 };
 
 export type SurveyResultsDTO = {
@@ -23,6 +25,7 @@ export type SurveyWithQuestionsDTO = {
   meetingId: number;
   description: string;
   questions: Question[];
+  surveyEndDate?: Date;
 };
 
 export type UserSurvey = {
@@ -33,7 +36,9 @@ export type UserSurvey = {
     question: Question;
     answer: Answer | null;
   }[];
-  state: 'INCOMPLETE' | 'COMPLETE';
+  userState: 'INCOMPLETE' | 'COMPLETE';
+  state: 'OPEN' | 'CLOSED';
+  surveyEndDate: Date | null;
 };
 
 export type SurveySummary = {

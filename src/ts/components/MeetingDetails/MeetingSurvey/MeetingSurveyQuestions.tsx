@@ -20,7 +20,7 @@ const MeetingSurveyQuestions = ({
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
   const [dataUpdated, setDataUpdated] = useState(true);
-  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
+  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.userState);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {

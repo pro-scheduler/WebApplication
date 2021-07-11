@@ -11,6 +11,7 @@ const defaultSurvey: Survey = {
   description: '',
   questions: [],
   answers: [],
+  state: 'OPEN',
 };
 
 const defaultSurveyResults: SurveyResultsDTO = {

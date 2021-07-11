@@ -31,3 +31,9 @@
 .createHeader {
     font-size: var(--s-font-size);
 }
+
+.deadlineHeader {
+    color: var(--gray);
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
