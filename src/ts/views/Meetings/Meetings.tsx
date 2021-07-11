@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import allActions from '../../actions';
@@ -13,6 +13,10 @@ import {
   loadUserParticipatedMeetings,
 } from '../../API/user/userService';
 import { Meeting } from '../../model/meeting/Meeting';
+import { ApiCall } from '../../API/genericApiCalls';
+import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -22,7 +26,13 @@ const Meetings = () => {
   const dispatch: Function = useDispatch();
   const [refreshMeetings, setRefreshMeetings] = useState<number>(0);
   const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
+  const [organizedMeetingsResponse, setOrganizedMeetingsResponse] = useState<ApiCall>(
+    new ApiCall()
+  );
   const [participatedMeetings, setParticipatedMeetings] = useState<Meeting[]>([]);
+  const [participatedMeetingsResponse, setParticipatedMeetingsResponse] = useState<ApiCall>(
+    new ApiCall()
+  );
 
   useEffect(() => {
     dispatch(allActions.userActions.fetchCurrentUser());
@@ -30,8 +40,8 @@ const Meetings = () => {
   }, []);
 
   useEffect(() => {
-    loadUserOrganizedMeetings(user.id, setOrganizedMeetings);
-    loadUserParticipatedMeetings(user.id, setParticipatedMeetings);
+    loadUserOrganizedMeetings(user.id, setOrganizedMeetings, setOrganizedMeetingsResponse);
+    loadUserParticipatedMeetings(user.id, setParticipatedMeetings, setParticipatedMeetingsResponse);
     fetchUserPendingInvitations(user.id, setInvitations);
     // eslint-disable-next-line
   }, [user.id, refreshMeetings]);
@@ -41,16 +51,33 @@ const Meetings = () => {
       {invitations.length > 0 && (
         <InvitationList invitations={invitations} refreshMeetings={setRefreshMeetings} />
       )}
-      <MeetingList
-        meetings={organizedMeetings}
-        header={'Meetings you organize'}
-        noMeetingsInfo={"You don't organize any meeting"}
-      />
-      <MeetingList
-        meetings={participatedMeetings}
-        header={'Meetings you participate in'}
-        noMeetingsInfo={"You don't participate in any meeting"}
-      />
+      {organizedMeetingsResponse.isSuccess ? (
+        <MeetingList
+          meetings={organizedMeetings}
+          header={'Meetings you organize'}
+          noMeetingsInfo={"You don't organize any meeting"}
+        />
+      ) : (
+        <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+          <Col className="text-center mt-5">
+            <LoadingSpinner active={organizedMeetingsResponse.isLoading} />
+          </Col>
+        </Row>
+      )}
+      {participatedMeetingsResponse.isSuccess ? (
+        <MeetingList
+          meetings={participatedMeetings}
+          header={'Meetings you participate in'}
+          noMeetingsInfo={"You don't participate in any meeting"}
+          showRedirectButton={false}
+        />
+      ) : (
+        <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+          <Col className="text-center mt-5">
+            <LoadingSpinner active={participatedMeetingsResponse.isLoading} />
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };

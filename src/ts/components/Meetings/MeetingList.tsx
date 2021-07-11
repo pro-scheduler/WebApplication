@@ -12,9 +12,15 @@ export type MeetingListProps = {
   header: string;
   noMeetingsInfo: string;
   meetings: Meeting[];
+  showRedirectButton?: boolean;
 };
 
-const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => {
+const MeetingList = ({
+  header,
+  noMeetingsInfo,
+  meetings,
+  showRedirectButton = true,
+}: MeetingListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const onFirstPageClick = () => {
@@ -74,11 +80,13 @@ const MeetingList = ({ header, noMeetingsInfo, meetings }: MeetingListProps) => 
       ) : (
         <div className="text-center mt-3">
           <div>{noMeetingsInfo}</div>
-          <RedirectButton
-            className={styles.noMeetingButton}
-            redirectTO="/create"
-            text="Add new meeting"
-          />
+          {showRedirectButton && (
+            <RedirectButton
+              className={styles.noMeetingButton}
+              redirectTO="/create"
+              text="Add new meeting"
+            />
+          )}
         </div>
       )}
     </Row>
