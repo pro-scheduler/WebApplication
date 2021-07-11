@@ -10,7 +10,6 @@ import {
   getAllUsersTimeAnswers,
   getUserTimeAnswers,
 } from '../../API/meeting/meetingService';
-import surveyActions from '../../actions/surveyActions';
 import { ProUser } from '../../model/user/ProUser';
 import { Meeting } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
@@ -21,6 +20,7 @@ import allActions from '../../actions';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
 import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -52,7 +52,7 @@ const MeetingDetails = () => {
 
   useEffect(() => {
     dispatch(allActions.userActions.fetchCurrentUser());
-    surveyActions.getSurveyForMeeting(id).then(setSurvey);
+    getSurveyForMeeting(id, setSurvey);
     refreshTimeData();
     // eslint-disable-next-line
   }, []);
@@ -71,7 +71,7 @@ const MeetingDetails = () => {
   }, [user.organizedMeetings]);
 
   useEffect(() => {
-    surveyActions.getSurveySummary(id).then(setSurveySummary);
+    getSurveySummary(id, setSurveySummary);
     // eslint-disable-next-line
   }, [survey, refreshSurveySummary]);
 

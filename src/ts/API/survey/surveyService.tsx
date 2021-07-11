@@ -1,7 +1,14 @@
 import { Question } from '../../model/survey/Question';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
-import { post } from '../genericApiCalls';
-import { getFillSurveyUrl, getSurveysUrl } from './urls';
+import { get, post } from '../genericApiCalls';
+import {
+  getFillSurveyUrl,
+  getSurveyAnswersUrl,
+  getSurveyForMeetingUrl,
+  getSurveySummaryUrl,
+  getSurveysUrl,
+  getSurveyUrl,
+} from './urls';
 import { Answer } from '../../model/survey/Answer';
 
 export const createSurvey = (
@@ -42,4 +49,28 @@ export const fillSurvey = (
     true,
     'Answers has been saved successfully'
   );
+};
+
+export const loadSurvey = (id: number, setSurvey: Function, setResponse?: Function) => {
+  get(getSurveyUrl(id), setSurvey, setResponse);
+};
+
+export const getSurveyForMeeting = (
+  meetingId: number,
+  setSurvey: Function,
+  setResponse?: Function
+) => {
+  get(getSurveyForMeetingUrl(meetingId), setSurvey, setResponse);
+};
+
+export const loadSurveyResults = (id: number, setSurvey: Function, setResponse?: Function) => {
+  get(getSurveyAnswersUrl(id), setSurvey, setResponse);
+};
+
+export const getSurveySummary = (
+  meetingId: number,
+  setSurveySummary: Function,
+  setResponse?: Function
+) => {
+  get(getSurveySummaryUrl(meetingId), setSurveySummary, setResponse);
 };
