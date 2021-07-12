@@ -62,9 +62,11 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   };
 
   const updateTime = (time: TimePickerValue) => {
-    finalDate?.setMinutes(parseInt(time.toString().slice(-2)));
-    finalDate?.setHours(parseInt(time.toString().slice(0, 2)));
-    finalDate?.setTime(finalDate.getTime() - finalDate.getTimezoneOffset() * 60 * 1000);
+    let newFinalDate: Date | undefined = finalDate;
+    newFinalDate?.setMinutes(parseInt(time.toString().slice(-2)));
+    newFinalDate?.setHours(parseInt(time.toString().slice(0, 2)));
+    newFinalDate?.setTime(newFinalDate.getTime() - newFinalDate.getTimezoneOffset() * 60 * 1000);
+    setFinalDate(newFinalDate);
     setFinalTime(time);
     survey.surveyEndDate = finalDate;
   };
