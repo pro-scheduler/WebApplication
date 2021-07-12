@@ -10,15 +10,20 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import DayPicker from 'react-day-picker';
+import TimePicker, { TimePickerValue } from 'react-time-picker';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
   survey: SurveyWithQuestionsDTO;
+  setSurvey: (newSurvey: SurveyWithQuestionsDTO) => void;
 };
 
-const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
+const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
+  const [finalDate, setFinalDate] = useState<Date | undefined>(undefined);
+  const [finalTime, setFinalTime] = useState<TimePickerValue>('00:00');
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -26,24 +31,49 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   };
 
   const updateQuestion = (questionToUpdate: Question) => {
-    survey.questions = survey.questions.filter(
+    const updatedQuestions = survey.questions.filter(
       (question: Question) => question.id !== questionToUpdate.id
     );
-    survey.questions.push(questionToUpdate);
+    setSurvey({ ...survey, questions: [...updatedQuestions, questionToUpdate] });
   };
 
   const deleteQuestion = (idToDelete: number) => {
-    survey.questions = survey.questions.filter((question: Question) => question.id !== idToDelete);
+    setSurvey({
+      ...survey,
+      questions: survey.questions.filter((question: Question) => question.id !== idToDelete),
+    });
     setQuestions(questions.filter((id: number) => idToDelete !== id));
   };
 
   const saveSurveyDescription = (description: string) => {
-    survey.description = description;
+    setSurvey({ ...survey, description: description });
   };
 
   useEffect(() => {
     setQuestions([]);
   }, []);
+
+  useEffect(() => {
+    setSurvey({ ...survey, surveyEndDate: finalDate });
+    // eslint-disable-next-line
+  }, [finalDate]);
+
+  const updateDate = (date: Date) => {
+    date.setMinutes(parseInt(finalTime.toString().slice(-2)));
+    date.setHours(parseInt(finalTime.toString().slice(0, 2)));
+    date.setTime(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+    setFinalDate(date.getDate() === finalDate?.getDate() ? undefined : date);
+  };
+
+  const updateTime = (time: TimePickerValue) => {
+    let newFinalDate: Date | undefined = finalDate;
+    newFinalDate?.setMinutes(parseInt(time.toString().slice(-2)));
+    newFinalDate?.setHours(parseInt(time.toString().slice(0, 2)));
+    newFinalDate?.setTime(newFinalDate.getTime() - newFinalDate.getTimezoneOffset() * 60 * 1000);
+    setFinalDate(newFinalDate);
+    setFinalTime(time);
+    setSurvey({ ...survey, surveyEndDate: finalDate });
+  };
 
   return (
     <div
@@ -59,6 +89,23 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
 
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Create survey</div>
+      </Row>
+
+      <Row className="justify-content-center mt-5">
+        <Col lg={12} className="text-center mb-3">
+          <div className={styles.deadlineHeader}>Set a deadline for completing the survey</div>
+        </Col>
+        <Col lg={6} className="text-center text-lg-right">
+          <DayPicker selectedDays={finalDate} onDayClick={updateDate} />
+        </Col>
+        <Col lg={6} className="text-center text-lg-left mt-2 mt-lg-3">
+          <TimePicker
+            value={finalTime}
+            onChange={updateTime}
+            renderNumbers={true}
+            clearIcon={null}
+          />
+        </Col>
       </Row>
 
       <Row className="justify-content-center mt-4">

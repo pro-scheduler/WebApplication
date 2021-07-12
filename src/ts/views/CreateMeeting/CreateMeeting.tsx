@@ -49,7 +49,6 @@ const CreateMeeting = () => {
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: -1,
@@ -131,7 +130,7 @@ const CreateMeeting = () => {
         setOnlineLink={setOnlineLink}
         setOnlinePassword={setOnlinePassword}
       />
-      <CreateSurvey survey={survey} state={state} />
+      <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
       {state === 'summary' && (
         <Row className="justify-content-center mt-5 mb-4">
           <Col xs="auto">

@@ -8,6 +8,7 @@ import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
 import Col from 'react-bootstrap/Col';
+import { BsClockFill } from 'react-icons/bs';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -20,7 +21,7 @@ const MeetingSurveyQuestions = ({
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
   const [dataUpdated, setDataUpdated] = useState(true);
-  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.state);
+  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.userState);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {
@@ -77,16 +78,29 @@ const MeetingSurveyQuestions = ({
   return (
     <Col>
       <div className="mx-auto text-center mt-5">
-        <p>{survey.description}</p>
+        {survey.surveyEndDate && (
+          <p className={styles.timeInfo}>
+            <BsClockFill className={styles.clockIcon} />
+            {survey.state === 'OPEN'
+              ? 'The survey will close at ' +
+                survey.surveyEndDate?.split('T')[1].slice(0, 5) +
+                ' on ' +
+                survey.surveyEndDate?.split('T')[0]
+              : 'The survey is closed'}
+          </p>
+        )}
+        <p className="mt-3">{survey.description}</p>
         {questions}
       </div>
       <div className="text-center">
-        <ActionButton
-          onclick={saveSurvey}
-          text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
-          disabled={!filledAnswers()}
-          className={styles.saveAnswersButton}
-        />
+        {survey.state === 'OPEN' && (
+          <ActionButton
+            onclick={saveSurvey}
+            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            disabled={!filledAnswers()}
+            className={styles.saveAnswersButton}
+          />
+        )}
       </div>
     </Col>
   );
