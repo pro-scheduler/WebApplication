@@ -16,9 +16,10 @@ import TimePicker, { TimePickerValue } from 'react-time-picker';
 export type CreateSurveyProps = {
   state: creatingMeetingState;
   survey: SurveyWithQuestionsDTO;
+  setSurvey: (newSurvey: SurveyWithQuestionsDTO) => void;
 };
 
-const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
+const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
   const [finalDate, setFinalDate] = useState<Date | undefined>(undefined);
@@ -30,19 +31,22 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   };
 
   const updateQuestion = (questionToUpdate: Question) => {
-    survey.questions = survey.questions.filter(
+    const updatedQuestions = survey.questions.filter(
       (question: Question) => question.id !== questionToUpdate.id
     );
-    survey.questions.push(questionToUpdate);
+    setSurvey({ ...survey, questions: [...updatedQuestions, questionToUpdate] });
   };
 
   const deleteQuestion = (idToDelete: number) => {
-    survey.questions = survey.questions.filter((question: Question) => question.id !== idToDelete);
+    setSurvey({
+      ...survey,
+      questions: survey.questions.filter((question: Question) => question.id !== idToDelete),
+    });
     setQuestions(questions.filter((id: number) => idToDelete !== id));
   };
 
   const saveSurveyDescription = (description: string) => {
-    survey.description = description;
+    setSurvey({ ...survey, description: description });
   };
 
   useEffect(() => {
@@ -50,7 +54,7 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
   }, []);
 
   useEffect(() => {
-    survey.surveyEndDate = finalDate;
+    setSurvey({ ...survey, surveyEndDate: finalDate });
     // eslint-disable-next-line
   }, [finalDate]);
 
@@ -68,7 +72,7 @@ const CreateSurvey = ({ state, survey }: CreateSurveyProps) => {
     newFinalDate?.setTime(newFinalDate.getTime() - newFinalDate.getTimezoneOffset() * 60 * 1000);
     setFinalDate(newFinalDate);
     setFinalTime(time);
-    survey.surveyEndDate = finalDate;
+    setSurvey({ ...survey, surveyEndDate: finalDate });
   };
 
   return (

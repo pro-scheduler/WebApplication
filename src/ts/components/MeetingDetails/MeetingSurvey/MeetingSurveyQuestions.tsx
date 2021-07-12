@@ -79,11 +79,11 @@ const MeetingSurveyQuestions = ({
     <Col>
       <div className="mx-auto text-center mt-5">
         {survey.surveyEndDate && (
-          <p>
+          <p className={styles.timeInfo}>
             <BsClockFill className={styles.clockIcon} />
             {survey.state === 'OPEN'
               ? 'The survey will close at ' +
-                survey.surveyEndDate?.split('T')[1] +
+                survey.surveyEndDate?.split('T')[1].slice(0, 5) +
                 ' on ' +
                 survey.surveyEndDate?.split('T')[0]
               : 'The survey is closed'}
