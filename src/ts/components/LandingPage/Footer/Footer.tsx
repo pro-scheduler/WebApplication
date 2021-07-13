@@ -12,10 +12,7 @@ const Footer = () => {
   return (
     <Jumbotron fluid className={styles.footer}>
       <Container fluid>
-        <Row className="mt-5 mb-0 pt-2 pb-0 ml-0">
-          <Col lg={12} className="my-0 py-0">
-            <hr className={styles.footerLine} />
-          </Col>
+        <Row className="mt-5 mb-0 pt-4 pb-0 ml-0">
           <Col lg={6} className="my-0 py-0">
             <p className={styles.footerLogo}>
               <img src={logo} alt="logo" className={styles.footerLogoImg} />

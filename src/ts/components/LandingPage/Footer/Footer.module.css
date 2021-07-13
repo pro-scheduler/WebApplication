@@ -5,13 +5,6 @@
     padding: 0;
 }
 
-.footerLine {
-    margin-top: 6vh;
-    border-top: 1px solid white;
-    color: white;
-    text-align: center;
-}
-
 .footerLogo {
     font-size: var(--xs-font-size);
 }
