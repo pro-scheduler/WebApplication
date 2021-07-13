@@ -8,31 +8,11 @@
     padding: 40px;
 }
 
-.headerLogo {
-    font-size: var(--header-font-size);
-    font-weight: var(--bold-font-weight);
-}
-
-.headerLogo img {
-    height: 40px;
-    margin-right: 15px;
-    margin-bottom: 20px;
-}
-
 .headerMotto {
     font-size: var(--motto-font-size);
     font-weight: var(--bold-font-weight);
-    text-align: center;
-    margin-top: 16vh;
-}
-
-.headerRow {
-    margin-top: 30vh;
-    text-align: center;
-}
-
-.redirectButton {
-    margin: 20px;
+    text-align: right;
+    margin-top: 80vh;
 }
 
 @media only screen and (max-width: 992px) {
@@ -42,19 +22,6 @@
 
     .headerMotto {
         font-size: var(--xl-font-size);
-    }
-
-    .headerRow {
-        margin-top: 15vh;
-    }
-
-    .redirectButton {
-        margin-top: 0;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    .redirectButton {
-        width: 210px;
+        margin-top: 55vh;
     }
 }

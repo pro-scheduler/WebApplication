@@ -1,0 +1,21 @@
+.navbar {
+    background-color: var(--purple);
+}
+
+.navbarLogo {
+    font-weight: var(--bold-font-weight);
+    display: flex;
+    align-items: center;
+}
+
+.navbarLogo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.signInButton {
+    width: auto;
+    height: auto;
+    padding: 5px 20px;
+    margin-left: 10px;
+}
