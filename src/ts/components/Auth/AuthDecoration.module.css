@@ -45,3 +45,9 @@
         margin: 0 15px;
     }
 }
+
+@media only screen and (max-width: 300px) {
+    .personIcon {
+        margin: 0 5px;
+    }
+}

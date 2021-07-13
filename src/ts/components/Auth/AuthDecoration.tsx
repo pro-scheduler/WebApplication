@@ -14,10 +14,10 @@ const AuthDecoration = () => {
       <div className={cx(styles.personIcon, styles.personIcon3)}>
         <FcBusinesswoman />
       </div>
+      <div className={cx(styles.personIcon, styles.personIcon1)}>
+        <FcManager />
+      </div>
       <div className={styles.additionalIcons}>
-        <div className={cx(styles.personIcon, styles.personIcon1)}>
-          <FcManager />
-        </div>
         <div className={cx(styles.personIcon, styles.personIcon2)}>
           <FcBusinesswoman />
         </div>
