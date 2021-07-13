@@ -7,14 +7,15 @@
 
 .footerLogo {
     font-size: var(--xs-font-size);
+    display: flex;
+    align-items: center;
 }
 
 .footerLogoImg {
-    height: 16px;
+    height: 20px;
     margin-right: 5px;
 }
 
 .copyright {
-    font-size: 10px;
-    margin-top: 20px;
+    font-size: 15px;
 }
