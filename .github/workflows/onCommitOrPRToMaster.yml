@@ -2,9 +2,9 @@ name: React app
 
 on:
   push:
-    branches: [ master ]
+    branches: [ release/1.0 ]
   pull_request:
-    branches: [ master ]
+    branches: [ release/1.0 ]
 
 jobs:
   push:
@@ -26,5 +26,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: proscheduler/pro-scheduler:webapplication
+          tags: proscheduler/pro-scheduler:webapplication-v1.0
           file: /docker/Dockerfile
