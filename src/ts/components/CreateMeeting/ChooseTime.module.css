@@ -5,3 +5,8 @@
 .createHeader {
     font-size: var(--s-font-size);
 }
+
+.possibleTimeHeader {
+    font-size: var(--s-font-size);
+    margin-top: 30px;
+}

@@ -9,6 +9,7 @@ import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
@@ -17,8 +18,9 @@ interface RangesWithDay {
 export type ChooseTimeProps = {
   state: creatingMeetingState;
   setSelectedRanges: Function;
+  setDeadlineDate: Function;
 };
-const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
+const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
   // eslint-disable-next-line
@@ -71,6 +73,7 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
     ran[date] = { ranges: ranges, date: day };
     setTimeRanges({ ...ran });
   };
+
   return (
     <div
       style={{ marginLeft: width < 576 ? 0 : 45 }}
@@ -85,6 +88,13 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
       </Row>
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Set time of the meeting</div>
+      </Row>
+      <TimePickerWithClock
+        setDay={setDeadlineDate}
+        label={'Set a deadline for time voting (optional)'}
+      />
+      <Row className="justify-content-center mt-4">
+        <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col />
