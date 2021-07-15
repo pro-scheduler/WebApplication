@@ -35,7 +35,6 @@ const NameAndDescription = ({
         <Col>
           <Card title={'Meeting name *'}>
             <SingleValueInput
-              label=""
               valueHandler={setName}
               setInvalid={setInvalidNameDesc}
               validation={[
@@ -49,7 +48,6 @@ const NameAndDescription = ({
           <Card title={'Meeting description'}>
             <div className="mt-4">
               <TextArea
-                label=""
                 valueHandler={setDescription}
                 setInvalid={setInvalidNameDesc}
                 validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
