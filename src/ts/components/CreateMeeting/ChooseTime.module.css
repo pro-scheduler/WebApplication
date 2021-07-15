@@ -1,7 +1,10 @@
 .hidden {
     display: none;
 }
-
 .createHeader {
     font-size: var(--s-font-size);
+}
+.deadlineHeader{
+    font-size: var(--s-font-size);
+    margin-top: 30px;
 }

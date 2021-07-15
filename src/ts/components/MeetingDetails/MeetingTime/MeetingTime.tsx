@@ -12,10 +12,12 @@ import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
+import Countdown from 'react-countdown';
 
 export type MeetingTimeProps = {
   meetingId: number;
   timeRanges: TimeRangeDTO[];
+  timeDeadline?: Date;
   answers?: TimeRangeDTO[];
   disabled?: Boolean;
   userRanges?: TimeRangeDTO[];
@@ -33,12 +35,14 @@ const MeetingTime = ({
   disabled,
   userRanges = [],
   refreshTimeData = () => {},
+  timeDeadline,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
   const [availableRanges, setAvailableRanges] = useState<RangesWithDay>({});
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
+  const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
@@ -49,6 +53,10 @@ const MeetingTime = ({
     ran[date] = { ranges: ranges, date: day };
     setSelectedRanges({ ...ran });
   };
+
+  useEffect(() => {
+    if (timeDeadline) setDeadlineExceeded(new Date().getTime() - timeDeadline.getTime() > 0);
+  }, [timeDeadline]);
 
   const saveTime = () => {
     let rangesFiltered: TimeRangeDTO[] = [];
@@ -158,12 +166,24 @@ const MeetingTime = ({
               checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
               unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
             />
+            <div style={{ fontSize: 20 }}>
+              {displayAnswers ? (
+                <>Users Answers </>
+              ) : timeDeadline && !deadlineExceeded ? (
+                <>
+                  Time for fill the preferences:{' '}
+                  <Countdown date={timeDeadline} daysInHours={true} />
+                </>
+              ) : (
+                <>Time for filling preferences expired</>
+              )}
+            </div>
           </div>
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
           {!displayAnswers ? (
             <UserTimePicker
-              disabled={disabled ? disabled : false}
+              disabled={deadlineExceeded}
               availableRanges={availableRanges}
               selectedRanges={userDefaultAnswers}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
@@ -181,7 +201,7 @@ const MeetingTime = ({
           )}
         </div>
       </Col>
-      {!displayAnswers && (
+      {!displayAnswers && !deadlineExceeded && (
         <Col lg={12} className="text-center mx-auto">
           <ActionButton
             text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
