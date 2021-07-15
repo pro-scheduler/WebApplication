@@ -11,6 +11,7 @@ import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
+import Card from '../common/Card/Card';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
@@ -72,18 +73,18 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
         <div className={styles.createHeader}>Create survey</div>
       </Row>
 
-      <TimePickerWithClock
-        label={'Set a deadline for completing the survey (optional)'}
-        setDay={setFinalDate}
-      />
+      <Card title="Deadline for completing the survey">
+        <TimePickerWithClock setDay={setFinalDate} />
+      </Card>
 
       <Row className="justify-content-center mt-4">
-        <Col xs={8} lg={8} className="text-left">
-          <TextArea
-            label="Survey Description"
-            valueHandler={saveSurveyDescription}
-            className={styles.surveyDescriptionInput}
-          />
+        <Col>
+          <Card title={'Survey Description'}>
+            <TextArea
+              valueHandler={saveSurveyDescription}
+              placeholder="Please type survey description..."
+            />
+          </Card>
         </Col>
         {questions.map((id: number) => {
           return (
