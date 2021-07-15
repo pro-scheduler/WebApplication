@@ -11,6 +11,7 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
 import { TiPlus } from 'react-icons/ti';
+import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
@@ -19,8 +20,9 @@ interface RangesWithDay {
 export type ChooseTimeProps = {
   state: creatingMeetingState;
   setSelectedRanges: Function;
+  setDeadlineDate: Function;
 };
-const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
+const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
   // eslint-disable-next-line
@@ -106,6 +108,12 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
       </Row>
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Set time of the meeting</div>
+      </Row>
+      <Card title="Deadline for time voting">
+        <TimePickerWithClock label="" setDay={setDeadlineDate} />
+      </Card>
+      <Row className="justify-content-center mt-4">
+        <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
       <Row className="justify-content-center mt-4">
         <Col className="text-center">

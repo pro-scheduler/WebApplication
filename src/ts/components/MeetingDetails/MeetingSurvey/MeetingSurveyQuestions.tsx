@@ -9,6 +9,7 @@ import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
 import Col from 'react-bootstrap/Col';
 import { BsClockFill } from 'react-icons/bs';
+import Countdown from 'react-countdown';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -81,12 +82,14 @@ const MeetingSurveyQuestions = ({
         {survey.surveyEndDate && (
           <p className={styles.timeInfo}>
             <BsClockFill className={styles.clockIcon} />
-            {survey.state === 'OPEN'
-              ? 'The survey will close at ' +
-                survey.surveyEndDate?.split('T')[1].slice(0, 5) +
-                ' on ' +
-                survey.surveyEndDate?.split('T')[0]
-              : 'The survey is closed'}
+            {survey.state === 'OPEN' ? (
+              <>
+                The survey will close in{' '}
+                <Countdown date={survey.surveyEndDate} daysInHours={true} />
+              </>
+            ) : (
+              'The survey is closed'
+            )}
           </p>
         )}
         <p className="mt-3">{survey.description}</p>

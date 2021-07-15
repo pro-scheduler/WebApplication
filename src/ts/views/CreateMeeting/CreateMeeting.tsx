@@ -44,6 +44,8 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
+  // eslint-disable-next-line
+  const [deadlineDate, setDeadlineDate] = useState<Date | undefined>(undefined);
   const history = useHistory();
   const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
@@ -64,6 +66,7 @@ const CreateMeeting = () => {
   const [showNavbarLegend, setShowNavbarLegend] = useState<boolean>(false);
 
   const saveThisMeeting = () => {
+    // need add deadlineDate here
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
         ? new RealMeetingDetailsDTO(name, description, timeRanges)
@@ -122,7 +125,11 @@ const CreateMeeting = () => {
         setDescription={setDescription}
         setInvalidNameDesc={setInvalidNameDesc}
       />
-      <ChooseTime state={state} setSelectedRanges={setTimeRanges} />
+      <ChooseTime
+        state={state}
+        setSelectedRanges={setTimeRanges}
+        setDeadlineDate={setDeadlineDate}
+      />
       <CreateInvitations state={state} showIcon={true} emails={emails} setEmails={setEmails} />
       <OnlineDetails
         state={state}
