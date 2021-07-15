@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 export type TimePickerWithClockProps = {
   setDay: Function;
-  label: string;
+  label?: string;
 };
 
 const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
@@ -26,11 +26,13 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
 
   return (
     <Row className="justify-content-center">
-      <Col lg={12} className="text-center my-3">
-        <div className={styles.deadlineHeader}>{label}</div>
-      </Col>
+      {label && (
+        <Col lg={12} className="text-center my-3">
+          <div className={styles.deadlineHeader}>{label}</div>
+        </Col>
+      )}
       <Col lg={6} className="text-center text-lg-right">
-        <DayPicker selectedDays={date} onDayClick={setDate} />
+        <DayPicker selectedDays={date} onDayClick={setDate} className={styles.dayPicker} />
       </Col>
       <Col lg={6} className="text-center text-lg-left mt-2 mt-lg-3">
         <TimePicker value={time} onChange={setTime} renderNumbers={true} clearIcon={null} />

@@ -8,19 +8,19 @@ export type SingleValueInputProps = {
   valueHandler: Function;
   className?: string;
   setInvalid?: Function;
-  required?: boolean;
   validation?: Validation[];
   initialInvalidState?: boolean;
+  placeholder?: string;
 };
 
 const SingleValueInput = ({
   label,
   valueHandler,
   className,
-  required,
   setInvalid,
   validation,
   initialInvalidState,
+  placeholder,
 }: SingleValueInputProps) => {
   const [state, setState] = useState<string>('');
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
@@ -45,10 +45,15 @@ const SingleValueInput = ({
 
   return (
     <>
-      <div className={styles.label_classic}>
-        {label} {required && '*'}
-      </div>
-      <input className={inputStyles} type="text" value={state} onChange={handleChange} />
+      <div className={styles.label_classic}>{label}</div>
+      <input
+        className={inputStyles}
+        type="text"
+        value={state}
+        placeholder={placeholder}
+        onChange={handleChange}
+        style={{ width: '100%' }}
+      />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>
       )}

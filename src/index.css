@@ -45,3 +45,7 @@ input[type=range].range-slider.range-slider--secondary::-ms-thumb {
 input[type=range].range-slider::-ms-fill-lower {
   background: var(--purple) !important;
 }
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  background-color: var(--bright-green) !important;
+}

@@ -25,7 +25,6 @@ const ExampleValidation = () => {
         label="Name"
         valueHandler={setName}
         setInvalid={setInvalidName}
-        required={true}
         validation={[
           { validation: minSings(5), message: 'Min 3 signs required' },
           { validation: minSings(5), message: 'Min 3 signs required' },

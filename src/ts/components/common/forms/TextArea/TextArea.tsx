@@ -12,6 +12,7 @@ export type TextAreaProps = {
   validation?: Validation[];
   initialInvalidState?: boolean;
   defaultValue?: string;
+  placeholder?: string;
 };
 
 const TextArea = ({
@@ -23,6 +24,7 @@ const TextArea = ({
   validation,
   initialInvalidState,
   defaultValue,
+  placeholder,
 }: TextAreaProps) => {
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
@@ -46,7 +48,13 @@ const TextArea = ({
       <div className={styles.label_classic}>
         {label} {required && '*'}
       </div>
-      <textarea className={textAreaStyles} onChange={handleChange} defaultValue={defaultValue} />
+      <textarea
+        className={textAreaStyles}
+        onChange={handleChange}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        style={{ width: '100%' }}
+      />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>
       )}

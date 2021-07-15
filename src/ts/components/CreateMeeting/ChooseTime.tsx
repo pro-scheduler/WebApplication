@@ -9,6 +9,8 @@ import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import Card from '../common/Card/Card';
+import { TiPlus } from 'react-icons/ti';
 import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 
 interface RangesWithDay {
@@ -74,9 +76,26 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
     setTimeRanges({ ...ran });
   };
 
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const removeDay = (day: Date) => {
+    setSelectedDays([...selectedDays.filter((d) => d !== day)]);
+  };
   return (
     <div
-      style={{ marginLeft: width < 576 ? 0 : 45 }}
       className={
         state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
       }
@@ -89,21 +108,47 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
-      <TimePickerWithClock
-        setDay={setDeadlineDate}
-        label={'Set a deadline for time voting (optional)'}
-      />
+      <Card title="Deadline for time voting">
+        <TimePickerWithClock setDay={setDeadlineDate} />
+      </Card>
       <Row className="justify-content-center mt-4">
         <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
       <Row className="justify-content-center mt-4">
-        <Col />
         <Col className="text-center">
-          <DayPicker selectedDays={selectedDays} onDayClick={handleDayClick} />
+          <Card title="Meeting dates">
+            <div className={styles.meetingDates}>
+              <DayPicker
+                selectedDays={selectedDays}
+                onDayClick={handleDayClick}
+                className={styles.dayPicker}
+              />
+              {selectedDays.length > 0 && (
+                <div className={styles.selectedDays}>
+                  <div className={styles.datesHeader}>Chosen dates</div>
+                  {selectedDays.map((date, i) => (
+                    <div key={i}>
+                      <hr className={styles.hrLine} />
+                      <div className={styles.dateRow}>
+                        <div>
+                          {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}
+                        </div>
+                        <TiPlus
+                          className={styles.deleteCross}
+                          onClick={() => {
+                            removeDay(date);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
         </Col>
-        <Col />
       </Row>
-      <div style={{ marginRight: width < 576 ? 45 : 0 }}>
+      <div style={{ marginRight: width < 576 ? 45 : 0 }} className="mt-5">
         <TimePicker
           days={selectedDays}
           count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}

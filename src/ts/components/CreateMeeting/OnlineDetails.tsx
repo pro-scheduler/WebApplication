@@ -3,8 +3,8 @@ import Col from 'react-bootstrap/Col';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import WorldIcon from '../common/Icons/WorldIcon';
 import styles from './OnlineDetails.module.css';
-import React from 'react';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import Card from '../../components/common/Card/Card';
 
 export type OnlineDetailsProps = {
   state: creatingMeetingState;
@@ -34,22 +34,22 @@ const OnlineDetails = ({
         <div className={styles.onlineMeetingHeader}>Online Meeting Details</div>
       </Row>
       <Row className="justify-content-center mt-4">
-        <Col />
-        <Col xs={8} lg={6} className="mx-auto">
-          <SingleValueInput
-            label="Meeting link"
-            valueHandler={setOnlineLink}
-            className={styles.onlineDetailsInput}
-          />
-          <div className="mt-4">
+        <Col>
+          <Card title="Meeting link">
             <SingleValueInput
-              label="Meeting password"
+              placeholder="Please type meeting link..."
+              valueHandler={setOnlineLink}
+              className={styles.onlineDetailsInput}
+            />
+          </Card>
+          <Card title="Meeting password">
+            <SingleValueInput
+              placeholder="Please type meeting password..."
               valueHandler={setOnlinePassword}
               className={styles.onlineDetailsInput}
             />
-          </div>
+          </Card>
         </Col>
-        <Col />
       </Row>
     </div>
   );
