@@ -96,7 +96,6 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
   };
   return (
     <div
-      style={{ marginLeft: width < 576 ? 0 : 45 }}
       className={
         state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
       }
@@ -110,7 +109,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
       <Card title="Deadline for time voting">
-        <TimePickerWithClock label="" setDay={setDeadlineDate} />
+        <TimePickerWithClock setDay={setDeadlineDate} />
       </Card>
       <Row className="justify-content-center mt-4">
         <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
@@ -119,7 +118,11 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
         <Col className="text-center">
           <Card title="Meeting dates">
             <div className={styles.meetingDates}>
-              <DayPicker selectedDays={selectedDays} onDayClick={handleDayClick} />
+              <DayPicker
+                selectedDays={selectedDays}
+                onDayClick={handleDayClick}
+                className={styles.dayPicker}
+              />
               {selectedDays.length > 0 && (
                 <div className={styles.selectedDays}>
                   <div className={styles.datesHeader}>Chosen dates</div>
