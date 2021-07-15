@@ -26,26 +26,14 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
 
   return (
     <Row className="justify-content-center">
-      <Col lg={12} className="text-center mb-3">
+      <Col lg={12} className="text-center my-3">
         <div className={styles.deadlineHeader}>{label}</div>
       </Col>
       <Col lg={6} className="text-center text-lg-right">
-        <DayPicker
-          selectedDays={date}
-          onDayClick={(date: Date) => {
-            setDate(date);
-          }}
-        />
+        <DayPicker selectedDays={date} onDayClick={setDate} />
       </Col>
       <Col lg={6} className="text-center text-lg-left mt-2 mt-lg-3">
-        <TimePicker
-          value={time}
-          onChange={(time: TimePickerValue) => {
-            setTime(time);
-          }}
-          renderNumbers={true}
-          clearIcon={null}
-        />
+        <TimePicker value={time} onChange={setTime} renderNumbers={true} clearIcon={null} />
       </Col>
     </Row>
   );

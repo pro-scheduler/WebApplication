@@ -11,7 +11,7 @@ import styles from './MeetingTime.module.css';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
-import { BsFillPieChartFill } from 'react-icons/bs';
+import { BsClockFill, BsFillPieChartFill } from 'react-icons/bs';
 import Countdown from 'react-countdown';
 
 export type MeetingTimeProps = {
@@ -166,16 +166,18 @@ const MeetingTime = ({
               checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
               unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
             />
-            <div style={{ fontSize: 20 }}>
-              {displayAnswers ? (
-                <>Users Answers </>
-              ) : timeDeadline && !deadlineExceeded ? (
-                <>
-                  Time for fill the preferences:{' '}
-                  <Countdown date={timeDeadline} daysInHours={true} />
-                </>
-              ) : (
-                <>Time for filling preferences expired</>
+            <div className="mt-5">
+              {!displayAnswers && timeDeadline && (
+                <p className={styles.timeInfo}>
+                  <BsClockFill className={styles.clockIcon} />
+                  {!deadlineExceeded ? (
+                    <>
+                      Voting will end in <Countdown date={timeDeadline} daysInHours={true} />
+                    </>
+                  ) : (
+                    'Voting is closed'
+                  )}
+                </p>
               )}
             </div>
           </div>

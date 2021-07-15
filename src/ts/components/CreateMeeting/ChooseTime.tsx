@@ -89,6 +89,13 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
+      <TimePickerWithClock
+        setDay={setDeadlineDate}
+        label={'Set a deadline for time voting (optional)'}
+      />
+      <Row className="justify-content-center mt-4">
+        <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
+      </Row>
       <Row className="justify-content-center mt-4">
         <Col />
         <Col className="text-center">
@@ -103,10 +110,6 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
           setRanges={setRanges}
         />
       </div>
-      <Row className="justify-content-center mt-4">
-        <div className={styles.deadlineHeader}>Set deadline for time voting</div>
-      </Row>
-      <TimePickerWithClock setDay={setDeadlineDate} label={''} />
     </div>
   );
 };

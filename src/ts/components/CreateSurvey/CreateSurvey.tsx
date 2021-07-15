@@ -73,7 +73,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
       </Row>
 
       <TimePickerWithClock
-        label={'Set a deadline for completing the survey'}
+        label={'Set a deadline for completing the survey (optional)'}
         setDay={setFinalDate}
       />
 
