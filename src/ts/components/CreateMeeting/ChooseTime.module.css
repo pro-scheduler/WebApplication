@@ -33,18 +33,6 @@
     font-size: 17px;
 }
 
-.deleteCross {
-    transform: rotate(45deg);
-    color: var(--light-red);
-    font-size: 30px;
-    border-radius: 100%;
-    cursor: pointer;
-}
-
-.deleteCross:hover {
-    opacity: 0.7;
-}
-
 .dateRow {
     display: flex;
     justify-content: space-between;

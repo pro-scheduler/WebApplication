@@ -10,8 +10,8 @@ import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
-import { TiPlus } from 'react-icons/ti';
 import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
+import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
@@ -133,12 +133,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
                         <div>
                           {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}
                         </div>
-                        <TiPlus
-                          className={styles.deleteCross}
-                          onClick={() => {
-                            removeDay(date);
-                          }}
-                        />
+                        <DeleteButton onDelete={() => removeDay(date)} />
                       </div>
                     </div>
                   ))}

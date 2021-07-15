@@ -7,6 +7,7 @@ import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import { optionToValueLabelPair } from '../../model/utils/ValueLabelPair';
 import { Question, QuestionType } from '../../model/survey/Question';
 import { TypedQuestionCreateProps } from './DropdownQuestionCreate';
+import Row from 'react-bootstrap/Row';
 
 const linearScaleFromOptions = Array.from({ length: 2 }, (_, i) => optionToValueLabelPair(i));
 
@@ -41,35 +42,41 @@ const LinearScaleQuestionCreate = ({ id, updateQuestion }: TypedQuestionCreatePr
 
   return (
     <>
-      <Col lg={12} className="text-left">
+      <div className="mt-3">
         <TextArea
-          label="Question"
+          label="Question description"
           valueHandler={handleQuestionChange}
           className={styles.questionTextArea}
+          placeholder={'Please type question ...'}
         />
-      </Col>
-      <Col lg={5} className="text-center mt-5">
-        <SingleDropdownButton
-          onChange={handleFromValueChange}
-          options={linearScaleFromOptions}
-          defaultValue={linearScaleFromOptions[0]}
-          className={linearStyles.dropdown}
-        />
-      </Col>
+      </div>
+      <Row>
+        <Col lg={12} className="mt-3">
+          <div className={linearStyles.scaleLabel}>Scale</div>
+        </Col>
+        <Col lg={2} className="text-center">
+          <SingleDropdownButton
+            onChange={handleFromValueChange}
+            options={linearScaleFromOptions}
+            defaultValue={linearScaleFromOptions[0]}
+            className={linearStyles.dropdown}
+          />
+        </Col>
 
-      <Col lg={2} className="text-center mt-5 pt-2">
-        {' '}
-        to{' '}
-      </Col>
+        <Col lg={1} className="text-center mt-2 pt-2">
+          {' '}
+          to{' '}
+        </Col>
 
-      <Col lg={5} className="text-center mt-5">
-        <SingleDropdownButton
-          onChange={handleToValueChange}
-          options={linearScaleToOptions}
-          defaultValue={linearScaleToOptions[8]}
-          className={linearStyles.dropdown}
-        />
-      </Col>
+        <Col lg={2} className="text-center">
+          <SingleDropdownButton
+            onChange={handleToValueChange}
+            options={linearScaleToOptions}
+            defaultValue={linearScaleToOptions[8]}
+            className={linearStyles.dropdown}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

@@ -2,3 +2,8 @@
     margin: auto;
     width: 150px;
 }
+
+.scaleLabel {
+    color: var(--medium-grey);
+    font-size: 18px;
+}

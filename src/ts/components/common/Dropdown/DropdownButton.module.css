@@ -1,11 +1,7 @@
 .dropdown {
     width: 320px;
-    background-color: var(--purple);
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
-    border-color: var(--purple);
-    text-align: center;
-    margin: auto;
     padding: 1px;
     border-radius: var(--border-radius);
 }
@@ -16,11 +12,15 @@
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
     border-color: var(--medium-red);
-    text-align: center;
-    margin: auto;
     padding: 1px;
     border-radius: var(--border-radius);
 }
 .invalid_text {
     color: var(--medium-red);
+}
+
+.label {
+    color: var(--gray);
+    font-size: 18px;
+    margin-bottom: 10px;
 }

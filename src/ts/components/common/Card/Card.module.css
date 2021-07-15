@@ -13,6 +13,15 @@
   font-size: 20px;
 }
 
+.containerHeader {
+  display: flex;
+}
+
+.deleteButtonContainer {
+  text-align: right;
+  margin-left: auto;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
     margin: 50px;

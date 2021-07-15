@@ -5,12 +5,12 @@ import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
 import { useEffect, useState } from 'react';
-import { TiDelete } from 'react-icons/ti';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
+import Card from '../common/Card/Card';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
@@ -72,39 +72,38 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
         <div className={styles.createHeader}>Create survey</div>
       </Row>
 
-      <TimePickerWithClock
-        label={'Set a deadline for completing the survey (optional)'}
-        setDay={setFinalDate}
-      />
+      <Card title="Deadline for completing the survey">
+        <TimePickerWithClock setDay={setFinalDate} />
+      </Card>
 
       <Row className="justify-content-center mt-4">
-        <Col xs={8} lg={8} className="text-left">
-          <TextArea
-            label="Survey Description"
-            valueHandler={saveSurveyDescription}
-            className={styles.surveyDescriptionInput}
-          />
-        </Col>
-        {questions.map((id: number) => {
-          return (
-            <QuestionCreate
-              key={id}
-              id={id}
-              updateQuestion={updateQuestion}
-              deleteButton={
-                <TiDelete
-                  className={styles.removeQuestionButton}
-                  onClick={() => deleteQuestion(id)}
-                  key={id}
-                />
-              }
+        <Col>
+          <Card title={'Survey Description'}>
+            <TextArea
+              valueHandler={saveSurveyDescription}
+              placeholder="Please type survey description..."
             />
-          );
-        })}
+          </Card>
+        </Col>
       </Row>
 
+      {questions.map((id: number, index: number) => {
+        return (
+          <Row className="justify-content-center mt-2" key={id}>
+            <Col>
+              <QuestionCreate
+                questionNumber={index + 1}
+                id={id}
+                updateQuestion={updateQuestion}
+                onDelete={() => deleteQuestion(id)}
+              />
+            </Col>
+          </Row>
+        );
+      })}
+
       <Row className="justify-content-center my-4">
-        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-7">
+        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-8">
           <div className={styles.addQuestionButton}>
             Add question
             <PlusButton className={styles.button} onclick={createNewQuestion} />

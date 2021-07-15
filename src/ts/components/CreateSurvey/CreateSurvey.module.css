@@ -12,11 +12,6 @@
     height: 50px;
 }
 
-.surveyDescriptionInput{
-    width: 100%;
-    height: 40px;
-}
-
 .removeQuestionButton {
     color: var(--light-red);
     cursor: pointer;

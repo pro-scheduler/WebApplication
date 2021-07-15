@@ -11,6 +11,7 @@ export type SingleValueInputProps = {
   validation?: Validation[];
   initialInvalidState?: boolean;
   placeholder?: string;
+  value?: string;
 };
 
 const SingleValueInput = ({
@@ -21,8 +22,8 @@ const SingleValueInput = ({
   validation,
   initialInvalidState,
   placeholder,
+  value,
 }: SingleValueInputProps) => {
-  const [state, setState] = useState<string>('');
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
   const inputStyles = cx(
@@ -31,7 +32,6 @@ const SingleValueInput = ({
   );
 
   const handleChange = (event: any) => {
-    setState(event.target.value);
     valueHandler(event.target.value);
     let valid = true;
     if (validation !== undefined) {
@@ -49,7 +49,7 @@ const SingleValueInput = ({
       <input
         className={inputStyles}
         type="text"
-        value={state}
+        value={value}
         placeholder={placeholder}
         onChange={handleChange}
         style={{ width: '100%' }}
