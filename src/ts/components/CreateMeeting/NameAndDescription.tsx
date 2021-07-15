@@ -46,14 +46,12 @@ const NameAndDescription = ({
             />
           </Card>
           <Card title={'Meeting description'}>
-            <div className="mt-4">
-              <TextArea
-                valueHandler={setDescription}
-                setInvalid={setInvalidNameDesc}
-                validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
-                placeholder="Please type meeting description..."
-              />
-            </div>
+            <TextArea
+              valueHandler={setDescription}
+              setInvalid={setInvalidNameDesc}
+              validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
+              placeholder="Please type meeting description..."
+            />
           </Card>
         </Col>
       </Row>

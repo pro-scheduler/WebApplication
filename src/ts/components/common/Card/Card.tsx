@@ -8,8 +8,8 @@ const Card: FunctionComponent<CardProps> = ({ title, children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
-      <hr></hr>
-      {children}
+      <hr />
+      <div className="mt-4"> {children}</div>
     </div>
   );
 };

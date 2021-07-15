@@ -117,7 +117,7 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
                   <div className={styles.datesHeader}>Chosen dates</div>
                   {selectedDays.map((date, i) => (
                     <div key={i}>
-                      <hr className={styles.hrLine}></hr>
+                      <hr className={styles.hrLine} />
                       <div className={styles.dateRow}>
                         <div>
                           {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}
@@ -137,7 +137,7 @@ const ChooseTime = ({ state, setSelectedRanges }: ChooseTimeProps) => {
           </Card>
         </Col>
       </Row>
-      <div style={{ marginRight: width < 576 ? 45 : 0 }}>
+      <div style={{ marginRight: width < 576 ? 45 : 0 }} className="mt-5">
         <TimePicker
           days={selectedDays}
           count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
