@@ -6,6 +6,7 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { minSings, maxSings, required } from '../../tools/validator';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import Card from '../../components/common/Card/Card';
 
 export type NameAndDescriptionProps = {
   state: creatingMeetingState;
@@ -31,29 +32,32 @@ const NameAndDescription = ({
         <div className={styles.createHeader}>Describe Meeting</div>
       </Row>
       <Row className="justify-content-center mt-4">
-        <Col />
-        <Col xs="auto">
-          <SingleValueInput
-            label="Name"
-            valueHandler={setName}
-            setInvalid={setInvalidNameDesc}
-            required={true}
-            validation={[
-              { validation: required, message: 'This field is required' },
-              { validation: minSings(5), message: 'Min 5 signs' },
-              { validation: maxSings(255), message: 'Max 255 signs' },
-            ]}
-          />
-          <div className="mt-4">
-            <TextArea
-              label="Description"
-              valueHandler={setDescription}
+        <Col>
+          <Card title={'Meeting name *'}>
+            <SingleValueInput
+              label=""
+              valueHandler={setName}
               setInvalid={setInvalidNameDesc}
-              validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
+              validation={[
+                { validation: required, message: 'This field is required' },
+                { validation: minSings(5), message: 'Min 5 signs' },
+                { validation: maxSings(255), message: 'Max 255 signs' },
+              ]}
+              placeholder="Please type meeting name..."
             />
-          </div>
+          </Card>
+          <Card title={'Meeting description'}>
+            <div className="mt-4">
+              <TextArea
+                label=""
+                valueHandler={setDescription}
+                setInvalid={setInvalidNameDesc}
+                validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
+                placeholder="Please type meeting description..."
+              />
+            </div>
+          </Card>
         </Col>
-        <Col />
       </Row>
     </div>
   );

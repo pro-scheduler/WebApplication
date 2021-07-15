@@ -100,7 +100,6 @@ const Example = () => {
       <SingleValueInput
         label="textInputLabel"
         valueHandler={setTextInputValue}
-        required={true}
         validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
         initialInvalidState={true}
       />
@@ -108,7 +107,6 @@ const Example = () => {
       <TextArea
         label="textAreaLabel"
         valueHandler={setTextInputValue}
-        required={true}
         validation={[{ validation: minSings(3), message: 'Example invalid field message' }]}
         initialInvalidState={true}
       />

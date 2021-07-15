@@ -1,0 +1,14 @@
+.container {
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  color: #707070;
+  padding: 20px;
+  margin: 20px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+}
