@@ -5,7 +5,6 @@ import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
 import { useEffect, useState } from 'react';
-import { TiDelete } from 'react-icons/ti';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
@@ -86,26 +85,25 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
             />
           </Card>
         </Col>
-        {questions.map((id: number) => {
-          return (
-            <QuestionCreate
-              key={id}
-              id={id}
-              updateQuestion={updateQuestion}
-              deleteButton={
-                <TiDelete
-                  className={styles.removeQuestionButton}
-                  onClick={() => deleteQuestion(id)}
-                  key={id}
-                />
-              }
-            />
-          );
-        })}
       </Row>
 
+      {questions.map((id: number, index: number) => {
+        return (
+          <Row className="justify-content-center mt-2" key={id}>
+            <Col>
+              <QuestionCreate
+                questionNumber={index + 1}
+                id={id}
+                updateQuestion={updateQuestion}
+                onDelete={() => deleteQuestion(id)}
+              />
+            </Col>
+          </Row>
+        );
+      })}
+
       <Row className="justify-content-center my-4">
-        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-7">
+        <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-8">
           <div className={styles.addQuestionButton}>
             Add question
             <PlusButton className={styles.button} onclick={createNewQuestion} />

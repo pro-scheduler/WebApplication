@@ -1,5 +1,3 @@
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import styles from './QuestionCreate.module.css';
 import SingleDropdownButton from '../common/Dropdown/SingleDropdownButton';
 import React, { useState } from 'react';
@@ -10,6 +8,7 @@ import DropdownQuestionCreate from './DropdownQuestionCreate';
 import MultiChoiceQuestionCreate from './MultiChoiceQuestionCreate';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import { Question, QuestionType } from '../../model/survey/Question';
+import Card from '../common/Card/Card';
 
 const options = [
   new ValueLabelPair(QuestionType.DROPDOWN, 'Dropdown'),
@@ -21,11 +20,12 @@ const options = [
 
 export type QuestionCreateProps = {
   id: number;
-  deleteButton: JSX.Element;
+  questionNumber: number;
+  onDelete: Function;
   updateQuestion: (question: Question) => void;
 };
 
-const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProps) => {
+const QuestionCreate = ({ id, questionNumber, onDelete, updateQuestion }: QuestionCreateProps) => {
   const [selectedValue, setSelectedValue] = useState(QuestionType.OPEN);
 
   const handleSingleChoice = ({ value, _ }: any) => {
@@ -33,39 +33,32 @@ const QuestionCreate = ({ id, deleteButton, updateQuestion }: QuestionCreateProp
   };
 
   return (
-    <>
-      <Col xs={8} sm={8} lg={10} className={styles.questionField}>
-        <Row>
-          <Col lg={12} className="text-right mt-sm-0">
-            {deleteButton}
-          </Col>
-          <Col xs={8} sm={6} lg={4} className="text-right mr-0 mt-4 mb-5">
-            <SingleDropdownButton
-              onChange={handleSingleChoice}
-              options={options}
-              defaultValue={options[3]}
-              className={styles.dropdownButton}
-            />
-          </Col>
-          <Col lg={11} className={styles.questionCreateFooter} />
-          {selectedValue === QuestionType.DROPDOWN && (
-            <DropdownQuestionCreate id={id} updateQuestion={updateQuestion} />
-          )}
-          {selectedValue === QuestionType.LINEAR_SCALE && (
-            <LinearScaleQuestionCreate id={id} updateQuestion={updateQuestion} />
-          )}
-          {selectedValue === QuestionType.MULTI_CHOICE && (
-            <MultiChoiceQuestionCreate id={id} updateQuestion={updateQuestion} />
-          )}
-          {selectedValue === QuestionType.OPEN && (
-            <OpenQuestionCreate id={id} updateQuestion={updateQuestion} />
-          )}
-          {selectedValue === QuestionType.YES_OR_NO && (
-            <YesOrNoQuestionCreate id={id} updateQuestion={updateQuestion} />
-          )}
-        </Row>
-      </Col>
-    </>
+    <Card title={`Question ${questionNumber}`} onDelete={onDelete}>
+      <div className="text-left mr-auto">
+        <SingleDropdownButton
+          onChange={handleSingleChoice}
+          options={options}
+          defaultValue={options[3]}
+          className={styles.dropdownButton}
+          label={'Question type'}
+        />
+      </div>
+      {selectedValue === QuestionType.DROPDOWN && (
+        <DropdownQuestionCreate id={id} updateQuestion={updateQuestion} />
+      )}
+      {selectedValue === QuestionType.LINEAR_SCALE && (
+        <LinearScaleQuestionCreate id={id} updateQuestion={updateQuestion} />
+      )}
+      {selectedValue === QuestionType.MULTI_CHOICE && (
+        <MultiChoiceQuestionCreate id={id} updateQuestion={updateQuestion} />
+      )}
+      {selectedValue === QuestionType.OPEN && (
+        <OpenQuestionCreate id={id} updateQuestion={updateQuestion} />
+      )}
+      {selectedValue === QuestionType.YES_OR_NO && (
+        <YesOrNoQuestionCreate id={id} updateQuestion={updateQuestion} />
+      )}
+    </Card>
   );
 };
 

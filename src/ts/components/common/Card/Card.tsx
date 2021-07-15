@@ -1,13 +1,22 @@
 import styles from './Card.module.css';
 import { FunctionComponent } from 'react';
+import DeleteButton from '../SubmitButton/ActionButton/DeleteButton';
 export type CardProps = {
   title?: string;
+  onDelete?: Function;
 };
 
-const Card: FunctionComponent<CardProps> = ({ title, children }) => {
+const Card: FunctionComponent<CardProps> = ({ title, onDelete, children }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{title}</div>
+      <div className={styles.containerHeader}>
+        <div className={styles.title}>{title}</div>
+        {onDelete && (
+          <div className={styles.deleteButtonContainer}>
+            <DeleteButton onDelete={onDelete} />
+          </div>
+        )}
+      </div>
       <hr />
       <div className="mt-4"> {children}</div>
     </div>

@@ -1,8 +1,21 @@
-.removeOptionButton {
-    color: var(--light-red);
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
+.option {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.circle {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.deleteButton {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
 }
 
 .addOptionButton {
@@ -15,12 +28,24 @@
 
 .optionsText{
     color: var(--medium-grey);
-    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.optionInput {
+    width: 320px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
 @media only screen and (max-width: 600px) {
+    .optionInput {
+        width: 200px;
+        display: block;
+        text-align: right;
+    }
+
     .addOptionButton {
-        margin-left: 0;
         margin-top: 12px;
     }
 }
