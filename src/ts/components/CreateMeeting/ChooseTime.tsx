@@ -100,21 +100,25 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
         state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
       }
     >
-      <Row className="justify-content-center mt-5">
+      <Row className="justify-content-center mt-5 ml-sm-5">
         <Col xs="auto">
           <CalendarIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
-      <Card title="Deadline for time voting">
-        <TimePickerWithClock setDay={setDeadlineDate} />
-      </Card>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center ml-sm-5">
+        <Col sm={12}>
+          <Card title="Deadline for time voting">
+            <TimePickerWithClock setDay={setDeadlineDate} />
+          </Card>
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <Col className="text-center">
           <Card title="Meeting dates">
             <div className={styles.meetingDates}>

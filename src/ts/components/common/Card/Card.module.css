@@ -27,3 +27,8 @@
     margin: 50px;
   }
 }
+
+.hrLine {
+  min-height: 1px !important;
+  height: 1px !important;
+}

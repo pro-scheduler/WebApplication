@@ -2,6 +2,7 @@ import styles from './SingleValueInput.module.css';
 import { useState } from 'react';
 import cx from 'classnames';
 import { Validation, handleValidation } from '../../../../tools/validator';
+import { KeyboardEventHandler } from 'react-select';
 
 export type SingleValueInputProps = {
   label?: string;
@@ -12,6 +13,7 @@ export type SingleValueInputProps = {
   initialInvalidState?: boolean;
   placeholder?: string;
   value?: string;
+  handleKeyDown?: KeyboardEventHandler;
 };
 
 const SingleValueInput = ({
@@ -23,6 +25,7 @@ const SingleValueInput = ({
   initialInvalidState,
   placeholder,
   value,
+  handleKeyDown,
 }: SingleValueInputProps) => {
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
@@ -53,6 +56,7 @@ const SingleValueInput = ({
         placeholder={placeholder}
         onChange={handleChange}
         style={{ width: '100%' }}
+        onKeyDown={handleKeyDown}
       />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>

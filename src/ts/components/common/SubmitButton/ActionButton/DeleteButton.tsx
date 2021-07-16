@@ -3,7 +3,11 @@ import styles from './DeleteButton.module.css';
 import cx from 'classnames';
 
 const DeleteButton = ({ onDelete, className }: { onDelete: Function; className?: string }) => {
-  return <TiPlus className={cx(styles.deleteCross, className)} onClick={() => onDelete()} />;
+  return (
+    <div className={styles.deleteContainer}>
+      <TiPlus className={cx(styles.deleteCross, className)} onClick={() => onDelete()} />
+    </div>
+  );
 };
 
 export default DeleteButton;
