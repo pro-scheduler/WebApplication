@@ -1,22 +1,16 @@
-.legendIcon {
-    margin-left: 10px;
-    color: var(--purple);
-    cursor: pointer;
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
-}
-
-.navbarLegend {
-    position: fixed;
-    right: 40px;
-    bottom: 10px;
+.hrLine {
+    min-height: 1px !important;
+    height: 1px !important;
     color: var(--gray);
-    font-size: 12px;
+    margin: 40px 20px 0;
 }
 
 @media only screen and (max-width: 600px) {
     .saveMeetingButton {
         width: 210px;
+    }
+
+    .hrLine {
+        margin: 40px 60px 0;
     }
 }

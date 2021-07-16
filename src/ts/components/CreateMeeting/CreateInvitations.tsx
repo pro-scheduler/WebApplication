@@ -12,6 +12,7 @@ import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { validateEmail } from '../../tools/validator';
 import UserNameIcon from '../common/Icons/UserNameIcon';
+import { toastWarning } from '../../tools/messagesInvocator';
 
 export type CreateInvitationsProps = {
   state: creatingMeetingState;
@@ -26,6 +27,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
   const [email, setEmail] = useState<string>('');
 
   const addEmail = () => {
+    if (!validateEmail(email)) toastWarning('Email address required');
     if (!emails.find((e) => e.value === email) && validateEmail(email)) {
       setEmails([...emails, new ValueLabelPair(email, email)]);
       setEmail('');
@@ -68,11 +70,11 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col sm={12} lg={6}>
           <Card title="Add participants">
-            <div className={styles.prticipantContainer}>
+            <div className={styles.participantContainer}>
               <div className={styles.participantInput}>
                 <SingleValueInput
                   valueHandler={setEmail}
-                  placeholder="Please type user email..."
+                  placeholder="Please type user email ..."
                   className={styles.participantInput}
                   handleKeyDown={handleKeyDown}
                   value={email}
@@ -110,7 +112,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
             <TextArea
               className={styles.invitationMessage}
               valueHandler={setInvitationMessage}
-              placeholder="Type invitation message here..."
+              placeholder="Please type invitation message ..."
             />
           </Card>
         </Col>

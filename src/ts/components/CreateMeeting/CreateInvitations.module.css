@@ -33,7 +33,7 @@
   height: 269px;
 }
 
-.prticipantContainer {
+.participantContainer {
   height: 269px;
 }
 
@@ -56,13 +56,12 @@
   .buttonAdd {
     display: block;
     width: 100%;
-    margin-left: 0;
     margin: auto;
     padding-left: 33%;
     padding-right: 33%;
   }
 
-  .prticaipantContainer {
+  .participantContainer {
     height: 309px;
   }
 
@@ -80,5 +79,5 @@
 
 .userNameIcon {
     display: flex;
-    
+
 }

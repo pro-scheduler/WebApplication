@@ -12,12 +12,12 @@ export type UserInvitationIconProps = {
 
 const UserNameIcon = ({ email, state }: UserInvitationIconProps) => {
   return (
-    <>
+    <div className={styles.userNameIconContainer}>
       <LetterIcon firstLetter={email.charAt(0)} />
       <div className={styles.userIconParticipantName}>{email}</div>
       {state === State.PENDING && <VscLoading className={styles.pendingStatus} />}
       {state === State.REJECTED && <VscClose className={styles.rejectedStatus} />}
-    </>
+    </div>
   );
 };
 export default UserNameIcon;

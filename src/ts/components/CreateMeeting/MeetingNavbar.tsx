@@ -40,16 +40,26 @@ const MeetingNavbar = ({
           <ul className={styles.items}>
             <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
               <button className={styles.itemButton} onClick={() => setState('name')}>
-                <div className={styles.itemContainer}>
-                  What
+                <div
+                  className={cx(
+                    styles.itemContainer,
+                    state === 'name' && styles.chosenItemContainer
+                  )}
+                >
+                  General
                   {nameFilled && <TiTick className={styles.filledIcon} />}
                 </div>
               </button>
             </li>
             <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
               <button className={styles.itemButton} onClick={() => setState('invitations')}>
-                <div className={styles.itemContainer}>
-                  Who
+                <div
+                  className={cx(
+                    styles.itemContainer,
+                    state === 'invitations' && styles.chosenItemContainer
+                  )}
+                >
+                  Participants
                   {participantsFilled && <TiTick className={styles.filledIcon} />}
                 </div>
               </button>
@@ -57,7 +67,12 @@ const MeetingNavbar = ({
             {timeModule && (
               <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
                 <button className={styles.itemButton} onClick={() => setState('time')}>
-                  <div className={styles.itemContainer}>
+                  <div
+                    className={cx(
+                      styles.itemContainer,
+                      state === 'time' && styles.chosenItemContainer
+                    )}
+                  >
                     Time
                     {timeFilled && <TiTick className={styles.filledIcon} />}
                   </div>
@@ -67,7 +82,12 @@ const MeetingNavbar = ({
             {placeModule && (
               <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
                 <button className={styles.itemButton} onClick={() => setState('place')}>
-                  <div className={styles.itemContainer}>
+                  <div
+                    className={cx(
+                      styles.itemContainer,
+                      state === 'place' && styles.chosenItemContainer
+                    )}
+                  >
                     Place
                     {placeFilled && <TiTick className={styles.filledIcon} />}
                   </div>
@@ -77,7 +97,12 @@ const MeetingNavbar = ({
             {surveyModule && (
               <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
                 <button className={styles.itemButton} onClick={() => setState('survey')}>
-                  <div className={styles.itemContainer}>
+                  <div
+                    className={cx(
+                      styles.itemContainer,
+                      state === 'survey' && styles.chosenItemContainer
+                    )}
+                  >
                     Survey
                     {surveyFilled && <TiTick className={styles.filledIcon} />}
                   </div>
@@ -86,7 +111,7 @@ const MeetingNavbar = ({
             )}
             <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
               <button
-                className={styles.itemButton}
+                className={cx(styles.itemButton, state === 'summary' && styles.chosenItemContainer)}
                 onClick={() => setState('summary')}
                 disabled={disabledSummary}
               >
