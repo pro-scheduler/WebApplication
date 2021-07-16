@@ -108,7 +108,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
-      <Row className="justify-content-center ml-sm-5">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <Col sm={12}>
           <Card title="Deadline for time voting">
             <TimePickerWithClock setDay={setDeadlineDate} />
@@ -118,7 +118,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-1 ml-sm-5">
         <Col className="text-center">
           <Card title="Meeting dates">
             <div className={styles.meetingDates}>

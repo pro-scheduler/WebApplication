@@ -42,7 +42,7 @@ const NameAndDescription = ({
                 { validation: minSings(5), message: 'Min 5 signs' },
                 { validation: maxSings(255), message: 'Max 255 signs' },
               ]}
-              placeholder="Please type meeting name..."
+              placeholder="Please type meeting name ..."
             />
           </Card>
           <Card title={'Meeting description'}>
@@ -50,7 +50,7 @@ const NameAndDescription = ({
               valueHandler={setDescription}
               setInvalid={setInvalidNameDesc}
               validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
-              placeholder="Please type meeting description..."
+              placeholder="Please type meeting description ..."
             />
           </Card>
         </Col>

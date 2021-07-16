@@ -33,18 +33,18 @@ const OnlineDetails = ({
       <Row className="justify-content-center mt-4">
         <div className={styles.onlineMeetingHeader}>Online Meeting Details</div>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title="Meeting link">
             <SingleValueInput
-              placeholder="Please type meeting link..."
+              placeholder="Please type meeting link ..."
               valueHandler={setOnlineLink}
               className={styles.onlineDetailsInput}
             />
           </Card>
           <Card title="Meeting password">
             <SingleValueInput
-              placeholder="Please type meeting password..."
+              placeholder="Please type meeting password ..."
               valueHandler={setOnlinePassword}
               className={styles.onlineDetailsInput}
             />

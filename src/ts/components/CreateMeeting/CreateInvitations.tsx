@@ -110,7 +110,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
             <TextArea
               className={styles.invitationMessage}
               valueHandler={setInvitationMessage}
-              placeholder="Type invitation message here ..."
+              placeholder="Please type invitation message ..."
             />
           </Card>
         </Col>

@@ -139,16 +139,24 @@ const CreateMeeting = () => {
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
       {state === 'summary' && (
-        <Row className="justify-content-center mt-5 mb-4">
-          <Col xs="auto">
-            <ActionButton
-              text="Save meeting"
-              onclick={saveThisMeeting}
-              disabled={invalidNameDesc || !required()(name)}
-              className={styles.saveMeetingButton}
-            />
-          </Col>
-        </Row>
+        <>
+          <Row className="justify-content-center mt-4 ml-sm-5">
+            <Col>
+              <hr className={styles.hrLine} />
+            </Col>
+          </Row>
+
+          <Row className="justify-content-center mt-5 mb-4">
+            <Col xs="auto">
+              <ActionButton
+                text="Create meeting"
+                onclick={saveThisMeeting}
+                disabled={invalidNameDesc || !required()(name)}
+                className={styles.saveMeetingButton}
+              />
+            </Col>
+          </Row>
+        </>
       )}
       <Row className="justify-content-center mt-2">
         <Col xs="auto">

@@ -72,16 +72,20 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
         <div className={styles.createHeader}>Create survey</div>
       </Row>
 
-      <Card title="Deadline for completing the survey">
-        <TimePickerWithClock setDay={setFinalDate} />
-      </Card>
+      <Row className="justify-content-center mt-4 ml-sm-5">
+        <Col>
+          <Card title="Deadline for completing the survey">
+            <TimePickerWithClock setDay={setFinalDate} />
+          </Card>
+        </Col>
+      </Row>
 
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title={'Survey Description'}>
             <TextArea
               valueHandler={saveSurveyDescription}
-              placeholder="Please type survey description..."
+              placeholder="Please type survey description ..."
             />
           </Card>
         </Col>
@@ -89,7 +93,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
 
       {questions.map((id: number, index: number) => {
         return (
-          <Row className="justify-content-center mt-2" key={id}>
+          <Row className="justify-content-center mt-2 ml-sm-5" key={id}>
             <Col>
               <QuestionCreate
                 questionNumber={index + 1}

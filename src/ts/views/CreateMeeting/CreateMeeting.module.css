@@ -15,8 +15,19 @@
     font-size: 12px;
 }
 
+.hrLine {
+    min-height: 1px !important;
+    height: 1px !important;
+    color: var(--gray);
+    margin: 40px 20px 0;
+}
+
 @media only screen and (max-width: 600px) {
     .saveMeetingButton {
         width: 210px;
+    }
+
+    .hrLine {
+        margin: 40px 60px 0;
     }
 }
