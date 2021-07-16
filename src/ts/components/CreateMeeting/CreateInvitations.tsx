@@ -12,6 +12,7 @@ import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { validateEmail } from '../../tools/validator';
 import UserNameIcon from '../common/Icons/UserNameIcon';
+import { toastWarning } from '../../tools/messagesInvocator';
 
 export type CreateInvitationsProps = {
   state: creatingMeetingState;
@@ -26,6 +27,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
   const [email, setEmail] = useState<string>('');
 
   const addEmail = () => {
+    if (!validateEmail(email)) toastWarning('Email address required');
     if (!emails.find((e) => e.value === email) && validateEmail(email)) {
       setEmails([...emails, new ValueLabelPair(email, email)]);
       setEmail('');
