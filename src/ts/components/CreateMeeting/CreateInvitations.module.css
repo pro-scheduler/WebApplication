@@ -18,9 +18,6 @@
 
 .participantInput {
   margin-bottom: 10px;
-}
-
-.participantInput {
   display: flex;
   justify-content: space-between;
 }
@@ -36,7 +33,7 @@
   height: 269px;
 }
 
-.prticaipantContainer {
+.prticipantContainer {
   height: 269px;
 }
 
