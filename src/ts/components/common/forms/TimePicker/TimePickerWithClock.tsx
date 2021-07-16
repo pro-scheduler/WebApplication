@@ -49,13 +49,7 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
         />
       </Col>
       <Col lg={6} className="text-center text-lg-left mt-2 mt-lg-3">
-        <TimePicker
-          value={time}
-          onChange={setTime}
-          renderNumbers={true}
-          clearIcon={null}
-          minTime={new Date(Date.now())}
-        />
+        <TimePicker value={time} onChange={setTime} renderNumbers={true} clearIcon={null} />
       </Col>
     </Row>
   );
