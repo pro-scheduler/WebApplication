@@ -68,11 +68,11 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col sm={12} lg={6}>
           <Card title="Add participants">
-            <div className={styles.prticipantContainer}>
+            <div className={styles.participantContainer}>
               <div className={styles.participantInput}>
                 <SingleValueInput
                   valueHandler={setEmail}
-                  placeholder="Please type user email..."
+                  placeholder="Please type user email ..."
                   className={styles.participantInput}
                   handleKeyDown={handleKeyDown}
                   value={email}
@@ -110,7 +110,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
             <TextArea
               className={styles.invitationMessage}
               valueHandler={setInvitationMessage}
-              placeholder="Type invitation message here..."
+              placeholder="Type invitation message here ..."
             />
           </Card>
         </Col>
