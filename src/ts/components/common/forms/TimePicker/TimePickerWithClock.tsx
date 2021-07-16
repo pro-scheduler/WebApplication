@@ -24,6 +24,11 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
     }
   }, [date, time, setDay]);
 
+  const changeDate = (chosenDate: Date) => {
+    if (chosenDate.getDate() === date?.getDate()) setDate(undefined);
+    else setDate(chosenDate);
+  };
+
   return (
     <Row className="justify-content-center">
       {label && (
@@ -34,7 +39,7 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
       <Col lg={6} className="text-center text-lg-right">
         <DayPicker
           selectedDays={date}
-          onDayClick={setDate}
+          onDayClick={changeDate}
           className={styles.dayPicker}
           disabledDays={[
             {

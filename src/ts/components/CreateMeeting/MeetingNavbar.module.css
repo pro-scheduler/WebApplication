@@ -8,11 +8,11 @@
 .item {
     position: relative;
     margin-top: 10px;
-    width: 100%;
+    width: auto;
 }
 
 .item:first-child {
-    margin-left: -60px;
+    margin-left: -80px;
 }
 
 .item:last-child {
@@ -52,15 +52,20 @@
     margin: 0 25px;
 }
 
+.itemContainer {
+    display: flex;
+    align-items: center;
+}
+
 .chosenItemContainer {
     font-weight: var(--bold-font-weight);
 }
 
 .filledIcon {
     color: var(--bright-green);
-    margin-top: -150px;
     width: 30px;
     height: 30px;
+    margin-left: 5px;
 }
 
 @media (max-width: 980px) {
@@ -95,16 +100,6 @@
     .item:last-child {
         top: -50%;
         margin-right: 0;
-    }
-
-    .itemContainer {
-        display: flex;
-        align-items: center;
-    }
-
-    .filledIcon {
-        margin-top: 0;
-        margin-left: 5px;
     }
 
     .wrapper {
