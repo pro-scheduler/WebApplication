@@ -18,7 +18,7 @@ const Card: FunctionComponent<CardProps> = ({ title, onDelete, children }) => {
         )}
       </div>
       <hr />
-      <div className="mt-4"> {children}</div>
+      <div className="mt-3"> {children}</div>
     </div>
   );
 };

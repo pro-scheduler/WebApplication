@@ -31,7 +31,7 @@ const NameAndDescription = ({
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Describe Meeting</div>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title={'Meeting name *'}>
             <SingleValueInput

@@ -1,11 +1,16 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import styles from './ChooseTime.module.css';
+import styles from './CreateInvitations.module.css';
 import { useState } from 'react';
-import { optionToValueLabelPair, ValueLabelPair } from '../../model/utils/ValueLabelPair';
-import MultiValueInput from '../common/forms/Input/MultiValueInput';
+import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import FriendsIcon from '../common/Icons/FriendsIcon';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import Card from '../common/Card/Card';
+import TextArea from '../common/forms/TextArea/TextArea';
+import SingleValueInput from '../common/forms/Input/SingleValueInput';
+import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
+import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
+import { validateEmail } from '../../tools/validator';
 
 export type CreateInvitationsProps = {
   state: creatingMeetingState;
@@ -15,22 +20,28 @@ export type CreateInvitationsProps = {
 };
 
 const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitationsProps) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  // eslint-disable-next-line
+  const [invitationMessage, setInvitationMessage] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+
+  const addEmail = () => {
+    if (!emails.find((e) => e.value === email) && validateEmail(email)) {
+      setEmails([...emails, new ValueLabelPair(email, email)]);
+      setEmail('');
+    }
+  };
+
+  const removeEmail = (email: string | boolean | number) => () => {
+    setEmails([...emails.filter((e) => e.value !== email)]);
+  };
 
   const handleKeyDown = (event: any) => {
-    if (!inputValue) return;
     switch (event.key) {
       case 'Enter':
       case 'Tab':
-        const email = optionToValueLabelPair(inputValue);
-        if (
-          emails.filter((valueLabelPair: ValueLabelPair) => valueLabelPair.value === email.value)
-            .length === 0
-        ) {
-          setEmails([...emails, email]);
-        }
-        setInputValue('');
+        addEmail();
         event.preventDefault();
+        break;
     }
   };
 
@@ -53,19 +64,52 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-4">
-        <Col />
-        <Col xs={8} lg={6}>
-          <MultiValueInput
-            inputValue={inputValue}
-            value={emails}
-            handleChange={setEmails}
-            handleInputChange={setInputValue}
-            handleKeyDown={handleKeyDown}
-            placeholder={'Type email and press enter ...'}
-          />
+      <Row className="justify-content-center mt-4 ml-sm-5">
+        <Col sm={12} lg={6}>
+          <Card title="Add people">
+            <div className={styles.prticaipantContainer}>
+              <div className={styles.participantInput}>
+                <SingleValueInput
+                  valueHandler={setEmail}
+                  placeholder="Please type user emial..."
+                  className={styles.participantInput}
+                  handleKeyDown={handleKeyDown}
+                />
+                <ActionButton
+                  text="Add"
+                  onclick={() => {
+                    addEmail();
+                  }}
+                  className={styles.buttonAdd}
+                />
+              </div>
+              <hr className={styles.topHr} />
+              <div className={styles.selectedParticipants}>
+                {emails.length > 0 &&
+                  emails.map((email, i) => (
+                    <div key={i}>
+                      <div className={styles.participantRow}>
+                        <div>{email.value}</div>
+                        <div className={styles.deleteContainer}>
+                          <DeleteButton onDelete={removeEmail(email.value)} />
+                        </div>
+                      </div>
+                      <hr className={styles.hrLine} />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </Card>
         </Col>
-        <Col />
+        <Col sm={12} lg={6}>
+          <Card title="Invitation message">
+            <TextArea
+              className={styles.invitationMessage}
+              valueHandler={setInvitationMessage}
+              placeholder="Type invitation message here..."
+            />
+          </Card>
+        </Col>
       </Row>
     </div>
   );
