@@ -1,7 +1,84 @@
 .hidden {
-    display: none;
+  display: none;
 }
 
 .createHeader {
-    font-size: var(--s-font-size);
+  font-size: var(--s-font-size);
+}
+
+.participantRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topHr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.participantInput {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonAdd {
+  width: auto !important;
+  margin-left: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.invitationMessage {
+  height: 269px;
+}
+
+.prticipantContainer {
+  height: 269px;
+}
+
+.selectedParticipants {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 206px;
+}
+
+.hrLine {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+  .participantInput {
+    display: block;
+    width: 100%;
+  }
+  .buttonAdd {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin: auto;
+    padding-left: 33%;
+    padding-right: 33%;
+  }
+
+  .prticaipantContainer {
+    height: 309px;
+  }
+
+  .selectedParticipants {
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 206px;
+  }
+}
+
+.deleteContainer {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.userNameIcon {
+    display: flex;
+    
 }

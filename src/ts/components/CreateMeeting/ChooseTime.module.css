@@ -1,59 +1,59 @@
 .hidden {
-    display: none;
+  display: none;
 }
 
 .createHeader {
-    font-size: var(--s-font-size);
+  font-size: var(--s-font-size);
 }
 
 .meetingDates {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .selectedDays {
-    display: none;
+  display: none;
 }
 
 @media only screen and (min-width: 768px) {
-    .selectedDays {
-        display: block;
-        text-align: left;
-        min-width: 200px;
-        margin-left: 50px;
-        width: 100%;
-        height: 340px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+  .selectedDays {
+    display: block;
+    text-align: left;
+    min-width: 200px;
+    margin-left: 50px;
+    width: 100%;
+    height: 340px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .datesHeader {
-    font-weight: 600;
-    font-size: 17px;
+  font-weight: 600;
+  font-size: 17px;
 }
 
 .dateRow {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .hrLine {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .possibleTimeHeader {
-    font-size: var(--s-font-size);
-    margin-top: 30px;
-    margin-right: 50px;
-    margin-left: 50px;
-    text-align: center;
+  font-size: var(--s-font-size);
+  margin-top: 30px;
+  margin-right: 50px;
+  margin-left: 50px;
+  text-align: center;
 }
 
 @media only screen and (max-width: 600px) {
-    .dayPicker {
-        width: 180px;
-        margin: auto
-    }
+  .dayPicker {
+    width: 180px;
+    margin: auto;
+  }
 }
