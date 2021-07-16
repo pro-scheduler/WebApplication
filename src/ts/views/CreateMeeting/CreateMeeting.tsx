@@ -26,7 +26,7 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { toastDefault } from '../../tools/messagesInvocator';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -63,7 +63,7 @@ const CreateMeeting = () => {
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
 
-  const [showNavbarLegend, setShowNavbarLegend] = useState<boolean>(false);
+  const [showInstruction, setShowInstruction] = useState<boolean>(false);
 
   const saveThisMeeting = () => {
     // need add deadlineDate here
@@ -72,6 +72,11 @@ const CreateMeeting = () => {
         ? new RealMeetingDetailsDTO(name, description, timeRanges)
         : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
     saveMeeting(meeting, setMeetingId, setSaveMeetingResponse, 'Meeting created successfully');
+  };
+
+  const showModules = () => {
+    setState('name');
+    setShowInstruction(true);
   };
 
   useEffect(() => {
@@ -90,6 +95,14 @@ const CreateMeeting = () => {
     }
     // eslint-disable-next-line
   }, [meetingId.id]);
+
+  useEffect(() => {
+    if (state !== 'modules')
+      toastDefault(
+        'To navigate between different modules, click on the module name in the navbar.'
+      );
+    // eslint-disable-next-line
+  }, [showInstruction]);
 
   return (
     <Container className="ml-5 ml-sm-auto">
@@ -110,7 +123,7 @@ const CreateMeeting = () => {
       )}
       {state === 'modules' && (
         <ChooseModules
-          showModules={() => setState('name')}
+          showModules={showModules}
           surveyModule={surveyModule}
           timeModule={timeModule}
           placeModule={placeModule}
@@ -169,18 +182,6 @@ const CreateMeeting = () => {
           />
         </Col>
       </Row>
-      {showNavbarLegend && (
-        <div className={styles.navbarLegend}>
-          To navigate between different modules, click on the module name in the navbar.
-        </div>
-      )}
-      {state !== 'modules' && (
-        <FaQuestionCircle
-          onMouseEnter={() => setShowNavbarLegend(true)}
-          onMouseLeave={() => setShowNavbarLegend(false)}
-          className={styles.legendIcon}
-        />
-      )}
     </Container>
   );
 };
