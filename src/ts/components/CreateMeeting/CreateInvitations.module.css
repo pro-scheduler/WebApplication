@@ -80,3 +80,8 @@
   width: 30px !important;
   height: 30px !important;
 }
+
+.userNameIcon {
+    display: flex;
+    
+}

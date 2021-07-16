@@ -11,6 +11,7 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { validateEmail } from '../../tools/validator';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type CreateInvitationsProps = {
   state: creatingMeetingState;
@@ -89,7 +90,9 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
                   emails.map((email, i) => (
                     <div key={i}>
                       <div className={styles.participantRow}>
-                        <div>{email.value}</div>
+                        <div className={styles.userNameIcon}>
+                          <UserNameIcon email={email.value.toString()} />
+                        </div>
                         <div className={styles.deleteContainer}>
                           <DeleteButton onDelete={removeEmail(email.value)} />
                         </div>

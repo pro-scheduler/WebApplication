@@ -1,6 +1,7 @@
 .userIcon {
     width: 34px;
     height: 34px;
+    min-width: 34px !important;
     border: none;
     display: inline-block;
     text-align: center;
