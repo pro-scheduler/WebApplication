@@ -32,10 +32,25 @@ const TimePickerWithClock = ({ setDay, label }: TimePickerWithClockProps) => {
         </Col>
       )}
       <Col lg={6} className="text-center text-lg-right">
-        <DayPicker selectedDays={date} onDayClick={setDate} className={styles.dayPicker} />
+        <DayPicker
+          selectedDays={date}
+          onDayClick={setDate}
+          className={styles.dayPicker}
+          disabledDays={[
+            {
+              before: new Date(Date.now()),
+            },
+          ]}
+        />
       </Col>
       <Col lg={6} className="text-center text-lg-left mt-2 mt-lg-3">
-        <TimePicker value={time} onChange={setTime} renderNumbers={true} clearIcon={null} />
+        <TimePicker
+          value={time}
+          onChange={setTime}
+          renderNumbers={true}
+          clearIcon={null}
+          minTime={new Date(Date.now())}
+        />
       </Col>
     </Row>
   );

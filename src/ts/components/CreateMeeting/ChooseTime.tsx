@@ -126,6 +126,11 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
                 selectedDays={selectedDays}
                 onDayClick={handleDayClick}
                 className={styles.dayPicker}
+                disabledDays={[
+                  {
+                    before: new Date(Date.now()),
+                  },
+                ]}
               />
               {selectedDays.length > 0 && (
                 <div className={styles.selectedDays}>
