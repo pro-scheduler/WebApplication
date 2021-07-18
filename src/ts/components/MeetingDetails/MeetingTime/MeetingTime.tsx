@@ -156,9 +156,9 @@ const MeetingTime = ({
   }, [userRanges, setUserDefaultAnswers]);
 
   return (
-    <Row className="justify-content mt-5 ml-5 mb-5 pl-5">
+    <Row className="justify-content my-5 ml-5 pl-5">
+      <LineWithHeader header={'When'} />
       <Col>
-        <LineWithHeader header={'When'} />
         <Col lg={12} className="text-center mx-auto">
           <div className={styles.switchTime}>
             <SwitchButton

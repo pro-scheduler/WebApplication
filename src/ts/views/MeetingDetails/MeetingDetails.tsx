@@ -23,6 +23,7 @@ import { loadUserOrganizedMeetings } from '../../API/user/userService';
 import userActions from '../../actions/userActions';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import MeetingNotifications from '../../components/MeetingDetails/MeetingNotifications/MeetingNotifications';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -95,6 +96,7 @@ const MeetingDetails = () => {
           isOrganizer={isOrganizer}
           refreshParticipants={setRefreshParticipants}
         />
+        {isOrganizer && <MeetingNotifications showSurveyNotifications={survey !== undefined} />}
         {meeting.availableTimeRanges.length > 0 && (
           <MeetingTime
             meetingId={id}
