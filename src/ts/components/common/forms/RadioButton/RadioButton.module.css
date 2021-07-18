@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+}
+
+.radioButton {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #e0dbdb;
+    box-shadow: var(--shadow);
+    border-radius: var(--circle-border-radius);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tick {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--circle-border-radius);
+    text-align: center;
+    margin: auto;
+    background-color: white;
+}
+
+.checkedTick {
+    background-color: var(--bright-green);
+}
+
+.radioButtonLabel {
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        display: block;
+    }
+
+    .radioButtonLabel {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
