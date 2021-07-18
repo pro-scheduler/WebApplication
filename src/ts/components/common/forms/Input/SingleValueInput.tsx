@@ -12,8 +12,10 @@ export type SingleValueInputProps = {
   validation?: Validation[];
   initialInvalidState?: boolean;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   handleKeyDown?: KeyboardEventHandler;
+  type?: 'text' | 'number';
+  minValue?: number;
 };
 
 const SingleValueInput = ({
@@ -26,6 +28,8 @@ const SingleValueInput = ({
   placeholder,
   value,
   handleKeyDown,
+  type = 'text',
+  minValue,
 }: SingleValueInputProps) => {
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
@@ -51,12 +55,13 @@ const SingleValueInput = ({
       <div className={styles.label_classic}>{label}</div>
       <input
         className={inputStyles}
-        type="text"
+        type={type}
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
         style={{ width: '100%' }}
         onKeyDown={handleKeyDown}
+        min={minValue}
       />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>

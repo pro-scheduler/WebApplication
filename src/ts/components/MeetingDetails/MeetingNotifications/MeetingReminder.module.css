@@ -1,0 +1,26 @@
+.amountInput {
+    width: 65px;
+    margin-right: 10px;
+}
+
+.timePickerContainer {
+    display: flex;
+    align-items: center;
+}
+
+.dropdownButton {
+    margin-right: 10px;
+    width: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+    .timePickerContainer {
+        display: block;
+    }
+
+    .dropdownButton {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: auto;
+    }
+}
