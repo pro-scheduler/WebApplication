@@ -9,12 +9,12 @@
     width: 250px;
     height: 250px;
     align-items: center;
-    margin: auto;
+    margin-left: auto;
 }
 
 .legendContainer {
     display: block;
-    margin: auto;
+    margin-right: auto;
     text-align: left;
 }
 
@@ -30,7 +30,8 @@
     }
 
     .chartContainer {
-        width: 200px;
-        height: 200px;
+        width: 100px;
+        height: 100px;
+        margin-right: auto;
     }
 }
