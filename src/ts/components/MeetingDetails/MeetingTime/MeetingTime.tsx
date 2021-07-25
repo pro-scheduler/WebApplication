@@ -11,8 +11,8 @@ import styles from './MeetingTime.module.css';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
-import { BsClockFill, BsFillPieChartFill } from 'react-icons/bs';
-import Countdown from 'react-countdown';
+import { BsFillPieChartFill } from 'react-icons/bs';
+import Timer from '../../common/Timer/Timer';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -166,21 +166,17 @@ const MeetingTime = ({
               checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
               unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
             />
-            <div className="mt-5">
-              {!displayAnswers && timeDeadline && (
-                <p className={styles.timeInfo}>
-                  <BsClockFill className={styles.clockIcon} />
-                  {!deadlineExceeded ? (
-                    <>
-                      Voting will end in <Countdown date={timeDeadline} daysInHours={true} />
-                    </>
-                  ) : (
-                    'Voting is closed'
-                  )}
-                </p>
-              )}
-            </div>
           </div>
+          {!displayAnswers && (
+            <div className="my-5">
+              <Timer
+                date={timeDeadline}
+                completedMessage={'Voting is ended'}
+                nonCompletedMessage={'Voting ends in:'}
+                noEndDateMessage={'Voting has no time limit'}
+              />
+            </div>
+          )}
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
           {!displayAnswers ? (

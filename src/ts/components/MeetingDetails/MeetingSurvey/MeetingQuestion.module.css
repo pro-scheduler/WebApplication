@@ -1,17 +1,11 @@
-.meetingQuestion {
-    width: 60%;
-    text-align: center;
-    margin: 40px auto;
-}
-
 .textArea {
     width: 100%;
     height: 40px;
 }
 
 .questionLabel {
-    margin-bottom: 0;
     color: var(--medium-grey);
+    margin-right: auto;
 }
 
 .linear {
@@ -20,4 +14,20 @@
 
 .dropdown {
     width: 100%;
+}
+
+.answerContainer {
+    width: 40%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .answerContainer {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .answerContainer {
+        width: 100%;
+    }
 }

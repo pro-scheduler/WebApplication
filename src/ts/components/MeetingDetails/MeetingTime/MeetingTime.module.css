@@ -14,16 +14,6 @@
     text-align: center;
 }
 
-.clockIcon {
-    color: var(--purple);
-    margin-right: 8px;
-}
-
-.timeInfo {
-    color: var(--gray);
-    margin-bottom: 40px;
-}
-
 @media only screen and (max-width: 600px) {
     .saveButton {
         width: 210px;

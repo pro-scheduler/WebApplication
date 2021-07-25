@@ -7,8 +7,10 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import { useState } from 'react';
 import MeetingSurveyQuestions from './MeetingSurveyQuestions';
-import MeetingSurveyResults from './MeetingSurveyResults';
+import MeetingSurveyAnswers from './MeetingSurveyAnswers';
 import { SurveySummary, UserSurvey } from '../../../model/survey/Survey';
+import MeetingSurveyDetails from './MeetingSurveyDetails';
+import MeetingSurveyResults from './MeetingSurveyResults';
 
 export type MeetingSurveyProps = {
   survey: UserSurvey;
@@ -27,6 +29,16 @@ const MeetingSurvey = ({
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Survey'} />
+      <Col lg={6}>
+        <MeetingSurveyDetails endDate={survey.surveyEndDate} description={survey.description} />
+      </Col>
+      <Col lg={6}>
+        <MeetingSurveyResults
+          numberOfParticipants={numberOfParticipants}
+          numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
+          emails={surveySummary?.users ?? []}
+        />
+      </Col>
       <Col lg={12} className="text-center mx-auto">
         <div className={styles.switchTime}>
           <SwitchButton
@@ -39,12 +51,7 @@ const MeetingSurvey = ({
       {displayAnswers ? (
         <MeetingSurveyQuestions survey={survey} setRefreshSurveySummary={setRefreshSurveySummary} />
       ) : (
-        surveySummary && (
-          <MeetingSurveyResults
-            surveySummary={surveySummary}
-            numberOfParticipants={numberOfParticipants}
-          />
-        )
+        surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
       )}
     </Row>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import styles from './UserIcon.module.css';
-import Popup from '../common/Popup/Popup';
+import YesNoPopup from '../common/Popup/YesNoPopup';
 import { removeUserFromMeeting } from '../../API/meeting/meetingService';
 import LetterIcon from '../common/Icons/LetterIcon';
 export type UserIconProps = {
@@ -26,9 +26,9 @@ const UserIcon = ({ name, meetingId, userId, canDelete, refreshParticipants }: U
       {canDelete && (
         <TiDelete className={styles.deleteUserButton} onClick={() => setModalShow(true)} />
       )}
-      <Popup
+      <YesNoPopup
         show={modalShow}
-        information={'Are you sure you want to remove the participant from the meeting?'}
+        title={'Are you sure you want to remove the participant from the meeting?'}
         onDecline={() => setModalShow(false)}
         onAccept={deleteParticipant}
       />

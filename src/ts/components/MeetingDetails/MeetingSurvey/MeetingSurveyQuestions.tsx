@@ -8,8 +8,6 @@ import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
 import Col from 'react-bootstrap/Col';
-import { BsClockFill } from 'react-icons/bs';
-import Countdown from 'react-countdown';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -61,13 +59,14 @@ const MeetingSurveyQuestions = ({
     );
   };
 
-  const questions = questionsAndAnswers.map((value) => {
+  const questions = questionsAndAnswers.map((value, index: number) => {
     return (
       <MeetingQuestion
         key={value.question.id}
         question={value.question}
         answer={value.answer}
         setAnswer={setAnswer}
+        questionNumber={index + 1}
       />
     );
   });
@@ -77,29 +76,13 @@ const MeetingSurveyQuestions = ({
   };
 
   return (
-    <Col>
-      <div className="mx-auto text-center mt-5">
-        {survey.surveyEndDate && (
-          <p className={styles.timeInfo}>
-            <BsClockFill className={styles.clockIcon} />
-            {survey.state === 'OPEN' ? (
-              <>
-                The survey will close in{' '}
-                <Countdown date={survey.surveyEndDate} daysInHours={true} />
-              </>
-            ) : (
-              'The survey is closed'
-            )}
-          </p>
-        )}
-        <p className="mt-3">{survey.description}</p>
-        {questions}
-      </div>
-      <div className="text-center">
+    <Col className="mt-3">
+      <div>{questions}</div>
+      <div className="text-center mt-5">
         {survey.state === 'OPEN' && (
           <ActionButton
             onclick={saveSurvey}
-            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            text={buttonText === 'INCOMPLETE' ? 'Save my answers' : 'Change my answers'}
             disabled={!filledAnswers()}
             className={styles.saveAnswersButton}
           />

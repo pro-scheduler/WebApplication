@@ -1,0 +1,24 @@
+.completedSurveysHeader {
+    font-size: 60px;
+    text-align: center;
+}
+
+.completedSurveysInfo {
+    text-align: center;
+}
+
+.showEmailsButton {
+    width: auto;
+    height: auto;
+    padding: 5px 20px;
+}
+
+.showEmailsContainer {
+    text-align: right;
+}
+
+@media only screen and (max-width: 600px) {
+    .completedSurveysHeader {
+        font-size: 40px;
+    }
+}
