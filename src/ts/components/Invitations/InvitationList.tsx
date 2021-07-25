@@ -1,20 +1,20 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EnvelopIcon from '../common/Icons/EnvelopIcon';
-import styles from './MeetingList.module.css';
+import styles from '../Meetings/MeetingList.module.css';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import InvitationCard from './InvitationCard';
 
 export type InvitationListProps = {
   invitations: BasicInvitationInfo[];
-  refreshMeetings: (value: number) => void;
+  refreshInvitations: (value: number) => void;
 };
-const InvitationList = ({ invitations, refreshMeetings }: InvitationListProps) => {
+const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps) => {
   const invitationCards = invitations.map((invitation: BasicInvitationInfo) => {
     return (
       <InvitationCard
         key={invitation.invitationId}
-        refreshMeetings={refreshMeetings}
+        refreshMeetings={refreshInvitations}
         invitation={invitation}
       />
     );
@@ -28,7 +28,7 @@ const InvitationList = ({ invitations, refreshMeetings }: InvitationListProps) =
       <Col lg={12} className={styles.meetingListHeader}>
         {'Your invitations'}
       </Col>
-      {invitationCards}
+      {invitationCards.length > 0 ? invitationCards : <p>You don't have any invitations</p>}
     </Row>
   );
 };

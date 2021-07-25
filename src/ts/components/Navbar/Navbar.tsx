@@ -9,10 +9,10 @@ import {
   SidebarContent,
 } from 'react-pro-sidebar';
 
-import { FaList } from 'react-icons/fa';
-import { FiLogOut, FiSettings, FiFolder, FiMonitor } from 'react-icons/fi';
-import { VscHome } from 'react-icons/vsc';
-import { BsPencil } from 'react-icons/bs';
+import { FaList, FaRegClipboard } from 'react-icons/fa';
+import { FiLogOut, FiFolder, FiMonitor } from 'react-icons/fi';
+import { BsEnvelope, BsPencil } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
@@ -37,20 +37,23 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
         {showDetails ? (
           <SidebarContent>
             <Menu iconShape="circle">
+              <hr className="newMeetingLine mt-3" />
               <MenuItem
-                icon={<VscHome />}
+                icon={<AiOutlinePlus className="plusIcon" />}
+                active={activeIcon === 'Schedule'}
+                onClick={() => setActiveIcon('Schedule')}
+              >
+                New meeting
+                <Link to="/create" />
+              </MenuItem>
+              <hr className="newMeetingLine" />
+
+              <MenuItem
+                icon={<FiMonitor />}
                 active={activeIcon === 'Home'}
                 onClick={() => setActiveIcon('Home')}
               >
                 Home
-              </MenuItem>
-
-              <MenuItem
-                icon={<FiMonitor />}
-                active={activeIcon === 'Dashboard'}
-                onClick={() => setActiveIcon('Dashboard')}
-              >
-                Dashboard
               </MenuItem>
 
               <MenuItem
@@ -63,25 +66,33 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
               </MenuItem>
 
               <MenuItem
-                icon={<BsPencil />}
-                active={activeIcon === 'Schedule'}
-                onClick={() => setActiveIcon('Schedule')}
+                icon={<FaRegClipboard />}
+                active={activeIcon === 'Surveys'}
+                onClick={() => setActiveIcon('Surveys')}
               >
-                Schedule a meeting
-                <Link to="/create" />
+                Surveys
               </MenuItem>
 
               <MenuItem
-                icon={<FiSettings />}
-                active={activeIcon === 'Settings'}
-                onClick={() => setActiveIcon('Settings')}
+                icon={<BsPencil />}
+                active={activeIcon === 'Declarations'}
+                onClick={() => setActiveIcon('Declarations')}
               >
-                Settings
+                Declarations
+              </MenuItem>
+
+              <MenuItem
+                icon={<BsEnvelope />}
+                active={activeIcon === 'Invitations'}
+                onClick={() => setActiveIcon('Invitations')}
+              >
+                Invitations
+                <Link to="/invitations" />
               </MenuItem>
 
               <MenuItem
                 icon={<FaList />}
-                className="closemenu"
+                className="closeMenu"
                 onClick={() => setMenuCollapse(!menuCollapse)}
               />
             </Menu>
@@ -94,7 +105,7 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
           <SidebarFooter>
             <Menu iconShape="circle">
               <MenuItem icon={<FiLogOut />}>
-                Logout
+                Sign out
                 <Link to="/" />
               </MenuItem>
             </Menu>

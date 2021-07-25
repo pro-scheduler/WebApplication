@@ -11,6 +11,7 @@ import ExampleInvalid from './views/Example/ExampleInvalid';
 import ExampleValidation from './views/Example/ExampleValidation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Invitations from './views/Invitations/Invitations';
 
 const Routes = () => {
   return (
@@ -53,6 +54,10 @@ const Routes = () => {
         <Route path="/meetings">
           <Navbar />
           <Meetings />
+        </Route>
+        <Route path="/invitations">
+          <Navbar />
+          <Invitations />
         </Route>
         <Route path="/time">
           <Time />
