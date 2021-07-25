@@ -1,0 +1,5 @@
+.descriptionHeader {
+    color: var(--medium-grey);
+    font-weight: var(--bold-font-weight);
+    margin-top: 30px;
+}
