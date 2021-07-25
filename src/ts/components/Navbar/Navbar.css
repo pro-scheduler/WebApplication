@@ -4,7 +4,7 @@
     z-index: 2;
 }
 
-#navbar .closemenu {
+#navbar .closeMenu {
     position: absolute;
     bottom: 12%;
 }
@@ -47,4 +47,11 @@
     background-color: none;
     font-weight: bold;
     z-index: 3;
+}
+
+#navbar .newMeetingLine {
+    min-height: 1px !important;
+    height: 1px !important;
+    background-color: white;
+    margin: 0 15px 0;
 }
