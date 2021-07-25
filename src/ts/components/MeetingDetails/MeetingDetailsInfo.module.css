@@ -1,0 +1,24 @@
+.moduleIcon {
+    color: var(--purple);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.passwordIcon {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.moduleContainer {
+    display: flex;
+    align-items: center;
+}
+
+.onlineMeetingLink {
+    color: var(--purple);
+}
+
+.onlineMeetingLink:hover {
+    color: var(--purple);
+}
