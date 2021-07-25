@@ -61,13 +61,14 @@ const MeetingSurveyQuestions = ({
     );
   };
 
-  const questions = questionsAndAnswers.map((value) => {
+  const questions = questionsAndAnswers.map((value, index: number) => {
     return (
       <MeetingQuestion
         key={value.question.id}
         question={value.question}
         answer={value.answer}
         setAnswer={setAnswer}
+        questionNumber={index + 1}
       />
     );
   });
@@ -78,7 +79,7 @@ const MeetingSurveyQuestions = ({
 
   return (
     <Col>
-      <div className="mx-auto text-center mt-5">
+      <div className="mt-5">
         {survey.surveyEndDate && (
           <p className={styles.timeInfo}>
             <BsClockFill className={styles.clockIcon} />
@@ -92,14 +93,14 @@ const MeetingSurveyQuestions = ({
             )}
           </p>
         )}
-        <p className="mt-3">{survey.description}</p>
+        <p className={styles.surveyDescription}>{survey.description}</p>
         {questions}
       </div>
-      <div className="text-center">
+      <div className="text-center mt-5">
         {survey.state === 'OPEN' && (
           <ActionButton
             onclick={saveSurvey}
-            text={buttonText === 'INCOMPLETE' ? 'Save answers' : 'Change answers'}
+            text={buttonText === 'INCOMPLETE' ? 'Save my answers' : 'Change my answers'}
             disabled={!filledAnswers()}
             className={styles.saveAnswersButton}
           />

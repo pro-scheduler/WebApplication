@@ -6,6 +6,11 @@
 .timeInfo {
     color: var(--gray);
     margin-bottom: 40px;
+    text-align: center;
+}
+
+.surveyDescription {
+    text-align: center;
 }
 
 @media only screen and (max-width: 600px) {
