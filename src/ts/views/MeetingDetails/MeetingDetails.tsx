@@ -24,6 +24,7 @@ import userActions from '../../actions/userActions';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import MeetingNotifications from '../../components/MeetingDetails/MeetingNotifications/MeetingNotifications';
+import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -87,9 +88,18 @@ const MeetingDetails = () => {
           meetingId={id}
           description={meeting.description}
           organizers={meeting.organizers}
-          link={meeting.link}
-          password={meeting.password}
         />
+        <Row className="justify-content ml-5 pl-5">
+          <Col lg={6}>
+            <MeetingDetailsInfo
+              hasDeclarations={false}
+              hasSurvey={survey !== undefined}
+              hasTime={meeting.availableTimeRanges.length > 0}
+              meetingLink={meeting.link}
+              meetingPassword={meeting.password}
+            />
+          </Col>
+        </Row>
         <MeetingParticipants
           meetingId={id}
           participants={meeting.participants}
