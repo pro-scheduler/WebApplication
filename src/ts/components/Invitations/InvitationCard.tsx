@@ -1,4 +1,4 @@
-import styles from './MeetingCard.module.css';
+import styles from '../Meetings/MeetingCard.module.css';
 import invitationStyles from './InvitationCard.module.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

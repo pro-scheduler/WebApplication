@@ -55,3 +55,8 @@
     background-color: white;
     margin: 0 15px 0;
 }
+
+#navbar .plusIcon {
+    width: 25px;
+    height: 25px;
+}

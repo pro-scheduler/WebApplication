@@ -39,7 +39,7 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
             <Menu iconShape="circle">
               <hr className="newMeetingLine mt-3" />
               <MenuItem
-                icon={<AiOutlinePlus />}
+                icon={<AiOutlinePlus className="plusIcon" />}
                 active={activeIcon === 'Schedule'}
                 onClick={() => setActiveIcon('Schedule')}
               >
@@ -87,6 +87,7 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
                 onClick={() => setActiveIcon('Invitations')}
               >
                 Invitations
+                <Link to="/invitations" />
               </MenuItem>
 
               <MenuItem
