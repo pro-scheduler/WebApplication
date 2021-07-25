@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import ActionButton from '../SubmitButton/ActionButton/ActionButton';
 import styles from './Popup.module.css';
 
 export type PopupProps = {
   show: boolean;
-  information: string;
-  onAccept: Function;
-  onDecline: Function;
+  title: string;
+  onClose: Function;
 };
 
-const Popup = ({ show, information, onAccept, onDecline }: PopupProps) => {
+const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }) => {
   return (
     <Modal
       show={show}
-      onHide={onDecline}
+      onHide={onClose}
       animation={false}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -22,13 +20,10 @@ const Popup = ({ show, information, onAccept, onDecline }: PopupProps) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className={styles.popupTitle}>
-          {information}
+          {title}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="text-center">
-        <ActionButton onclick={() => onAccept()} text={'Yes'} className={styles.popupYesButton} />
-        <ActionButton onclick={() => onDecline()} text={'No'} className={styles.popupNoButton} />
-      </Modal.Body>
+      <Modal.Body className="text-center">{children}</Modal.Body>
     </Modal>
   );
 };

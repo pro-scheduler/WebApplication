@@ -76,8 +76,8 @@ const MeetingSurveyQuestions = ({
   };
 
   return (
-    <Col>
-      <div className="mt-5">{questions}</div>
+    <Col className="mt-3">
+      <div>{questions}</div>
       <div className="text-center mt-5">
         {survey.state === 'OPEN' && (
           <ActionButton

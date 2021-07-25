@@ -4,6 +4,7 @@ import React from 'react';
 import { BsSquareFill } from 'react-icons/bs';
 import { ChoiceInfo } from '../../../model/survey/Survey';
 import SliderInput from '../../common/forms/Input/SliderInput';
+import Card from '../../common/Card/Card';
 
 export type ChartItem = {
   title: string;
@@ -11,9 +12,14 @@ export type ChartItem = {
   color: string;
 };
 
-export type AnswersPieChartProps = { data: ChoiceInfo[]; question: string; avg?: number };
+export type AnswersPieChartProps = {
+  data: ChoiceInfo[];
+  question: string;
+  avg?: number;
+  questionNumber: number;
+};
 
-const AnswersPieChart = ({ data, question, avg }: AnswersPieChartProps) => {
+const AnswersPieChart = ({ data, question, avg, questionNumber }: AnswersPieChartProps) => {
   const dataWithColor: ChartItem[] = data.map((choiceInfo: ChoiceInfo, index: number) => {
     return {
       title: choiceInfo.point !== undefined ? choiceInfo.point.toString() : choiceInfo.choice,
@@ -34,9 +40,8 @@ const AnswersPieChart = ({ data, question, avg }: AnswersPieChartProps) => {
   ));
 
   return (
-    <div className={styles.answersPieChartContainer}>
+    <Card title={'Question ' + questionNumber}>
       <p>{question}</p>
-      <hr className={styles.questionLine} />
       <div className={styles.chartWithLegendContainer}>
         {chartData.length > 0 && (
           <div className={styles.chartContainer}>
@@ -68,7 +73,7 @@ const AnswersPieChart = ({ data, question, avg }: AnswersPieChartProps) => {
           />
         </>
       )}
-    </div>
+    </Card>
   );
 };
 
