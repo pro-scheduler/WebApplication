@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import AuthView from './AuthView';
 import GoogleButton from '../../components/common/SubmitButton/IconButton/GoogleButton';
 import FacebookButton from '../../components/common/SubmitButton/IconButton/FacebookButton';
-import {googleUrl, facebookUrl} from '../../auth/AuthCredentials';
+import { googleUrl, facebookUrl } from '../../auth/AuthCredentials';
 
 const SignIn = () => {
   return (
