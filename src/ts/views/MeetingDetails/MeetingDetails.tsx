@@ -104,6 +104,7 @@ const MeetingDetails = () => {
               meetingId={id}
               isOrganizer={isOrganizer}
               refreshParticipants={setRefreshParticipants}
+              participants={meeting.participants}
             />
           </Col>
         </Row>

@@ -12,23 +12,28 @@ import Card from '../../common/Card/Card';
 import DeleteButton from '../../common/SubmitButton/ActionButton/DeleteButton';
 import { removeUserFromMeeting } from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
+import YesNoPopup from '../../common/Popup/YesNoPopup';
+import { ProUser } from '../../../model/user/ProUser';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
   isOrganizer: boolean;
   refreshParticipants: (value: number) => void;
+  participants: ProUser[];
 };
 
 const MeetingParticipants = ({
   meetingId,
   isOrganizer,
   refreshParticipants,
+  participants,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [state, setState] = useState<State>(State.ACCEPTED);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
@@ -37,6 +42,7 @@ const MeetingParticipants = ({
 
   const deleteParticipant = (userId: number) => {
     removeUserFromMeeting(meetingId, userId);
+    setModalShow(false);
     if (refreshParticipants) refreshParticipants(Math.random());
   };
 
@@ -66,13 +72,6 @@ const MeetingParticipants = ({
             <div className={styles.userNameIcon}>
               <UserNameIcon email={basicInvitationInfo.basicUserInfoDTO.email} />
             </div>
-            {isOrganizer && basicInvitationInfo.state === State.ACCEPTED && (
-              <div className={styles.deleteContainer}>
-                <DeleteButton
-                  onDelete={() => deleteParticipant(basicInvitationInfo.basicUserInfoDTO.id)}
-                />
-              </div>
-            )}
           </div>
           <hr className={styles.hrLine} />
         </div>
@@ -80,14 +79,33 @@ const MeetingParticipants = ({
     });
   };
 
+  const acceptedInvitations = participants.map((participant: ProUser, index: number) => {
+    return (
+      <div key={index + State.ACCEPTED}>
+        <div className={styles.participantRow}>
+          <div className={styles.userNameIcon}>
+            <UserNameIcon email={participant.email} />
+          </div>
+          {isOrganizer && (
+            <div className={styles.deleteContainer}>
+              <DeleteButton onDelete={() => setModalShow(true)} />
+            </div>
+          )}
+          <YesNoPopup
+            show={modalShow}
+            title={'Are you sure you want to remove the participant from the meeting?'}
+            onDecline={() => setModalShow(false)}
+            onAccept={() => deleteParticipant(participant.id)}
+          />
+        </div>
+        <hr className={styles.hrLine} />
+      </div>
+    );
+  });
+
   const pendingInvitations = invitationsToList(
     invitations.filter(
       (basicInvitationInfo: BasicInvitationInfo) => basicInvitationInfo.state === State.PENDING
-    )
-  );
-  const acceptedInvitations = invitationsToList(
-    invitations.filter(
-      (basicInvitationInfo: BasicInvitationInfo) => basicInvitationInfo.state === State.ACCEPTED
     )
   );
 
