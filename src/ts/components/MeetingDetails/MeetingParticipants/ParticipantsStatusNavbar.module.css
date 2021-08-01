@@ -24,7 +24,6 @@
 .item {
     display: flex;
     align-items: center;
-
 }
 
 .container {
@@ -40,4 +39,21 @@
 
 .itemContainer {
     cursor: pointer;
+    opacity: 0.5;
+}
+
+.chosenItem {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        display: block;
+        text-align: center;
+        margin: auto auto 20px;
+    }
+
+    .item {
+        justify-content: center;
+    }
 }

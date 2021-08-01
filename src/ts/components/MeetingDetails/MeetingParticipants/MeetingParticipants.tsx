@@ -104,6 +104,7 @@ const MeetingParticipants = ({
         pending={pendingInvitations.length}
         rejected={rejectedInvitations.length}
         setState={setState}
+        currentState={state}
       />
       <hr className={styles.hrLine} />
       {state === State.ACCEPTED && (
