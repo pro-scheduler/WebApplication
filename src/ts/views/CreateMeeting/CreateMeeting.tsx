@@ -26,7 +26,8 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
-import { toastDefault } from '../../tools/messagesInvocator';
+import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
+import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -62,8 +63,7 @@ const CreateMeeting = () => {
   const [surveyModule, setSurveyModule] = useState<boolean>(false);
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
-
-  const [showInstruction, setShowInstruction] = useState<boolean>(false);
+  const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
 
   const saveThisMeeting = () => {
     // need add deadlineDate here
@@ -76,7 +76,17 @@ const CreateMeeting = () => {
 
   const showModules = () => {
     setState('name');
-    setShowInstruction(true);
+    if (timeModule) {
+      modules.push('time');
+    }
+    if (placeModule) {
+      modules.push('place');
+    }
+    if (surveyModule) {
+      modules.push('survey');
+    }
+    modules.push('summary');
+    setModules(modules);
   };
 
   useEffect(() => {
@@ -96,13 +106,29 @@ const CreateMeeting = () => {
     // eslint-disable-next-line
   }, [meetingId.id]);
 
-  useEffect(() => {
-    if (state !== 'modules')
-      toastDefault(
-        'To navigate between different modules, click on the module name in the navbar.'
-      );
-    // eslint-disable-next-line
-  }, [showInstruction]);
+  const setPrevState = () => {
+    const index: number = modules.indexOf(state);
+    if (index !== -1) {
+      const newState: creatingMeetingState | undefined = modules
+        .filter((module: creatingMeetingState, i: number) => i === index - 1)
+        .pop();
+      if (newState) {
+        setState(newState);
+      }
+    }
+  };
+
+  const setNextState = () => {
+    const index: number = modules.indexOf(state);
+    if (index !== -1) {
+      const newState: creatingMeetingState | undefined = modules
+        .filter((module: creatingMeetingState, i: number) => i === index + 1)
+        .pop();
+      if (newState && (newState !== 'summary' || (invalidNameDesc && !required()(name)))) {
+        setState(newState);
+      }
+    }
+  };
 
   return (
     <Container className="ml-5 ml-sm-auto">
@@ -180,6 +206,12 @@ const CreateMeeting = () => {
               saveSurveyResponse.isLoading
             }
           />
+          {state !== 'modules' && (
+            <div className={styles.navigationContainer}>
+              <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
+              <RightArrowButton onclick={setNextState} disabled={state === 'summary'} />
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

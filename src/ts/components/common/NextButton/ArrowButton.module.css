@@ -1,0 +1,14 @@
+.arrowButton {
+    text-decoration: none;
+    background-color: var(--background-color);
+    border: none;
+    color: var(--purple);
+}
+
+.arrowButton:focus {
+    outline: none;
+}
+
+.arrowButton:hover {
+    opacity: 0.8;
+}
