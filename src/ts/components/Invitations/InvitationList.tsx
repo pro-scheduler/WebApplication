@@ -56,7 +56,7 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
                   <tr>
                     <th>Meeting name</th>
                     <th>Description</th>
-                    <th/>
+                    <th />
                   </tr>
                 </thead>
                 <tbody>{invitationRows}</tbody>
