@@ -14,6 +14,9 @@ import { removeUserFromMeeting } from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
 import YesNoPopup from '../../common/Popup/YesNoPopup';
 import { ProUser } from '../../../model/user/ProUser';
+import Popup from '../../common/Popup/Popup';
+import CreateInvitations from '../../CreateMeeting/CreateInvitations';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
@@ -33,7 +36,8 @@ const MeetingParticipants = ({
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [state, setState] = useState<State>(State.ACCEPTED);
-  const [modalShow, setModalShow] = useState(false);
+  const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
+  const [addModalShow, setAddModalShow] = useState<boolean>(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
@@ -42,7 +46,7 @@ const MeetingParticipants = ({
 
   const deleteParticipant = (userId: number) => {
     removeUserFromMeeting(meetingId, userId);
-    setModalShow(false);
+    setDeleteModalShow(false);
     if (refreshParticipants) refreshParticipants(Math.random());
   };
 
@@ -54,6 +58,7 @@ const MeetingParticipants = ({
       },
       setSaveResponse
     );
+    setAddModalShow(false);
   };
 
   useEffect(() => {
@@ -88,13 +93,13 @@ const MeetingParticipants = ({
           </div>
           {isOrganizer && (
             <div className={styles.deleteContainer}>
-              <DeleteButton onDelete={() => setModalShow(true)} />
+              <DeleteButton onDelete={() => setDeleteModalShow(true)} />
             </div>
           )}
           <YesNoPopup
-            show={modalShow}
+            show={deleteModalShow}
             title={'Are you sure you want to remove the participant from the meeting?'}
-            onDecline={() => setModalShow(false)}
+            onDecline={() => setDeleteModalShow(false)}
             onAccept={() => deleteParticipant(participant.id)}
           />
         </div>
@@ -116,7 +121,7 @@ const MeetingParticipants = ({
   );
 
   return (
-    <Card title={'Who'}>
+    <Card title={'Who'} onAdd={() => setAddModalShow(true)}>
       <ParticipantsStatusNavbar
         accepted={acceptedInvitations.length}
         pending={pendingInvitations.length}
@@ -144,6 +149,24 @@ const MeetingParticipants = ({
             : 'There are no rejected invitations'}
         </div>
       )}
+      <Popup
+        show={addModalShow}
+        title={'Add participants to the meeting'}
+        onClose={() => setAddModalShow(false)}
+      >
+        <CreateInvitations
+          state={'invitations'}
+          showIcon={false}
+          emails={emails}
+          setEmails={setEmails}
+          oneColumn={true}
+        />
+        <ActionButton
+          onclick={sendInvitations}
+          text={'Send invitations'}
+          className={styles.inviteButton}
+        />
+      </Popup>
     </Card>
   );
 };

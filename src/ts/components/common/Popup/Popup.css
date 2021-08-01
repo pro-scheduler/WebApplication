@@ -2,3 +2,7 @@
     font-size: var(--xs-font-size);
     color: var(--medium-grey);
 }
+
+.popup .modal-content {
+    background-color: var(--background-color);
+}
