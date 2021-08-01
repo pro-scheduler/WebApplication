@@ -43,24 +43,23 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
         <Col lg={12} className="text-center mt-5">
           <EnvelopIcon className={styles.invitationListIcon} />
         </Col>
-        <Col lg={12} className={styles.invitationListHeader}>
-          {'Your invitations'}
-        </Col>
       </Row>
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title={'Your invitations'}>
             {invitations.length > 0 ? (
-              <Table responsive="sm">
-                <thead>
-                  <tr>
-                    <th>Meeting name</th>
-                    <th>Description</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>{invitationRows}</tbody>
-              </Table>
+              <div className={styles.invitationsTable}>
+                <Table responsive="sm">
+                  <thead>
+                    <tr>
+                      <th>Meeting name</th>
+                      <th>Description</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>{invitationRows}</tbody>
+                </Table>
+              </div>
             ) : (
               <div>You don't have any invitations</div>
             )}
