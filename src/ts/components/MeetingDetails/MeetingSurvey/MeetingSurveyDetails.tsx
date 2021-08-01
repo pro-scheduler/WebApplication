@@ -10,18 +10,20 @@ export type MeetingSurveyDetailsProps = {
 const MeetingSurveyDetails = ({ endDate, description }: MeetingSurveyDetailsProps) => {
   return (
     <Card title={'Details'}>
-      <Timer
-        date={endDate}
-        completedMessage={'The survey is closed'}
-        nonCompletedMessage={'The survey ends in:'}
-        noEndDateMessage={'The survey has no time limit'}
-      />
-      {description && (
-        <>
-          <p className={styles.descriptionHeader}>Description</p>
-          {description}
-        </>
-      )}
+      <div className={styles.container}>
+        <Timer
+          date={endDate}
+          completedMessage={'The survey is closed'}
+          nonCompletedMessage={'The survey ends in:'}
+          noEndDateMessage={'The survey has no time limit'}
+        />
+        {description && (
+          <>
+            <p className={styles.descriptionHeader}>Description</p>
+            {description}
+          </>
+        )}
+      </div>
     </Card>
   );
 };
