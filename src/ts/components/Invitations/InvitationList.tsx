@@ -8,13 +8,33 @@ import { Table } from 'react-bootstrap';
 import { acceptInvitation, rejectInvitation } from '../../API/invitation/invitationService';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import YesButton from '../common/SubmitButton/ActionButton/YesButton';
+import SearchBox from '../common/forms/Input/SearchBox';
+import { useEffect, useState } from 'react';
 
 export type InvitationListProps = {
   invitations: BasicInvitationInfo[];
   refreshInvitations: (value: number) => void;
 };
 const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps) => {
-  const invitationRows = invitations.map((invitation: BasicInvitationInfo, index: number) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<BasicInvitationInfo[]>(invitations);
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    if (searchTerm !== '') {
+      setSearchResults(
+        invitations.filter((invitation: BasicInvitationInfo) =>
+          invitation.basicMeetingDetailsDTO.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setSearchResults(invitations);
+    }
+  }, [searchTerm, invitations]);
+
+  const invitationRows = searchResults.map((invitation: BasicInvitationInfo, index: number) => {
     return (
       <tr key={index}>
         <td>{invitation.basicMeetingDetailsDTO.name}</td>
@@ -49,6 +69,7 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
           <Card title={'Your invitations'}>
             {invitations.length > 0 ? (
               <div className={styles.invitationsTable}>
+                <SearchBox value={searchTerm} onChange={handleChange} />
                 <Table responsive="sm">
                   <thead>
                     <tr>
