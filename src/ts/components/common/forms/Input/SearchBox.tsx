@@ -1,4 +1,6 @@
 import { ChangeEventHandler } from 'react';
+import styles from './SearchBox.module.css';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export type SearchBoxProps = {
   value: string;
@@ -6,6 +8,17 @@ export type SearchBoxProps = {
 };
 
 const SearchBox = ({ value, onChange }: SearchBoxProps) => {
-  return <input type={'text'} placeholder={'Search'} value={value} onChange={onChange} />;
+  return (
+    <div className={styles.searchContainer}>
+      <AiOutlineSearch className={styles.searchIcon} />
+      <input
+        type={'text'}
+        placeholder={'Search ...'}
+        value={value}
+        onChange={onChange}
+        className={styles.input}
+      />
+    </div>
+  );
 };
 export default SearchBox;

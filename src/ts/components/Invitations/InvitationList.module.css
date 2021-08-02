@@ -17,5 +17,11 @@
 .invitationsTable {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 220px;
+    height: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .invitationsTable {
+        height: 400px;
+    }
 }
