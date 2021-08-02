@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
-import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants';
+import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import {
@@ -99,13 +99,15 @@ const MeetingDetails = () => {
               meetingPassword={meeting.password}
             />
           </Col>
+          <Col lg={6}>
+            <MeetingParticipants
+              meetingId={id}
+              isOrganizer={isOrganizer}
+              refreshParticipants={setRefreshParticipants}
+              participants={meeting.participants}
+            />
+          </Col>
         </Row>
-        <MeetingParticipants
-          meetingId={id}
-          participants={meeting.participants}
-          isOrganizer={isOrganizer}
-          refreshParticipants={setRefreshParticipants}
-        />
         {isOrganizer && <MeetingNotifications showSurveyNotifications={survey !== undefined} />}
         {meeting.availableTimeRanges.length > 0 && (
           <MeetingTime

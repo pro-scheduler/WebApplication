@@ -1,0 +1,9 @@
+.plusIcon {
+    font-size: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.plusIcon:hover {
+    opacity: 0.7;
+}

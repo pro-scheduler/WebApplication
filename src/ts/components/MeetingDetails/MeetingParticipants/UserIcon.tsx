@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import styles from './UserIcon.module.css';
-import YesNoPopup from '../common/Popup/YesNoPopup';
-import { removeUserFromMeeting } from '../../API/meeting/meetingService';
-import LetterIcon from '../common/Icons/LetterIcon';
+import YesNoPopup from '../../common/Popup/YesNoPopup';
+import { removeUserFromMeeting } from '../../../API/meeting/meetingService';
+import LetterIcon from '../../common/Icons/LetterIcon';
 export type UserIconProps = {
   name: String;
   meetingId: number;

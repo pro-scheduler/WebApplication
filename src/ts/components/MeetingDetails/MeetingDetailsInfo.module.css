@@ -22,3 +22,9 @@
 .onlineMeetingLink:hover {
     color: var(--purple);
 }
+
+.container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 193px;
+}

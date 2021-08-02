@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import styles from './Popup.module.css';
+import './Popup.css';
 
 export type PopupProps = {
   show: boolean;
@@ -17,9 +17,10 @@ const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className={'popup'}
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" className={styles.popupTitle}>
+        <Modal.Title id="contained-modal-title-vcenter" className={'popupTitle'}>
           {title}
         </Modal.Title>
       </Modal.Header>

@@ -25,7 +25,7 @@ const MeetingDetailsInfo = ({
   const [showPassword, setShowPassword] = useState<boolean>(false);
   return (
     <Card title={'Details'}>
-      <div>
+      <div className={styles.container}>
         <p className={styles.moduleContainer}>
           <BiCalendarEvent className={styles.moduleIcon} />{' '}
           {hasTime ? 'Time available' : 'No time available'}

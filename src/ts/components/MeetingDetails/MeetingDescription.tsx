@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import styles from './MeetingDescription.module.css';
-import UserIcon from './UserIcon';
+import UserIcon from './MeetingParticipants/UserIcon';
 import { ProUser } from '../../model/user/ProUser';
 
 export type MeetingDescriptionProps = {

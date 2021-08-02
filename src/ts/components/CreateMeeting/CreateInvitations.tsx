@@ -19,9 +19,16 @@ export type CreateInvitationsProps = {
   showIcon: boolean;
   emails: ValueLabelPair[];
   setEmails: (newEmails: ValueLabelPair[]) => void;
+  oneColumn?: boolean;
 };
 
-const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitationsProps) => {
+const CreateInvitations = ({
+  state,
+  showIcon,
+  emails,
+  setEmails,
+  oneColumn = false,
+}: CreateInvitationsProps) => {
   // eslint-disable-next-line
   const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -67,8 +74,12 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-4 ml-sm-5">
-        <Col sm={12} lg={6}>
+      <Row
+        className={
+          oneColumn ? 'justify-content-center mt-4' : 'justify-content-center mt-4 ml-sm-5'
+        }
+      >
+        <Col sm={12} lg={oneColumn ? 12 : 6}>
           <Card title="Add participants">
             <div className={styles.participantContainer}>
               <div className={styles.participantInput}>
@@ -107,7 +118,7 @@ const CreateInvitations = ({ state, showIcon, emails, setEmails }: CreateInvitat
             </div>
           </Card>
         </Col>
-        <Col sm={12} lg={6}>
+        <Col sm={12} lg={oneColumn ? 12 : 6}>
           <Card title="Invitation message">
             <TextArea
               className={styles.invitationMessage}

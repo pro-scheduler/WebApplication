@@ -17,7 +17,7 @@
   display: flex;
 }
 
-.deleteButtonContainer {
+.buttonContainer {
   text-align: right;
   margin-left: auto;
 }
