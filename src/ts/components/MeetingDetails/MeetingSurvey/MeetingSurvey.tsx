@@ -28,7 +28,7 @@ const MeetingSurvey = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'Survey'} />
+      <LineWithHeader header={'Survey'} iconAction={() => {}} />
       <Col lg={6}>
         <MeetingSurveyDetails endDate={survey.surveyEndDate} description={survey.description} />
       </Col>
