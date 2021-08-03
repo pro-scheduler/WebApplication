@@ -165,6 +165,7 @@ const MeetingTime = ({
               onChange={() => setDisplayAnswers(!displayAnswers)}
               checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
               unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+              title={'Show how others voted'}
             />
           </div>
           {!displayAnswers && (
@@ -202,7 +203,7 @@ const MeetingTime = ({
       {!displayAnswers && !deadlineExceeded && (
         <Col lg={12} className="text-center mx-auto">
           <ActionButton
-            text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
+            text={userRanges.length === 0 ? 'Save my time preferences' : 'Edit my time preferences'}
             onclick={saveTime}
             className={styles.saveButton}
             disabled={!preferencesChanged}
