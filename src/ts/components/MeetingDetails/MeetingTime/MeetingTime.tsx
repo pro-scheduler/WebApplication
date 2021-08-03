@@ -159,7 +159,7 @@ const MeetingTime = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'When'} />
+      <LineWithHeader header={'When'} iconAction={() => {}} />
       <Col>
         <Col lg={12} className="text-center mx-auto">
           <div className={styles.switchTime}>

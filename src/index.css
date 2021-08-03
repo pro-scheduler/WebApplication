@@ -1,5 +1,6 @@
 @import './css/tokens/colors.css';
 @import './css/tokens/fonts.css';
+@import './css/tokens/animations.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
