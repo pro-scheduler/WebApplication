@@ -23,8 +23,8 @@ import { loadUserOrganizedMeetings } from '../../API/user/userService';
 import userActions from '../../actions/userActions';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import MeetingNotifications from '../../components/MeetingDetails/MeetingNotifications/MeetingNotifications';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
+import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
 
 const MeetingDetails = () => {
   const dispatch: Function = useDispatch();
@@ -34,6 +34,7 @@ const MeetingDetails = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
     return state.userReducer;
   });
+  const [showSettings, setShowSettings] = useState<Boolean>(false);
   const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
@@ -88,28 +89,33 @@ const MeetingDetails = () => {
           meetingId={id}
           description={meeting.description}
           organizers={meeting.organizers}
+          showSettings={showSettings}
+          setShowSettings={setShowSettings}
+          isOrganizer={isOrganizer}
         />
-        <Row className="justify-content ml-5 pl-5">
-          <Col lg={6}>
-            <MeetingDetailsInfo
-              hasDeclarations={false}
-              hasSurvey={survey !== undefined}
-              hasTime={meeting.availableTimeRanges.length > 0}
-              meetingLink={meeting.link}
-              meetingPassword={meeting.password}
-            />
-          </Col>
-          <Col lg={6}>
-            <MeetingParticipants
-              meetingId={id}
-              isOrganizer={isOrganizer}
-              refreshParticipants={setRefreshParticipants}
-              participants={meeting.participants}
-            />
-          </Col>
-        </Row>
-        {isOrganizer && <MeetingNotifications showSurveyNotifications={survey !== undefined} />}
-        {meeting.availableTimeRanges.length > 0 && (
+        {showSettings && <MeetingSettings survey={survey} />}
+        {!showSettings && (
+          <Row className="justify-content ml-5 pl-5">
+            <Col lg={6}>
+              <MeetingDetailsInfo
+                hasDeclarations={false}
+                hasSurvey={survey !== undefined}
+                hasTime={meeting.availableTimeRanges.length > 0}
+                meetingLink={meeting.link}
+                meetingPassword={meeting.password}
+              />
+            </Col>
+            <Col lg={6}>
+              <MeetingParticipants
+                meetingId={id}
+                isOrganizer={isOrganizer}
+                refreshParticipants={setRefreshParticipants}
+                participants={meeting.participants}
+              />
+            </Col>
+          </Row>
+        )}
+        {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime
             meetingId={id}
             timeRanges={meeting.availableTimeRanges}
@@ -120,7 +126,7 @@ const MeetingDetails = () => {
             timeDeadline={new Date(new Date().getTime() + 60 * 60 * 60 * 1000)}
           />
         )}
-        {survey && (
+        {survey && !showSettings && (
           <MeetingSurvey
             survey={survey}
             setRefreshSurveySummary={setRefreshSurveySummary}

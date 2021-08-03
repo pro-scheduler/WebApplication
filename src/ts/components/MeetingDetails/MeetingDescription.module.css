@@ -1,16 +1,85 @@
 .meetingDescriptionName {
-    font-size: var(--motto-font-size);
-    margin-bottom: 10px;
+  font-size: var(--motto-font-size);
+  margin-bottom: 10px;
 }
 
 .meetingDescriptionOrganizer {
-    font-size: var(--xs-font-size);
-    display: inline;
-    margin-right: 20px;
+  font-size: var(--xs-font-size);
+  display: inline;
+  margin-right: 20px;
 }
 
 @media only screen and (max-width: 600px) {
-    .meetingDescriptionName {
-        font-size: var(--xl-font-size);
-    }
+  .meetingDescriptionName {
+    font-size: var(--xl-font-size);
+  }
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settingsIcon {
+  margin-right: 100px;
+  font-size: 70px;
+  transition-duration: 1s;
+  transition-property: transform;
+  color: var(--medium-grey);
+}
+
+.settingsIcon:hover {
+  transform: rotate(120deg);
+  -webkit-transform: rotate(120deg);
+  color: var(--medium-grey);
+  cursor: pointer;
+}
+
+.detailsIcon {
+  margin-right: 100px;
+  font-size: 70px;
+  transition-duration: 1s;
+  transition-property: transform;
+  color: var(--medium-grey);
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(-3deg);
+  }
+  10% {
+    transform: rotate(3deg);
+  }
+  20% {
+    transform: rotate(-3deg);
+  }
+  30% {
+    transform: rotate(3deg);
+  }
+  40% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+  60% {
+    transform: rotate(-3deg);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  90% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(-3deg);
+  }
+}
+
+.detailsIcon:hover {
+  animation: shake 1s;
+  cursor: pointer;
 }
