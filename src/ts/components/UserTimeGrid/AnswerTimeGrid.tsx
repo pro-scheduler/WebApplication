@@ -13,6 +13,7 @@ export type AnswerTimeGridProps = {
   lockedRanges: Array<{ from: string; to: string }>;
   answers: { ranges: Array<{ from: string; to: string }>; date: Date };
   disabled: Boolean;
+  numberOfParticipants: number;
 };
 
 interface Ranges {
@@ -29,6 +30,7 @@ const AnswerTimeGrid = ({
   addRanges,
   lockedRanges,
   answers,
+  numberOfParticipants,
   disabled,
 }: AnswerTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>({});
@@ -132,12 +134,12 @@ const AnswerTimeGrid = ({
           top={parseInt(pixel)}
           height={1}
           key={pixel + ' 1'}
-          color={'var(--purple-' + Math.min(color, 7).toString() + ')'}
+          color={'var(--purple-' + Math.ceil((color / numberOfParticipants) * 7).toString() + ')'}
         />
       );
     }
     setCalculatedLockedRanges(ranges);
-  }, [lockedRanges, answers]);
+  }, [lockedRanges, answers, numberOfParticipants]);
 
   useEffect(() => {
     setMappedLocked(

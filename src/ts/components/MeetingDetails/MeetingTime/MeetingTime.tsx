@@ -22,6 +22,7 @@ export type MeetingTimeProps = {
   disabled?: Boolean;
   userRanges?: TimeRangeDTO[];
   refreshTimeData?: Function;
+  numberOfParticipants: number;
 };
 
 interface RangesWithDay {
@@ -36,6 +37,7 @@ const MeetingTime = ({
   userRanges = [],
   refreshTimeData = () => {},
   timeDeadline,
+  numberOfParticipants,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -196,6 +198,7 @@ const MeetingTime = ({
               setRanges={setRanges}
               answers={userAnswers}
               disabled={true}
+              numberOfParticipants={numberOfParticipants}
             />
           )}
         </div>
