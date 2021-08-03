@@ -217,7 +217,12 @@ const Time = () => {
       </Row>
       <Row>
         <Col>
-          <MeetingTime meetingId={0} timeRanges={timeRanges} answers={timeAnswers} />
+          <MeetingTime
+            meetingId={0}
+            timeRanges={timeRanges}
+            answers={timeAnswers}
+            numberOfParticipants={10}
+          />
         </Col>
       </Row>
       <h3>Disabled</h3>
@@ -228,6 +233,7 @@ const Time = () => {
             timeRanges={timeRanges}
             answers={timeAnswers}
             disabled={true}
+            numberOfParticipants={10}
           />
         </Col>
       </Row>

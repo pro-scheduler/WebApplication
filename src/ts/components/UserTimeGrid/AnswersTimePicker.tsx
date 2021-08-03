@@ -19,11 +19,13 @@ const AnswersTimePicker = ({
   availableRanges,
   answers,
   disabled,
+  numberOfParticipants,
 }: {
   count: number;
   setRanges: Function;
   availableRanges: RangesWithDay;
   answers: RangesWithDay;
+  numberOfParticipants: number;
   disabled?: Boolean;
 }) => {
   const [currentDays, setCurrentDays] = useState<JSX.Element[]>([]);
@@ -56,6 +58,7 @@ const AnswersTimePicker = ({
             }}
             lockedRanges={value.ranges}
             answers={answers[key]}
+            numberOfParticipants={numberOfParticipants}
           />
         </Col>
       )
@@ -64,7 +67,7 @@ const AnswersTimePicker = ({
       tmp.push(<Col key={tmp.length} />);
     }
     setCurrentDays(tmp);
-  }, [start, availableRanges, count, setRanges, answers, disabled]);
+  }, [start, availableRanges, count, setRanges, answers, disabled, numberOfParticipants]);
 
   return (
     <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>

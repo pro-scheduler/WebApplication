@@ -22,6 +22,7 @@ export type MeetingTimeProps = {
   disabled?: Boolean;
   userRanges?: TimeRangeDTO[];
   refreshTimeData?: Function;
+  numberOfParticipants: number;
 };
 
 interface RangesWithDay {
@@ -36,6 +37,7 @@ const MeetingTime = ({
   userRanges = [],
   refreshTimeData = () => {},
   timeDeadline,
+  numberOfParticipants,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -165,6 +167,7 @@ const MeetingTime = ({
               onChange={() => setDisplayAnswers(!displayAnswers)}
               checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
               unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+              title={'Show how others voted'}
             />
           </div>
           {!displayAnswers && (
@@ -195,6 +198,7 @@ const MeetingTime = ({
               setRanges={setRanges}
               answers={userAnswers}
               disabled={true}
+              numberOfParticipants={numberOfParticipants}
             />
           )}
         </div>
@@ -202,7 +206,7 @@ const MeetingTime = ({
       {!displayAnswers && !deadlineExceeded && (
         <Col lg={12} className="text-center mx-auto">
           <ActionButton
-            text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
+            text={userRanges.length === 0 ? 'Save my time preferences' : 'Edit my time preferences'}
             onclick={saveTime}
             className={styles.saveButton}
             disabled={!preferencesChanged}
