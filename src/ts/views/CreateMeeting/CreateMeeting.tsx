@@ -177,9 +177,19 @@ const CreateMeeting = () => {
         setOnlinePassword={setOnlinePassword}
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
+      <Row className="justify-content-center mt-2">
+        <Col xs="auto">
+          {state !== 'modules' && (
+            <div className={styles.navigationContainer}>
+              <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
+              <RightArrowButton onclick={setNextState} disabled={state === 'summary'} />
+            </div>
+          )}
+        </Col>
+      </Row>
       {state === 'summary' && (
         <>
-          <Row className="justify-content-center mt-4 ml-sm-5">
+          <Row className="justify-content-center ml-sm-5">
             <Col>
               <hr className={styles.hrLine} />
             </Col>
@@ -206,12 +216,6 @@ const CreateMeeting = () => {
               saveSurveyResponse.isLoading
             }
           />
-          {state !== 'modules' && (
-            <div className={styles.navigationContainer}>
-              <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
-              <RightArrowButton onclick={setNextState} disabled={state === 'summary'} />
-            </div>
-          )}
         </Col>
       </Row>
     </Container>

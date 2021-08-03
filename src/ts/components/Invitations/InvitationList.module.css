@@ -1,0 +1,27 @@
+.acceptRejectContainer {
+    display: flex;
+    align-items: center;
+}
+
+.invitationListHeader {
+    font-size: var(--s-font-size);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.invitationListIcon {
+    color: var(--purple);
+}
+
+.invitationsTable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .invitationsTable {
+        height: 400px;
+    }
+}

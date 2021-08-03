@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 const DeleteButton = ({ onDelete, className }: { onDelete: Function; className?: string }) => {
   return (
-    <div className={styles.deleteContainer}>
+    <div>
       <TiPlus className={cx(styles.deleteCross, className)} onClick={() => onDelete()} />
     </div>
   );

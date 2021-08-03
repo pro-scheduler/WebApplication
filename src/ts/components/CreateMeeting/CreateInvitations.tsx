@@ -74,11 +74,7 @@ const CreateInvitations = ({
           </Row>
         </>
       )}
-      <Row
-        className={
-          oneColumn ? 'justify-content-center mt-4' : 'justify-content-center mt-4 ml-sm-5'
-        }
-      >
+      <Row className="justify-content-center mt-4">
         <Col sm={12} lg={oneColumn ? 12 : 6}>
           <Card title="Add participants">
             <div className={styles.participantContainer}>
