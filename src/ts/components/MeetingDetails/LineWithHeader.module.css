@@ -13,7 +13,21 @@
   margin-top: 10px;
 }
 
+.arrowIcon {
+  font-size: 45px;
+}
+
+.pencilIcon {
+  font-size: 30px;
+  margin-left: 10px;
+}
+
 .pencilIcon:hover {
   animation: var(--animation-shake) 1s;
   cursor: pointer;
+}
+
+.arrowIcon:hover {
+  cursor: pointer;
+  animation: var(--animation-shake) 1s;
 }

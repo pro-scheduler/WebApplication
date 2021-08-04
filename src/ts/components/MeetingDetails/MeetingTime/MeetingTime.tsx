@@ -13,6 +13,7 @@ import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
+import { Collapse } from 'react-collapse';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -43,6 +44,7 @@ const MeetingTime = ({
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
+  const [opened, setOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
@@ -157,56 +159,60 @@ const MeetingTime = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'When'} iconAction={() => {}} />
+      <LineWithHeader header={'When'} iconAction={() => {}} collapseAction={setOpened} />
       <Col>
-        <Col lg={12} className="text-center mx-auto">
-          <div className={styles.switchTime}>
-            <SwitchButton
-              onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-            />
-          </div>
-          {!displayAnswers && (
-            <div className="my-5">
-              <Timer
-                date={timeDeadline}
-                completedMessage={'Voting is ended'}
-                nonCompletedMessage={'Voting ends in:'}
-                noEndDateMessage={'Voting has no time limit'}
+        <Collapse isOpened={opened}>
+          <Col lg={12} className="text-center mx-auto">
+            <div className={styles.switchTime}>
+              <SwitchButton
+                onChange={() => setDisplayAnswers(!displayAnswers)}
+                checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
               />
             </div>
-          )}
-        </Col>
-        <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-          {!displayAnswers ? (
-            <UserTimePicker
-              disabled={deadlineExceeded}
-              availableRanges={availableRanges}
-              selectedRanges={userDefaultAnswers}
-              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
-              setRanges={setRanges}
-              setPreferencesChanged={setPreferencesChanged}
-            />
-          ) : (
-            <AnswersTimePicker
-              availableRanges={availableRanges}
-              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
-              setRanges={setRanges}
-              answers={userAnswers}
-              disabled={true}
-            />
-          )}
-        </div>
+            {!displayAnswers && (
+              <div className="my-5">
+                <Timer
+                  date={timeDeadline}
+                  completedMessage={'Voting is ended'}
+                  nonCompletedMessage={'Voting ends in:'}
+                  noEndDateMessage={'Voting has no time limit'}
+                />
+              </div>
+            )}
+          </Col>
+          <div style={{ marginRight: width < 576 ? 45 : 0 }}>
+            {!displayAnswers ? (
+              <UserTimePicker
+                disabled={deadlineExceeded}
+                availableRanges={availableRanges}
+                selectedRanges={userDefaultAnswers}
+                count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
+                setRanges={setRanges}
+                setPreferencesChanged={setPreferencesChanged}
+              />
+            ) : (
+              <AnswersTimePicker
+                availableRanges={availableRanges}
+                count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
+                setRanges={setRanges}
+                answers={userAnswers}
+                disabled={true}
+              />
+            )}
+          </div>
+        </Collapse>
       </Col>
       {!displayAnswers && !deadlineExceeded && (
         <Col lg={12} className="text-center mx-auto">
-          <ActionButton
-            text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
-            onclick={saveTime}
-            className={styles.saveButton}
-            disabled={!preferencesChanged}
-          />
+          <Collapse isOpened={opened}>
+            <ActionButton
+              text={userRanges.length === 0 ? 'Save time preferences' : 'Edit time preferences'}
+              onclick={saveTime}
+              className={styles.saveButton}
+              disabled={!preferencesChanged}
+            />
+          </Collapse>
         </Col>
       )}
     </Row>
