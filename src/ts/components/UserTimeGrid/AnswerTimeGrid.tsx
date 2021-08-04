@@ -246,7 +246,14 @@ const AnswerTimeGrid = ({
             }
           >
             <Row className={'m-0'}>
-              <Col className={'align-self-center pr-0'} xs="auto" style={{ zIndex: 999 }}>
+              <Col
+                className={'align-self-center pr-0'}
+                xs="auto"
+                style={{
+                  zIndex: 999,
+                  color: i > 20 || i < 7 ? 'var(--light-grey)' : 'var(--medium-grey)',
+                }}
+              >
                 {i}:00{' '}
               </Col>
               <Col>
