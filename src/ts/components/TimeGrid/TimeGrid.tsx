@@ -127,7 +127,11 @@ const TimeGrid = ({ primaryLabel, secondaryLabel, boxSizes, addRanges }: TimeGri
             className={styles.button_cell + ' ' + (i === 23 ? styles.bottom_radius : '')}
           >
             <Row className={'m-0'}>
-              <Col className={'align-self-center pr-0'} xs="auto">
+              <Col
+                className={'align-self-center pr-0'}
+                xs="auto"
+                style={{ color: i > 20 || i < 7 ? 'var(--light-grey)' : 'var(--medium-grey)' }}
+              >
                 {i}:00{' '}
               </Col>
               <Col>

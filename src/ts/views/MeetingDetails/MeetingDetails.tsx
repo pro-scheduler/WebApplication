@@ -124,6 +124,7 @@ const MeetingDetails = () => {
             refreshTimeData={refreshTimeData}
             // meeting.timeDeadline here ( change '+' for '-' to check expiration time message)
             timeDeadline={new Date(new Date().getTime() + 60 * 60 * 60 * 1000)}
+            numberOfParticipants={meeting.participants.length}
           />
         )}
         {survey && !showSettings && (
