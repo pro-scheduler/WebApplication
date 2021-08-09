@@ -11,6 +11,7 @@ import MeetingSurveyAnswers from './MeetingSurveyAnswers';
 import { SurveySummary, UserSurvey } from '../../../model/survey/Survey';
 import MeetingSurveyDetails from './MeetingSurveyDetails';
 import MeetingSurveyResults from './MeetingSurveyResults';
+import { Collapse } from 'react-collapse';
 
 export type MeetingSurveyProps = {
   survey: UserSurvey;
@@ -25,34 +26,45 @@ const MeetingSurvey = ({
   numberOfParticipants,
 }: MeetingSurveyProps) => {
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
-
+  const [opened, setOpened] = useState<boolean>(true);
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'Survey'} iconAction={() => {}} />
+      <LineWithHeader header={'Survey'} iconAction={() => {}} collapseAction={setOpened} />
       <Col lg={6}>
-        <MeetingSurveyDetails endDate={survey.surveyEndDate} description={survey.description} />
+        <Collapse isOpened={opened}>
+          <MeetingSurveyDetails endDate={survey.surveyEndDate} description={survey.description} />
+        </Collapse>
       </Col>
       <Col lg={6}>
-        <MeetingSurveyResults
-          numberOfParticipants={numberOfParticipants}
-          numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
-          emails={surveySummary?.users ?? []}
-        />
+        <Collapse isOpened={opened}>
+          <MeetingSurveyResults
+            numberOfParticipants={numberOfParticipants}
+            numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
+            emails={surveySummary?.users ?? []}
+          />
+        </Collapse>
       </Col>
       <Col lg={12} className="text-center mx-auto">
-        <div className={styles.switchTime}>
-          <SwitchButton
-            onChange={() => setDisplayAnswers(!displayAnswers)}
-            checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-            unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-          />
-        </div>
+        <Collapse isOpened={opened}>
+          <div className={styles.switchTime}>
+            <SwitchButton
+              onChange={() => setDisplayAnswers(!displayAnswers)}
+              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+            />
+          </div>
+        </Collapse>
       </Col>
-      {displayAnswers ? (
-        <MeetingSurveyQuestions survey={survey} setRefreshSurveySummary={setRefreshSurveySummary} />
-      ) : (
-        surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
-      )}
+      <Collapse isOpened={opened}>
+        {displayAnswers ? (
+          <MeetingSurveyQuestions
+            survey={survey}
+            setRefreshSurveySummary={setRefreshSurveySummary}
+          />
+        ) : (
+          surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
+        )}
+      </Collapse>
     </Row>
   );
 };
