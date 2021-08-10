@@ -103,6 +103,8 @@ const MeetingDetails = () => {
                 hasTime={meeting.availableTimeRanges.length > 0}
                 meetingLink={meeting.link}
                 meetingPassword={meeting.password}
+                name={meeting.name}
+                description={meeting.description}
               />
             </Col>
             <Col lg={6}>

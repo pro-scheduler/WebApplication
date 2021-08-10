@@ -45,7 +45,7 @@ const TextArea = ({
   };
   return (
     <>
-      <div className={styles.label_classic}>
+      <div className={styles.label_classic} style={{ marginBottom: label ? 10 : 0 }}>
         {label} {required && '*'}
       </div>
       <textarea
