@@ -120,7 +120,7 @@ const MeetingDetailsInfo = ({
                 updateNameAndDescription();
               }}
               disabled={invalidNameDesc || (newName === name && description === newDescription)}
-              text="Submit"
+              text="Edit"
             />
           </div>
         </>
