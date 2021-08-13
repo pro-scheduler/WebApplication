@@ -65,19 +65,23 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title={'Your invitations'}>
-            <div className={styles.invitationsTable}>
-              <SearchBox value={searchTerm} onChange={handleChange} />
-              <Table responsive="sm" className="mt-4">
-                <thead>
-                  <tr>
-                    <th>Meeting name</th>
-                    <th>Description</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>{invitationRows}</tbody>
-              </Table>
-            </div>
+            {invitations.length > 0 ? (
+              <div className={styles.invitationsTable}>
+                <SearchBox value={searchTerm} onChange={handleChange} />
+                <Table responsive="sm" className="mt-4">
+                  <thead>
+                    <tr>
+                      <th>Meeting name</th>
+                      <th>Description</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>{invitationRows}</tbody>
+                </Table>
+              </div>
+            ) : (
+              <div>You don't have any invitations</div>
+            )}
           </Card>
         </Col>
       </Row>
