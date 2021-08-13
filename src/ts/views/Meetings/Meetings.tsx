@@ -14,6 +14,8 @@ import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import userActions from '../../actions/userActions';
+import CalendarIcon from '../../components/common/Icons/CalendarIcon';
+import styles from './Meetings.module.css';
 
 const Meetings = () => {
   const user: ProUser = useSelector((state: RootStateOrAny) => {
@@ -42,6 +44,11 @@ const Meetings = () => {
 
   return (
     <Container fluid className="ml-5 ml-sm-auto">
+      <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+        <Col lg={12} className="text-center mt-5">
+          <CalendarIcon className={styles.meetingListIcon} />
+        </Col>
+      </Row>
       {organizedMeetingsResponse.isSuccess ? (
         <MeetingList
           meetings={organizedMeetings}
@@ -58,7 +65,7 @@ const Meetings = () => {
       {participatedMeetingsResponse.isSuccess ? (
         <MeetingList
           meetings={participatedMeetings}
-          header={'Meetings you participate in'}
+          header={'Meetings you participate'}
           noMeetingsInfo={"You don't participate in any meeting"}
           showRedirectButton={false}
         />
