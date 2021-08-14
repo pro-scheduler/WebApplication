@@ -1,12 +1,13 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import CalendarIcon from '../common/Icons/CalendarIcon';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
-import MeetingPagination from './MeetingPagination';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Meeting } from '../../model/meeting/Meeting';
-import MeetingCard from './MeetingCard';
 import styles from './MeetingList.module.css';
+import Card from '../common/Card/Card';
+import SearchBox from '../common/forms/Input/SearchBox';
+import { Table } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 
 export type MeetingListProps = {
   header: string;
@@ -21,74 +22,70 @@ const MeetingList = ({
   meetings,
   showRedirectButton = true,
 }: MeetingListProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const onFirstPageClick = () => {
-    setCurrentPage(1);
+  const history = useHistory();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Meeting[]>(meetings);
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value);
   };
 
-  const onNextPageClick = () => {
-    if (currentPage < Math.ceil(meetings.length / 4)) setCurrentPage(currentPage + 1);
-  };
+  useEffect(() => {
+    setSearchResults(
+      searchTerm !== ''
+        ? meetings.filter((meeting: Meeting) =>
+            meeting.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : meetings
+    );
+  }, [searchTerm, meetings]);
 
-  const onPrevPageClick = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const onLastPageClick = () => {
-    setCurrentPage(Math.ceil(meetings.length / 4));
-  };
-
-  const getClassName = (number: number) => {
-    if (currentPage === number) return 'paginationCurrentItem';
-    return 'paginationItem';
-  };
-
-  const meetingCards = meetings
-    .slice(currentPage * 4 - 4, currentPage * 4)
-    .map((meeting: Meeting) => {
-      return <MeetingCard key={meeting.id} {...meeting} />;
-    });
+  const meetingRows = searchResults.map((meeting: Meeting, index: number) => {
+    return (
+      <tr
+        key={index}
+        onClick={() => history.push(`/meetings/${meeting.id}`)}
+        className={styles.meetingRow}
+      >
+        <td>{meeting.name}</td>
+        <td>{meeting.description}</td>
+        <td>{meeting.type}</td>
+      </tr>
+    );
+  });
 
   return (
-    <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
-      <Col lg={12} className="text-center mt-5">
-        <CalendarIcon className={styles.meetingListIcon} />
-      </Col>
-      <Col lg={12} className={styles.meetingListHeader}>
-        {header}
-      </Col>
-      {meetings.length > 0 ? (
-        <>
-          {meetingCards}
-          <Col lg={12} />
-          <Col xs={12} md={6} lg={6} className="text-center">
-            <div className="text-center">
-              <MeetingPagination
-                meetingsPerPage={4}
-                totalMeetings={meetings.length}
-                paginate={(number: number) => setCurrentPage(number)}
-                nextPage={onNextPageClick}
-                prevPage={onPrevPageClick}
-                firstPage={onFirstPageClick}
-                lastPage={onLastPageClick}
-                className={(number: number) => getClassName(number)}
-              />
+    <Row className="justify-content-center mt-4 ml-sm-5">
+      <Col>
+        <Card title={header}>
+          {meetings.length > 0 ? (
+            <div className={styles.meetingsTable}>
+              <SearchBox value={searchTerm} onChange={handleChange} />
+              <Table responsive="sm" className="mt-4">
+                <thead>
+                  <tr>
+                    <th>Meeting name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>{meetingRows}</tbody>
+              </Table>
             </div>
-          </Col>
-        </>
-      ) : (
-        <div className="text-center mt-3">
-          <div>{noMeetingsInfo}</div>
-          {showRedirectButton && (
-            <RedirectButton
-              className={styles.noMeetingButton}
-              redirectTO="/create"
-              text="Add new meeting"
-            />
+          ) : (
+            <div className="text-center mt-3">
+              <div>{noMeetingsInfo}</div>
+              {showRedirectButton && (
+                <RedirectButton
+                  className={styles.noMeetingButton}
+                  redirectTO="/create"
+                  text="Add new meeting"
+                />
+              )}
+            </div>
           )}
-        </div>
-      )}
+        </Card>
+      </Col>
     </Row>
   );
 };

@@ -1,19 +1,22 @@
-.meetingListHeader {
-    font-size: var(--s-font-size);
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.meetingListIcon {
-    color: var(--purple);
-}
-
 .noMeetingButton {
     margin-top: 30px;
 }
 
+.meetingsTable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 300px;
+}
+
+.meetingRow {
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
+    .meetingsTable {
+        height: 400px;
+    }
+
     .noMeetingButton {
         width: 210px;
     }

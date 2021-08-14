@@ -124,7 +124,7 @@ const CreateMeeting = () => {
       const newState: creatingMeetingState | undefined = modules
         .filter((module: creatingMeetingState, i: number) => i === index + 1)
         .pop();
-      if (newState && (newState !== 'summary' || (invalidNameDesc && !required()(name)))) {
+      if (newState && (newState !== 'summary' || (!invalidNameDesc && required()(name)))) {
         setState(newState);
       }
     }
