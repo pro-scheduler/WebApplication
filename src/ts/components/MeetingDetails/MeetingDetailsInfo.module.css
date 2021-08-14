@@ -29,11 +29,11 @@
     height: 193px;
 }
 
-.cancelMeetingButtonContainer {
+.actionButtonContainer {
     text-align: right;
 }
 
-.cancelMeetingButton {
+.actionButton {
     width: auto;
     padding: 10px;
 }
