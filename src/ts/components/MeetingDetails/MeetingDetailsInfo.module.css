@@ -28,3 +28,12 @@
     overflow-x: hidden;
     height: 193px;
 }
+
+.cancelMeetingButtonContainer {
+    text-align: right;
+}
+
+.cancelMeetingButton {
+    width: auto;
+    padding: 10px;
+}

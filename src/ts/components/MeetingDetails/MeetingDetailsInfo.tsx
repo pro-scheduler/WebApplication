@@ -6,6 +6,8 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
 import React, { useState } from 'react';
 import cx from 'classnames';
+import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
+import YesNoPopup from '../common/Popup/YesNoPopup';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -13,6 +15,7 @@ export type MeetingDetailsInfoProps = {
   hasTime: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
+  isOrganizer: boolean;
 };
 
 const MeetingDetailsInfo = ({
@@ -21,10 +24,29 @@ const MeetingDetailsInfo = ({
   hasTime,
   meetingLink,
   meetingPassword,
+  isOrganizer,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [modalShow, setModalShow] = useState(false);
+  // TODO send to backend
+  const cancelMeeting = () => {
+    setModalShow(false);
+  };
   return (
-    <Card title={'Details'}>
+    <Card
+      title={'Details'}
+      footer={
+        isOrganizer ? (
+          <div className={styles.cancelMeetingButtonContainer}>
+            <ActionButton
+              onclick={() => setModalShow(true)}
+              text={'Cancel the meeting'}
+              className={styles.cancelMeetingButton}
+            />
+          </div>
+        ) : undefined
+      }
+    >
       <div className={styles.container}>
         <p className={styles.moduleContainer}>
           <BiCalendarEvent className={styles.moduleIcon} />{' '}
@@ -61,6 +83,12 @@ const MeetingDetailsInfo = ({
           {hasDeclarations ? 'Declarations available' : 'No declarations available'}
         </p>
       </div>
+      <YesNoPopup
+        show={modalShow}
+        title={'Do you want to cancel the meeting?'}
+        onDecline={() => setModalShow(false)}
+        onAccept={cancelMeeting}
+      />
     </Card>
   );
 };
