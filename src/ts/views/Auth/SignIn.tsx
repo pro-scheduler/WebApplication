@@ -1,4 +1,3 @@
-import React from 'react';
 import Container from 'react-bootstrap/Container';
 import AuthView from './AuthView';
 import GoogleButton from '../../components/common/SubmitButton/IconButton/GoogleButton';
