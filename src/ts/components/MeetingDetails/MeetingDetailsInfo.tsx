@@ -11,6 +11,9 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { useEffect } from 'react';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
+import YesNoPopup from '../common/Popup/YesNoPopup';
+import { useHistory } from 'react-router';
+import { leaveMeeting } from '../../API/meeting/meetingService';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -20,6 +23,8 @@ export type MeetingDetailsInfoProps = {
   meetingPassword: string | undefined;
   name: string;
   description: string;
+  isOrganizer: boolean;
+  meetingId: number;
 };
 
 const MeetingDetailsInfo = ({
@@ -30,12 +35,17 @@ const MeetingDetailsInfo = ({
   meetingPassword,
   name,
   description,
+  isOrganizer,
+  meetingId,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescirption, setEditNameAndDescription] = useState<boolean>(false);
   const [newName, setName] = useState<string>('');
   const [newDescription, setDescription] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
+  const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
+  const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
+  const history = useHistory();
 
   const updateNameAndDescription = () => {
     console.log(
@@ -48,12 +58,44 @@ const MeetingDetailsInfo = ({
     setDescription(description);
   }, [name, description]);
 
+  // TODO send to backend
+  const cancelTheMeeting = () => {
+    setCancelMeetingModal(false);
+  };
+
+  const leaveTheMeeting = () => {
+    setLeaveMeetingModal(false);
+    leaveMeeting(
+      meetingId,
+      () => void 0,
+      () => void 0,
+      () => history.push('/meetings')
+    );
+  };
+
   return (
     <Card
       title={'Details'}
       onEdit={() => {
         setEditNameAndDescription(!editNameAndDescirption);
       }}
+      footer={
+        <div className={styles.actionButtonContainer}>
+          {isOrganizer ? (
+            <ActionButton
+              onclick={() => setCancelMeetingModal(true)}
+              text={'Cancel the meeting'}
+              className={styles.actionButton}
+            />
+          ) : (
+            <ActionButton
+              onclick={() => setLeaveMeetingModal(true)}
+              text={'Leave the meeting'}
+              className={styles.actionButton}
+            />
+          )}
+        </div>
+      }
     >
       {!editNameAndDescirption ? (
         <div className={styles.container}>
@@ -125,6 +167,18 @@ const MeetingDetailsInfo = ({
           </div>
         </>
       )}
+      <YesNoPopup
+        show={cancelMeetingModal}
+        title={'Do you want to cancel the meeting?'}
+        onDecline={() => setCancelMeetingModal(false)}
+        onAccept={cancelTheMeeting}
+      />
+      <YesNoPopup
+        show={leaveMeetingModal}
+        title={'Do you want to leave the meeting?'}
+        onDecline={() => setLeaveMeetingModal(false)}
+        onAccept={leaveTheMeeting}
+      />
     </Card>
   );
 };

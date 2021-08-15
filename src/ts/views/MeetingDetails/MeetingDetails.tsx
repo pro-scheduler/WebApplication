@@ -105,6 +105,8 @@ const MeetingDetails = () => {
                 meetingPassword={meeting.password}
                 name={meeting.name}
                 description={meeting.description}
+                isOrganizer={isOrganizer}
+                meetingId={meeting.id}
               />
             </Col>
             <Col lg={6}>

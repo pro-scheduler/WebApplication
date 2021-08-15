@@ -41,3 +41,12 @@
     justify-content: center;
     margin-top: 15px;
 }
+
+.actionButtonContainer {
+    text-align: right;
+}
+
+.actionButton {
+    width: auto;
+    padding: 10px;
+}
