@@ -22,25 +22,24 @@
 
 .settingsIcon {
   margin-right: 100px;
-  font-size: 70px;
+  font-size: 50px;
   transition-duration: 1s;
   transition-property: transform;
-  color: var(--medium-grey);
+  color: var(black);
 }
 
 .settingsIcon:hover {
   transform: rotate(120deg);
   -webkit-transform: rotate(120deg);
-  color: var(--medium-grey);
   cursor: pointer;
 }
 
 .detailsIcon {
   margin-right: 100px;
-  font-size: 70px;
+  font-size: 50px;
   transition-duration: 1s;
   transition-property: transform;
-  color: var(--medium-grey);
+  color: var(black);
 }
 
 .detailsIcon:hover {

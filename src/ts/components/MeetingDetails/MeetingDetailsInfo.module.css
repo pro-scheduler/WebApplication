@@ -29,6 +29,19 @@
     height: 193px;
 }
 
+.editLabel {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
 .actionButtonContainer {
     text-align: right;
 }
