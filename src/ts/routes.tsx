@@ -16,11 +16,13 @@ import Invitations from './views/Invitations/Invitations';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { fetchCurrentUser } from './API/user/userService';
-
+import { defaultUser } from './auth/userContext';
+import { ProUser } from './model/user/ProUser';
 const Routes = () => {
+  const [user, setUser] = useState<ProUser>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
   useEffect(() => {
-    fetchCurrentUser(() => {}, setResponse);
+    fetchCurrentUser(setUser, setResponse);
   }, []);
 
   return (
@@ -58,15 +60,15 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/meetings/:id" isNotLoggedIn={response.isFailed}>
           <Navbar />
-          <MeetingDetails />
+          <MeetingDetails user={user} />
         </ProtectedRoute>
         <ProtectedRoute path="/meetings" isNotLoggedIn={response.isFailed}>
           <Navbar />
-          <Meetings />
+          <Meetings user={user} />
         </ProtectedRoute>
         <ProtectedRoute path="/invitations" isNotLoggedIn={response.isFailed}>
           <Navbar />
-          <Invitations />
+          <Invitations user={user} />
         </ProtectedRoute>
         <ProtectedRoute path="/time" isNotLoggedIn={response.isFailed}>
           <Time />

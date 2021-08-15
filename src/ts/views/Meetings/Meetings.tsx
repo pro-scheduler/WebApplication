@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { ProUser } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import { useState } from 'react';
@@ -13,15 +12,10 @@ import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import userActions from '../../actions/userActions';
 import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 import styles from './Meetings.module.css';
 
-const Meetings = () => {
-  const user: ProUser = useSelector((state: RootStateOrAny) => {
-    return state.userReducer;
-  });
-  const dispatch: Function = useDispatch();
+const Meetings = ({ user }: { user: ProUser }) => {
   const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
   const [organizedMeetingsResponse, setOrganizedMeetingsResponse] = useState<ApiCall>(
     new ApiCall()
@@ -30,11 +24,6 @@ const Meetings = () => {
   const [participatedMeetingsResponse, setParticipatedMeetingsResponse] = useState<ApiCall>(
     new ApiCall()
   );
-
-  useEffect(() => {
-    dispatch(userActions.fetchCurrentUser());
-    // eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     loadUserOrganizedMeetings(user.id, setOrganizedMeetings, setOrganizedMeetingsResponse);

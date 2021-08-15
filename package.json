@@ -11,7 +11,6 @@
     "@types/react": "^17.0.3",
     "@types/react-bootstrap-range-slider": "^1.2.0",
     "@types/react-dom": "^17.0.3",
-    "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "bootstrap": "^4.6.0",
     "classcat": "^5.0.3",
@@ -29,7 +28,6 @@
     "react-icons": "^4.2.0",
     "react-minimal-pie-chart": "^8.2.0",
     "react-pro-sidebar": "^0.6.0",
-    "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -37,7 +35,6 @@
     "react-switch": "^6.0.0",
     "react-time-picker": "^4.3.0",
     "react-toastify": "^7.0.4",
-    "redux-thunk": "^2.3.0",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"
   },
