@@ -6,6 +6,10 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
 import React, { useState } from 'react';
 import cx from 'classnames';
+import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
+import YesNoPopup from '../common/Popup/YesNoPopup';
+import { useHistory } from 'react-router';
+import { leaveMeeting } from '../../API/meeting/meetingService';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -13,6 +17,8 @@ export type MeetingDetailsInfoProps = {
   hasTime: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
+  isOrganizer: boolean;
+  meetingId: number;
 };
 
 const MeetingDetailsInfo = ({
@@ -21,10 +27,50 @@ const MeetingDetailsInfo = ({
   hasTime,
   meetingLink,
   meetingPassword,
+  isOrganizer,
+  meetingId,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
+  const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
+  const history = useHistory();
+
+  // TODO send to backend
+  const cancelTheMeeting = () => {
+    setCancelMeetingModal(false);
+  };
+
+  const leaveTheMeeting = () => {
+    setLeaveMeetingModal(false);
+    leaveMeeting(
+      meetingId,
+      () => void 0,
+      () => void 0,
+      () => history.push('/meetings')
+    );
+  };
+
   return (
-    <Card title={'Details'}>
+    <Card
+      title={'Details'}
+      footer={
+        <div className={styles.actionButtonContainer}>
+          {isOrganizer ? (
+            <ActionButton
+              onclick={() => setCancelMeetingModal(true)}
+              text={'Cancel the meeting'}
+              className={styles.actionButton}
+            />
+          ) : (
+            <ActionButton
+              onclick={() => setLeaveMeetingModal(true)}
+              text={'Leave the meeting'}
+              className={styles.actionButton}
+            />
+          )}
+        </div>
+      }
+    >
       <div className={styles.container}>
         <p className={styles.moduleContainer}>
           <BiCalendarEvent className={styles.moduleIcon} />{' '}
@@ -61,6 +107,18 @@ const MeetingDetailsInfo = ({
           {hasDeclarations ? 'Declarations available' : 'No declarations available'}
         </p>
       </div>
+      <YesNoPopup
+        show={cancelMeetingModal}
+        title={'Do you want to cancel the meeting?'}
+        onDecline={() => setCancelMeetingModal(false)}
+        onAccept={cancelTheMeeting}
+      />
+      <YesNoPopup
+        show={leaveMeetingModal}
+        title={'Do you want to leave the meeting?'}
+        onDecline={() => setLeaveMeetingModal(false)}
+        onAccept={leaveTheMeeting}
+      />
     </Card>
   );
 };

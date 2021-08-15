@@ -28,3 +28,12 @@
     overflow-x: hidden;
     height: 193px;
 }
+
+.actionButtonContainer {
+    text-align: right;
+}
+
+.actionButton {
+    width: auto;
+    padding: 10px;
+}

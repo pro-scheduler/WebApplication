@@ -7,6 +7,7 @@ import {
   getSaveUserTimeUrl,
   getAllUsersTimesUrl,
   getUserTimeAnswersUrl,
+  getLeaveMeetingUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 export const saveMeeting = (
@@ -57,3 +58,19 @@ export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Funct
 
 export const getUserTimeAnswers = (meetingId: number, setResponseData: Function) =>
   get(getUserTimeAnswersUrl(meetingId), setResponseData);
+
+export const leaveMeeting = (
+  meetingId: number,
+  setData?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  post(
+    { id: meetingId },
+    getLeaveMeetingUrl(),
+    setData,
+    setResponse,
+    true,
+    'You successfully left the meeting',
+    onSuccess
+  );
