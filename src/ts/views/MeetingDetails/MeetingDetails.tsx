@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import {
   loadMeeting,
   getAllUsersTimeAnswers,
@@ -20,20 +19,15 @@ import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import { loadUserOrganizedMeetings } from '../../API/user/userService';
-import userActions from '../../actions/userActions';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
 import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
 
-const MeetingDetails = () => {
-  const dispatch: Function = useDispatch();
+const MeetingDetails = ({ user }: { user: ProUser }) => {
   const { id }: any = useParams();
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
-  const user: ProUser = useSelector((state: RootStateOrAny) => {
-    return state.userReducer;
-  });
   const [showSettings, setShowSettings] = useState<Boolean>(false);
   const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
@@ -57,7 +51,6 @@ const MeetingDetails = () => {
   };
 
   useEffect(() => {
-    dispatch(userActions.fetchCurrentUser());
     getSurveyForMeeting(id, setSurvey);
     refreshTimeData();
     // eslint-disable-next-line

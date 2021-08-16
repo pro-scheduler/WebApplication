@@ -1,4 +1,8 @@
-import { getUserOrganizedMeetingsUrl, getUserParticipatedMeetingsUrl } from './urls';
+import {
+  getUserOrganizedMeetingsUrl,
+  getUserParticipatedMeetingsUrl,
+  getCurrentUserUrl,
+} from './urls';
 import { get } from '../genericApiCalls';
 
 export const loadUserOrganizedMeetings = (
@@ -16,3 +20,6 @@ export const loadUserParticipatedMeetings = (
 ) => {
   get(getUserParticipatedMeetingsUrl(userId), setMeetings, setResponse);
 };
+
+export const fetchCurrentUser = (setUser: Function, setResponse?: Function) =>
+  get(getCurrentUserUrl(), setUser, setResponse);

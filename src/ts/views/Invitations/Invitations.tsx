@@ -4,21 +4,10 @@ import InvitationList from '../../components/Invitations/InvitationList';
 import { BasicInvitationInfo } from '../../model/invitation/Invitation';
 import { fetchUserPendingInvitations } from '../../API/invitation/invitationService';
 import { ProUser } from '../../model/user/ProUser';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import userActions from '../../actions/userActions';
 
-const Invitations = () => {
-  const user: ProUser = useSelector((state: RootStateOrAny) => {
-    return state.userReducer;
-  });
-  const dispatch: Function = useDispatch();
+const Invitations = ({ user }: { user: ProUser }) => {
   const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
   const [refreshInvitations, setRefreshInvitations] = useState<number>(0);
-
-  useEffect(() => {
-    dispatch(userActions.fetchCurrentUser());
-    // eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     fetchUserPendingInvitations(user.id, setInvitations);
