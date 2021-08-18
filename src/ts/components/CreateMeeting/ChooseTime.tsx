@@ -10,8 +10,8 @@ import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
-import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
+import DataTimePicker from '../common/forms/DataTimePicker/DataTimePicker';
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
@@ -111,7 +111,12 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col sm={12}>
           <Card title="Deadline for time voting">
-            <TimePickerWithClock setDay={setDeadlineDate} />
+            <DataTimePicker
+              setDate={setDeadlineDate}
+              timeLabel="Select day"
+              dateLabel="Select time"
+              defaultDate={new Date()}
+            />
           </Card>
         </Col>
       </Row>

@@ -9,8 +9,8 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
-import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 import Card from '../common/Card/Card';
+import DataTimePicker from '../common/forms/DataTimePicker/DataTimePicker';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
@@ -75,7 +75,12 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title="Deadline for completing the survey">
-            <TimePickerWithClock setDay={setFinalDate} />
+            <DataTimePicker
+              setDate={setFinalDate}
+              timeLabel="Select day"
+              dateLabel="Select time"
+              defaultDate={new Date()}
+            />
           </Card>
         </Col>
       </Row>

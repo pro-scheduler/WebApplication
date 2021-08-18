@@ -10,40 +10,39 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display:flex;
+  display: flex;
   flex-direction: column;
   background-color: var(--background-color);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 /* for Firefox */
-input[type="range"].range-slider.range-slider--secondary::-moz-range-thumb {
+input[type='range'].range-slider.range-slider--secondary::-moz-range-thumb {
   background: var(--light-purple) !important;
 }
 
-input[type="range"].range-slider::-moz-range-track {
+input[type='range'].range-slider::-moz-range-track {
   background: var(--purple) !important;
 }
 
 /* for Chrome and Edge*/
-input[type="range"].range-slider.range-slider--secondary::-webkit-slider-runnable-track {
+input[type='range'].range-slider.range-slider--secondary::-webkit-slider-runnable-track {
   background: var(--light-purple) !important;
 }
 
-input[type="range"].range-slider::-webkit-slider-thumb {
+input[type='range'].range-slider::-webkit-slider-thumb {
   background: var(--purple) !important;
 }
 
 /* for Internet Explorer */
-input[type=range].range-slider.range-slider--secondary::-ms-thumb {
+input[type='range'].range-slider.range-slider--secondary::-ms-thumb {
   background: var(--light-purple) !important;
 }
 
-input[type=range].range-slider::-ms-fill-lower {
+input[type='range'].range-slider::-ms-fill-lower {
   background: var(--purple) !important;
 }
 
@@ -53,4 +52,8 @@ input[type=range].range-slider::-ms-fill-lower {
 
 .ReactCollapse--collapse {
   transition: height 1s;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  background-color: var(--purple) !important;
 }
