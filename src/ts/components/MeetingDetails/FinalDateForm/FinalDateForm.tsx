@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Card from '../../common/Card/Card';
-import DataTimePicker from '../../common/forms/DataTimePicker/DataTimePicker';
+import DateTimePicker from '../../common/forms/DateTimePicker/DateTimePicker';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import styles from './FinalDateForm.module.css';
 
 export type FinalDateFormProps = {
-  meetingId: string;
+  meetingId: number;
   finalBeginDate: Date;
   finalEndDate: Date;
 };
@@ -33,44 +33,61 @@ const FinalDateForm = ({ meetingId, finalBeginDate, finalEndDate }: FinalDateFor
           footer={
             <div>
               <div className={styles.buttonContainer}>
-                <ActionButton
-                  onclick={saveFinalDate}
-                  text="Save FInal Date"
-                  className={styles.submitButton}
-                  disabled={finalEndDate === endDate && finalBeginDate === beginDate}
-                />
-                <ActionButton
-                  onclick={reset}
-                  text="Reset"
-                  disabled={finalEndDate === endDate && finalBeginDate === beginDate}
-                />
+                <Row className="justify-content">
+                  <Col lg={6}>
+                    <div className={styles.centerColumn}>
+                      <ActionButton
+                        onclick={saveFinalDate}
+                        text="Save final date"
+                        disabled={finalEndDate === endDate && finalBeginDate === beginDate}
+                        className={styles.buttonAction}
+                      />
+                    </div>
+                  </Col>
+                  <Col lg={6} className="mt-2 mt-lg-0">
+                    <div className={styles.centerColumn}>
+                      <ActionButton
+                        onclick={reset}
+                        text="Reset"
+                        disabled={finalEndDate === endDate && finalBeginDate === beginDate}
+                        className={styles.buttonAction}
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </div>
             </div>
           }
         >
           <div className={styles.finalDateContainer}>
-            <div className={styles.beginDatePicker}>
-              <div>
-                Begin date:
-                <DataTimePicker
-                  dateLabel="set meeting begin day"
-                  timeLabel="Set meeting begin time"
-                  setDate={setBeginDate}
-                  defaultDate={beginDate}
-                />
-              </div>
-            </div>
-            <div className={styles.endDatePicker}>
-              <div>
-                End date:
-                <DataTimePicker
-                  dateLabel="set meeting end day"
-                  timeLabel="Set meeting end time"
-                  setDate={setEndDate}
-                  defaultDate={endDate}
-                />
-              </div>
-            </div>
+            <Row className="justify-content">
+              <Col lg={6}>
+                <div className={styles.beginDatePicker}>
+                  <div>
+                    Begin date:
+                    <DateTimePicker
+                      dateLabel="Set meeting begin day"
+                      timeLabel="Set meeting begin time"
+                      setDate={setBeginDate}
+                      defaultDate={beginDate}
+                    />
+                  </div>
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className={styles.endDatePicker}>
+                  <div>
+                    End date:
+                    <DateTimePicker
+                      dateLabel="Set meeting end day"
+                      timeLabel="Set meeting end time"
+                      setDate={setEndDate}
+                      defaultDate={endDate}
+                    />
+                  </div>
+                </div>
+              </Col>
+            </Row>
           </div>
         </Card>
       </Col>

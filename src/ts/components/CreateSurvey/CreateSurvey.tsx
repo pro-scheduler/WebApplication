@@ -10,7 +10,7 @@ import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
-import DataTimePicker from '../common/forms/DataTimePicker/DataTimePicker';
+import DateTimePicker from '../common/forms/DateTimePicker/DateTimePicker';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
@@ -21,7 +21,7 @@ export type CreateSurveyProps = {
 const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
-  const [finalDate, setFinalDate] = useState<Date | undefined>(undefined);
+  const [finalDate, setFinalDate] = useState<Date>(new Date());
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -75,11 +75,11 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col>
           <Card title="Deadline for completing the survey">
-            <DataTimePicker
+            <DateTimePicker
               setDate={setFinalDate}
               timeLabel="Select day"
               dateLabel="Select time"
-              defaultDate={new Date()}
+              defaultDate={finalDate}
             />
           </Card>
         </Col>

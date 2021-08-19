@@ -1,4 +1,4 @@
-import styles from './DataTimePicker.module.css';
+import styles from './DateTimePicker.module.css';
 import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
@@ -6,7 +6,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { createTheme, ThemeProvider } from '@material-ui/core';
-export type DataTimePickerProps = {
+export type DateTimePickerProps = {
   setDate: Function;
   timeLabel: String;
   dateLabel: String;
@@ -20,7 +20,7 @@ const theme = createTheme({
   },
 });
 
-const DataTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DataTimePickerProps) => {
+const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTimePickerProps) => {
   const handleDateChange = (date: Date | null) => {
     setDate(date);
   };
@@ -62,4 +62,4 @@ const DataTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DataTime
   );
 };
 
-export default DataTimePicker;
+export default DateTimePicker;
