@@ -6,6 +6,8 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { createTheme, ThemeProvider } from '@material-ui/core';
+import { useState } from 'react';
+import { useEffect } from 'react';
 export type DateTimePickerProps = {
   setDate: Function;
   timeLabel: String;
@@ -21,9 +23,20 @@ const theme = createTheme({
 });
 
 const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTimePickerProps) => {
+  const [currentDate, setCurrentDate] = useState<Date>(defaultDate);
   const handleDateChange = (date: Date | null) => {
-    setDate(date);
+    if (date) {
+      let newDate: Date | undefined = new Date(date.getTime());
+      newDate?.setTime(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
+      setDate(newDate);
+    }
   };
+
+  useEffect(() => {
+    let newDate: Date | undefined = new Date(defaultDate.getTime());
+    newDate?.setTime(newDate.getTime() + newDate.getTimezoneOffset() * 60 * 1000);
+    setCurrentDate(newDate);
+  }, [defaultDate]);
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -36,7 +49,7 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
               variant="inline"
               label={dateLabel}
               format="MM/dd/yyyy"
-              value={defaultDate}
+              value={currentDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
@@ -49,7 +62,7 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
               variant="inline"
               id="time-picker"
               label={timeLabel}
-              value={defaultDate}
+              value={currentDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change time',
