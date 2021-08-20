@@ -6,6 +6,11 @@ export enum MeetingType {
   REAL = 'REAL',
 }
 
+export enum MeetingRole {
+  ORGANIZER = 'ORGANIZER',
+  ATTENDEE = 'ATTENDEE',
+}
+
 export type Meeting = {
   id: number;
   name: string;
@@ -63,6 +68,7 @@ export type MeetingDetailsDTO = {
   description: string;
   availableTimeRanges: TimeRangeDTO[];
   type: MeetingType;
+  markTimeRangeDeadline: Date | undefined;
 };
 
 export type DeepMeetingDetailsDTO = {
@@ -96,6 +102,7 @@ export class OnlineMeetingDetailsDTO implements MeetingDetailsDTO {
     public availableTimeRanges: TimeRangeDTO[],
     public link: string,
     public password: string,
+    public markTimeRangeDeadline: Date | undefined,
     public type: MeetingType = MeetingType.ONLINE
   ) {}
 }
@@ -117,6 +124,17 @@ export class RealMeetingDetailsDTO implements MeetingDetailsDTO {
     public name: string,
     public description: string,
     public availableTimeRanges: TimeRangeDTO[],
+    public markTimeRangeDeadline: Date | undefined,
     public type: MeetingType = MeetingType.REAL
+  ) {}
+}
+
+export class MeetingAttendeeDetails {
+  constructor(
+    public attendeeId: number,
+    public userId: string,
+    public markedTimeRanges: TimeRangeDTO[],
+    public email: string,
+    public role: MeetingRole = MeetingRole.ATTENDEE
   ) {}
 }

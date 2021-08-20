@@ -69,8 +69,15 @@ const CreateMeeting = () => {
     // need add deadlineDate here
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
-        ? new RealMeetingDetailsDTO(name, description, timeRanges)
-        : new OnlineMeetingDetailsDTO(name, description, timeRanges, onlineLink, onlinePassword);
+        ? new RealMeetingDetailsDTO(name, description, timeRanges, deadlineDate)
+        : new OnlineMeetingDetailsDTO(
+            name,
+            description,
+            timeRanges,
+            onlineLink,
+            onlinePassword,
+            deadlineDate
+          );
     saveMeeting(meeting, setMeetingId, setSaveMeetingResponse, 'Meeting created successfully');
   };
 

@@ -4,21 +4,15 @@ import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
-import {
-  loadMeeting,
-  getAllUsersTimeAnswers,
-  getUserTimeAnswers,
-} from '../../API/meeting/meetingService';
+import { loadMeeting } from '../../API/meeting/meetingService';
 import { ProUser } from '../../model/user/ProUser';
-import { Meeting } from '../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingRole } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
-import { MeetingTimeSummary } from '../../model/meeting/MeetingTimeSummary';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
-import { loadUserOrganizedMeetings } from '../../API/user/userService';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
@@ -30,45 +24,46 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [showSettings, setShowSettings] = useState<Boolean>(false);
-  const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
   const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
-  const [allUsersAnswers, setAllUsersAnswers] = useState<MeetingTimeSummary>({
-    availableTimeRanges: [],
-    timeRangesEnteredByAllUsers: [],
-  });
+  const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
+
   useEffect(() => {
     loadMeeting(id, setMeeting, setMeetingResponse);
     // eslint-disable-next-line
   }, [refreshParticipants]);
 
   const refreshTimeData = () => {
-    getAllUsersTimeAnswers(id, setAllUsersAnswers);
-    getUserTimeAnswers(id, setUserTimeAnswers);
+    if (meeting) {
+      setAllUsersAnswers(
+        meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
+      );
+      // TO do add user time answers
+      setUserTimeAnswers([]);
+    }
   };
+  useEffect(() => {
+    refreshTimeData();
+    // eslint-disable-next-line
+  }, [meeting]);
 
   useEffect(() => {
     getSurveyForMeeting(id, setSurvey);
-    refreshTimeData();
-    // eslint-disable-next-line
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    loadUserOrganizedMeetings(user.id, setOrganizedMeetings);
-    // eslint-disable-next-line
-  }, [user.id]);
-
-  useEffect(() => {
-    setIsOrganizer(
-      organizedMeetings.filter((meeting: Meeting) => meeting.id === parseInt(id)).pop() !==
-        undefined
-    );
-    // eslint-disable-next-line
-  }, [organizedMeetings]);
+    if (meeting)
+      setIsOrganizer(
+        meeting.attendees.some(
+          (a: MeetingAttendeeDetails) =>
+            parseInt(a.userId) === user.id && a.role === MeetingRole.ORGANIZER
+        )
+      );
+  }, [meeting, user.id]);
 
   useEffect(() => {
     getSurveySummary(id, setSurveySummary);
@@ -82,7 +77,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           name={meeting.name}
           meetingId={id}
           description={meeting.description}
-          organizers={meeting.organizers}
+          organizers={meeting.attendees.filter(
+            (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ORGANIZER
+          )}
           showSettings={showSettings}
           setShowSettings={setShowSettings}
           isOrganizer={isOrganizer}
@@ -108,7 +105,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 meetingId={id}
                 isOrganizer={isOrganizer}
                 refreshParticipants={setRefreshParticipants}
-                participants={meeting.participants}
+                participants={meeting.attendees}
               />
             </Col>
           </Row>
@@ -121,12 +118,11 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           <MeetingTime
             meetingId={id}
             timeRanges={meeting.availableTimeRanges}
-            answers={allUsersAnswers.timeRangesEnteredByAllUsers}
+            answers={allUsersAnswers}
             userRanges={userTimeAnswers}
             refreshTimeData={refreshTimeData}
-            // meeting.timeDeadline here ( change '+' for '-' to check expiration time message)
-            timeDeadline={new Date(new Date().getTime() + 60 * 60 * 60 * 1000)}
-            numberOfParticipants={meeting.participants.length}
+            timeDeadline={new Date(meeting.markTimeRangeDeadline)}
+            numberOfParticipants={meeting.attendees.length}
           />
         )}
         {survey && !showSettings && (
@@ -134,7 +130,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             survey={survey}
             setRefreshSurveySummary={setRefreshSurveySummary}
             surveySummary={surveySummary}
-            numberOfParticipants={meeting.participants.length}
+            numberOfParticipants={meeting.attendees.length}
           />
         )}
       </Container>
