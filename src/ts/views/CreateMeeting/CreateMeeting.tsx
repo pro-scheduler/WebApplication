@@ -91,11 +91,13 @@ const CreateMeeting = () => {
 
   useEffect(() => {
     if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
-      const invitations = {
+      const createInvitationsRequest = {
+        meetingId: meetingId.id,
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+        message: 'Hi!!!',
       };
-      if (invitations.emails.length > 0) {
-        createInvitations(meetingId.id, invitations, setSetInvitationsResponse);
+      if (createInvitationsRequest.emails.length > 0) {
+        createInvitations(createInvitationsRequest, setSetInvitationsResponse);
       }
       if (survey.questions.length > 0) {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);

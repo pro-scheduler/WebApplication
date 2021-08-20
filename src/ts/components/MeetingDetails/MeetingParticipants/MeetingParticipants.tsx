@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './MeetingParticipants.module.css';
 import UserNameIcon from '../../common/Icons/UserNameIcon';
-import { BasicInvitationInfo, State } from '../../../model/invitation/Invitation';
+import { InvitationDetails, State } from '../../../model/invitation/Invitation';
 import { ValueLabelPair } from '../../../model/utils/ValueLabelPair';
 import {
   createInvitations,
@@ -32,7 +32,7 @@ const MeetingParticipants = ({
   participants,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
-  const [invitations, setInvitations] = useState<BasicInvitationInfo[]>([]);
+  const [invitations, setInvitations] = useState<InvitationDetails[]>([]);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [state, setState] = useState<State>(State.ACCEPTED);
@@ -52,9 +52,10 @@ const MeetingParticipants = ({
 
   const sendInvitations = () => {
     createInvitations(
-      meetingId,
       {
+        meetingId: meetingId,
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
+        message: 'Invitation message!',
       },
       setSaveResponse
     );
@@ -69,13 +70,13 @@ const MeetingParticipants = ({
     // eslint-disable-next-line
   }, [saveResponse]);
 
-  const invitationsToList = (basicInvitationsInfo: BasicInvitationInfo[]) => {
-    return basicInvitationsInfo.map((basicInvitationInfo: BasicInvitationInfo, index: number) => {
+  const invitationsToList = (invitationDetailsList: InvitationDetails[]) => {
+    return invitationDetailsList.map((invitationDetails: InvitationDetails, index: number) => {
       return (
-        <div key={index + basicInvitationInfo.state}>
+        <div key={index + invitationDetails.state}>
           <div className={styles.participantRow}>
             <div className={styles.userNameIcon}>
-              <UserNameIcon email={basicInvitationInfo.basicUserInfoDTO.email} />
+              <UserNameIcon email={invitationDetails.user.email} />
             </div>
           </div>
           <hr className={styles.hrLine} />
@@ -110,13 +111,13 @@ const MeetingParticipants = ({
 
   const pendingInvitations = invitationsToList(
     invitations.filter(
-      (basicInvitationInfo: BasicInvitationInfo) => basicInvitationInfo.state === State.PENDING
+      (invitationDetails: InvitationDetails) => invitationDetails.state === State.PENDING
     )
   );
 
   const rejectedInvitations = invitationsToList(
     invitations.filter(
-      (basicInvitationInfo: BasicInvitationInfo) => basicInvitationInfo.state === State.REJECTED
+      (invitationDetails: InvitationDetails) => invitationDetails.state === State.REJECTED
     )
   );
 

@@ -26,6 +26,12 @@ export type MeetingDTO = {
   type: MeetingType;
 };
 
+export type MeetingSummary = {
+  id: number;
+  name: string;
+  description: string;
+};
+
 export class OnlineMeeting implements Meeting {
   constructor(
     public id: number,
