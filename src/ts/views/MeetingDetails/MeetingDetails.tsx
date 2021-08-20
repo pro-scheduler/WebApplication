@@ -23,6 +23,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
 import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
+import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 
 const MeetingDetails = ({ user }: { user: ProUser }) => {
   const { id }: any = useParams();
@@ -111,6 +112,10 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
               />
             </Col>
           </Row>
+        )}
+        {!showSettings && (
+          // TODO connect with api
+          <FinalDateForm meetingId={id} finalEndDate={new Date()} finalBeginDate={new Date()} />
         )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime

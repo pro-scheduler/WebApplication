@@ -1,0 +1,20 @@
+.timePickerContainer {
+  margin: 10px;
+  margin-top: 0;
+}
+.dataPickerContainer {
+  margin: 10px;
+  margin-top: 0;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 610px) {
+  .container {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -10,8 +10,8 @@ import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
-import TimePickerWithClock from '../common/forms/TimePicker/TimePickerWithClock';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
+import DateTimePicker from '../common/forms/DateTimePicker/DateTimePicker';
 
 interface RangesWithDay {
   [key: string]: { ranges: Array<{ from: string; to: string }>; date: Date };
@@ -25,6 +25,7 @@ export type ChooseTimeProps = {
 const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
+  const [deadline, setDeadline] = useState<Date>(new Date());
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
@@ -111,7 +112,15 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
       <Row className="justify-content-center mt-4 ml-sm-5">
         <Col sm={12}>
           <Card title="Deadline for time voting">
-            <TimePickerWithClock setDay={setDeadlineDate} />
+            <DateTimePicker
+              setDate={(date: Date) => {
+                setDeadlineDate(date);
+                setDeadline(date);
+              }}
+              timeLabel="Select day"
+              dateLabel="Select time"
+              defaultDate={deadline}
+            />
           </Card>
         </Col>
       </Row>
