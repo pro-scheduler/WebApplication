@@ -2,7 +2,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import EnvelopIcon from '../common/Icons/EnvelopIcon';
 import styles from './InvitationList.module.css';
-import { BasicInvitationInfo } from '../../model/invitation/Invitation';
+import { InvitationDetails } from '../../model/invitation/Invitation';
 import Card from '../common/Card/Card';
 import { Table } from 'react-bootstrap';
 import { acceptInvitation, rejectInvitation } from '../../API/invitation/invitationService';
@@ -12,12 +12,12 @@ import SearchBox from '../common/forms/Input/SearchBox';
 import { useEffect, useState } from 'react';
 
 export type InvitationListProps = {
-  invitations: BasicInvitationInfo[];
+  invitations: InvitationDetails[];
   refreshInvitations: (value: number) => void;
 };
 const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<BasicInvitationInfo[]>(invitations);
+  const [searchResults, setSearchResults] = useState<InvitationDetails[]>(invitations);
   const handleChange = (event: any) => {
     setSearchTerm(event.target.value);
   };
@@ -25,28 +25,28 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
   useEffect(() => {
     setSearchResults(
       searchTerm !== ''
-        ? invitations.filter((invitation: BasicInvitationInfo) =>
-            invitation.basicMeetingDetailsDTO.name.toLowerCase().includes(searchTerm.toLowerCase())
+        ? invitations.filter((invitation: InvitationDetails) =>
+            invitation.meeting.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
         : invitations
     );
   }, [searchTerm, invitations]);
 
-  const invitationRows = searchResults.map((invitation: BasicInvitationInfo, index: number) => {
+  const invitationRows = searchResults.map((invitation: InvitationDetails, index: number) => {
     return (
       <tr key={index}>
-        <td>{invitation.basicMeetingDetailsDTO.name}</td>
-        <td>{invitation.basicMeetingDetailsDTO.description}</td>
+        <td>{invitation.meeting.name}</td>
+        <td>{invitation.meeting.description}</td>
         <td>
           <div className={styles.acceptRejectContainer}>
             <YesButton
               onAccept={() =>
-                acceptInvitation(invitation.invitationId, () => refreshInvitations(Math.random()))
+                acceptInvitation(invitation.id, () => refreshInvitations(Math.random()))
               }
             />
             <DeleteButton
               onDelete={() =>
-                rejectInvitation(invitation.invitationId, () => refreshInvitations(Math.random()))
+                rejectInvitation(invitation.id, () => refreshInvitations(Math.random()))
               }
             />
           </div>

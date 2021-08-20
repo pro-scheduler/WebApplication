@@ -18,3 +18,8 @@ export type UserResponse = {
   email: string;
   nickname: string;
 };
+
+export type UserSummary = {
+  id: number;
+  email: string;
+};

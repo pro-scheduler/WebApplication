@@ -4,18 +4,18 @@ import {
   getAcceptInvitationUrl,
   getRejectInvitationUrl,
   getUserPendingInvitationsUrl,
+  getInvitationsUrl,
 } from './urls';
-import { InvitationEmailsDTO } from '../../model/invitation/Invitation';
+import { CreateInvitationsRequest } from '../../model/invitation/Invitation';
 
 export const createInvitations = (
-  meetingId: number,
-  invitationEmailsDTO: InvitationEmailsDTO,
+  createRequest: CreateInvitationsRequest,
   setResponse?: Function,
   setData?: Function
 ) =>
   post(
-    invitationEmailsDTO,
-    getMeetingInvitationsUrl(meetingId),
+    createRequest,
+    getInvitationsUrl(),
     setData,
     setResponse,
     true,
