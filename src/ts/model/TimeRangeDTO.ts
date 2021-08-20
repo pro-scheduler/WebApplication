@@ -1,4 +1,4 @@
 export type TimeRangeDTO = {
-  startDateTime: Date;
-  endDateTime: Date;
+  timeStart: Date;
+  timeEnd: Date;
 };

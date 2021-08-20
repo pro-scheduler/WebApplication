@@ -76,7 +76,7 @@ const MeetingTime = ({
           to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
           from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
           to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
-          rangesFiltered.push({ startDateTime: from, endDateTime: to });
+          rangesFiltered.push({ timeStart: from, timeEnd: to });
         });
       }
     }
@@ -88,12 +88,12 @@ const MeetingTime = ({
   useEffect(() => {
     let ranges: RangesWithDay = {};
     timeRanges.sort((range1: TimeRangeDTO, range2: TimeRangeDTO) => {
-      return new Date(range1.startDateTime).getTime() - new Date(range2.startDateTime).getTime();
+      return new Date(range1.timeStart).getTime() - new Date(range2.timeStart).getTime();
     });
     timeRanges
       .map((range) => {
-        const start = new Date(range.startDateTime);
-        const end = new Date(range.endDateTime);
+        const start = new Date(range.timeStart);
+        const end = new Date(range.timeEnd);
         const day =
           ('0' + start.getDate()).slice(-2) +
           '.' +
@@ -116,8 +116,8 @@ const MeetingTime = ({
     if (answers) {
       answers
         .map((range) => {
-          const start = new Date(range.startDateTime);
-          const end = new Date(range.endDateTime);
+          const start = new Date(range.timeStart);
+          const end = new Date(range.timeEnd);
           const day =
             ('0' + start.getDate()).slice(-2) +
             '.' +
@@ -141,8 +141,8 @@ const MeetingTime = ({
     if (userRanges) {
       userRanges
         .map((range) => {
-          const start = new Date(range.startDateTime);
-          const end = new Date(range.endDateTime);
+          const start = new Date(range.timeStart);
+          const end = new Date(range.timeEnd);
           const day =
             ('0' + start.getDate()).slice(-2) +
             '.' +

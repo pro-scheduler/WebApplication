@@ -60,7 +60,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
               to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
               from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
               to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
-              rangesFiltered.push({ startDateTime: from, endDateTime: to });
+              rangesFiltered.push({ timeStart: from, timeEnd: to });
             });
           }
         }
