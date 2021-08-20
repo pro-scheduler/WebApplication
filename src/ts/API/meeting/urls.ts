@@ -2,9 +2,6 @@ export const getMeetingsUrl = () => `${process.env.REACT_APP_API_URL}meetings`;
 
 export const getMeetingUrl = (meetingId: number) => getMeetingsUrl() + `/${meetingId}`;
 
-export const getMeetingTimeRangesUrl = (meetingId: number) =>
-  getMeetingUrl(meetingId) + '/timeranges';
-
 export const getMeetingParticipantsUrl = (meetingId: number) =>
   getMeetingUrl(meetingId) + '/participants';
 
