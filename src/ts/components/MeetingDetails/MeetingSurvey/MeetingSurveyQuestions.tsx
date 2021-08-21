@@ -7,7 +7,6 @@ import { Answer } from '../../../model/survey/Answer';
 import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
-import Col from 'react-bootstrap/Col';
 
 const MeetingSurveyQuestions = ({
   survey,
@@ -76,7 +75,7 @@ const MeetingSurveyQuestions = ({
   };
 
   return (
-    <Col className="mt-3">
+    <>
       <div>{questions}</div>
       <div className="text-center mt-5">
         {survey.state === 'OPEN' && (
@@ -88,7 +87,7 @@ const MeetingSurveyQuestions = ({
           />
         )}
       </div>
-    </Col>
+    </>
   );
 };
 

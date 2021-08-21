@@ -1,4 +1,3 @@
-import Col from 'react-bootstrap/Col';
 import AnswersPieChart from './AnswersPieChart';
 import React from 'react';
 import OpenAnswers from './OpenAnswers';
@@ -44,11 +43,7 @@ const MeetingSurveyAnswers = ({ surveySummary }: MeetingSurveyResultsProps) => {
     );
   });
 
-  return (
-    <Col className="mt-3">
-      <div>{charts}</div>
-    </Col>
-  );
+  return <div>{charts}</div>;
 };
 
 export default MeetingSurveyAnswers;

@@ -55,16 +55,18 @@ const MeetingSurvey = ({
           </div>
         </Collapse>
       </Col>
-      <Collapse isOpened={opened}>
-        {displayAnswers ? (
-          <MeetingSurveyQuestions
-            survey={survey}
-            setRefreshSurveySummary={setRefreshSurveySummary}
-          />
-        ) : (
-          surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
-        )}
-      </Collapse>
+      <Col className="mt-3">
+        <Collapse isOpened={opened}>
+          {displayAnswers ? (
+            <MeetingSurveyQuestions
+              survey={survey}
+              setRefreshSurveySummary={setRefreshSurveySummary}
+            />
+          ) : (
+            surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
+          )}
+        </Collapse>
+      </Col>
     </Row>
   );
 };
