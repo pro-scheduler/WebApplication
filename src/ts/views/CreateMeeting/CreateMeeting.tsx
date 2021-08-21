@@ -46,7 +46,6 @@ const CreateMeeting = () => {
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [timeRanges, setTimeRanges] = useState<TimeRangeDTO[]>([]);
-  // eslint-disable-next-line
   const [deadlineDate, setDeadlineDate] = useState<Date | undefined>(undefined);
   const history = useHistory();
   const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });

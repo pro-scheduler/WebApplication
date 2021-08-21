@@ -16,7 +16,9 @@ const FinalDateForm = ({ meetingId, finalBeginDate, finalEndDate }: FinalDateFor
   const [endDate, setEndDate] = useState(finalEndDate);
 
   const saveFinalDate = () => {
-    //TO DO send save request here
+    //TODO send save request here
+    beginDate.setTime(beginDate.getTime() - beginDate.getTimezoneOffset() * 60 * 1000);
+    endDate.setTime(endDate.getTime() - endDate.getTimezoneOffset() * 60 * 1000);
     console.log(endDate, beginDate, meetingId);
   };
 
