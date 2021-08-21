@@ -42,7 +42,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
       setAllUsersAnswers(
         meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
       );
-      // TO do add user time answers
+      // TODO add user time answers
       setUserTimeAnswers([]);
     }
   };
