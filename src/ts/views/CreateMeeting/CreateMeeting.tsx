@@ -66,7 +66,9 @@ const CreateMeeting = () => {
   const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
 
   const saveThisMeeting = () => {
-    // need add deadlineDate here
+    if (deadlineDate) {
+      deadlineDate.setTime(deadlineDate.getTime() - deadlineDate.getTimezoneOffset() * 60 * 1000);
+    }
     const meeting: MeetingDetailsDTO =
       onlineLink === ''
         ? new RealMeetingDetailsDTO(name, description, timeRanges, deadlineDate)
@@ -107,6 +109,11 @@ const CreateMeeting = () => {
         createInvitations(createInvitationsRequest, setSetInvitationsResponse);
       }
       if (survey.questions.length > 0) {
+        if (survey.surveyEndDate) {
+          survey.surveyEndDate.setTime(
+            survey.surveyEndDate.getTime() - survey.surveyEndDate.getTimezoneOffset() * 60 * 1000
+          );
+        }
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });

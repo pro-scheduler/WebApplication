@@ -59,9 +59,6 @@ const MeetingTime = ({
   };
 
   useEffect(() => {
-    console.log(userRanges, timeRanges, answers);
-  }, [timeRanges, userRanges, answers]);
-  useEffect(() => {
     if (timeDeadline) setDeadlineExceeded(new Date().getTime() - timeDeadline.getTime() > 0);
   }, [timeDeadline]);
 

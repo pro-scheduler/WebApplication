@@ -26,15 +26,12 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
   const [currentDate, setCurrentDate] = useState<Date>(defaultDate);
   const handleDateChange = (date: Date | null) => {
     if (date) {
-      let newDate: Date | undefined = new Date(date.getTime());
-      newDate?.setTime(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
-      setDate(newDate);
+      setDate(date);
     }
   };
 
   useEffect(() => {
-    let newDate: Date | undefined = new Date(defaultDate.getTime());
-    newDate?.setTime(newDate.getTime() + newDate.getTimezoneOffset() * 60 * 1000);
+    const newDate = new Date(defaultDate);
     setCurrentDate(newDate);
   }, [defaultDate]);
 
@@ -45,7 +42,6 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
           <div className={styles.dataPickerContainer}>
             <KeyboardDatePicker
               margin="normal"
-              id="date-picker-dialog"
               variant="inline"
               label={dateLabel}
               format="MM/dd/yyyy"
@@ -60,7 +56,6 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
             <KeyboardTimePicker
               margin="normal"
               variant="inline"
-              id="time-picker"
               label={timeLabel}
               value={currentDate}
               onChange={handleDateChange}

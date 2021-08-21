@@ -19,6 +19,7 @@ export type Meeting = {
   organizers: ProUser[];
   participants: ProUser[];
   type: MeetingType;
+  markTimeRangeDeadline: string | undefined;
 };
 
 export type MeetingDTO = {
@@ -47,7 +48,8 @@ export class OnlineMeeting implements Meeting {
     public organizers: ProUser[],
     public link: string,
     public password: string,
-    public type: MeetingType = MeetingType.ONLINE
+    public type: MeetingType = MeetingType.ONLINE,
+    public markTimeRangeDeadline: string | undefined
   ) {}
 }
 
@@ -59,7 +61,8 @@ export class RealMeeting implements Meeting {
     public availableTimeRanges: TimeRangeDTO[],
     public participants: ProUser[],
     public organizers: ProUser[],
-    public type: MeetingType = MeetingType.REAL
+    public type: MeetingType = MeetingType.REAL,
+    public markTimeRangeDeadline: string | undefined
   ) {}
 }
 
