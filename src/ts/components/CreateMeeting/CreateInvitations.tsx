@@ -19,6 +19,7 @@ export type CreateInvitationsProps = {
   showIcon: boolean;
   emails: ValueLabelPair[];
   setEmails: (newEmails: ValueLabelPair[]) => void;
+  setInvitationMessage: (message: string) => void;
   oneColumn?: boolean;
 };
 
@@ -27,10 +28,9 @@ const CreateInvitations = ({
   showIcon,
   emails,
   setEmails,
+  setInvitationMessage,
   oneColumn = false,
 }: CreateInvitationsProps) => {
-  // eslint-disable-next-line
-  const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [email, setEmail] = useState<string>('');
 
   const addEmail = () => {

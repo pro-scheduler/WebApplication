@@ -32,6 +32,7 @@ const MeetingParticipants = ({
   participants,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [invitations, setInvitations] = useState<InvitationDetails[]>([]);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
@@ -55,7 +56,7 @@ const MeetingParticipants = ({
       {
         meetingId: meetingId,
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        message: 'Invitation message!',
+        message: invitationMessage,
       },
       setSaveResponse
     );
@@ -161,6 +162,7 @@ const MeetingParticipants = ({
           emails={emails}
           setEmails={setEmails}
           oneColumn={true}
+          setInvitationMessage={setInvitationMessage}
         />
         <ActionButton
           onclick={sendInvitations}

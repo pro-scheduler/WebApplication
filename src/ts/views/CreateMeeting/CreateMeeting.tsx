@@ -41,6 +41,7 @@ const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
+  const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [onlineLink, setOnlineLink] = useState<string>('');
   const [onlinePassword, setOnlinePassword] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
@@ -103,7 +104,7 @@ const CreateMeeting = () => {
       const createInvitationsRequest = {
         meetingId: meetingId.id,
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
-        message: 'Hi!!!',
+        message: invitationMessage,
       };
       if (createInvitationsRequest.emails.length > 0) {
         createInvitations(createInvitationsRequest, setSetInvitationsResponse);
@@ -185,7 +186,13 @@ const CreateMeeting = () => {
         setSelectedRanges={setTimeRanges}
         setDeadlineDate={setDeadlineDate}
       />
-      <CreateInvitations state={state} showIcon={true} emails={emails} setEmails={setEmails} />
+      <CreateInvitations
+        state={state}
+        showIcon={true}
+        emails={emails}
+        setEmails={setEmails}
+        setInvitationMessage={setInvitationMessage}
+      />
       <OnlineDetails
         state={state}
         onlineLink={onlineLink}
