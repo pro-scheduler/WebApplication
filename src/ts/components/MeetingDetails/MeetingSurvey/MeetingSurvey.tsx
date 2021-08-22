@@ -42,6 +42,7 @@ const MeetingSurvey = ({
   });
   const [questions, setQuestions] = useState<Question[]>();
   const [editSurveyMode, setEditSurveyMode] = useState<boolean>(false);
+  const [questionsToAdd, setQuestionsToAdd] = useState<Question[]>([]);
 
   const setSurveyToEditAndQuestions = (receivedSurvey: SurveyWithQuestionsDTO) => {
     setSurveyToEdit(receivedSurvey);
@@ -53,6 +54,16 @@ const MeetingSurvey = ({
   }, [survey.meetingId]);
 
   const updateSurvey = () => {
+    if (questionsToAdd.length > 0) {
+      setQuestionsToAdd(
+        questionsToAdd.map((question: Question) => {
+          question.id = null;
+          return question;
+        })
+      );
+
+      surveyToEdit.questions = [...surveyToEdit.questions, ...questionsToAdd];
+    }
     editSurvey(survey.id, surveyToEdit, () => getSurveyToEdit(survey.meetingId, setSurveyToEdit));
     setRefreshSurvey(Math.random());
   };
@@ -104,6 +115,8 @@ const MeetingSurvey = ({
                 <MeetingSurveyQuestions
                   survey={survey}
                   setRefreshSurveySummary={setRefreshSurveySummary}
+                  questionsToAdd={questionsToAdd}
+                  setQuestionsToAdd={setQuestionsToAdd}
                 />
               ) : (
                 surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
@@ -120,6 +133,8 @@ const MeetingSurvey = ({
                 setRefreshSurveySummary={setRefreshSurveySummary}
                 surveyToEdit={surveyToEdit}
                 setSurveyToEdit={setSurveyToEdit}
+                questionsToAdd={questionsToAdd}
+                setQuestionsToAdd={setQuestionsToAdd}
               />
             </Collapse>
           </Col>
@@ -131,7 +146,8 @@ const MeetingSurvey = ({
                 disabled={
                   survey.description === surveyToEdit.description &&
                   survey.surveyEndDate === surveyToEdit.surveyEndDate &&
-                  questions === surveyToEdit.questions
+                  questions === surveyToEdit.questions &&
+                  questionsToAdd.length === 0
                 }
               />
             </Collapse>

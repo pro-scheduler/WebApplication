@@ -7,17 +7,25 @@ import { Answer } from '../../../model/survey/Answer';
 import styles from './MeetingSurveyQuestions.module.css';
 import { fillSurvey } from '../../../API/survey/surveyService';
 import { ApiCall } from '../../../API/genericApiCalls';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import QuestionCreate from '../../CreateSurvey/QuestionCreate';
+import PlusButton from '../../common/RoundButtons/PlusButton';
 
 const MeetingSurveyQuestions = ({
   survey,
   setRefreshSurveySummary,
   surveyToEdit,
   setSurveyToEdit,
+  questionsToAdd,
+  setQuestionsToAdd,
 }: {
   survey: UserSurvey;
   setRefreshSurveySummary: (value: number) => void;
   surveyToEdit?: SurveyWithQuestionsDTO;
   setSurveyToEdit?: (editedSurvey: SurveyWithQuestionsDTO) => void;
+  questionsToAdd: Question[];
+  setQuestionsToAdd: (newQuestions: Question[]) => void;
 }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
@@ -25,6 +33,8 @@ const MeetingSurveyQuestions = ({
   const [dataUpdated, setDataUpdated] = useState(true);
   const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.userState);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+  const [newQuestions, setNewQuestions] = useState<number[]>([]);
+  const [questionId, setQuestionId] = useState(0);
 
   useEffect(() => {
     if (saveResponse.isSuccess) {
@@ -75,6 +85,23 @@ const MeetingSurveyQuestions = ({
     }
   };
 
+  const createNewQuestion = () => {
+    setNewQuestions([...newQuestions, questionId]);
+    setQuestionId(questionId + 1);
+  };
+
+  const updateNewQuestion = (questionToUpdate: Question) => {
+    const updatedQuestions = questionsToAdd.filter(
+      (question: Question) => question.id !== questionToUpdate.id
+    );
+    setQuestionsToAdd([...updatedQuestions, questionToUpdate]);
+  };
+
+  const deleteNewQuestion = (idToDelete: number) => {
+    setQuestionsToAdd(questionsToAdd.filter((question: Question) => question.id !== idToDelete));
+    setNewQuestions(newQuestions.filter((id: number) => idToDelete !== id));
+  };
+
   const questions = questionsAndAnswers.map((value, index: number) => {
     return (
       <MeetingQuestion
@@ -95,16 +122,41 @@ const MeetingSurveyQuestions = ({
   return (
     <>
       <div>{questions}</div>
-      <div className="text-center mt-5">
-        {survey.state === 'OPEN' && !surveyToEdit && (
+      {survey.state === 'OPEN' && !surveyToEdit && (
+        <div className="text-center mt-5">
           <ActionButton
             onclick={saveSurvey}
             text={buttonText === 'INCOMPLETE' ? 'Save my answers' : 'Change my answers'}
             disabled={!filledAnswers()}
             className={styles.saveAnswersButton}
           />
-        )}
-      </div>
+        </div>
+      )}
+      {surveyToEdit && (
+        <div className="mt-0">
+          {newQuestions.map((id: number, index: number) => {
+            return (
+              <QuestionCreate
+                questionNumber={
+                  surveyToEdit ? surveyToEdit.questions.length + index + 1 : index + 1
+                }
+                id={id}
+                updateQuestion={updateNewQuestion}
+                onDelete={() => deleteNewQuestion(id)}
+              />
+            );
+          })}
+
+          <Row className="justify-content-center my-4">
+            <Col xs="auto" lg={2} className="text-right mr-0 pr-0 offset-lg-8">
+              <div className={styles.addQuestionButton}>
+                Add question
+                <PlusButton className={styles.button} onclick={createNewQuestion} />
+              </div>
+            </Col>
+          </Row>
+        </div>
+      )}
     </>
   );
 };
