@@ -14,6 +14,7 @@ import MeetingSurveyResults from './MeetingSurveyResults';
 import { Collapse } from 'react-collapse';
 import { editSurvey, getSurveyToEdit } from '../../../API/survey/surveyService';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import { Question } from '../../../model/survey/Question';
 
 export type MeetingSurveyProps = {
   survey: UserSurvey;
@@ -39,10 +40,16 @@ const MeetingSurvey = ({
     questions: [],
     surveyEndDate: undefined,
   });
+  const [questions, setQuestions] = useState<Question[]>();
   const [editSurveyMode, setEditSurveyMode] = useState<boolean>(false);
 
+  const setSurveyToEditAndQuestions = (receivedSurvey: SurveyWithQuestionsDTO) => {
+    setSurveyToEdit(receivedSurvey);
+    setQuestions(receivedSurvey.questions);
+  };
+
   useEffect(() => {
-    getSurveyToEdit(survey.meetingId, setSurveyToEdit);
+    getSurveyToEdit(survey.meetingId, setSurveyToEditAndQuestions);
   }, [survey.meetingId]);
 
   const updateSurvey = () => {
@@ -105,18 +112,31 @@ const MeetingSurvey = ({
           </Col>
         </>
       ) : (
-        <Col lg={12} className="text-center">
-          <Collapse isOpened={opened}>
-            <ActionButton
-              onclick={updateSurvey}
-              text={'Edit the survey'}
-              disabled={
-                survey.description === surveyToEdit.description &&
-                survey.surveyEndDate === surveyToEdit.surveyEndDate
-              }
-            />
-          </Collapse>
-        </Col>
+        <>
+          <Col className="mt-3">
+            <Collapse isOpened={opened}>
+              <MeetingSurveyQuestions
+                survey={survey}
+                setRefreshSurveySummary={setRefreshSurveySummary}
+                surveyToEdit={surveyToEdit}
+                setSurveyToEdit={setSurveyToEdit}
+              />
+            </Collapse>
+          </Col>
+          <Col lg={12} className="text-center">
+            <Collapse isOpened={opened}>
+              <ActionButton
+                onclick={updateSurvey}
+                text={'Edit the survey'}
+                disabled={
+                  survey.description === surveyToEdit.description &&
+                  survey.surveyEndDate === surveyToEdit.surveyEndDate &&
+                  questions === surveyToEdit.questions
+                }
+              />
+            </Collapse>
+          </Col>
+        </>
       )}
     </Row>
   );

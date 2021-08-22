@@ -1,4 +1,4 @@
-import { UserSurvey } from '../../../model/survey/Survey';
+import { SurveyWithQuestionsDTO, UserSurvey } from '../../../model/survey/Survey';
 import MeetingQuestion from './MeetingQuestion';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { useEffect, useState } from 'react';
@@ -11,9 +11,13 @@ import { ApiCall } from '../../../API/genericApiCalls';
 const MeetingSurveyQuestions = ({
   survey,
   setRefreshSurveySummary,
+  surveyToEdit,
+  setSurveyToEdit,
 }: {
   survey: UserSurvey;
   setRefreshSurveySummary: (value: number) => void;
+  surveyToEdit?: SurveyWithQuestionsDTO;
+  setSurveyToEdit?: (editedSurvey: SurveyWithQuestionsDTO) => void;
 }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
@@ -58,6 +62,19 @@ const MeetingSurveyQuestions = ({
     );
   };
 
+  const deleteQuestion = (questionId: number | null) => {
+    if (surveyToEdit && setSurveyToEdit) {
+      const editedQuestions: Question[] = surveyToEdit.questions.filter(
+        (question: Question) => question.id !== questionId
+      );
+      setSurveyToEdit({ ...surveyToEdit, questions: editedQuestions });
+
+      setQuestionsAndAnswers(
+        questionsAndAnswers.filter((value) => value.question.id !== questionId)
+      );
+    }
+  };
+
   const questions = questionsAndAnswers.map((value, index: number) => {
     return (
       <MeetingQuestion
@@ -66,6 +83,7 @@ const MeetingSurveyQuestions = ({
         answer={value.answer}
         setAnswer={setAnswer}
         questionNumber={index + 1}
+        onDelete={surveyToEdit ? () => deleteQuestion(value.question.id) : undefined}
       />
     );
   });
@@ -78,7 +96,7 @@ const MeetingSurveyQuestions = ({
     <>
       <div>{questions}</div>
       <div className="text-center mt-5">
-        {survey.state === 'OPEN' && (
+        {survey.state === 'OPEN' && !surveyToEdit && (
           <ActionButton
             onclick={saveSurvey}
             text={buttonText === 'INCOMPLETE' ? 'Save my answers' : 'Change my answers'}
