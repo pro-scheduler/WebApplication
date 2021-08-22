@@ -10,13 +10,6 @@ export type TimerProps = {
 };
 
 const Timer = ({ date, completedMessage, nonCompletedMessage, noEndDateMessage }: TimerProps) => {
-  let currentDate = undefined;
-
-  if (date) {
-    currentDate = new Date(date);
-    currentDate.setTime(currentDate.getTime() - currentDate.getTimezoneOffset() * 60 * 1000);
-  }
-
   const renderer = ({
     days,
     hours,
@@ -47,7 +40,7 @@ const Timer = ({ date, completedMessage, nonCompletedMessage, noEndDateMessage }
   return (
     <>
       {date ? (
-        <Countdown renderer={renderer} date={currentDate} />
+        <Countdown renderer={renderer} date={date} />
       ) : (
         <p>
           <MdAlarm className={styles.clockIcon} />
