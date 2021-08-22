@@ -2,22 +2,9 @@ export const getMeetingsUrl = () => `${process.env.REACT_APP_API_URL}meetings`;
 
 export const getMeetingUrl = (meetingId: number) => getMeetingsUrl() + `/${meetingId}`;
 
-export const getMeetingParticipantsUrl = (meetingId: number) =>
-  getMeetingUrl(meetingId) + '/participants';
-
-export const getMeetingOrganizersUrl = (meetingId: number) =>
-  getMeetingUrl(meetingId) + '/organizers';
-
-export const getJoinMeetingUrl = () => getMeetingsUrl() + '/join';
-
 export const getLeaveMeetingUrl = () => getMeetingsUrl() + '/leave';
 
-export const getRemoveUserFromMeetingUrl = (meetingId: number) =>
-  getMeetingUrl(meetingId) + '/remove';
+export const getCancelMeetingUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/cancel';
 
-export const getSaveUserTimeUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/timeranges';
-
-export const getAllUsersTimesUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/timeranges';
-
-export const getUserTimeAnswersUrl = (meetingId: number) =>
-  getMeetingUrl(meetingId) + '/user/timeranges';
+export const getMeetingAttendeeUrl = (meetingId: number, attendeeId: number) =>
+  getMeetingUrl(meetingId) + `/attendees/${attendeeId}`;

@@ -219,6 +219,7 @@ const Time = () => {
         <Col>
           <MeetingTime
             meetingId={0}
+            attendeeId={0}
             timeRanges={timeRanges}
             answers={timeAnswers}
             numberOfParticipants={10}
@@ -230,6 +231,7 @@ const Time = () => {
         <Col>
           <MeetingTime
             meetingId={0}
+            attendeeId={0}
             timeRanges={timeRanges}
             answers={timeAnswers}
             disabled={true}

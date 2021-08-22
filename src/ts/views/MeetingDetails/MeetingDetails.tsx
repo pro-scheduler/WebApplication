@@ -21,6 +21,7 @@ import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDa
 
 const MeetingDetails = ({ user }: { user: ProUser }) => {
   const { id }: any = useParams();
+  const [userAttendeeId, setUserAttendeeId] = useState<number>(0);
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [showSettings, setShowSettings] = useState<Boolean>(false);
@@ -32,8 +33,13 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
+  const setMeetingDetails = (meeting: any) => {
+    setMeeting(meeting);
+    setUserAttendeeId(meeting.attendees.find((a: any) => a.user.userId === user.id));
+  };
+
   useEffect(() => {
-    loadMeeting(id, setMeeting, setMeetingResponse);
+    loadMeeting(id, setMeetingDetails, setMeetingResponse);
     // eslint-disable-next-line
   }, [refreshParticipants]);
 
@@ -59,8 +65,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
     if (meeting)
       setIsOrganizer(
         meeting.attendees.some(
-          (a: MeetingAttendeeDetails) =>
-            parseInt(a.userId) === user.id && a.role === MeetingRole.ORGANIZER
+          (a: MeetingAttendeeDetails) => a.user.id === user.id && a.role === MeetingRole.ORGANIZER
         )
       );
   }, [meeting, user.id]);
@@ -117,6 +122,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime
             meetingId={id}
+            attendeeId={userAttendeeId}
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers}
             userRanges={userTimeAnswers}

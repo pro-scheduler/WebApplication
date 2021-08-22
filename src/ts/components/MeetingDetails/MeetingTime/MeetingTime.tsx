@@ -17,6 +17,7 @@ import { Collapse } from 'react-collapse';
 
 export type MeetingTimeProps = {
   meetingId: number;
+  attendeeId: number;
   timeRanges: TimeRangeDTO[];
   timeDeadline?: Date;
   answers?: TimeRangeDTO[];
@@ -32,6 +33,7 @@ interface RangesWithDay {
 
 const MeetingTime = ({
   meetingId,
+  attendeeId,
   answers,
   timeRanges,
   disabled,
@@ -77,7 +79,7 @@ const MeetingTime = ({
         });
       }
     }
-    saveUserTimeRanges(meetingId, rangesFiltered, () => {
+    saveUserTimeRanges(meetingId, attendeeId, rangesFiltered, () => {
       refreshTimeData();
       setPreferencesChanged(false);
     });
