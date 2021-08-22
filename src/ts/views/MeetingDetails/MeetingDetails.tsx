@@ -35,8 +35,14 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
 
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
-    setUserAttendeeId(meeting.attendees.find((a: any) => a.user.userId === user.id));
   };
+
+  useEffect(() => {
+    if (meeting) {
+      setUserAttendeeId(meeting.attendees.find((a: any) => a.user.id === user.id).attendeeId);
+    }
+    // eslint-disable-next-line
+  }, [meeting]);
 
   useEffect(() => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);

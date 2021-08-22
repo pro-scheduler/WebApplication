@@ -100,7 +100,7 @@ export class RealMeetingDetails implements MeetingDetails {
 
 export class MeetingAttendeeDetails {
   constructor(
-    public id: number,
+    public attendeeId: number,
     public user: UserSummary,
     public invitedBy: UserSummary,
     public markedTimeRanges: TimeRangeDTO[],

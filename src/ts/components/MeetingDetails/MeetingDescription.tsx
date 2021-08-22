@@ -30,9 +30,9 @@ const MeetingDescription = ({
       <UserIcon
         name={organizer.user.email}
         meetingId={meetingId}
-        attendeeId={organizer.id}
+        attendeeId={organizer.attendeeId}
         canDelete={false}
-        key={'organizer' + organizer.id}
+        key={'organizer' + organizer.attendeeId}
       />
     );
   });
