@@ -4,6 +4,11 @@
     margin-top: 30px;
 }
 
+.deadlineHeader {
+    color: var(--medium-grey);
+    font-weight: var(--bold-font-weight);
+}
+
 .container {
     overflow-y: auto;
     overflow-x: hidden;
