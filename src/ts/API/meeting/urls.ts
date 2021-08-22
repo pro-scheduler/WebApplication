@@ -2,7 +2,7 @@ export const getMeetingsUrl = () => `${process.env.REACT_APP_API_URL}meetings`;
 
 export const getMeetingUrl = (meetingId: number) => getMeetingsUrl() + `/${meetingId}`;
 
-export const getLeaveMeetingUrl = () => getMeetingsUrl() + '/leave';
+export const getLeaveMeetingUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/leave';
 
 export const getCancelMeetingUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/cancel';
 

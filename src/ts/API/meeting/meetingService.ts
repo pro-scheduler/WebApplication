@@ -59,8 +59,8 @@ export const leaveMeeting = (
   onSuccess?: Function
 ) =>
   post(
-    { id: meetingId },
-    getLeaveMeetingUrl(),
+    {},
+    getLeaveMeetingUrl(meetingId),
     setData,
     setResponse,
     true,
