@@ -18,9 +18,16 @@ export type MeetingQuestionProps = {
   answer: Answer | null;
   setAnswer: (questionId: number | null, newAnswer: Answer) => void;
   questionNumber: number;
+  onDelete?: Function;
 };
 
-const MeetingQuestion = ({ question, answer, setAnswer, questionNumber }: MeetingQuestionProps) => {
+const MeetingQuestion = ({
+  question,
+  answer,
+  setAnswer,
+  questionNumber,
+  onDelete,
+}: MeetingQuestionProps) => {
   const yesOrNoOptions = [
     { value: true, label: 'Yes' },
     { value: false, label: 'No' },
@@ -35,7 +42,7 @@ const MeetingQuestion = ({ question, answer, setAnswer, questionNumber }: Meetin
   }, []);
 
   return (
-    <Card title={'Question ' + questionNumber}>
+    <Card title={'Question ' + questionNumber} onDelete={onDelete}>
       <p className={styles.questionLabel}>{question.question}</p>
       {question.type === QuestionType.OPEN && (
         <div className={styles.answerContainer}>

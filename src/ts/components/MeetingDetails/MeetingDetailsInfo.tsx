@@ -39,7 +39,7 @@ const MeetingDetailsInfo = ({
   meetingId,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [editNameAndDescirption, setEditNameAndDescription] = useState<boolean>(false);
+  const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
   const [newName, setName] = useState<string>('');
   const [newDescription, setDescription] = useState<string>('');
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
@@ -77,7 +77,7 @@ const MeetingDetailsInfo = ({
     <Card
       title={'Details'}
       onEdit={() => {
-        setEditNameAndDescription(!editNameAndDescirption);
+        setEditNameAndDescription(!editNameAndDescription);
       }}
       footer={
         <div className={styles.actionButtonContainer}>
@@ -97,7 +97,7 @@ const MeetingDetailsInfo = ({
         </div>
       }
     >
-      {!editNameAndDescirption ? (
+      {!editNameAndDescription ? (
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
             <BiCalendarEvent className={styles.moduleIcon} />{' '}

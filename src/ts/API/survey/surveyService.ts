@@ -1,12 +1,13 @@
 import { Question } from '../../model/survey/Question';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
-import { get, post } from '../genericApiCalls';
+import { get, post, put } from '../genericApiCalls';
 import {
   getFillSurveyUrl,
   getSurveyAnswersUrl,
   getSurveyForMeetingUrl,
   getSurveySummaryUrl,
   getSurveysUrl,
+  getSurveyToEditUrl,
   getSurveyUrl,
 } from './urls';
 import { Answer } from '../../model/survey/Answer';
@@ -73,4 +74,26 @@ export const getSurveySummary = (
   setResponse?: Function
 ) => {
   get(getSurveySummaryUrl(meetingId), setSurveySummary, setResponse);
+};
+
+export const getSurveyToEdit = (meetingId: number, setSurvey: Function, setResponse?: Function) => {
+  get(getSurveyToEditUrl(meetingId), setSurvey, setResponse);
+};
+
+export const editSurvey = (
+  id: number,
+  survey: SurveyWithQuestionsDTO,
+  onSuccess?: Function,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  put(
+    survey,
+    getSurveyUrl(id),
+    setData,
+    setResponse,
+    true,
+    'Survey has been updated successfully',
+    onSuccess
+  );
 };
