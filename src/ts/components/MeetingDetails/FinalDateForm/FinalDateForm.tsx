@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { updateFinalDate } from '../../../API/meeting/meetingService';
 import Card from '../../common/Card/Card';
 import DateTimePicker from '../../common/forms/DateTimePicker/DateTimePicker';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
@@ -9,15 +10,36 @@ export type FinalDateFormProps = {
   meetingId: number;
   finalBeginDate: Date;
   finalEndDate: Date;
+  hasBeenSet: boolean;
 };
 
-const FinalDateForm = ({ meetingId, finalBeginDate, finalEndDate }: FinalDateFormProps) => {
-  const [beginDate, setBeginDate] = useState(finalBeginDate);
-  const [endDate, setEndDate] = useState(finalEndDate);
+const FinalDateForm = ({
+  meetingId,
+  finalBeginDate,
+  finalEndDate,
+  hasBeenSet,
+}: FinalDateFormProps) => {
+  const [defaultBegin, setDefaultBegin] = useState<Date>(finalBeginDate);
+  const [defaultEnd, setDefaultEnd] = useState<Date>(finalEndDate);
+  const [beginDate, setBeginDate] = useState<Date>(finalBeginDate);
+  const [endDate, setEndDate] = useState<Date>(finalEndDate);
+  const [saved, setSaved] = useState<boolean>(hasBeenSet);
 
   const saveFinalDate = () => {
-    //TODO send save request here
-    console.log(endDate, beginDate, meetingId);
+    updateFinalDate(
+      {
+        timeStart: beginDate,
+        timeEnd: finalEndDate,
+      },
+      meetingId,
+      () => {},
+      () => {},
+      () => {
+        setSaved(true);
+        setDefaultBegin(beginDate);
+        setDefaultEnd(endDate);
+      }
+    );
   };
 
   const reset = () => {
@@ -38,8 +60,8 @@ const FinalDateForm = ({ meetingId, finalBeginDate, finalEndDate }: FinalDateFor
                     <div className={styles.centerColumn}>
                       <ActionButton
                         onclick={saveFinalDate}
-                        text="Save final date"
-                        disabled={finalEndDate === endDate && finalBeginDate === beginDate}
+                        text={saved ? 'Edit final date' : 'Save final date'}
+                        disabled={defaultEnd === endDate && defaultBegin === beginDate}
                         className={styles.buttonAction}
                       />
                     </div>
@@ -49,7 +71,7 @@ const FinalDateForm = ({ meetingId, finalBeginDate, finalEndDate }: FinalDateFor
                       <ActionButton
                         onclick={reset}
                         text="Reset"
-                        disabled={finalEndDate === endDate && finalBeginDate === beginDate}
+                        disabled={defaultEnd === endDate && defaultBegin === beginDate}
                         className={styles.buttonAction}
                       />
                     </div>

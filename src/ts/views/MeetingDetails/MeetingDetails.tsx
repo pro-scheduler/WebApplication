@@ -112,8 +112,12 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           </Row>
         )}
         {!showSettings && (
-          // TODO connect with api
-          <FinalDateForm meetingId={id} finalEndDate={new Date()} finalBeginDate={new Date()} />
+          <FinalDateForm
+            meetingId={id}
+            finalEndDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
+            finalBeginDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
+            hasBeenSet={meeting.finalDate != null}
+          />
         )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime

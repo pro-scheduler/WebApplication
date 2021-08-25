@@ -1,4 +1,4 @@
-import { post, get } from '../genericApiCalls';
+import { post, get, put } from '../genericApiCalls';
 import { MeetingDetailsDTO } from '../../model/meeting/Meeting';
 import {
   getMeetingsUrl,
@@ -72,5 +72,24 @@ export const leaveMeeting = (
     setResponse,
     true,
     'You successfully left the meeting',
+    onSuccess
+  );
+
+export const updateFinalDate = (
+  finalDate: TimeRangeDTO,
+  meetingId: number,
+  setData?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      finalDate,
+    },
+    getMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Final date saved',
     onSuccess
   );
