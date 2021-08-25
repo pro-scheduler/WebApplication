@@ -1,21 +1,14 @@
-import { post, get, put } from '../genericApiCalls';
-import { MeetingDetailsDTO } from '../../model/meeting/Meeting';
-import {
-  getMeetingsUrl,
-  getMeetingUrl,
-  getRemoveUserFromMeetingUrl,
-  getSaveUserTimeUrl,
-  getAllUsersTimesUrl,
-  getUserTimeAnswersUrl,
-  getLeaveMeetingUrl,
-} from './urls';
+import { post, get, put, del } from '../genericApiCalls';
+import { getMeetingsUrl, getMeetingUrl, getLeaveMeetingUrl, getMeetingAttendeeUrl } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { CreateMeetingRequest } from '../../model/meeting/Meeting';
+
 export const saveMeeting = (
-  meeting: MeetingDetailsDTO,
+  createRequest: CreateMeetingRequest,
   setMeetingId: Function,
   setResponse?: Function,
   successMessage?: string
-) => post(meeting, getMeetingsUrl(), setMeetingId, setResponse, true, successMessage);
+) => post(createRequest, getMeetingsUrl(), setMeetingId, setResponse, true, successMessage);
 
 export const loadMeeting = (id: number, setMeeting: Function, setResponse?: Function) =>
   get(getMeetingUrl(id), setMeeting, setResponse);
@@ -23,15 +16,14 @@ export const loadMeeting = (id: number, setMeeting: Function, setResponse?: Func
 export const fetchAllMeetings = (setMeetings: Function, setResponse?: Function) =>
   get(getMeetingsUrl(), setMeetings, setResponse);
 
-export const removeUserFromMeeting = (
+export const removeAttendeeFromMeeting = (
   meetingId: number,
-  userId: number,
+  attendeeId: number,
   setData?: Function,
   setResponse?: Function
 ) =>
-  post(
-    { id: userId },
-    getRemoveUserFromMeetingUrl(meetingId),
+  del(
+    getMeetingAttendeeUrl(meetingId, attendeeId),
     setData,
     setResponse,
     true,
@@ -40,24 +32,19 @@ export const removeUserFromMeeting = (
 
 export const saveUserTimeRanges = (
   meetingId: number,
+  attendeeId: number,
   userMarkedTimeRanges: TimeRangeDTO[],
   refreshTimeData: Function
 ) =>
-  post(
-    userMarkedTimeRanges,
-    getSaveUserTimeUrl(meetingId),
+  put(
+    { markedTimeRanges: userMarkedTimeRanges },
+    getMeetingAttendeeUrl(meetingId, attendeeId),
     () => {},
     () => {},
     true,
     'Time saved successfully',
     refreshTimeData
   );
-
-export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Function) =>
-  get(getAllUsersTimesUrl(meetingId), setResponseData);
-
-export const getUserTimeAnswers = (meetingId: number, setResponseData: Function) =>
-  get(getUserTimeAnswersUrl(meetingId), setResponseData);
 
 export const leaveMeeting = (
   meetingId: number,
@@ -66,8 +53,8 @@ export const leaveMeeting = (
   onSuccess?: Function
 ) =>
   post(
-    { id: meetingId },
-    getLeaveMeetingUrl(),
+    {},
+    getLeaveMeetingUrl(meetingId),
     setData,
     setResponse,
     true,

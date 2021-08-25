@@ -60,6 +60,7 @@ const handleResponse = (
   }
   return response.json();
 };
+
 export const post = (
   data: any,
   apiLink: string,
@@ -74,6 +75,72 @@ export const post = (
     method: 'POST',
     headers,
     body: JSON.stringify(data),
+  })
+    .then((response: Response) => {
+      return handleResponse(response, setResponse, successMessage, onSuccess);
+    })
+    .then((result) => {
+      if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
+        if (result.status === 401 && showFailed)
+          toastError('You are not Authorized, please log in.');
+        else if (showFailed) toastError(result.title + ' ' + result.detail);
+      } else {
+        if (setData) setData(result);
+        if (onSuccess) onSuccess();
+      }
+    })
+    .catch((error) => {
+      setFailed(setResponse);
+      if (showFailed) toastError(error);
+    });
+};
+
+export const put = (
+  data: any,
+  apiLink: string,
+  setData?: Function,
+  setResponse?: Function,
+  showFailed?: boolean,
+  successMessage?: string,
+  onSuccess?: Function
+) => {
+  setLoading(setResponse);
+  fetch(apiLink, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data),
+  })
+    .then((response: Response) => {
+      return handleResponse(response, setResponse, successMessage, onSuccess);
+    })
+    .then((result) => {
+      if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
+        if (result.status === 401 && showFailed)
+          toastError('You are not Authorized, please log in.');
+        else if (showFailed) toastError(result.title + ' ' + result.detail);
+      } else {
+        if (setData) setData(result);
+        if (onSuccess) onSuccess();
+      }
+    })
+    .catch((error) => {
+      setFailed(setResponse);
+      if (showFailed) toastError(error);
+    });
+};
+
+export const del = (
+  apiLink: string,
+  setData?: Function,
+  setResponse?: Function,
+  showFailed?: boolean,
+  successMessage?: string,
+  onSuccess?: Function
+) => {
+  setLoading(setResponse);
+  fetch(apiLink, {
+    method: 'DELETE',
+    headers,
   })
     .then((response: Response) => {
       return handleResponse(response, setResponse, successMessage, onSuccess);
@@ -118,40 +185,6 @@ export const get = (
       } else {
         setResponseData(result);
         if (successMessage) toastSuccess(successMessage);
-        if (onSuccess) onSuccess();
-      }
-    })
-    .catch((error) => {
-      setFailed(setResponse);
-      if (showFailed) toastError(error);
-    });
-};
-
-export const put = (
-  data: any,
-  apiLink: string,
-  setData?: Function,
-  setResponse?: Function,
-  showFailed?: boolean,
-  successMessage?: string,
-  onSuccess?: Function
-) => {
-  setLoading(setResponse);
-  fetch(apiLink, {
-    method: 'PUT',
-    headers,
-    body: JSON.stringify(data),
-  })
-    .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage, onSuccess);
-    })
-    .then((result) => {
-      if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
-        if (result.status === 401 && showFailed)
-          toastError('You are not Authorized, please log in.');
-        else if (showFailed) toastError(result.title + ' ' + result.detail);
-      } else {
-        if (setData) setData(result);
         if (onSuccess) onSuccess();
       }
     })
