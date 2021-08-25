@@ -28,6 +28,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
+  const [refreshSurvey, setRefreshSurvey] = useState<number>(0);
   const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
   const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
@@ -65,7 +66,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
 
   useEffect(() => {
     getSurveyForMeeting(id, setSurvey);
-  }, [id]);
+  }, [id, refreshSurvey]);
 
   useEffect(() => {
     if (meeting)
@@ -143,6 +144,8 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             setRefreshSurveySummary={setRefreshSurveySummary}
             surveySummary={surveySummary}
             numberOfParticipants={meeting.attendees.length}
+            isOrganizer={isOrganizer}
+            setRefreshSurvey={setRefreshSurvey}
           />
         )}
       </Container>

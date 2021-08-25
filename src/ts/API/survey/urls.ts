@@ -9,3 +9,5 @@ export const getSurveyForMeetingUrl = (meetingId: number) => getSurveysUrl() + `
 export const getFillSurveyUrl = () => getSurveysUrl() + '/fill';
 
 export const getSurveySummaryUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/summary`;
+
+export const getSurveyToEditUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/basic`;

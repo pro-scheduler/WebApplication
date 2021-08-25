@@ -12,27 +12,27 @@ const LineWithHeader = ({
   iconAction?: Function;
   collapseAction?: Function;
 }) => {
-  const [colapsed, setColapsed] = useState<Boolean>(true);
+  const [collapsed, setCollapsed] = useState<Boolean>(true);
 
   return (
     <Col lg={12} className="my-0 py-0 pr-5">
       <div className={styles.meetingDetailsHeader}>
         <div>{header}</div>
         <div>
-          {collapseAction && colapsed && (
+          {collapseAction && collapsed && (
             <RiArrowDownSLine
               onClick={() => {
                 collapseAction(false);
-                setColapsed(false);
+                setCollapsed(false);
               }}
               className={styles.arrowIcon}
             />
           )}
-          {collapseAction && !colapsed && (
+          {collapseAction && !collapsed && (
             <RiArrowLeftSLine
               onClick={() => {
                 collapseAction(true);
-                setColapsed(true);
+                setCollapsed(true);
               }}
               className={styles.arrowIcon}
             />
