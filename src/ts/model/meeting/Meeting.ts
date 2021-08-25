@@ -1,5 +1,5 @@
 import { TimeRangeDTO } from '../TimeRangeDTO';
-import { BasicUserInfoDTO, ProUser } from '../user/ProUser';
+import { UserSummary } from '../user/ProUser';
 
 export enum MeetingType {
   ONLINE = 'ONLINE',
@@ -11,139 +11,99 @@ export enum MeetingRole {
   ATTENDEE = 'ATTENDEE',
 }
 
-export type Meeting = {
-  id: number;
+export type CreateMeetingRequest = {
   name: string;
   description: string;
-  availableTimeRanges: TimeRangeDTO[];
-  organizers: ProUser[];
-  participants: ProUser[];
   type: MeetingType;
-  markTimeRangeDeadline: string | undefined;
+  availableTimeRanges: TimeRangeDTO[] | undefined;
+  markTimeRangeDeadline: Date | undefined;
+  link: string | undefined;
+  password: string | undefined;
 };
 
-export type MeetingDTO = {
+export type UpdateMeetingRequest = {
+  name: string | undefined;
+  description: string | undefined;
+  availableTimeRanges: TimeRangeDTO[] | undefined;
+  finalDate: TimeRangeDTO | undefined;
+  markTimeRangeDeadline: Date | undefined;
+};
+
+export class UpdateOnlineMeetingRequest {
+  constructor(
+    public name: string | undefined,
+    public description: string | undefined,
+    public availableTimeRanges: TimeRangeDTO[] | undefined,
+    public finalDate: TimeRangeDTO | undefined,
+    public markTimeRangeDeadline: Date | undefined,
+    public link: string | undefined,
+    public password: string | undefined
+  ) {}
+}
+
+export class UpdateRealMeetingRequest {
+  constructor(
+    public name: string | undefined,
+    public description: string | undefined,
+    public availableTimeRanges: TimeRangeDTO[] | undefined,
+    public finalDate: TimeRangeDTO | undefined,
+    public markTimeRangeDeadline: Date | undefined
+  ) {}
+}
+
+export type MeetingDetails = {
   id: number;
   name: string;
   description: string;
   availableTimeRanges: TimeRangeDTO[];
-  organizers: number[];
-  participants: number[];
+  attendees: MeetingAttendeeDetails[];
   type: MeetingType;
+  markTimeRangeDeadline: string | undefined;
+  finalDate: TimeRangeDTO;
 };
 
 export type MeetingSummary = {
   id: number;
   name: string;
   description: string;
+  type: MeetingType;
+  organizer: UserSummary;
 };
 
-export class OnlineMeeting implements Meeting {
+export class OnlineMeetingDetails implements MeetingDetails {
   constructor(
     public id: number,
     public name: string,
     public description: string,
     public availableTimeRanges: TimeRangeDTO[],
-    public participants: ProUser[],
-    public organizers: ProUser[],
+    public attendees: MeetingAttendeeDetails[],
     public link: string,
     public password: string,
     public type: MeetingType = MeetingType.ONLINE,
-    public markTimeRangeDeadline: string | undefined
+    public markTimeRangeDeadline: string | undefined,
+    public finalDate: TimeRangeDTO
   ) {}
 }
 
-export class RealMeeting implements Meeting {
+export class RealMeetingDetails implements MeetingDetails {
   constructor(
     public id: number,
     public name: string,
     public description: string,
     public availableTimeRanges: TimeRangeDTO[],
-    public participants: ProUser[],
-    public organizers: ProUser[],
+    public attendees: MeetingAttendeeDetails[],
     public type: MeetingType = MeetingType.REAL,
-    public markTimeRangeDeadline: string | undefined
-  ) {}
-}
-
-export type BasicMeetingDetailsDTO = {
-  id: number;
-  name: string;
-  description: string;
-};
-
-export type MeetingDetailsDTO = {
-  name: string;
-  description: string;
-  availableTimeRanges: TimeRangeDTO[];
-  type: MeetingType;
-  markTimeRangeDeadline: Date | undefined;
-};
-
-export type DeepMeetingDetailsDTO = {
-  id: number;
-  name: string;
-  description: string;
-  availableTimeRanges: TimeRangeDTO[];
-  participants: BasicUserInfoDTO[];
-  organizers: BasicUserInfoDTO[];
-  type: MeetingType;
-};
-
-export class OnlineDeepMeetingDetailsDTO implements DeepMeetingDetailsDTO {
-  constructor(
-    public id: number,
-    public name: string,
-    public description: string,
-    public availableTimeRanges: TimeRangeDTO[],
-    public participants: BasicUserInfoDTO[],
-    public organizers: BasicUserInfoDTO[],
-    public link: string,
-    public password: string,
-    public type: MeetingType = MeetingType.ONLINE
-  ) {}
-}
-
-export class OnlineMeetingDetailsDTO implements MeetingDetailsDTO {
-  constructor(
-    public name: string,
-    public description: string,
-    public availableTimeRanges: TimeRangeDTO[],
-    public link: string,
-    public password: string,
-    public markTimeRangeDeadline: Date | undefined,
-    public type: MeetingType = MeetingType.ONLINE
-  ) {}
-}
-
-export class RealDeepMeetingDetailsDTO implements DeepMeetingDetailsDTO {
-  constructor(
-    public id: number,
-    public name: string,
-    public description: string,
-    public availableTimeRanges: TimeRangeDTO[],
-    public participants: BasicUserInfoDTO[],
-    public organizers: BasicUserInfoDTO[],
-    public type: MeetingType = MeetingType.REAL
-  ) {}
-}
-
-export class RealMeetingDetailsDTO implements MeetingDetailsDTO {
-  constructor(
-    public name: string,
-    public description: string,
-    public availableTimeRanges: TimeRangeDTO[],
-    public markTimeRangeDeadline: Date | undefined,
-    public type: MeetingType = MeetingType.REAL
+    public markTimeRangeDeadline: string | undefined,
+    public finalDate: TimeRangeDTO
   ) {}
 }
 
 export class MeetingAttendeeDetails {
   constructor(
     public attendeeId: number,
-    public userId: string,
+    public user: UserSummary,
+    public invitedBy: UserSummary,
     public markedTimeRanges: TimeRangeDTO[],
-    public email: string,
     public role: MeetingRole = MeetingRole.ATTENDEE
   ) {}
 }

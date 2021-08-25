@@ -10,11 +10,6 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import OnlineDetails from '../../components/CreateMeeting/OnlineDetails';
 import { required } from '../../tools/validator';
-import {
-  MeetingDetailsDTO,
-  OnlineMeetingDetailsDTO,
-  RealMeetingDetailsDTO,
-} from '../../model/meeting/Meeting';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import MeetingNavbar from '../../components/CreateMeeting/MeetingNavbar';
@@ -28,6 +23,7 @@ import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
 import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
 import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
+import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -65,19 +61,26 @@ const CreateMeeting = () => {
   const [placeModule, setPlaceModule] = useState<boolean>(false);
   const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
 
+  const getCreatedMeetingType = () => {
+    return onlineLink === '' ? MeetingType.REAL : MeetingType.ONLINE;
+  };
+
   const saveThisMeeting = () => {
-    const meeting: MeetingDetailsDTO =
-      onlineLink === ''
-        ? new RealMeetingDetailsDTO(name, description, timeRanges, deadlineDate)
-        : new OnlineMeetingDetailsDTO(
-            name,
-            description,
-            timeRanges,
-            onlineLink,
-            onlinePassword,
-            deadlineDate
-          );
-    saveMeeting(meeting, setMeetingId, setSaveMeetingResponse, 'Meeting created successfully');
+    const createRequest: CreateMeetingRequest = {
+      name: name,
+      description: description,
+      type: getCreatedMeetingType(),
+      availableTimeRanges: timeRanges,
+      markTimeRangeDeadline: deadlineDate,
+      link: onlineLink,
+      password: onlinePassword,
+    };
+    saveMeeting(
+      createRequest,
+      setMeetingId,
+      setSaveMeetingResponse,
+      'Meeting created successfully'
+    );
   };
 
   const showModules = () => {

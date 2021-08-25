@@ -10,19 +10,19 @@ import {
 import { ApiCall } from '../../../API/genericApiCalls';
 import Card from '../../common/Card/Card';
 import DeleteButton from '../../common/SubmitButton/ActionButton/DeleteButton';
-import { removeUserFromMeeting } from '../../../API/meeting/meetingService';
+import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
 import YesNoPopup from '../../common/Popup/YesNoPopup';
-import { ProUser } from '../../../model/user/ProUser';
 import Popup from '../../common/Popup/Popup';
 import CreateInvitations from '../../CreateMeeting/CreateInvitations';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import { MeetingAttendeeDetails } from '../../../model/meeting/Meeting';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
   isOrganizer: boolean;
   refreshParticipants: (value: number) => void;
-  participants: ProUser[];
+  participants: MeetingAttendeeDetails[];
 };
 
 const MeetingParticipants = ({
@@ -45,8 +45,8 @@ const MeetingParticipants = ({
     // eslint-disable-next-line
   }, [invitationsChanged]);
 
-  const deleteParticipant = (userId: number) => {
-    removeUserFromMeeting(meetingId, userId);
+  const deleteParticipant = (attendeeId: number) => {
+    removeAttendeeFromMeeting(meetingId, attendeeId);
     setDeleteModalShow(false);
     if (refreshParticipants) refreshParticipants(Math.random());
   };
@@ -86,29 +86,31 @@ const MeetingParticipants = ({
     });
   };
 
-  const acceptedInvitations = participants.map((participant: ProUser, index: number) => {
-    return (
-      <div key={index + State.ACCEPTED}>
-        <div className={styles.participantRow}>
-          <div className={styles.userNameIcon}>
-            <UserNameIcon email={participant.email} />
-          </div>
-          {isOrganizer && (
-            <div className={styles.deleteContainer}>
-              <DeleteButton onDelete={() => setDeleteModalShow(true)} />
+  const acceptedInvitations = participants.map(
+    (participant: MeetingAttendeeDetails, index: number) => {
+      return (
+        <div key={index + State.ACCEPTED}>
+          <div className={styles.participantRow}>
+            <div className={styles.userNameIcon}>
+              <UserNameIcon email={participant.user.email} />
             </div>
-          )}
-          <YesNoPopup
-            show={deleteModalShow}
-            title={'Are you sure you want to remove the participant from the meeting?'}
-            onDecline={() => setDeleteModalShow(false)}
-            onAccept={() => deleteParticipant(participant.id)}
-          />
+            {isOrganizer && (
+              <div className={styles.deleteContainer}>
+                <DeleteButton onDelete={() => setDeleteModalShow(true)} />
+              </div>
+            )}
+            <YesNoPopup
+              show={deleteModalShow}
+              title={'Are you sure you want to remove the participant from the meeting?'}
+              onDecline={() => setDeleteModalShow(false)}
+              onAccept={() => deleteParticipant(participant.attendeeId)}
+            />
+          </div>
+          <hr className={styles.hrLine} />
         </div>
-        <hr className={styles.hrLine} />
-      </div>
-    );
-  });
+      );
+    }
+  );
 
   const pendingInvitations = invitationsToList(
     invitations.filter(

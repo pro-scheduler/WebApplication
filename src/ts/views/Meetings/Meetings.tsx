@@ -3,31 +3,28 @@ import Container from 'react-bootstrap/Container';
 import { ProUser } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import { useState } from 'react';
-import {
-  loadUserOrganizedMeetings,
-  loadUserParticipatedMeetings,
-} from '../../API/user/userService';
-import { Meeting } from '../../model/meeting/Meeting';
+import { MeetingSummary } from '../../model/meeting/Meeting';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 import styles from './Meetings.module.css';
+import { fetchAllMeetings } from '../../API/meeting/meetingService';
 
 const Meetings = ({ user }: { user: ProUser }) => {
-  const [organizedMeetings, setOrganizedMeetings] = useState<Meeting[]>([]);
-  const [organizedMeetingsResponse, setOrganizedMeetingsResponse] = useState<ApiCall>(
-    new ApiCall()
-  );
-  const [participatedMeetings, setParticipatedMeetings] = useState<Meeting[]>([]);
-  const [participatedMeetingsResponse, setParticipatedMeetingsResponse] = useState<ApiCall>(
-    new ApiCall()
-  );
+  const [organizedMeetings, setOrganizedMeetings] = useState<MeetingSummary[]>([]);
+  const [participatedMeetings, setParticipatedMeetings] = useState<MeetingSummary[]>([]);
+
+  const [meetingsResponse, setMeetingsResponse] = useState<ApiCall>(new ApiCall());
+
+  const setUserMeetings = (meetings: MeetingSummary[]) => {
+    setOrganizedMeetings(meetings.filter((m) => m.organizer.id === user.id));
+    setParticipatedMeetings(meetings.filter((m) => m.organizer.id !== user.id));
+  };
 
   useEffect(() => {
-    loadUserOrganizedMeetings(user.id, setOrganizedMeetings, setOrganizedMeetingsResponse);
-    loadUserParticipatedMeetings(user.id, setParticipatedMeetings, setParticipatedMeetingsResponse);
+    fetchAllMeetings(setUserMeetings, setMeetingsResponse);
     // eslint-disable-next-line
   }, [user.id]);
 
@@ -38,7 +35,7 @@ const Meetings = ({ user }: { user: ProUser }) => {
           <CalendarIcon className={styles.meetingListIcon} />
         </Col>
       </Row>
-      {organizedMeetingsResponse.isSuccess ? (
+      {meetingsResponse.isSuccess ? (
         <MeetingList
           meetings={organizedMeetings}
           header={'Meetings you organize'}
@@ -47,11 +44,11 @@ const Meetings = ({ user }: { user: ProUser }) => {
       ) : (
         <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
           <Col className="text-center mt-5">
-            <LoadingSpinner active={organizedMeetingsResponse.isLoading} />
+            <LoadingSpinner active={meetingsResponse.isLoading} />
           </Col>
         </Row>
       )}
-      {participatedMeetingsResponse.isSuccess ? (
+      {meetingsResponse.isSuccess ? (
         <MeetingList
           meetings={participatedMeetings}
           header={'Meetings you participate'}
@@ -61,7 +58,7 @@ const Meetings = ({ user }: { user: ProUser }) => {
       ) : (
         <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
           <Col className="text-center mt-5">
-            <LoadingSpinner active={participatedMeetingsResponse.isLoading} />
+            <LoadingSpinner active={meetingsResponse.isLoading} />
           </Col>
         </Row>
       )}
