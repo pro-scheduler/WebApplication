@@ -103,7 +103,7 @@ const MeetingParticipants = ({
               show={deleteModalShow}
               title={'Are you sure you want to remove the participant from the meeting?'}
               onDecline={() => setDeleteModalShow(false)}
-              onAccept={() => deleteParticipant(participant.id)}
+              onAccept={() => deleteParticipant(participant.attendeeId)}
             />
           </div>
           <hr className={styles.hrLine} />
