@@ -46,12 +46,6 @@ export const saveUserTimeRanges = (
     refreshTimeData
   );
 
-// export const getAllUsersTimeAnswers = (meetingId: number, setResponseData: Function) =>
-//   get(getAllUsersTimesUrl(meetingId), setResponseData);
-
-// export const getUserTimeAnswers = (meetingId: number, setResponseData: Function) =>
-//   get(getUserTimeAnswersUrl(meetingId), setResponseData);
-
 export const leaveMeeting = (
   meetingId: number,
   setData?: Function,
