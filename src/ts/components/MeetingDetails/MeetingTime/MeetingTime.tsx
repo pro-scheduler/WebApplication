@@ -14,6 +14,7 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
 import { Collapse } from 'react-collapse';
+import { MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -26,6 +27,7 @@ export type MeetingTimeProps = {
   refreshTimeData?: Function;
   numberOfParticipants: number;
   isOrganizer: boolean;
+  state: MeetingState;
 };
 
 interface RangesWithDay {
@@ -43,6 +45,7 @@ const MeetingTime = ({
   timeDeadline,
   numberOfParticipants,
   isOrganizer,
+  state,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -167,7 +170,7 @@ const MeetingTime = ({
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader
         header={'When'}
-        iconAction={isOrganizer ? () => {} : undefined}
+        iconAction={isOrganizer && state === MeetingState.OPEN ? () => {} : undefined}
         collapseAction={setOpened}
       />
       <Col>
@@ -181,7 +184,7 @@ const MeetingTime = ({
                 title={'Show how others voted'}
               />
             </div>
-            {!displayAnswers && (
+            {!displayAnswers && state === MeetingState.OPEN && (
               <div className="my-5">
                 <Timer
                   date={timeDeadline}
@@ -215,7 +218,7 @@ const MeetingTime = ({
           </div>
         </Collapse>
       </Col>
-      {!displayAnswers && !deadlineExceeded && (
+      {!displayAnswers && !deadlineExceeded && state === MeetingState.OPEN && (
         <Col lg={12} className="text-center mx-auto">
           <Collapse isOpened={opened}>
             <ActionButton

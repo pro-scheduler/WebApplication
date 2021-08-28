@@ -1,19 +1,19 @@
 import Card from '../common/Card/Card';
-import { BiWorld, BiCalendarEvent } from 'react-icons/bi';
+import { BiCalendarEvent, BiWorld } from 'react-icons/bi';
 import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { minSings, maxSings, required } from '../../tools/validator';
+import { maxSings, minSings, required } from '../../tools/validator';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
-import { useEffect } from 'react';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router';
 import { cancelMeeting, leaveMeeting } from '../../API/meeting/meetingService';
+import { MeetingState } from '../../model/meeting/Meeting';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -25,6 +25,7 @@ export type MeetingDetailsInfoProps = {
   description: string;
   isOrganizer: boolean;
   meetingId: number;
+  state: MeetingState;
 };
 
 const MeetingDetailsInfo = ({
@@ -37,6 +38,7 @@ const MeetingDetailsInfo = ({
   description,
   isOrganizer,
   meetingId,
+  state,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -73,28 +75,30 @@ const MeetingDetailsInfo = ({
     <Card
       title={'Details'}
       onEdit={
-        isOrganizer
+        isOrganizer && state === MeetingState.OPEN
           ? () => {
               setEditNameAndDescription(!editNameAndDescription);
             }
           : undefined
       }
       footer={
-        <div className={styles.actionButtonContainer}>
-          {isOrganizer ? (
-            <ActionButton
-              onclick={() => setCancelMeetingModal(true)}
-              text={'Cancel the meeting'}
-              className={styles.actionButton}
-            />
-          ) : (
-            <ActionButton
-              onclick={() => setLeaveMeetingModal(true)}
-              text={'Leave the meeting'}
-              className={styles.actionButton}
-            />
-          )}
-        </div>
+        state === MeetingState.OPEN ? (
+          <div className={styles.actionButtonContainer}>
+            {isOrganizer ? (
+              <ActionButton
+                onclick={() => setCancelMeetingModal(true)}
+                text={'Cancel the meeting'}
+                className={styles.actionButton}
+              />
+            ) : (
+              <ActionButton
+                onclick={() => setLeaveMeetingModal(true)}
+                text={'Leave the meeting'}
+                className={styles.actionButton}
+              />
+            )}
+          </div>
+        ) : undefined
       }
     >
       {!editNameAndDescription ? (

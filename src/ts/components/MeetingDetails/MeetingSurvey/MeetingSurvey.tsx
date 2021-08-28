@@ -15,6 +15,7 @@ import { Collapse } from 'react-collapse';
 import { editSurvey, getSurveyToEdit } from '../../../API/survey/surveyService';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { Question } from '../../../model/survey/Question';
+import { MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingSurveyProps = {
   survey: UserSurvey;
@@ -23,6 +24,7 @@ export type MeetingSurveyProps = {
   numberOfParticipants: number;
   isOrganizer: boolean;
   setRefreshSurvey: (value: number) => void;
+  state: MeetingState;
 };
 const MeetingSurvey = ({
   survey,
@@ -31,6 +33,7 @@ const MeetingSurvey = ({
   numberOfParticipants,
   isOrganizer,
   setRefreshSurvey,
+  state,
 }: MeetingSurveyProps) => {
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
   const [opened, setOpened] = useState<boolean>(true);
@@ -72,7 +75,11 @@ const MeetingSurvey = ({
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader
         header={'Survey'}
-        iconAction={isOrganizer ? () => setEditSurveyMode(!editSurveyMode) : () => {}}
+        iconAction={
+          isOrganizer && state === MeetingState.OPEN
+            ? () => setEditSurveyMode(!editSurveyMode)
+            : undefined
+        }
         collapseAction={setOpened}
       />
       <Col lg={editSurveyMode ? 12 : 6}>
@@ -83,6 +90,7 @@ const MeetingSurvey = ({
             editSurvey={editSurveyMode}
             surveyToEdit={surveyToEdit}
             setSurveyToEdit={setSurveyToEdit}
+            state={state}
           />
         </Collapse>
       </Col>
@@ -94,6 +102,7 @@ const MeetingSurvey = ({
                 numberOfParticipants={numberOfParticipants}
                 numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
                 emails={surveySummary?.users ?? []}
+                isOrganizer={isOrganizer}
               />
             </Collapse>
           </Col>
@@ -117,6 +126,7 @@ const MeetingSurvey = ({
                   setRefreshSurveySummary={setRefreshSurveySummary}
                   questionsToAdd={questionsToAdd}
                   setQuestionsToAdd={setQuestionsToAdd}
+                  state={state}
                 />
               ) : (
                 surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
@@ -135,6 +145,7 @@ const MeetingSurvey = ({
                 setSurveyToEdit={setSurveyToEdit}
                 questionsToAdd={questionsToAdd}
                 setQuestionsToAdd={setQuestionsToAdd}
+                state={state}
               />
             </Collapse>
           </Col>

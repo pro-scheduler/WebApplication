@@ -4,6 +4,7 @@ import Timer from '../../common/Timer/Timer';
 import DateTimePicker from '../../common/forms/DateTimePicker/DateTimePicker';
 import TextArea from '../../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../../model/survey/Survey';
+import { MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingSurveyDetailsProps = {
   endDate: string | undefined;
@@ -11,6 +12,7 @@ export type MeetingSurveyDetailsProps = {
   editSurvey: boolean;
   surveyToEdit: SurveyWithQuestionsDTO;
   setSurveyToEdit: (editedSurvey: SurveyWithQuestionsDTO) => void;
+  state: MeetingState;
 };
 
 const MeetingSurveyDetails = ({
@@ -19,6 +21,7 @@ const MeetingSurveyDetails = ({
   editSurvey,
   surveyToEdit,
   setSurveyToEdit,
+  state,
 }: MeetingSurveyDetailsProps) => {
   const setEndDate = (newDate: Date) => {
     if (surveyToEdit) setSurveyToEdit({ ...surveyToEdit, surveyEndDate: newDate });
@@ -33,12 +36,16 @@ const MeetingSurveyDetails = ({
       <div className={styles.container}>
         {!editSurvey ? (
           <>
-            <Timer
-              date={endDate}
-              completedMessage={'The survey is closed'}
-              nonCompletedMessage={'The survey ends in:'}
-              noEndDateMessage={'The survey has no time limit'}
-            />
+            {state === MeetingState.OPEN ? (
+              <Timer
+                date={endDate}
+                completedMessage={'The survey is closed'}
+                nonCompletedMessage={'The survey ends in:'}
+                noEndDateMessage={'The survey has no time limit'}
+              />
+            ) : (
+              <p>The survey is canceled</p>
+            )}
             {description && (
               <>
                 <p className={styles.descriptionHeader}>Description</p>

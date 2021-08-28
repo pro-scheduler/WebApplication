@@ -16,13 +16,14 @@ import YesNoPopup from '../../common/Popup/YesNoPopup';
 import Popup from '../../common/Popup/Popup';
 import CreateInvitations from '../../CreateMeeting/CreateInvitations';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { MeetingAttendeeDetails } from '../../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
   isOrganizer: boolean;
   refreshParticipants: (value: number) => void;
   participants: MeetingAttendeeDetails[];
+  state: MeetingState;
 };
 
 const MeetingParticipants = ({
@@ -30,13 +31,14 @@ const MeetingParticipants = ({
   isOrganizer,
   refreshParticipants,
   participants,
+  state,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [invitations, setInvitations] = useState<InvitationDetails[]>([]);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
-  const [state, setState] = useState<State>(State.ACCEPTED);
+  const [invitationState, setInvitationState] = useState<State>(State.ACCEPTED);
   const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
 
@@ -94,7 +96,7 @@ const MeetingParticipants = ({
             <div className={styles.userNameIcon}>
               <UserNameIcon email={participant.user.email} />
             </div>
-            {isOrganizer && (
+            {isOrganizer && state === MeetingState.OPEN && (
               <div className={styles.deleteContainer}>
                 <DeleteButton onDelete={() => setDeleteModalShow(true)} />
               </div>
@@ -125,28 +127,31 @@ const MeetingParticipants = ({
   );
 
   return (
-    <Card title={'Who'} onAdd={isOrganizer ? () => setAddModalShow(true) : undefined}>
+    <Card
+      title={'Who'}
+      onAdd={isOrganizer && state === MeetingState.OPEN ? () => setAddModalShow(true) : undefined}
+    >
       <ParticipantsStatusNavbar
         accepted={acceptedInvitations.length}
         pending={pendingInvitations.length}
         rejected={rejectedInvitations.length}
-        setState={setState}
-        currentState={state}
+        setState={setInvitationState}
+        currentState={invitationState}
       />
       <hr className={styles.hrLine} />
-      {state === State.ACCEPTED && (
+      {invitationState === State.ACCEPTED && (
         <div className={styles.selectedParticipants}>
           {acceptedInvitations.length > 0
             ? acceptedInvitations
             : 'There are no accepted invitations'}
         </div>
       )}
-      {state === State.PENDING && (
+      {invitationState === State.PENDING && (
         <div className={styles.selectedParticipants}>
           {pendingInvitations.length > 0 ? pendingInvitations : 'There are no pending invitations'}
         </div>
       )}
-      {state === State.REJECTED && (
+      {invitationState === State.REJECTED && (
         <div className={styles.selectedParticipants}>
           {rejectedInvitations.length > 0
             ? rejectedInvitations

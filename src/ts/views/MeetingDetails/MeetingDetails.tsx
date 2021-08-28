@@ -6,7 +6,7 @@ import MeetingParticipants from '../../components/MeetingDetails/MeetingParticip
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { loadMeeting } from '../../API/meeting/meetingService';
 import { ProUser } from '../../model/user/ProUser';
-import { MeetingAttendeeDetails, MeetingRole } from '../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
@@ -95,6 +95,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           showSettings={showSettings}
           setShowSettings={setShowSettings}
           isOrganizer={isOrganizer}
+          state={meeting.state}
         />
         {showSettings && <MeetingSettings survey={survey} />}
         {!showSettings && (
@@ -110,6 +111,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 description={meeting.description}
                 isOrganizer={isOrganizer}
                 meetingId={meeting.id}
+                state={meeting.state}
               />
             </Col>
             <Col lg={6}>
@@ -118,11 +120,12 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 isOrganizer={isOrganizer}
                 refreshParticipants={setRefreshParticipants}
                 participants={meeting.attendees}
+                state={meeting.state}
               />
             </Col>
           </Row>
         )}
-        {!showSettings && (
+        {!showSettings && meeting.state === MeetingState.OPEN && (
           // TODO connect with api
           <FinalDateForm meetingId={id} finalEndDate={new Date()} finalBeginDate={new Date()} />
         )}
@@ -137,6 +140,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             timeDeadline={new Date(meeting.markTimeRangeDeadline)}
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
+            state={meeting.state}
           />
         )}
         {survey && !showSettings && (
@@ -147,6 +151,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
             setRefreshSurvey={setRefreshSurvey}
+            state={meeting.state}
           />
         )}
       </Container>
