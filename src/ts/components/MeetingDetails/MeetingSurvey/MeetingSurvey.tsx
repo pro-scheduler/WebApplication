@@ -56,6 +56,11 @@ const MeetingSurvey = ({
     getSurveyToEdit(survey.meetingId, setSurveyToEditAndQuestions);
   }, [survey.meetingId]);
 
+  const refreshSurvey = () => {
+    setRefreshSurvey(Math.random());
+    getSurveyToEdit(survey.meetingId, setSurveyToEdit);
+  };
+
   const updateSurvey = () => {
     if (questionsToAdd.length > 0) {
       setQuestionsToAdd(
@@ -67,8 +72,7 @@ const MeetingSurvey = ({
 
       surveyToEdit.questions = [...surveyToEdit.questions, ...questionsToAdd];
     }
-    editSurvey(survey.id, surveyToEdit, () => getSurveyToEdit(survey.meetingId, setSurveyToEdit));
-    setRefreshSurvey(Math.random());
+    editSurvey(survey.id, surveyToEdit, refreshSurvey);
   };
 
   return (
