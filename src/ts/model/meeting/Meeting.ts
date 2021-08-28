@@ -11,6 +11,11 @@ export enum MeetingRole {
   ATTENDEE = 'ATTENDEE',
 }
 
+export enum MeetingState {
+  OPEN = 'OPEN',
+  CANCELLED = 'CANCELLED',
+}
+
 export type CreateMeetingRequest = {
   name: string;
   description: string;
@@ -58,6 +63,7 @@ export type MeetingDetails = {
   availableTimeRanges: TimeRangeDTO[];
   attendees: MeetingAttendeeDetails[];
   type: MeetingType;
+  state: MeetingState;
   markTimeRangeDeadline: string | undefined;
   finalDate: TimeRangeDTO;
 };
@@ -80,6 +86,7 @@ export class OnlineMeetingDetails implements MeetingDetails {
     public link: string,
     public password: string,
     public type: MeetingType = MeetingType.ONLINE,
+    public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
     public finalDate: TimeRangeDTO
   ) {}
@@ -93,6 +100,7 @@ export class RealMeetingDetails implements MeetingDetails {
     public availableTimeRanges: TimeRangeDTO[],
     public attendees: MeetingAttendeeDetails[],
     public type: MeetingType = MeetingType.REAL,
+    public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
     public finalDate: TimeRangeDTO
   ) {}

@@ -1,5 +1,11 @@
 import { post, get, put, del } from '../genericApiCalls';
-import { getMeetingsUrl, getMeetingUrl, getLeaveMeetingUrl, getMeetingAttendeeUrl } from './urls';
+import {
+  getMeetingsUrl,
+  getMeetingUrl,
+  getLeaveMeetingUrl,
+  getMeetingAttendeeUrl,
+  getCancelMeetingUrl,
+} from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { CreateMeetingRequest } from '../../model/meeting/Meeting';
 
@@ -48,9 +54,9 @@ export const saveUserTimeRanges = (
 
 export const leaveMeeting = (
   meetingId: number,
+  onSuccess?: Function,
   setData?: Function,
-  setResponse?: Function,
-  onSuccess?: Function
+  setResponse?: Function
 ) =>
   post(
     {},
@@ -59,5 +65,21 @@ export const leaveMeeting = (
     setResponse,
     true,
     'You successfully left the meeting',
+    onSuccess
+  );
+
+export const cancelMeeting = (
+  meetingId: number,
+  onSuccess?: Function,
+  setData?: Function,
+  setResponse?: Function
+) =>
+  post(
+    {},
+    getCancelMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'You successfully canceled the meeting',
     onSuccess
   );

@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router';
-import { leaveMeeting } from '../../API/meeting/meetingService';
+import { cancelMeeting, leaveMeeting } from '../../API/meeting/meetingService';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -47,7 +47,7 @@ const MeetingDetailsInfo = ({
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
-  // TODO
+  // TODO connect to API
   const updateNameAndDescription = () => {
     console.log(
       `Here please implement new api call with name and description update ${newName} ${newDescription}`
@@ -59,19 +59,14 @@ const MeetingDetailsInfo = ({
     setDescription(description);
   }, [name, description]);
 
-  // TODO send to backend
   const cancelTheMeeting = () => {
     setCancelMeetingModal(false);
+    cancelMeeting(meetingId);
   };
 
   const leaveTheMeeting = () => {
     setLeaveMeetingModal(false);
-    leaveMeeting(
-      meetingId,
-      () => void 0,
-      () => void 0,
-      () => history.push('/meetings')
-    );
+    leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
   return (
