@@ -223,6 +223,7 @@ const Time = () => {
             timeRanges={timeRanges}
             answers={timeAnswers}
             numberOfParticipants={10}
+            isOrganizer={true}
           />
         </Col>
       </Row>
@@ -236,6 +237,7 @@ const Time = () => {
             answers={timeAnswers}
             disabled={true}
             numberOfParticipants={10}
+            isOrganizer={true}
           />
         </Col>
       </Row>

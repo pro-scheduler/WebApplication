@@ -77,9 +77,13 @@ const MeetingDetailsInfo = ({
   return (
     <Card
       title={'Details'}
-      onEdit={() => {
-        setEditNameAndDescription(!editNameAndDescription);
-      }}
+      onEdit={
+        isOrganizer
+          ? () => {
+              setEditNameAndDescription(!editNameAndDescription);
+            }
+          : undefined
+      }
       footer={
         <div className={styles.actionButtonContainer}>
           {isOrganizer ? (

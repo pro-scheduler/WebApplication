@@ -25,6 +25,7 @@ export type MeetingTimeProps = {
   userRanges?: TimeRangeDTO[];
   refreshTimeData?: Function;
   numberOfParticipants: number;
+  isOrganizer: boolean;
 };
 
 interface RangesWithDay {
@@ -41,6 +42,7 @@ const MeetingTime = ({
   refreshTimeData = () => {},
   timeDeadline,
   numberOfParticipants,
+  isOrganizer,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -163,7 +165,11 @@ const MeetingTime = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'When'} iconAction={() => {}} collapseAction={setOpened} />
+      <LineWithHeader
+        header={'When'}
+        iconAction={isOrganizer ? () => {} : undefined}
+        collapseAction={setOpened}
+      />
       <Col>
         <Collapse isOpened={opened}>
           <Col lg={12} className="text-center mx-auto">
