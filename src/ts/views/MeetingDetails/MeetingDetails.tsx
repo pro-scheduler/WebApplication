@@ -30,7 +30,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [refreshSurvey, setRefreshSurvey] = useState<number>(0);
   const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
-  const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
+  const [refreshMeeting, setRefreshMeeting] = useState<number>(0);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
@@ -48,7 +48,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   useEffect(() => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
     // eslint-disable-next-line
-  }, [refreshParticipants]);
+  }, [refreshMeeting]);
 
   const refreshTimeData = () => {
     if (meeting) {
@@ -112,13 +112,14 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 isOrganizer={isOrganizer}
                 meetingId={meeting.id}
                 state={meeting.state}
+                refreshMeeting={() => setRefreshMeeting(Math.random())}
               />
             </Col>
             <Col lg={6}>
               <MeetingParticipants
                 meetingId={id}
                 isOrganizer={isOrganizer}
-                refreshParticipants={setRefreshParticipants}
+                refreshParticipants={setRefreshMeeting}
                 participants={meeting.attendees}
                 state={meeting.state}
               />

@@ -26,6 +26,7 @@ export type MeetingDetailsInfoProps = {
   isOrganizer: boolean;
   meetingId: number;
   state: MeetingState;
+  refreshMeeting: Function;
 };
 
 const MeetingDetailsInfo = ({
@@ -39,6 +40,7 @@ const MeetingDetailsInfo = ({
   isOrganizer,
   meetingId,
   state,
+  refreshMeeting,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -63,7 +65,7 @@ const MeetingDetailsInfo = ({
 
   const cancelTheMeeting = () => {
     setCancelMeetingModal(false);
-    cancelMeeting(meetingId);
+    cancelMeeting(meetingId, refreshMeeting);
   };
 
   const leaveTheMeeting = () => {
