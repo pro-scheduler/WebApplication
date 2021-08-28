@@ -125,7 +125,7 @@ const MeetingParticipants = ({
   );
 
   return (
-    <Card title={'Who'} onAdd={() => setAddModalShow(true)}>
+    <Card title={'Who'} onAdd={isOrganizer ? () => setAddModalShow(true) : undefined}>
       <ParticipantsStatusNavbar
         accepted={acceptedInvitations.length}
         pending={pendingInvitations.length}

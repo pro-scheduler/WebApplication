@@ -47,6 +47,7 @@ const MeetingDetailsInfo = ({
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
+  // TODO
   const updateNameAndDescription = () => {
     console.log(
       `Here please implement new api call with name and description update ${newName} ${newDescription}`
@@ -76,9 +77,13 @@ const MeetingDetailsInfo = ({
   return (
     <Card
       title={'Details'}
-      onEdit={() => {
-        setEditNameAndDescription(!editNameAndDescription);
-      }}
+      onEdit={
+        isOrganizer
+          ? () => {
+              setEditNameAndDescription(!editNameAndDescription);
+            }
+          : undefined
+      }
       footer={
         <div className={styles.actionButtonContainer}>
           {isOrganizer ? (

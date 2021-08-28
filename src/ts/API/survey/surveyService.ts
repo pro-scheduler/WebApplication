@@ -16,6 +16,7 @@ export const createSurvey = (
   meetingId: number,
   surveyWithQuestions: SurveyWithQuestionsDTO,
   setResponse?: Function,
+  onSuccess?: Function,
   setData?: Function
 ) => {
   surveyWithQuestions.questions = surveyWithQuestions.questions.map((question: Question) => {
@@ -30,7 +31,8 @@ export const createSurvey = (
     setData,
     setResponse,
     true,
-    'Survey has been added successfully'
+    'Survey has been added successfully',
+    onSuccess
   );
 };
 

@@ -77,8 +77,8 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
           <Card title="Deadline for completing the survey">
             <DateTimePicker
               setDate={setFinalDate}
-              timeLabel="Select day"
-              dateLabel="Select time"
+              timeLabel="Select time"
+              dateLabel="Select date"
               defaultDate={finalDate}
             />
           </Card>

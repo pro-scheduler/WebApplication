@@ -39,11 +39,11 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   };
 
   useEffect(() => {
-    if (meeting) {
+    if (meeting && user.id) {
       setUserAttendeeId(meeting.attendees.find((a: any) => a.user.id === user.id).attendeeId);
     }
     // eslint-disable-next-line
-  }, [meeting]);
+  }, [meeting, user.id]);
 
   useEffect(() => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
@@ -136,6 +136,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             refreshTimeData={refreshTimeData}
             timeDeadline={new Date(meeting.markTimeRangeDeadline)}
             numberOfParticipants={meeting.attendees.length}
+            isOrganizer={isOrganizer}
           />
         )}
         {survey && !showSettings && (
