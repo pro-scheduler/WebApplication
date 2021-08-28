@@ -21,11 +21,11 @@
 }
 
 .settingsIcon {
-  margin-right: 100px;
-  font-size: 50px;
+  margin-right: 42px;
+  font-size: 30px;
   transition-duration: 1s;
   transition-property: transform;
-  color: var(black);
+  color: var(--medium-grey);
 }
 
 .settingsIcon:hover {
@@ -35,11 +35,11 @@
 }
 
 .detailsIcon {
-  margin-right: 100px;
-  font-size: 50px;
+  margin-right: 42px;
+  font-size: 30px;
   transition-duration: 1s;
   transition-property: transform;
-  color: var(black);
+  color: var(--medium-grey);
 }
 
 .detailsIcon:hover {
