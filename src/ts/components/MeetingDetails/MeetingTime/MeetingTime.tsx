@@ -181,7 +181,6 @@ const MeetingTime = ({
                 onChange={() => setDisplayAnswers(!displayAnswers)}
                 checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
                 unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-                title={'Show how others voted'}
               />
             </div>
             {!displayAnswers && state === MeetingState.OPEN && (
