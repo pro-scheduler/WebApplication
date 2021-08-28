@@ -106,10 +106,14 @@ const CreateMeeting = () => {
         message: invitationMessage,
       };
       if (createInvitationsRequest.emails.length > 0) {
-        createInvitations(createInvitationsRequest, setSetInvitationsResponse);
+        createInvitations(createInvitationsRequest, setSetInvitationsResponse, () =>
+          history.push('/meetings/' + meetingId.id)
+        );
       }
       if (survey.questions.length > 0) {
-        createSurvey(meetingId.id, survey, setSaveSurveyResponse);
+        createSurvey(meetingId.id, survey, setSaveSurveyResponse, () =>
+          history.push('/meetings/' + meetingId.id)
+        );
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
       history.push('/meetings/' + meetingId.id);
