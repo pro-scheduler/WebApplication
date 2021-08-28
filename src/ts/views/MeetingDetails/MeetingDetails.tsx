@@ -28,14 +28,23 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
-  const [refreshSurvey, setRefreshSurvey] = useState<number>(0);
-  const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
-  const [refreshMeeting, setRefreshMeeting] = useState<number>(0);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
+  };
+
+  const reloadMeeting = () => {
+    loadMeeting(id, setMeetingDetails, setMeetingResponse);
+  };
+
+  const reloadSurvey = () => {
+    getSurveyForMeeting(id, setSurvey);
+  };
+
+  const reloadSurveySummary = () => {
+    getSurveySummary(id, setSurveySummary);
   };
 
   useEffect(() => {
@@ -46,9 +55,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, [meeting, user.id]);
 
   useEffect(() => {
-    loadMeeting(id, setMeetingDetails, setMeetingResponse);
+    reloadMeeting();
     // eslint-disable-next-line
-  }, [refreshMeeting]);
+  }, []);
 
   const refreshTimeData = () => {
     if (meeting) {
@@ -65,8 +74,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, [meeting]);
 
   useEffect(() => {
-    getSurveyForMeeting(id, setSurvey);
-  }, [id, refreshSurvey]);
+    reloadSurvey();
+    // eslint-disable-next-line
+  }, [id]);
 
   useEffect(() => {
     if (meeting)
@@ -78,9 +88,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, [meeting, user.id]);
 
   useEffect(() => {
-    getSurveySummary(id, setSurveySummary);
+    reloadSurveySummary();
     // eslint-disable-next-line
-  }, [survey, refreshSurveySummary]);
+  }, [survey]);
 
   return meeting ? (
     <div>
@@ -112,14 +122,14 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 isOrganizer={isOrganizer}
                 meetingId={meeting.id}
                 state={meeting.state}
-                refreshMeeting={() => setRefreshMeeting(Math.random())}
+                refreshMeeting={reloadMeeting}
               />
             </Col>
             <Col lg={6}>
               <MeetingParticipants
                 meetingId={id}
                 isOrganizer={isOrganizer}
-                refreshParticipants={setRefreshMeeting}
+                refreshParticipants={reloadMeeting}
                 participants={meeting.attendees}
                 state={meeting.state}
               />
@@ -147,11 +157,11 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
         {survey && !showSettings && (
           <MeetingSurvey
             survey={survey}
-            setRefreshSurveySummary={setRefreshSurveySummary}
+            reloadSurveySummary={reloadSurveySummary}
             surveySummary={surveySummary}
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
-            setRefreshSurvey={setRefreshSurvey}
+            reloadSurvey={reloadSurvey}
             state={meeting.state}
           />
         )}

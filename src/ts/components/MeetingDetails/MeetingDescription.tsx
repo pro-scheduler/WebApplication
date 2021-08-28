@@ -67,7 +67,7 @@ const MeetingDescription = ({
       </Col>
       {state === MeetingState.CANCELLED && (
         <Col lg={12}>
-          <div className={styles.canceledMeetingInfo}>CANCELED</div>
+          <div className={styles.canceledMeetingInfo}>{MeetingState.CANCELLED}</div>
         </Col>
       )}
       <Col lg={12} className="mt-5">

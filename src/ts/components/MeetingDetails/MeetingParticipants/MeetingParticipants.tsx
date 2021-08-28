@@ -21,7 +21,7 @@ import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Mee
 export type MeetingParticipantsProps = {
   meetingId: number;
   isOrganizer: boolean;
-  refreshParticipants: (value: number) => void;
+  refreshParticipants: Function;
   participants: MeetingAttendeeDetails[];
   state: MeetingState;
 };
@@ -50,7 +50,7 @@ const MeetingParticipants = ({
   const deleteParticipant = (attendeeId: number) => {
     removeAttendeeFromMeeting(meetingId, attendeeId);
     setDeleteModalShow(false);
-    if (refreshParticipants) refreshParticipants(Math.random());
+    if (refreshParticipants) refreshParticipants();
   };
 
   const sendInvitations = () => {

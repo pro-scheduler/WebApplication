@@ -15,7 +15,7 @@ import { MeetingState } from '../../../model/meeting/Meeting';
 
 const MeetingSurveyQuestions = ({
   survey,
-  setRefreshSurveySummary,
+  reloadSurveySummary,
   surveyToEdit,
   setSurveyToEdit,
   questionsToAdd,
@@ -23,7 +23,7 @@ const MeetingSurveyQuestions = ({
   state,
 }: {
   survey: UserSurvey;
-  setRefreshSurveySummary: (value: number) => void;
+  reloadSurveySummary: Function;
   surveyToEdit?: SurveyWithQuestionsDTO;
   setSurveyToEdit?: (editedSurvey: SurveyWithQuestionsDTO) => void;
   questionsToAdd: Question[];
@@ -43,7 +43,7 @@ const MeetingSurveyQuestions = ({
     if (saveResponse.isSuccess) {
       setDataUpdated(false);
       setButtonText('COMPLETE');
-      setRefreshSurveySummary(Math.random());
+      reloadSurveySummary();
     }
     // eslint-disable-next-line
   }, [saveResponse]);

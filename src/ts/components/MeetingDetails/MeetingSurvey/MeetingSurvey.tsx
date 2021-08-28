@@ -19,20 +19,20 @@ import { MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingSurveyProps = {
   survey: UserSurvey;
-  setRefreshSurveySummary: (value: number) => void;
+  reloadSurveySummary: Function;
   surveySummary: SurveySummary | undefined;
   numberOfParticipants: number;
   isOrganizer: boolean;
-  setRefreshSurvey: (value: number) => void;
+  reloadSurvey: Function;
   state: MeetingState;
 };
 const MeetingSurvey = ({
   survey,
-  setRefreshSurveySummary,
+  reloadSurveySummary,
   surveySummary,
   numberOfParticipants,
   isOrganizer,
-  setRefreshSurvey,
+  reloadSurvey,
   state,
 }: MeetingSurveyProps) => {
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
@@ -57,7 +57,7 @@ const MeetingSurvey = ({
   }, [survey.meetingId]);
 
   const refreshSurvey = () => {
-    setRefreshSurvey(Math.random());
+    reloadSurvey();
     getSurveyToEdit(survey.meetingId, setSurveyToEdit);
   };
 
@@ -127,7 +127,7 @@ const MeetingSurvey = ({
               {displayAnswers ? (
                 <MeetingSurveyQuestions
                   survey={survey}
-                  setRefreshSurveySummary={setRefreshSurveySummary}
+                  reloadSurveySummary={reloadSurveySummary}
                   questionsToAdd={questionsToAdd}
                   setQuestionsToAdd={setQuestionsToAdd}
                   state={state}
@@ -144,7 +144,7 @@ const MeetingSurvey = ({
             <Collapse isOpened={opened}>
               <MeetingSurveyQuestions
                 survey={survey}
-                setRefreshSurveySummary={setRefreshSurveySummary}
+                reloadSurveySummary={reloadSurveySummary}
                 surveyToEdit={surveyToEdit}
                 setSurveyToEdit={setSurveyToEdit}
                 questionsToAdd={questionsToAdd}
