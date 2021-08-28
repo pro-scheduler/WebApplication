@@ -48,7 +48,9 @@ const MeetingList = ({
       >
         <td>{meeting.name}</td>
         <td>{meeting.description}</td>
+        <td>{meeting.organizer.email}</td>
         <td>{meeting.type}</td>
+        <td>{meeting.state}</td>
       </tr>
     );
   });
@@ -65,7 +67,9 @@ const MeetingList = ({
                   <tr>
                     <th>Meeting name</th>
                     <th>Description</th>
+                    <th>Organizer</th>
                     <th>Type</th>
+                    <th>State</th>
                     <th />
                   </tr>
                 </thead>

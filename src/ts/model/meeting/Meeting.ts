@@ -74,6 +74,7 @@ export type MeetingSummary = {
   description: string;
   type: MeetingType;
   organizer: UserSummary;
+  state: MeetingState;
 };
 
 export class OnlineMeetingDetails implements MeetingDetails {
