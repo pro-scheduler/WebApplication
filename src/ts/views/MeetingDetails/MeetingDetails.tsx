@@ -137,7 +137,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             setRefreshSurvey={setRefreshSurvey}
           />
         )}
-        {!showSettings && <MeetingDeclarations meetingId={id} userMail={user.email} />}
+        {!showSettings && (
+          <MeetingDeclarations meetingId={id} userMail={user.email} isOrganizer={isOrganizer} />
+        )}
       </Container>
     </div>
   ) : (

@@ -5,14 +5,24 @@ import DeleteButton from '../../../common/SubmitButton/ActionButton/DeleteButton
 import PlusButton from '../../../common/SubmitButton/ActionButton/PlusButton';
 import LetterIcon from '../../../common/Icons/LetterIcon';
 import ReturnButton from '../../../common/SubmitButton/ActionButton/ReturnButton';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export type DeclarationProps = {
   declaration: DeclarationDetails;
-  isOwner: boolean;
+  isMeetingOrganizer: boolean;
   userMail: string;
 };
 
-const Declaration = ({ declaration, isOwner, userMail }: DeclarationProps) => {
+const Declaration = ({ declaration, isMeetingOrganizer, userMail }: DeclarationProps) => {
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [isAssigned, setIsAssigned] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsOwner(isMeetingOrganizer || declaration.createdBy.email === userMail);
+    setIsAssigned(declaration.assigned.some((user) => user.email === userMail));
+  }, [declaration, isMeetingOrganizer, userMail]);
+
   const onDelete = () => {};
   const onAdd = () => {};
   const onJoin = () => {};
@@ -23,11 +33,13 @@ const Declaration = ({ declaration, isOwner, userMail }: DeclarationProps) => {
       <div className={styles.containerHeader}>
         <div className={styles.title}>{declaration.title}</div>
         <div className={styles.buttonContainer}>
-          <ReturnButton
-            className={styles.shake}
-            onReturn={onReturn}
-            hoverText="Unassing from the declaration"
-          />
+          {isAssigned && (
+            <ReturnButton
+              className={styles.shake}
+              onReturn={onReturn}
+              hoverText="Unassing from the declaration"
+            />
+          )}
           {isOwner && (
             <RiPencilFill className={styles.pencilIcon} onClick={onJoin} title="Edit declaration" />
           )}
@@ -48,14 +60,20 @@ const Declaration = ({ declaration, isOwner, userMail }: DeclarationProps) => {
             className={styles.currentUserIcon}
             style={{ right: declaration.assigned.length * 20 }}
           >
-            <LetterIcon firstLetter={userMail.charAt(0)} />
-            <div className={styles.assignMe}>
-              <PlusButton
-                className={styles.assignMeButton + ' ' + styles.shake}
-                onAdd={onAdd}
-                hoverText={'Join to the declaration'}
-              />
-            </div>
+            {!isAssigned && (
+              <>
+                <div className={styles.currentUserLetter}>
+                  <LetterIcon firstLetter={userMail.charAt(0)} />
+                </div>
+                <div className={styles.assignMe}>
+                  <PlusButton
+                    className={styles.assignMeButton + ' ' + styles.shake}
+                    onAdd={onAdd}
+                    hoverText={'Join to the declaration'}
+                  />
+                </div>{' '}
+              </>
+            )}
           </div>
         </div>
       </div>

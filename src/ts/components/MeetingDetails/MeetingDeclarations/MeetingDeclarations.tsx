@@ -12,9 +12,10 @@ import styles from './MeetingDeclarations.module.css';
 export type MeetingDeclarationsProps = {
   meetingId: number;
   userMail: string;
+  isOrganizer: boolean;
 };
 
-const MeetingDeclarations = ({ meetingId, userMail }: MeetingDeclarationsProps) => {
+const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclarationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   // eslint-disable-next-line
@@ -26,10 +27,6 @@ const MeetingDeclarations = ({ meetingId, userMail }: MeetingDeclarationsProps) 
     }
   }, [meetingId]);
 
-  useEffect(() => {
-    console.log(declarations);
-  }, [declarations]);
-
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader header={'Declarations'} collapseAction={setOpened} />
@@ -37,7 +34,12 @@ const MeetingDeclarations = ({ meetingId, userMail }: MeetingDeclarationsProps) 
         <Collapse isOpened={opened}>
           <div className={styles.declarationsContainer}>
             {declarations.map((dec, i) => (
-              <Declaration userMail={userMail} declaration={dec} isOwner={true} key={i} />
+              <Declaration
+                userMail={userMail}
+                declaration={dec}
+                isMeetingOrganizer={isOrganizer}
+                key={i}
+              />
             ))}
           </div>
         </Collapse>

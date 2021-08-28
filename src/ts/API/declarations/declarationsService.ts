@@ -50,9 +50,10 @@ export const loadDeclaration = (
       meetingId: 5,
       title: 'Some meeting',
       description: 'Some description',
+      // you can put here your email to see decclaration card as an owner
       createdBy: {
         id: 12,
-        email: 'b@test.com',
+        email: 'radek4ec@gmail.com',
         username: 'user1',
       },
       assigned: [
@@ -82,16 +83,48 @@ export const loadMeetingDeclarations = (
         title: 'Some meeting',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
+        // you can put here your email to see decclaration card as an owner
+        createdBy: {
+          id: 12,
+          email: 'radek4ec@gmail.com',
+          username: 'user1',
+        },
+        // you can put here your email to see decclarassigned card view
+        assigned: [
+          {
+            id: 12,
+            email: 'radek4ec@gmail.com',
+            username: 'user1',
+          },
+          {
+            id: 10,
+            email: 'c@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'r@test.com',
+            username: 'user',
+          },
+        ],
+      },
+      {
+        id: 11,
+        meetingId: 5,
+        title: 'Some meeting',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
         createdBy: {
           id: 12,
           email: 'b@test.com',
           username: 'user1',
         },
+        // you can put here your email to see decclarassigned card view
         assigned: [
           {
-            id: 10,
-            email: 'a@test.com',
-            username: 'user',
+            id: 12,
+            email: 'radek4ec@gmail.com',
+            username: 'user1',
           },
           {
             id: 10,
@@ -142,123 +175,7 @@ export const loadMeetingDeclarations = (
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
         createdBy: {
           id: 12,
-          email: 'b@test.com',
-          username: 'user1',
-        },
-        assigned: [
-          {
-            id: 10,
-            email: 'a@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'c@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'r@test.com',
-            username: 'user',
-          },
-        ],
-      },
-      {
-        id: 11,
-        meetingId: 5,
-        title: 'Some meeting',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
-        createdBy: {
-          id: 12,
-          email: 'b@test.com',
-          username: 'user1',
-        },
-        assigned: [
-          {
-            id: 10,
-            email: 'a@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'c@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'r@test.com',
-            username: 'user',
-          },
-        ],
-      },
-      {
-        id: 11,
-        meetingId: 5,
-        title: 'Some meeting',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
-        createdBy: {
-          id: 12,
-          email: 'b@test.com',
-          username: 'user1',
-        },
-        assigned: [
-          {
-            id: 10,
-            email: 'a@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'c@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'r@test.com',
-            username: 'user',
-          },
-        ],
-      },
-      {
-        id: 11,
-        meetingId: 5,
-        title: 'Some meeting',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
-        createdBy: {
-          id: 12,
-          email: 'b@test.com',
-          username: 'user1',
-        },
-        assigned: [
-          {
-            id: 10,
-            email: 'a@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'c@test.com',
-            username: 'user',
-          },
-          {
-            id: 10,
-            email: 'r@test.com',
-            username: 'user',
-          },
-        ],
-      },
-      {
-        id: 11,
-        meetingId: 5,
-        title: 'Some meeting',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
-        createdBy: {
-          id: 12,
-          email: 'b@test.com',
+          email: 'radek4ec@gmail.com',
           username: 'user1',
         },
         assigned: [
