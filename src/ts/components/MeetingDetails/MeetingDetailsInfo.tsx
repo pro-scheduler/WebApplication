@@ -47,6 +47,7 @@ const MeetingDetailsInfo = ({
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
+  // TODO
   const updateNameAndDescription = () => {
     console.log(
       `Here please implement new api call with name and description update ${newName} ${newDescription}`
