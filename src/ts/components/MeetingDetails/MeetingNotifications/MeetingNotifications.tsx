@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import SurveyReminder from './SurveyReminder';
 import MeetingTimeVotingReminder from './MeetingTimeVotingReminder';
 import SurveyTimeReminder from './SurveyTimeReminder';
+import MeetingReminder from './MeetingReminder';
 
 export type MeetingNotificationsProps = {
   meetingId: number;
@@ -34,6 +35,15 @@ const MeetingNotifications = ({
               meetingId={meetingId}
               meetingName={meetingName}
               deadline={new Date(markTimeRangeDeadline)}
+            />
+          </Col>
+        )}
+        {meetingFinalDate && (
+          <Col sm={12}>
+            <MeetingReminder
+              meetingId={meetingId}
+              meetingName={meetingName}
+              finalDate={new Date(meetingFinalDate)}
             />
           </Col>
         )}

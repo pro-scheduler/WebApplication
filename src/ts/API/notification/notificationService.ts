@@ -1,13 +1,16 @@
 import { del, post, put } from '../genericApiCalls';
 import {
+  MeetingReminderRequest,
   MeetingTimeReminderRequest,
   SurveyReminderRequest,
   SurveyTimeReminderRequest,
 } from '../../model/notification/Notification';
 import {
   getCreateSurveyReminderUrl,
+  getCreateUpdateMeetingReminderUrl,
   getCreateUpdateSurveyTimeReminderUrl,
   getCreateUpdateTimeReminderUrl,
+  getDeleteMeetingReminderUrl,
   getDeleteSurveyTimeReminderUrl,
   getDeleteTimeReminderUrl,
 } from './urls';
@@ -67,7 +70,7 @@ export const createOrUpdateMeetingTimeReminder = (
     setData,
     setResponse,
     true,
-    'Time voting reminder has been updated  successfully'
+    'Time voting reminder has been updated successfully'
   );
 };
 
@@ -82,5 +85,34 @@ export const deleteMeetingTimeReminder = (
     setResponse,
     true,
     'Time voting reminder has been deleted successfully'
+  );
+};
+
+export const createOrUpdateMeetingReminder = (
+  meetingReminderRequest: MeetingReminderRequest,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  put(
+    meetingReminderRequest,
+    getCreateUpdateMeetingReminderUrl(),
+    setData,
+    setResponse,
+    true,
+    'Meeting reminder has been updated successfully'
+  );
+};
+
+export const deleteMeetingReminder = (
+  meetingId: number,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  del(
+    getDeleteMeetingReminderUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Meeting reminder has been deleted successfully'
   );
 };

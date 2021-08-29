@@ -2,9 +2,9 @@ export const getNotificationsUrl = () =>
   `${process.env.REACT_APP_NOTIFICATION_SERVICE_URL}notifications`;
 
 // meeting reminders
-export const getCreateUpdateReminderUrl = () => getNotificationsUrl() + '/meeting';
+export const getCreateUpdateMeetingReminderUrl = () => getNotificationsUrl() + '/meeting';
 
-export const getDeleteReminderUrl = (meetingId: number) =>
+export const getDeleteMeetingReminderUrl = (meetingId: number) =>
   getNotificationsUrl() + `/meeting/${meetingId}`;
 
 // meeting time reminders

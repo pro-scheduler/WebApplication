@@ -18,3 +18,10 @@ export type MeetingTimeReminderRequest = {
   newTimeToSendNotification: Date;
   timePreferencesDeadline: Date;
 };
+
+export type MeetingReminderRequest = {
+  meetingId: number;
+  meetingName: string;
+  newTimeToSendNotification: Date;
+  originalMeetingTime: Date;
+};

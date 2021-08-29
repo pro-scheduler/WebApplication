@@ -1,53 +1,49 @@
 import TimeReminder, { TimeUnit } from './TimeReminder';
 import { useState } from 'react';
 import {
-  deleteMeetingTimeReminder,
-  createOrUpdateMeetingTimeReminder,
+  createOrUpdateMeetingReminder,
+  deleteMeetingReminder,
 } from '../../../API/notification/notificationService';
 
 export type MeetingTimeVotingReminderProps = {
   meetingName: string;
-  deadline: Date;
+  finalDate: Date;
   meetingId: number;
 };
-const MeetingTimeVotingReminder = ({
-  meetingName,
-  deadline,
-  meetingId,
-}: MeetingTimeVotingReminderProps) => {
+const MeetingReminder = ({ meetingName, finalDate, meetingId }: MeetingTimeVotingReminderProps) => {
   const [reminder, setReminder] = useState<boolean>(false);
   const [value, setValue] = useState<number>(15);
   const [timeUnit, setTimeUnit] = useState<TimeUnit>(TimeUnit.MINUTES);
 
   const sendReminders = () => {
-    const date = new Date(deadline);
+    const date = new Date(finalDate);
 
     // TODO remove when API will change
     if (timeUnit === TimeUnit.MINUTES) {
-      date.setMinutes(deadline.getMinutes() - value);
+      date.setMinutes(finalDate.getMinutes() - value);
     } else if (timeUnit === TimeUnit.HOURS) {
-      date.setHours(deadline.getHours() - value);
+      date.setHours(finalDate.getHours() - value);
     } else {
-      date.setDate(deadline.getDate() - value);
+      date.setDate(finalDate.getDate() - value);
     }
     if (reminder) {
-      createOrUpdateMeetingTimeReminder({
+      createOrUpdateMeetingReminder({
         meetingId: meetingId,
         meetingName: meetingName,
         newTimeToSendNotification: date,
-        timePreferencesDeadline: deadline,
+        originalMeetingTime: finalDate,
       });
     } else {
-      deleteMeetingTimeReminder(meetingId);
+      deleteMeetingReminder(meetingId);
     }
   };
 
   return (
     <TimeReminder
       sendReminders={sendReminders}
-      cardHeader={'Voting meeting time reminder'}
-      checkboxLabel={'Send reminder about the meeting voting deadline to all participants'}
-      beforeLabel={'before the time voting ends'}
+      cardHeader={'Meeting reminder'}
+      checkboxLabel={'Send reminder about the meeting to all participants'}
+      beforeLabel={'before the meeting starts'}
       timeUnit={timeUnit}
       setTimeUnit={setTimeUnit}
       reminder={reminder}
@@ -58,4 +54,4 @@ const MeetingTimeVotingReminder = ({
   );
 };
 
-export default MeetingTimeVotingReminder;
+export default MeetingReminder;
