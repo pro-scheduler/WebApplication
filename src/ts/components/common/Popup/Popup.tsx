@@ -17,7 +17,7 @@ const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className={'popup'}
+      className={'popup' + (show ? ' showAnimation' : '')}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className={'popupTitle'}>
