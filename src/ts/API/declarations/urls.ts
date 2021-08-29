@@ -7,8 +7,8 @@ export const getDeclarationUrl = (declarationId: number) =>
 export const getAllMeetingDeclarationsUrl = (meetingId: number) =>
   getDeclarationsUrl() + `?meetingId=${meetingId}`;
 
-export const assingToDeclarationUrl = (declarationId: number) =>
+export const assignToDeclarationUrl = (declarationId: number) =>
   getDeclarationsUrl() + `/${declarationId}/assign`;
 
-export const unassingToDeclarationUrl = (declarationId: number) =>
+export const unassignToDeclarationUrl = (declarationId: number) =>
   getDeclarationsUrl() + `/${declarationId}/unassign`;

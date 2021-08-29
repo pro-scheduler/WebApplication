@@ -6,7 +6,6 @@ import {
   loadMeetingDeclarations,
   saveDeclaration,
 } from '../../../API/declarations/declarationsService';
-import { ApiCall } from '../../../API/genericApiCalls';
 import { DeclarationDetails } from '../../../model/declaration/Declaration';
 import { minSings, maxSings, required } from '../../../tools/validator';
 import Popup from '../../common/Popup/Popup';
@@ -31,12 +30,10 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclaratio
   const [description, setDescription] = useState<string>('');
   const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);
   const [showAddDeclarationModal, setShowAddDeclarationModal] = useState<boolean>(false);
-  // eslint-disable-next-line
-  const [laodResponse, setLoadResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {
     if (meetingId) {
-      loadMeetingDeclarations(meetingId, setDeclarations, setLoadResponse);
+      loadMeetingDeclarations(meetingId, setDeclarations, () => {});
     }
   }, [meetingId]);
 
@@ -52,6 +49,8 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclaratio
       }
     );
     setShowAddDeclarationModal(false);
+    setTitle('');
+    setDescription('');
   };
 
   return (

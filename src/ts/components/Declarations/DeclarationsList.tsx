@@ -41,7 +41,7 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
   return (
     <Row className="justify-content-center mt-4 ml-sm-5">
       <Col>
-        <Card title="Your declarations list">
+        <Card title="Your declarations">
           {declarations.length > 0 && (
             <div className={styles.declarationsTable}>
               <SearchBox value={searchTerm} onChange={handleChange} />

@@ -95,7 +95,7 @@ const Declaration = ({
             <ReturnButton
               className={styles.shake}
               onReturn={onReturn}
-              hoverText="Unassing from the declaration"
+              hoverText="Unassign from the declaration"
             />
           )}
           {isOwner && (

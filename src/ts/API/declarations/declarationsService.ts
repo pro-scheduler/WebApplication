@@ -3,8 +3,8 @@ import {
   getDeclarationsUrl,
   getDeclarationUrl,
   getAllMeetingDeclarationsUrl,
-  assingToDeclarationUrl,
-  unassingToDeclarationUrl,
+  assignToDeclarationUrl,
+  unassignToDeclarationUrl,
 } from './urls';
 
 export const saveDeclaration = (
@@ -74,11 +74,11 @@ export const assignToDeclaration = (
 ) =>
   post(
     {},
-    assingToDeclarationUrl(declarationId),
+    assignToDeclarationUrl(declarationId),
     () => {},
     setResponse,
     true,
-    'User successfully assignees to the declaration',
+    'User has been assigned to the declaration successfully',
     onSuccess
   );
 
@@ -89,10 +89,10 @@ export const unassignFromDeclaration = (
 ) =>
   post(
     {},
-    unassingToDeclarationUrl(declarationId),
+    unassignToDeclarationUrl(declarationId),
     () => {},
     setResponse,
     true,
-    'User successfully unassignees from the declaration',
+    'User has been unassigned from the declaration successfully',
     onSuccess
   );
