@@ -9,12 +9,14 @@ export type MeetingSurveyResultsProps = {
   numberOfParticipants: number;
   numberOfFilledSurveys: number;
   emails: string[];
+  isOrganizer: boolean;
 };
 
 const MeetingSurveyResults = ({
   numberOfParticipants,
   numberOfFilledSurveys,
   emails,
+  isOrganizer,
 }: MeetingSurveyResultsProps) => {
   const [showEmails, setShowEmails] = useState<boolean>(false);
 
@@ -27,13 +29,15 @@ const MeetingSurveyResults = ({
     <Card
       title={'Results'}
       footer={
-        <div className={styles.showEmailsContainer}>
-          <ActionButton
-            onclick={() => setShowEmails(true)}
-            text={'Show who filled the survey'}
-            className={styles.showEmailsButton}
-          />
-        </div>
+        isOrganizer ? (
+          <div className={styles.showEmailsContainer}>
+            <ActionButton
+              onclick={() => setShowEmails(true)}
+              text={'Show who filled the survey'}
+              className={styles.showEmailsButton}
+            />
+          </div>
+        ) : undefined
       }
     >
       <div className={styles.completedSurveysHeader}>

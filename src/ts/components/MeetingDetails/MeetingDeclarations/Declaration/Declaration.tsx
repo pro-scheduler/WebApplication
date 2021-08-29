@@ -58,13 +58,7 @@ const Declaration = ({
     assignToDeclaration(declaration.id, setResponse, () => {
       setDeclaration({
         ...declaration,
-        assignees: [
-          ...declaration.assignees,
-          {
-            email: user.email,
-            id: 1,
-          },
-        ],
+        assignees: [...declaration.assignees, user],
       });
     });
   };

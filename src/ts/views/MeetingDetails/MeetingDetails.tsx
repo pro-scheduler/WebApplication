@@ -6,7 +6,7 @@ import MeetingParticipants from '../../components/MeetingDetails/MeetingParticip
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { loadMeeting } from '../../API/meeting/meetingService';
 import { ProUser } from '../../model/user/ProUser';
-import { MeetingAttendeeDetails, MeetingRole } from '../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
@@ -22,22 +22,43 @@ import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarat
 
 const MeetingDetails = ({ user }: { user: ProUser }) => {
   const { id }: any = useParams();
+  const [userAttendeeId, setUserAttendeeId] = useState<number>(0);
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [showSettings, setShowSettings] = useState<Boolean>(false);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
-  const [refreshSurvey, setRefreshSurvey] = useState<number>(0);
-  const [refreshSurveySummary, setRefreshSurveySummary] = useState<number>(0);
-  const [refreshParticipants, setRefreshParticipants] = useState<number>(0);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
+  const setMeetingDetails = (meeting: any) => {
+    setMeeting(meeting);
+  };
+
+  const reloadMeeting = () => {
+    loadMeeting(id, setMeetingDetails, setMeetingResponse);
+  };
+
+  const reloadSurvey = () => {
+    getSurveyForMeeting(id, setSurvey);
+  };
+
+  const reloadSurveySummary = () => {
+    getSurveySummary(id, setSurveySummary);
+  };
+
   useEffect(() => {
-    loadMeeting(id, setMeeting, setMeetingResponse);
+    if (meeting && user.id) {
+      setUserAttendeeId(meeting.attendees.find((a: any) => a.user.id === user.id).attendeeId);
+    }
     // eslint-disable-next-line
-  }, [refreshParticipants]);
+  }, [meeting, user.id]);
+
+  useEffect(() => {
+    reloadMeeting();
+    // eslint-disable-next-line
+  }, []);
 
   const refreshTimeData = () => {
     if (meeting) {
@@ -54,23 +75,23 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, [meeting]);
 
   useEffect(() => {
-    getSurveyForMeeting(id, setSurvey);
-  }, [id, refreshSurvey]);
+    reloadSurvey();
+    // eslint-disable-next-line
+  }, [id]);
 
   useEffect(() => {
     if (meeting)
       setIsOrganizer(
         meeting.attendees.some(
-          (a: MeetingAttendeeDetails) =>
-            parseInt(a.userId) === user.id && a.role === MeetingRole.ORGANIZER
+          (a: MeetingAttendeeDetails) => a.user.id === user.id && a.role === MeetingRole.ORGANIZER
         )
       );
   }, [meeting, user.id]);
 
   useEffect(() => {
-    getSurveySummary(id, setSurveySummary);
+    reloadSurveySummary();
     // eslint-disable-next-line
-  }, [survey, refreshSurveySummary]);
+  }, [survey]);
 
   return meeting ? (
     <div>
@@ -85,6 +106,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           showSettings={showSettings}
           setShowSettings={setShowSettings}
           isOrganizer={isOrganizer}
+          state={meeting.state}
         />
         {showSettings && <MeetingSettings survey={survey} />}
         {!showSettings && (
@@ -100,41 +122,52 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 description={meeting.description}
                 isOrganizer={isOrganizer}
                 meetingId={meeting.id}
+                state={meeting.state}
+                refreshMeeting={reloadMeeting}
               />
             </Col>
             <Col lg={6}>
               <MeetingParticipants
                 meetingId={id}
                 isOrganizer={isOrganizer}
-                refreshParticipants={setRefreshParticipants}
+                refreshParticipants={reloadMeeting}
                 participants={meeting.attendees}
+                state={meeting.state}
               />
             </Col>
           </Row>
         )}
-        {!showSettings && (
-          // TODO connect with api
-          <FinalDateForm meetingId={id} finalEndDate={new Date()} finalBeginDate={new Date()} />
+        {!showSettings && meeting.state === MeetingState.OPEN && (
+          <FinalDateForm
+            meetingId={id}
+            finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
+            finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
+            hasBeenSet={meeting.finalDate != null}
+          />
         )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime
             meetingId={id}
+            attendeeId={userAttendeeId}
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers}
             userRanges={userTimeAnswers}
             refreshTimeData={refreshTimeData}
             timeDeadline={new Date(meeting.markTimeRangeDeadline)}
             numberOfParticipants={meeting.attendees.length}
+            isOrganizer={isOrganizer}
+            state={meeting.state}
           />
         )}
         {survey && !showSettings && (
           <MeetingSurvey
             survey={survey}
-            setRefreshSurveySummary={setRefreshSurveySummary}
+            reloadSurveySummary={reloadSurveySummary}
             surveySummary={surveySummary}
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
-            setRefreshSurvey={setRefreshSurvey}
+            reloadSurvey={reloadSurvey}
+            state={meeting.state}
           />
         )}
         {!showSettings && (
@@ -143,6 +176,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             user={{
               id: user.id,
               email: user.email,
+              username: user.nickname,
             }}
             isOrganizer={isOrganizer}
           />

@@ -1,5 +1,5 @@
-import { BasicMeetingDetailsDTO, MeetingSummary } from '../meeting/Meeting';
-import { BasicUserInfoDTO, UserSummary } from '../user/ProUser';
+import { MeetingSummary } from '../meeting/Meeting';
+import { UserSummary } from '../user/ProUser';
 
 export enum State {
   PENDING = 'PENDING',
@@ -34,19 +34,4 @@ export type CreateInvitationsRequest = {
   meetingId: number;
   emails: string[];
   message: string;
-};
-
-export type BasicInvitationInfo = {
-  invitationId: number;
-  basicMeetingDetailsDTO: BasicMeetingDetailsDTO;
-  basicUserInfoDTO: BasicUserInfoDTO;
-  state: State;
-};
-
-export type InvitationEmailDTO = {
-  email: string;
-};
-
-export type InvitationEmailsDTO = {
-  emails: string[];
 };

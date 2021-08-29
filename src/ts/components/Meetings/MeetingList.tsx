@@ -2,7 +2,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
 import React, { useEffect, useState } from 'react';
-import { Meeting } from '../../model/meeting/Meeting';
+import { MeetingSummary } from '../../model/meeting/Meeting';
 import styles from './MeetingList.module.css';
 import Card from '../common/Card/Card';
 import SearchBox from '../common/forms/Input/SearchBox';
@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 export type MeetingListProps = {
   header: string;
   noMeetingsInfo: string;
-  meetings: Meeting[];
+  meetings: MeetingSummary[];
   showRedirectButton?: boolean;
 };
 
@@ -24,7 +24,7 @@ const MeetingList = ({
 }: MeetingListProps) => {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<Meeting[]>(meetings);
+  const [searchResults, setSearchResults] = useState<MeetingSummary[]>(meetings);
   const handleChange = (event: any) => {
     setSearchTerm(event.target.value);
   };
@@ -32,14 +32,14 @@ const MeetingList = ({
   useEffect(() => {
     setSearchResults(
       searchTerm !== ''
-        ? meetings.filter((meeting: Meeting) =>
+        ? meetings.filter((meeting: MeetingSummary) =>
             meeting.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
         : meetings
     );
   }, [searchTerm, meetings]);
 
-  const meetingRows = searchResults.map((meeting: Meeting, index: number) => {
+  const meetingRows = searchResults.map((meeting: MeetingSummary, index: number) => {
     return (
       <tr
         key={index}
@@ -48,7 +48,9 @@ const MeetingList = ({
       >
         <td>{meeting.name}</td>
         <td>{meeting.description}</td>
+        <td>{meeting.organizer.email}</td>
         <td>{meeting.type}</td>
+        <td>{meeting.state}</td>
       </tr>
     );
   });
@@ -65,7 +67,9 @@ const MeetingList = ({
                   <tr>
                     <th>Meeting name</th>
                     <th>Description</th>
+                    <th>Organizer</th>
                     <th>Type</th>
+                    <th>State</th>
                     <th />
                   </tr>
                 </thead>

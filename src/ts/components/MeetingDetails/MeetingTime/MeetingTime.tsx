@@ -14,9 +14,11 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
 import { Collapse } from 'react-collapse';
+import { MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingTimeProps = {
   meetingId: number;
+  attendeeId: number;
   timeRanges: TimeRangeDTO[];
   timeDeadline?: Date;
   answers?: TimeRangeDTO[];
@@ -24,6 +26,8 @@ export type MeetingTimeProps = {
   userRanges?: TimeRangeDTO[];
   refreshTimeData?: Function;
   numberOfParticipants: number;
+  isOrganizer: boolean;
+  state: MeetingState;
 };
 
 interface RangesWithDay {
@@ -32,6 +36,7 @@ interface RangesWithDay {
 
 const MeetingTime = ({
   meetingId,
+  attendeeId,
   answers,
   timeRanges,
   disabled,
@@ -39,6 +44,8 @@ const MeetingTime = ({
   refreshTimeData = () => {},
   timeDeadline,
   numberOfParticipants,
+  isOrganizer,
+  state,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -77,7 +84,7 @@ const MeetingTime = ({
         });
       }
     }
-    saveUserTimeRanges(meetingId, rangesFiltered, () => {
+    saveUserTimeRanges(meetingId, attendeeId, rangesFiltered, () => {
       refreshTimeData();
       setPreferencesChanged(false);
     });
@@ -161,7 +168,11 @@ const MeetingTime = ({
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
-      <LineWithHeader header={'When'} iconAction={() => {}} collapseAction={setOpened} />
+      <LineWithHeader
+        header={'When'}
+        iconAction={isOrganizer && state === MeetingState.OPEN ? () => {} : undefined}
+        collapseAction={setOpened}
+      />
       <Col>
         <Collapse isOpened={opened}>
           <Col lg={12} className="text-center mx-auto">
@@ -170,10 +181,9 @@ const MeetingTime = ({
                 onChange={() => setDisplayAnswers(!displayAnswers)}
                 checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
                 unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-                title={'Show how others voted'}
               />
             </div>
-            {!displayAnswers && (
+            {!displayAnswers && state === MeetingState.OPEN && (
               <div className="my-5">
                 <Timer
                   date={timeDeadline}
@@ -207,7 +217,7 @@ const MeetingTime = ({
           </div>
         </Collapse>
       </Col>
-      {!displayAnswers && !deadlineExceeded && (
+      {!displayAnswers && !deadlineExceeded && state === MeetingState.OPEN && (
         <Col lg={12} className="text-center mx-auto">
           <Collapse isOpened={opened}>
             <ActionButton

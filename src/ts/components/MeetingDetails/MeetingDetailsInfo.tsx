@@ -1,19 +1,19 @@
 import Card from '../common/Card/Card';
-import { BiWorld, BiCalendarEvent } from 'react-icons/bi';
+import { BiCalendarEvent, BiWorld } from 'react-icons/bi';
 import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { minSings, maxSings, required } from '../../tools/validator';
+import { maxSings, minSings, required } from '../../tools/validator';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
-import { useEffect } from 'react';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router';
-import { leaveMeeting } from '../../API/meeting/meetingService';
+import { cancelMeeting, leaveMeeting } from '../../API/meeting/meetingService';
+import { MeetingState } from '../../model/meeting/Meeting';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -25,6 +25,8 @@ export type MeetingDetailsInfoProps = {
   description: string;
   isOrganizer: boolean;
   meetingId: number;
+  state: MeetingState;
+  refreshMeeting: Function;
 };
 
 const MeetingDetailsInfo = ({
@@ -37,6 +39,8 @@ const MeetingDetailsInfo = ({
   description,
   isOrganizer,
   meetingId,
+  state,
+  refreshMeeting,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -47,6 +51,7 @@ const MeetingDetailsInfo = ({
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
+  // TODO connect to API
   const updateNameAndDescription = () => {
     // TO-DO
     console.log(
@@ -59,43 +64,44 @@ const MeetingDetailsInfo = ({
     setDescription(description);
   }, [name, description]);
 
-  // TODO send to backend
   const cancelTheMeeting = () => {
     setCancelMeetingModal(false);
+    cancelMeeting(meetingId, refreshMeeting);
   };
 
   const leaveTheMeeting = () => {
     setLeaveMeetingModal(false);
-    leaveMeeting(
-      meetingId,
-      () => void 0,
-      () => void 0,
-      () => history.push('/meetings')
-    );
+    leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
   return (
     <Card
       title={'Details'}
-      onEdit={() => {
-        setEditNameAndDescription(!editNameAndDescription);
-      }}
+      onEdit={
+        isOrganizer && state === MeetingState.OPEN
+          ? () => {
+              setEditNameAndDescription(!editNameAndDescription);
+            }
+          : undefined
+      }
       footer={
-        <div className={styles.actionButtonContainer}>
-          {isOrganizer ? (
-            <ActionButton
-              onclick={() => setCancelMeetingModal(true)}
-              text={'Cancel the meeting'}
-              className={styles.actionButton}
-            />
-          ) : (
-            <ActionButton
-              onclick={() => setLeaveMeetingModal(true)}
-              text={'Leave the meeting'}
-              className={styles.actionButton}
-            />
-          )}
-        </div>
+        state === MeetingState.OPEN ? (
+          <div className={styles.actionButtonContainer}>
+            {isOrganizer ? (
+              <ActionButton
+                onclick={() => setCancelMeetingModal(true)}
+                text={'Cancel the meeting'}
+                className={styles.actionButton}
+              />
+            ) : (
+              <ActionButton
+                onclick={() => setLeaveMeetingModal(true)}
+                text={'Leave the meeting'}
+                className={styles.actionButton}
+              />
+            )}
+          </div>
+        ) : undefined
       }
     >
       {!editNameAndDescription ? (

@@ -1,16 +1,11 @@
-import { Meeting } from '../meeting/Meeting';
+import { MeetingDetails } from '../meeting/Meeting';
 
 export type ProUser = {
   id: number;
   email: string;
   nickname: string;
-  organizedMeetings: Meeting[];
-  participatedMeetings: Meeting[];
-};
-
-export type BasicUserInfoDTO = {
-  id: number;
-  email: string;
+  organizedMeetings: MeetingDetails[];
+  participatedMeetings: MeetingDetails[];
 };
 
 export type UserResponse = {
@@ -22,5 +17,5 @@ export type UserResponse = {
 export type UserSummary = {
   id: number;
   email: string;
-  username?: string;
+  username: string;
 };

@@ -4,16 +4,17 @@ import { FiSettings } from 'react-icons/fi';
 import { RiSurveyLine } from 'react-icons/ri';
 import styles from './MeetingDescription.module.css';
 import UserIcon from './MeetingParticipants/UserIcon';
-import { ProUser } from '../../model/user/ProUser';
+import { MeetingAttendeeDetails, MeetingState } from '../../model/meeting/Meeting';
 
 export type MeetingDescriptionProps = {
   name: string;
   meetingId: number;
-  organizers: ProUser[];
+  organizers: MeetingAttendeeDetails[];
   description: string;
   setShowSettings: Function;
   showSettings: Boolean;
   isOrganizer: Boolean;
+  state: MeetingState;
 };
 
 const MeetingDescription = ({
@@ -24,15 +25,16 @@ const MeetingDescription = ({
   setShowSettings,
   showSettings,
   isOrganizer,
+  state,
 }: MeetingDescriptionProps) => {
-  const organizersIcons = organizers.map((organizer: ProUser) => {
+  const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
     return (
       <UserIcon
-        name={organizer.email}
+        name={organizer.user.email}
         meetingId={meetingId}
-        userId={organizer.id}
+        attendeeId={organizer.attendeeId}
         canDelete={false}
-        key={'organizer' + organizer.id}
+        key={'organizer' + organizer.attendeeId}
       />
     );
   });
@@ -63,6 +65,11 @@ const MeetingDescription = ({
           )}
         </div>
       </Col>
+      {state === MeetingState.CANCELLED && (
+        <Col lg={12}>
+          <div className={styles.canceledMeetingInfo}>{MeetingState.CANCELLED}</div>
+        </Col>
+      )}
       <Col lg={12} className="mt-5">
         <div className={styles.meetingDescriptionOrganizer}>
           {organizers.length > 1 ? 'Organizers' : 'Organizer'}

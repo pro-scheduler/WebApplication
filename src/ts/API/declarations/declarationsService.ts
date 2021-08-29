@@ -1,4 +1,4 @@
-import { post, get, put } from '../genericApiCalls';
+import { post, get, put, del } from '../genericApiCalls';
 import {
   getDeclarationsUrl,
   getDeclarationUrl,
@@ -53,29 +53,19 @@ export const updateDeclaration = (
     onSuccess
   );
 
-// TO DO delete declaration
 export const deleteDeclaration = (
   declarationId: number,
   setResponse?: Function,
   onSuccess?: Function
-) => {
-  // TO DO add delete api call after merging (del needed)
-  if (setResponse) {
-    setResponse({
-      isLoading: true,
-      isSuccess: false,
-      isFailed: false,
-    });
-    setTimeout(() => {
-      if (onSuccess) onSuccess();
-      setResponse({
-        isLoading: false,
-        isSuccess: true,
-        isFailed: false,
-      });
-    }, 1000);
-  }
-};
+) =>
+  del(
+    getDeclarationUrl(declarationId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully removed a declaration.',
+    onSuccess
+  );
 
 export const assignToDeclaration = (
   declarationId: number,
