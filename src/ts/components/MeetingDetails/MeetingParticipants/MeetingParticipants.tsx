@@ -48,9 +48,8 @@ const MeetingParticipants = ({
   }, [invitationsChanged]);
 
   const deleteParticipant = (attendeeId: number) => {
-    removeAttendeeFromMeeting(meetingId, attendeeId);
+    removeAttendeeFromMeeting(meetingId, attendeeId, refreshParticipants);
     setDeleteModalShow(false);
-    if (refreshParticipants) refreshParticipants();
   };
 
   const sendInvitations = () => {
