@@ -345,6 +345,93 @@ export const loadUserDeclarations = (setDeclarations: Function, setResponse?: Fu
           },
         ],
       },
+      {
+        id: 16,
+        meetingId: 5,
+        title: 'Some meeting',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
+        createdBy: {
+          id: 12,
+          email: 'b@test.com',
+          username: 'user1',
+        },
+        assigned: [
+          {
+            id: 10,
+            email: 'a@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'c@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'r@test.com',
+            username: 'user',
+          },
+        ],
+      },
+      {
+        id: 17,
+        meetingId: 5,
+        title: 'Some meeting',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
+        createdBy: {
+          id: 12,
+          email: 'b@test.com',
+          username: 'user1',
+        },
+        assigned: [
+          {
+            id: 10,
+            email: 'a@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'c@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'r@test.com',
+            username: 'user',
+          },
+        ],
+      },
+      {
+        id: 18,
+        meetingId: 5,
+        title: 'Some meeting',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper enim et dui scelerisque maximus. Vestibulum at placerat sem. Sed vitae ante eget diam ornare congue at non turpis. Integer nec odio feugiat, aliquet lacus sit amet, aliquet nulla nullam. ',
+        createdBy: {
+          id: 12,
+          email: 'b@test.com',
+          username: 'user1',
+        },
+        assigned: [
+          {
+            id: 10,
+            email: 'a@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'c@test.com',
+            username: 'user',
+          },
+          {
+            id: 10,
+            email: 'r@test.com',
+            username: 'user',
+          },
+        ],
+      },
     ]);
   }, 500);
   return;

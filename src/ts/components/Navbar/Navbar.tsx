@@ -79,6 +79,7 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
                 onClick={() => setActiveIcon('Declarations')}
               >
                 Declarations
+                <Link to="/declarations" />
               </MenuItem>
 
               <MenuItem

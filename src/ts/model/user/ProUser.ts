@@ -22,4 +22,5 @@ export type UserResponse = {
 export type UserSummary = {
   id: number;
   email: string;
+  username?: string;
 };
