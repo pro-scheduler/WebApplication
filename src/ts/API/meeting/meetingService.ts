@@ -70,6 +70,25 @@ export const leaveMeeting = (
     onSuccess
   );
 
+export const updateFinalDate = (
+  finalDate: TimeRangeDTO,
+  meetingId: number,
+  setData?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      finalDate,
+    },
+    getMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Final date saved',
+    onSuccess
+  );
+
 export const cancelMeeting = (
   meetingId: number,
   onSuccess?: Function,
