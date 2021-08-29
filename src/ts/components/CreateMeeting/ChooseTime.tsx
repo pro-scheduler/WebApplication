@@ -117,8 +117,8 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
                 setDeadlineDate(date);
                 setDeadline(date);
               }}
-              timeLabel="Select day"
-              dateLabel="Select time"
+              timeLabel="Select time"
+              dateLabel="Select date"
               defaultDate={deadline}
             />
           </Card>

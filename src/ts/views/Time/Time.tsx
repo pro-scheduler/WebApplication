@@ -5,6 +5,7 @@ import TimeGrid from '../../components/TimeGrid/TimeGrid';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
+import { MeetingState } from '../../model/meeting/Meeting';
 
 const Time = () => {
   let now = new Date().getTime();
@@ -223,6 +224,8 @@ const Time = () => {
             timeRanges={timeRanges}
             answers={timeAnswers}
             numberOfParticipants={10}
+            isOrganizer={true}
+            state={MeetingState.OPEN}
           />
         </Col>
       </Row>
@@ -236,6 +239,8 @@ const Time = () => {
             answers={timeAnswers}
             disabled={true}
             numberOfParticipants={10}
+            isOrganizer={true}
+            state={MeetingState.OPEN}
           />
         </Col>
       </Row>
