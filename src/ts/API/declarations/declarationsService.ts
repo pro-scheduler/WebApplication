@@ -359,26 +359,40 @@ export const updateDeclaration = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  setTimeout(() => {
-    setDeclaration({
-      id: 12,
-      meetingId: 5,
-      title: newDeclaration.title,
-      description: newDeclaration.description,
-      createdBy: {
-        id: 12,
-        email: 'b@test.com',
-        username: 'user1',
-      },
-      assigned: [
-        {
-          id: 10,
-          email: 'a@test.com',
-          username: 'user',
-        },
-      ],
+  if (setResponse) {
+    setResponse({
+      isLoading: true,
+      isSuccess: false,
+      isFailed: false,
     });
-  }, 500);
+    setTimeout(() => {
+      if (onSuccess) onSuccess();
+      setResponse({
+        isLoading: false,
+        isSuccess: true,
+        isFailed: false,
+      });
+      setDeclaration({
+        id: 12,
+        meetingId: 5,
+        title: newDeclaration.title,
+        description: newDeclaration.description,
+        createdBy: {
+          id: 12,
+          email: 'b@test.com',
+          username: 'user1',
+        },
+        assigned: [
+          {
+            id: 10,
+            email: 'a@test.com',
+            username: 'user',
+          },
+        ],
+      });
+    }, 1000);
+  }
+
   return;
   // eslint-disable-next-line
   put(
@@ -399,7 +413,21 @@ export const deleteDeclaration = (
   onSuccess?: Function
 ) => {
   // TO DO add delete api call after merging (del needed)
-  if (onSuccess) onSuccess();
+  if (setResponse) {
+    setResponse({
+      isLoading: true,
+      isSuccess: false,
+      isFailed: false,
+    });
+    setTimeout(() => {
+      if (onSuccess) onSuccess();
+      setResponse({
+        isLoading: false,
+        isSuccess: true,
+        isFailed: false,
+      });
+    }, 1000);
+  }
 };
 
 export const assignToDeclaration = (
@@ -407,7 +435,21 @@ export const assignToDeclaration = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  if (onSuccess) onSuccess();
+  if (setResponse) {
+    setResponse({
+      isLoading: true,
+      isSuccess: false,
+      isFailed: false,
+    });
+    setTimeout(() => {
+      if (onSuccess) onSuccess();
+      setResponse({
+        isLoading: false,
+        isSuccess: true,
+        isFailed: false,
+      });
+    }, 1000);
+  }
   return;
   // eslint-disable-next-line
   post(
@@ -426,7 +468,21 @@ export const unassignFromDeclaration = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  if (onSuccess) onSuccess();
+  if (setResponse) {
+    setResponse({
+      isLoading: true,
+      isSuccess: false,
+      isFailed: false,
+    });
+    setTimeout(() => {
+      if (onSuccess) onSuccess();
+      setResponse({
+        isLoading: false,
+        isSuccess: true,
+        isFailed: false,
+      });
+    }, 1000);
+  }
   return;
   // eslint-disable-next-line
   post(

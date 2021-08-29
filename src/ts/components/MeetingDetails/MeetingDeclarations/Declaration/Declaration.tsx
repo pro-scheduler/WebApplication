@@ -19,6 +19,8 @@ import SingleValueInput from '../../../common/forms/Input/SingleValueInput';
 import { minSings, maxSings, required } from '../../../../tools/validator';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
 import TextArea from '../../../common/forms/TextArea/TextArea';
+import LoadingSpinner from '../../../common/Spinner/LoadingSpinner';
+import { ApiCall } from '../../../../API/genericApiCalls';
 
 export type DeclarationProps = {
   defaultDeclaration: DeclarationDetails;
@@ -39,7 +41,8 @@ const Declaration = ({
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(defaultDeclaration.title);
   const [newDescription, setNewDescription] = useState<string>(defaultDeclaration.description);
-  const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);
+  const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState<boolean>(true);
+  const [response, setResponse] = useState<ApiCall>(new ApiCall());
 
   useEffect(() => {
     setIsOwner(isMeetingOrganizer || declaration.createdBy.email === user.email);
@@ -47,44 +50,32 @@ const Declaration = ({
   }, [declaration, isMeetingOrganizer, user.email]);
 
   const onDelete = () => {
-    deleteDeclaration(
-      declaration.id,
-      () => {},
-      () => {
-        removeDeclaration(declaration.id);
-      }
-    );
+    deleteDeclaration(declaration.id, setResponse, () => {
+      removeDeclaration(declaration.id);
+    });
   };
   const onAdd = () => {
-    assignToDeclaration(
-      declaration.id,
-      () => {},
-      () => {
-        setDeclaration({
-          ...declaration,
-          assigned: [
-            ...declaration.assigned,
-            {
-              email: user.email,
-              id: 1,
-            },
-          ],
-        });
-      }
-    );
+    assignToDeclaration(declaration.id, setResponse, () => {
+      setDeclaration({
+        ...declaration,
+        assigned: [
+          ...declaration.assigned,
+          {
+            email: user.email,
+            id: 1,
+          },
+        ],
+      });
+    });
   };
 
   const onReturn = () => {
-    unassignFromDeclaration(
-      declaration.id,
-      () => {},
-      () => {
-        setDeclaration({
-          ...declaration,
-          assigned: declaration.assigned.filter((u) => u.email !== user.email),
-        });
-      }
-    );
+    unassignFromDeclaration(declaration.id, setResponse, () => {
+      setDeclaration({
+        ...declaration,
+        assigned: declaration.assigned.filter((u) => u.email !== user.email),
+      });
+    });
   };
 
   const onEdit = () => {
@@ -94,7 +85,8 @@ const Declaration = ({
         title: newTitle,
         description: newDescription,
       },
-      setDeclaration
+      setDeclaration,
+      setResponse
     );
     setShowEditModal(false);
   };
@@ -104,6 +96,7 @@ const Declaration = ({
       <div className={styles.containerHeader}>
         <div className={styles.title}>{declaration.title}</div>
         <div className={styles.buttonContainer}>
+          <LoadingSpinner active={response.isLoading} />
           {isAssigned && (
             <ReturnButton
               className={styles.shake}
