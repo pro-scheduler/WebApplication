@@ -1,12 +1,24 @@
 import Card from '../../common/Card/Card';
 import Checkbox from '../../common/forms/Checkbox/Checkbox';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import SingleValueInput from '../../common/forms/Input/SingleValueInput';
-import styles from './MeetingReminder.module.css';
+import styles from './TimeReminder.module.css';
 import SingleDropdownButton from '../../common/Dropdown/SingleDropdownButton';
 import { ValueLabelPair } from '../../../model/utils/ValueLabelPair';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 
-const MeetingReminder = () => {
+export type TimeReminderProps = {
+  sendReminders: MouseEventHandler;
+  cardHeader: string;
+  checkboxLabel: string;
+  beforeLabel: string;
+};
+const TimeReminder = ({
+  sendReminders,
+  cardHeader,
+  checkboxLabel,
+  beforeLabel,
+}: TimeReminderProps) => {
   // TODO get settings from backend and send new settings
   const [reminder, setReminder] = useState<boolean>(false);
   const [value, setValue] = useState<number>(15);
@@ -21,12 +33,8 @@ const MeetingReminder = () => {
   };
 
   return (
-    <Card title="Meeting reminder">
-      <Checkbox
-        checked={reminder}
-        setChecked={setReminder}
-        label={'Send reminder about the meeting to all participants'}
-      />
+    <Card title={cardHeader}>
+      <Checkbox checked={reminder} setChecked={setReminder} label={checkboxLabel} />
       <div className={styles.timePickerContainer}>
         <div className={styles.amountInput}>
           <SingleValueInput valueHandler={setValue} value={value} type={'number'} minValue={0} />
@@ -37,10 +45,15 @@ const MeetingReminder = () => {
           defaultValue={options[0]}
           className={styles.dropdownButton}
         />
-        <div>before the meeting starts</div>
+        <div>{beforeLabel}</div>
       </div>
+      <ActionButton
+        onclick={sendReminders}
+        text={'Save reminder'}
+        className={styles.sendReminderButton}
+      />
     </Card>
   );
 };
 
-export default MeetingReminder;
+export default TimeReminder;

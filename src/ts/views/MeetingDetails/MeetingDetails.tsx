@@ -108,7 +108,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           state={meeting.state}
         />
         {showSettings && (
-          <MeetingSettings survey={survey} meetingId={id} meetingName={meeting.name} />
+          <MeetingSettings survey={survey} meetingId={parseInt(id)} meetingName={meeting.name} />
         )}
         {!showSettings && (
           <Row className="justify-content ml-5 pl-5">
