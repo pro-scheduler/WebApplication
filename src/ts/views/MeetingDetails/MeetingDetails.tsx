@@ -138,7 +138,14 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           />
         )}
         {!showSettings && (
-          <MeetingDeclarations meetingId={id} userMail={user.email} isOrganizer={isOrganizer} />
+          <MeetingDeclarations
+            meetingId={id}
+            user={{
+              id: user.id,
+              email: user.email,
+            }}
+            isOrganizer={isOrganizer}
+          />
         )}
       </Container>
     </div>

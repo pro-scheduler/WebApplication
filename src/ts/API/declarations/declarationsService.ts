@@ -114,7 +114,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 12,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -144,7 +144,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 13,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -173,7 +173,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 14,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -202,7 +202,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 15,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -231,7 +231,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 16,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -260,7 +260,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 17,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -289,7 +289,7 @@ export const loadMeetingDeclarations = (
         ],
       },
       {
-        id: 11,
+        id: 18,
         meetingId: 5,
         title: 'Some meeting',
         description:
@@ -361,7 +361,7 @@ export const updateDeclaration = (
 ) => {
   setTimeout(() => {
     setDeclaration({
-      id: 11,
+      id: 12,
       meetingId: 5,
       title: newDeclaration.title,
       description: newDeclaration.description,
@@ -397,13 +397,19 @@ export const deleteDeclaration = (
   declarationId: number,
   setResponse?: Function,
   onSuccess?: Function
-) => {};
+) => {
+  // TO DO add delete api call after merging (del needed)
+  if (onSuccess) onSuccess();
+};
 
 export const assignToDeclaration = (
   declarationId: number,
   setResponse?: Function,
   onSuccess?: Function
-) =>
+) => {
+  if (onSuccess) onSuccess();
+  return;
+  // eslint-disable-next-line
   post(
     {},
     assingToDeclarationUrl(declarationId),
@@ -413,12 +419,16 @@ export const assignToDeclaration = (
     'User successfully assigned to the declaration',
     onSuccess
   );
+};
 
 export const unassignFromDeclaration = (
   declarationId: number,
   setResponse?: Function,
   onSuccess?: Function
-) =>
+) => {
+  if (onSuccess) onSuccess();
+  return;
+  // eslint-disable-next-line
   post(
     {},
     unassingToDeclarationUrl(declarationId),
@@ -428,3 +438,4 @@ export const unassignFromDeclaration = (
     'User successfully unassigned from the declaration',
     onSuccess
   );
+};

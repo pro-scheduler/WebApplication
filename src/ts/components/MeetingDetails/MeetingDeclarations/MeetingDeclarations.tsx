@@ -16,14 +16,15 @@ import Declaration from './Declaration/Declaration';
 import styles from './MeetingDeclarations.module.css';
 import TextArea from '../../common/forms/TextArea/TextArea';
 import SingleValueInput from '../../common/forms/Input/SingleValueInput';
+import { UserSummary } from '../../../model/user/ProUser';
 
 export type MeetingDeclarationsProps = {
   meetingId: number;
-  userMail: string;
+  user: UserSummary;
   isOrganizer: boolean;
 };
 
-const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclarationsProps) => {
+const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclarationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [title, setTitle] = useState<string>('');
@@ -61,9 +62,12 @@ const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclar
           <div className={styles.declarationsContainer}>
             {declarations.map((dec, i) => (
               <Declaration
-                userMail={userMail}
-                declaration={dec}
+                user={user}
+                defaultDeclaration={dec}
                 isMeetingOrganizer={isOrganizer}
+                removeDeclaration={(id: number) => {
+                  setDeclarations(declarations.filter((d) => d.id !== id));
+                }}
                 key={i}
               />
             ))}

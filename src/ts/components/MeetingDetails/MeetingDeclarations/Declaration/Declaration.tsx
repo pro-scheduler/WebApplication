@@ -7,26 +7,77 @@ import LetterIcon from '../../../common/Icons/LetterIcon';
 import ReturnButton from '../../../common/SubmitButton/ActionButton/ReturnButton';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import {
+  assignToDeclaration,
+  deleteDeclaration,
+  unassignFromDeclaration,
+} from '../../../../API/declarations/declarationsService';
+import { UserSummary } from '../../../../model/user/ProUser';
 
 export type DeclarationProps = {
-  declaration: DeclarationDetails;
+  defaultDeclaration: DeclarationDetails;
   isMeetingOrganizer: boolean;
-  userMail: string;
+  user: UserSummary;
+  removeDeclaration: Function;
 };
 
-const Declaration = ({ declaration, isMeetingOrganizer, userMail }: DeclarationProps) => {
+const Declaration = ({
+  defaultDeclaration,
+  isMeetingOrganizer,
+  user,
+  removeDeclaration,
+}: DeclarationProps) => {
+  const [declaration, setDeclaration] = useState(defaultDeclaration);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [isAssigned, setIsAssigned] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsOwner(isMeetingOrganizer || declaration.createdBy.email === userMail);
-    setIsAssigned(declaration.assigned.some((user) => user.email === userMail));
-  }, [declaration, isMeetingOrganizer, userMail]);
+    setIsOwner(isMeetingOrganizer || declaration.createdBy.email === user.email);
+    setIsAssigned(declaration.assigned.some((u) => u.email === user.email));
+  }, [declaration, isMeetingOrganizer, user.email]);
 
-  const onDelete = () => {};
-  const onAdd = () => {};
-  const onJoin = () => {};
-  const onReturn = () => {};
+  const onDelete = () => {
+    deleteDeclaration(
+      declaration.id,
+      () => {},
+      () => {
+        removeDeclaration(declaration.id);
+      }
+    );
+  };
+  const onAdd = () => {
+    assignToDeclaration(
+      declaration.id,
+      () => {},
+      () => {
+        setDeclaration({
+          ...declaration,
+          assigned: [
+            ...declaration.assigned,
+            {
+              email: user.email,
+              id: 1,
+            },
+          ],
+        });
+      }
+    );
+  };
+
+  const onReturn = () => {
+    unassignFromDeclaration(
+      declaration.id,
+      () => {},
+      () => {
+        setDeclaration({
+          ...declaration,
+          assigned: declaration.assigned.filter((u) => u.email !== user.email),
+        });
+      }
+    );
+  };
+
+  const onEdit = () => {};
 
   return (
     <div className={styles.container}>
@@ -41,7 +92,7 @@ const Declaration = ({ declaration, isMeetingOrganizer, userMail }: DeclarationP
             />
           )}
           {isOwner && (
-            <RiPencilFill className={styles.pencilIcon} onClick={onJoin} title="Edit declaration" />
+            <RiPencilFill className={styles.pencilIcon} onClick={onEdit} title="Edit declaration" />
           )}
           {isOwner && <DeleteButton onDelete={onDelete} hoverText={'Remove declaration'} />}
         </div>
@@ -63,7 +114,7 @@ const Declaration = ({ declaration, isMeetingOrganizer, userMail }: DeclarationP
             {!isAssigned && (
               <>
                 <div className={styles.currentUserLetter}>
-                  <LetterIcon firstLetter={userMail.charAt(0)} />
+                  <LetterIcon firstLetter={user.email.charAt(0)} />
                 </div>
                 <div className={styles.assignMe}>
                   <PlusButton
