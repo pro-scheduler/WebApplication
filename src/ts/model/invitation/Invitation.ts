@@ -10,6 +10,7 @@ export enum State {
 export type InvitationDetails = {
   id: number;
   user: UserSummary;
+  invitedBy: UserSummary;
   meeting: MeetingSummary;
   state: State;
 };
