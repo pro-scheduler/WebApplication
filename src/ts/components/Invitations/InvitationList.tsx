@@ -37,6 +37,7 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
       <tr key={index}>
         <td>{invitation.meeting.name}</td>
         <td>{invitation.meeting.description}</td>
+        <td>{invitation.invitedBy.email}</td>
         <td>
           <div className={styles.acceptRejectContainer}>
             <YesButton
@@ -73,6 +74,7 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
                     <tr>
                       <th>Meeting name</th>
                       <th>Description</th>
+                      <th>Invited by</th>
                       <th />
                     </tr>
                   </thead>
