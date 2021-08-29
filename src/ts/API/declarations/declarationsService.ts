@@ -1,5 +1,4 @@
 import { post, get, put } from '../genericApiCalls';
-import { DeclarationDetails } from '../../model/declaration/Declaration';
 import {
   getDeclarationsUrl,
   getDeclarationUrl,
@@ -9,17 +8,16 @@ import {
 } from './urls';
 
 export const saveDeclaration = (
-  declaration: DeclarationDetails,
+  declaration: { title: string; description: string; meetingId: number },
   setDeclaration: Function,
-  setResponse?: Function,
-  successMessage?: string
+  setResponse?: Function
 ) => {
   setTimeout(() => {
     setDeclaration({
       id: 11,
       meetingId: 5,
-      title: 'Some meeting',
-      description: 'Some description',
+      title: declaration.title,
+      description: declaration.description,
       createdBy: {
         id: 12,
         email: 'b@test.com',
@@ -36,7 +34,14 @@ export const saveDeclaration = (
   }, 500);
   return;
   // eslint-disable-next-line
-  post(declaration, getDeclarationsUrl(), setDeclaration, setResponse, true, successMessage);
+  post(
+    declaration,
+    getDeclarationsUrl(),
+    setDeclaration,
+    setResponse,
+    true,
+    'You have successfully added a declartation.'
+  );
 };
 
 export const loadDeclaration = (

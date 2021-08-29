@@ -3,3 +3,34 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.addNewButton {
+  margin-top: 15px;
+}
+
+.addDeclarationForm {
+  text-align: left;
+  color: var(--gray);
+}
+
+.titleLabel {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.formLabel {
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.buttonContainer {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}

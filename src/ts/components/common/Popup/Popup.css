@@ -5,4 +5,5 @@
 
 .popup .modal-content {
     background-color: var(--background-color);
+    border-radius: 20px;
 }

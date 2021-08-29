@@ -2,12 +2,20 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Collapse } from 'react-collapse';
-import { loadMeetingDeclarations } from '../../../API/declarations/declarationsService';
+import {
+  loadMeetingDeclarations,
+  saveDeclaration,
+} from '../../../API/declarations/declarationsService';
 import { ApiCall } from '../../../API/genericApiCalls';
 import { DeclarationDetails } from '../../../model/declaration/Declaration';
+import { minSings, maxSings, required } from '../../../tools/validator';
+import Popup from '../../common/Popup/Popup';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import LineWithHeader from '../LineWithHeader';
 import Declaration from './Declaration/Declaration';
 import styles from './MeetingDeclarations.module.css';
+import TextArea from '../../common/forms/TextArea/TextArea';
+import SingleValueInput from '../../common/forms/Input/SingleValueInput';
 
 export type MeetingDeclarationsProps = {
   meetingId: number;
@@ -18,6 +26,10 @@ export type MeetingDeclarationsProps = {
 const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclarationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);
+  const [showAddDeclarationModal, setShowAddDeclarationModal] = useState<boolean>(false);
   // eslint-disable-next-line
   const [laodResponse, setLoadResponse] = useState<ApiCall>(new ApiCall());
 
@@ -26,6 +38,20 @@ const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclar
       loadMeetingDeclarations(meetingId, setDeclarations, setLoadResponse);
     }
   }, [meetingId]);
+
+  const addDeclaration = () => {
+    saveDeclaration(
+      {
+        title: title,
+        description: description,
+        meetingId: meetingId,
+      },
+      (dec: DeclarationDetails) => {
+        setDeclarations([...declarations, dec]);
+      }
+    );
+    setShowAddDeclarationModal(false);
+  };
 
   return (
     <Row className="justify-content my-5 ml-5 pl-5">
@@ -42,7 +68,53 @@ const MeetingDeclarations = ({ meetingId, userMail, isOrganizer }: MeetingDeclar
               />
             ))}
           </div>
+          <div className={styles.buttonContainer}>
+            <ActionButton
+              onclick={() => {
+                setShowAddDeclarationModal(true);
+              }}
+              text="Add new declaration"
+              className={styles.addNewButton}
+            />
+          </div>
         </Collapse>
+        <Popup
+          show={showAddDeclarationModal}
+          title="Add new declaration"
+          onClose={setShowAddDeclarationModal}
+        >
+          <div className={styles.addDeclarationForm}>
+            <p className={styles.titleLabel}>Declaration title</p>
+            <SingleValueInput
+              value={title}
+              valueHandler={setTitle}
+              setInvalid={setInvalidTitleOrDesc}
+              validation={[
+                { validation: required, message: 'This field is required' },
+                { validation: minSings(5), message: 'Min 5 signs' },
+                { validation: maxSings(255), message: 'Max 255 signs' },
+              ]}
+              placeholder="Please type declaration title ..."
+            />
+            <p className={styles.formLabel}>Declaration description</p>
+            <TextArea
+              defaultValue={description}
+              valueHandler={setDescription}
+              setInvalid={setInvalidTitleOrDesc}
+              validation={[{ validation: maxSings(512), message: 'Max 500 signs' }]}
+              placeholder="Please type declaration description ..."
+            />
+            <div className={styles.buttonContainer}>
+              <ActionButton
+                onclick={() => {
+                  addDeclaration();
+                }}
+                disabled={invalidTitleOrDesc}
+                text="Save declaration"
+              />
+            </div>
+          </div>
+        </Popup>
       </Col>
     </Row>
   );
