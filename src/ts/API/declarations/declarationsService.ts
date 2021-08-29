@@ -18,7 +18,7 @@ export const saveDeclaration = (
     setDeclaration,
     setResponse,
     true,
-    'You have successfully added a declartation.'
+    'You have successfully added a declaration'
   );
 
 export const loadDeclaration = (
@@ -63,7 +63,7 @@ export const deleteDeclaration = (
     () => {},
     setResponse,
     true,
-    'You have successfully removed a declaration.',
+    'You have successfully removed a declaration',
     onSuccess
   );
 

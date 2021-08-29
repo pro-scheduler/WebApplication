@@ -28,12 +28,12 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
     );
   }, [searchTerm, declarations]);
 
-  const declarationsRows = searchResults.map((delcaration: DeclarationDetails, index: number) => {
+  const declarationsRows = searchResults.map((declaration: DeclarationDetails, index: number) => {
     return (
       <tr key={index}>
-        <td>{delcaration.title}</td>
-        <td>{delcaration.description}</td>
-        <td>{delcaration.createdBy.email}</td>
+        <td>{declaration.title}</td>
+        <td>{declaration.description}</td>
+        <td>{declaration.createdBy.email}</td>
       </tr>
     );
   });
