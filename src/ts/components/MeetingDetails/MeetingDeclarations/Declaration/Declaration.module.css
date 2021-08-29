@@ -78,3 +78,25 @@
 .currentUserLetter {
   opacity: 0.8;
 }
+
+.editDeclarationForm {
+  text-align: left;
+  color: var(--gray);
+}
+
+.titleLabel {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.formLabel {
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.formButtonContainer {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}

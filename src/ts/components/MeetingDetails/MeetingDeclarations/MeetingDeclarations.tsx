@@ -105,7 +105,7 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclaratio
               defaultValue={description}
               valueHandler={setDescription}
               setInvalid={setInvalidTitleOrDesc}
-              validation={[{ validation: maxSings(512), message: 'Max 500 signs' }]}
+              validation={[{ validation: maxSings(512), message: 'Max 512 signs' }]}
               placeholder="Please type declaration description ..."
             />
             <div className={styles.buttonContainer}>

@@ -11,8 +11,14 @@ import {
   assignToDeclaration,
   deleteDeclaration,
   unassignFromDeclaration,
+  updateDeclaration,
 } from '../../../../API/declarations/declarationsService';
 import { UserSummary } from '../../../../model/user/ProUser';
+import Popup from '../../../common/Popup/Popup';
+import SingleValueInput from '../../../common/forms/Input/SingleValueInput';
+import { minSings, maxSings, required } from '../../../../tools/validator';
+import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
+import TextArea from '../../../common/forms/TextArea/TextArea';
 
 export type DeclarationProps = {
   defaultDeclaration: DeclarationDetails;
@@ -30,6 +36,10 @@ const Declaration = ({
   const [declaration, setDeclaration] = useState(defaultDeclaration);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [isAssigned, setIsAssigned] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [newTitle, setNewTitle] = useState<string>(defaultDeclaration.title);
+  const [newDescription, setNewDescription] = useState<string>(defaultDeclaration.description);
+  const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);
 
   useEffect(() => {
     setIsOwner(isMeetingOrganizer || declaration.createdBy.email === user.email);
@@ -77,7 +87,17 @@ const Declaration = ({
     );
   };
 
-  const onEdit = () => {};
+  const onEdit = () => {
+    updateDeclaration(
+      declaration.id,
+      {
+        title: newTitle,
+        description: newDescription,
+      },
+      setDeclaration
+    );
+    setShowEditModal(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -92,7 +112,13 @@ const Declaration = ({
             />
           )}
           {isOwner && (
-            <RiPencilFill className={styles.pencilIcon} onClick={onEdit} title="Edit declaration" />
+            <RiPencilFill
+              className={styles.pencilIcon}
+              onClick={() => {
+                setShowEditModal(true);
+              }}
+              title="Edit declaration"
+            />
           )}
           {isOwner && <DeleteButton onDelete={onDelete} hoverText={'Remove declaration'} />}
         </div>
@@ -122,12 +148,49 @@ const Declaration = ({
                     onAdd={onAdd}
                     hoverText={'Join to the declaration'}
                   />
-                </div>{' '}
+                </div>
               </>
             )}
           </div>
         </div>
       </div>
+      <Popup show={showEditModal} title="Edit declaration" onClose={setShowEditModal}>
+        <div className={styles.editDeclarationForm}>
+          <p className={styles.titleLabel}>Declaration title</p>
+          <SingleValueInput
+            value={newTitle}
+            valueHandler={setNewTitle}
+            setInvalid={setInvalidTitleOrDesc}
+            validation={[
+              { validation: required, message: 'This field is required' },
+              { validation: minSings(5), message: 'Min 5 signs' },
+              { validation: maxSings(255), message: 'Max 255 signs' },
+            ]}
+            placeholder="Please type declaration title ..."
+          />
+          <p className={styles.formLabel}>Declaration description</p>
+          <TextArea
+            defaultValue={newDescription}
+            valueHandler={setNewDescription}
+            setInvalid={setInvalidTitleOrDesc}
+            validation={[{ validation: maxSings(512), message: 'Max 512 signs' }]}
+            placeholder="Please type declaration description ..."
+          />
+          <div className={styles.formButtonContainer}>
+            <ActionButton
+              onclick={() => {
+                onEdit();
+              }}
+              disabled={
+                invalidTitleOrDesc ||
+                (defaultDeclaration.title === newTitle &&
+                  defaultDeclaration.description === newDescription)
+              }
+              text="Edit declaration"
+            />
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };
