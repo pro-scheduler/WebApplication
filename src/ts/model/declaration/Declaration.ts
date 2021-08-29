@@ -6,5 +6,5 @@ export type DeclarationDetails = {
   title: string;
   description: string;
   createdBy: UserSummary;
-  assigned: UserSummary[];
+  assignees: UserSummary[];
 };

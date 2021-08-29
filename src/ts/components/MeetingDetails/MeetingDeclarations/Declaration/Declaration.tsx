@@ -46,7 +46,7 @@ const Declaration = ({
 
   useEffect(() => {
     setIsOwner(isMeetingOrganizer || declaration.createdBy.email === user.email);
-    setIsAssigned(declaration.assigned.some((u) => u.email === user.email));
+    setIsAssigned(declaration.assignees.some((u) => u.email === user.email));
   }, [declaration, isMeetingOrganizer, user.email]);
 
   const onDelete = () => {
@@ -58,8 +58,8 @@ const Declaration = ({
     assignToDeclaration(declaration.id, setResponse, () => {
       setDeclaration({
         ...declaration,
-        assigned: [
-          ...declaration.assigned,
+        assignees: [
+          ...declaration.assignees,
           {
             email: user.email,
             id: 1,
@@ -73,7 +73,7 @@ const Declaration = ({
     unassignFromDeclaration(declaration.id, setResponse, () => {
       setDeclaration({
         ...declaration,
-        assigned: declaration.assigned.filter((u) => u.email !== user.email),
+        assignees: declaration.assignees.filter((u) => u.email !== user.email),
       });
     });
   };
@@ -121,14 +121,14 @@ const Declaration = ({
       <div className={styles.footer}>
         <LetterIcon firstLetter={declaration.createdBy.email.charAt(0)} />
         <div className={styles.assignedContainer}>
-          {declaration.assigned.map((assigned, i) => (
+          {declaration.assignees.map((assigned, i) => (
             <div key={i} className={styles.userIcon} style={{ right: i * 20 }}>
               <LetterIcon firstLetter={assigned.email.charAt(0)} />
             </div>
           ))}
           <div
             className={styles.currentUserIcon}
-            style={{ right: declaration.assigned.length * 20 }}
+            style={{ right: declaration.assignees.length * 20 }}
           >
             {!isAssigned && (
               <>

@@ -1,4 +1,5 @@
-export const getDeclarationsUrl = () => `${process.env.REACT_APP_API_URL}declarations`;
+export const getDeclarationsUrl = () =>
+  `${process.env.REACT_APP_DECLARATION_SERVICE_URL}declarations`;
 
 export const getDeclarationUrl = (declarationId: number) =>
   getDeclarationsUrl() + `/${declarationId}`;
