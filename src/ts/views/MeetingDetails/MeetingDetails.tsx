@@ -139,10 +139,11 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
         {!showSettings && meeting.state === MeetingState.OPEN && (
           <FinalDateForm
             meetingId={id}
-            finalEndDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
-            finalBeginDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
+            finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
+            finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
             hasBeenSet={meeting.finalDate != null}
           />
+        )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
           <MeetingTime
             meetingId={id}

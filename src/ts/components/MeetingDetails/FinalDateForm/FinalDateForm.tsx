@@ -29,7 +29,7 @@ const FinalDateForm = ({
     updateFinalDate(
       {
         timeStart: beginDate,
-        timeEnd: finalEndDate,
+        timeEnd: endDate,
       },
       meetingId,
       () => {},
