@@ -9,9 +9,15 @@ export type MeetingNotificationsProps = {
   meetingId: number;
   surveyId?: number;
   meetingName: string;
+  surveyEndDate?: string;
 };
 
-const MeetingNotifications = ({ meetingId, surveyId, meetingName }: MeetingNotificationsProps) => {
+const MeetingNotifications = ({
+  meetingId,
+  surveyId,
+  meetingName,
+  surveyEndDate,
+}: MeetingNotificationsProps) => {
   return (
     <>
       <Row className="justify-content mt-5 ml-5 pl-5">
@@ -27,9 +33,15 @@ const MeetingNotifications = ({ meetingId, surveyId, meetingName }: MeetingNotif
           <Col sm={12}>
             <SurveyReminder meetingId={meetingId} surveyId={surveyId} meetingName={meetingName} />
           </Col>
-          <Col sm={12}>
-            <SurveyTimeReminder />
-          </Col>
+          {surveyEndDate && (
+            <Col sm={12}>
+              <SurveyTimeReminder
+                meetingId={meetingId}
+                surveyId={surveyId}
+                surveyEndDate={new Date(surveyEndDate)}
+              />
+            </Col>
+          )}
         </Row>
       )}
     </>

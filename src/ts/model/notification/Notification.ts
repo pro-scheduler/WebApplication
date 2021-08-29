@@ -4,3 +4,10 @@ export type SurveyReminderRequest = {
   meetingName: string;
   toAll: boolean;
 };
+
+export type SurveyTimeReminderRequest = {
+  meetingId: number;
+  surveyId: number;
+  timeToSendNotification: Date;
+  originalSurveyTime: Date;
+};

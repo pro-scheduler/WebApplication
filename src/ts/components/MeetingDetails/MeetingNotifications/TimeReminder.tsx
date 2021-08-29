@@ -1,30 +1,41 @@
 import Card from '../../common/Card/Card';
 import Checkbox from '../../common/forms/Checkbox/Checkbox';
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import SingleValueInput from '../../common/forms/Input/SingleValueInput';
 import styles from './TimeReminder.module.css';
 import SingleDropdownButton from '../../common/Dropdown/SingleDropdownButton';
 import { ValueLabelPair } from '../../../model/utils/ValueLabelPair';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-
+export enum TimeUnit {
+  MINUTES = 'Minutes',
+  HOURS = 'Hours',
+  DAYS = 'Days',
+}
 export type TimeReminderProps = {
   sendReminders: MouseEventHandler;
   cardHeader: string;
   checkboxLabel: string;
   beforeLabel: string;
+  timeUnit: TimeUnit;
+  setTimeUnit: (value: TimeUnit) => void;
+  reminder: boolean;
+  setReminder: (value: boolean) => void;
+  value: number;
+  setValue: (newValue: number) => void;
 };
 const TimeReminder = ({
   sendReminders,
   cardHeader,
   checkboxLabel,
   beforeLabel,
+  timeUnit,
+  setTimeUnit,
+  reminder,
+  setReminder,
+  value,
+  setValue,
 }: TimeReminderProps) => {
-  // TODO get settings from backend and send new settings
-  const [reminder, setReminder] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(15);
-  // eslint-disable-next-line
-  const [timeUnit, setTimeUnit] = useState<'Minutes' | 'Hours' | 'Days'>('Hours');
-  const options: ValueLabelPair[] = ['Minutes', 'Hours', 'Days'].map(
+  const options: ValueLabelPair[] = [TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS].map(
     (option: string) => new ValueLabelPair(option, option)
   );
 
@@ -42,14 +53,14 @@ const TimeReminder = ({
         <SingleDropdownButton
           options={options}
           onChange={handleNewTimeUnit}
-          defaultValue={options[0]}
+          defaultValue={new ValueLabelPair(timeUnit, timeUnit)}
           className={styles.dropdownButton}
         />
         <div>{beforeLabel}</div>
       </div>
       <ActionButton
         onclick={sendReminders}
-        text={'Save reminder'}
+        text={reminder ? 'Save reminder' : 'Delete reminder'}
         className={styles.sendReminderButton}
       />
     </Card>

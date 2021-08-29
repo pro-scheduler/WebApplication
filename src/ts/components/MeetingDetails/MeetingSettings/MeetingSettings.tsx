@@ -8,7 +8,12 @@ export type MeetingSettingsProps = {
 const MeetingSettings = ({ survey, meetingId, meetingName }: MeetingSettingsProps) => {
   return (
     <>
-      <MeetingNotifications meetingId={meetingId} meetingName={meetingName} surveyId={survey?.id} />
+      <MeetingNotifications
+        meetingId={meetingId}
+        meetingName={meetingName}
+        surveyId={survey?.id}
+        surveyEndDate={survey?.surveyEndDate}
+      />
     </>
   );
 };

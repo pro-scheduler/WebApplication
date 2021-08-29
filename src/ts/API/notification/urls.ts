@@ -19,4 +19,4 @@ export const getCreateSurveyReminderUrl = () => getNotificationsUrl() + '/survey
 export const getCreateUpdateSurveyTimeReminderUrl = () => getNotificationsUrl() + '/survey/time';
 
 export const getDeleteSurveyTimeReminderUrl = (surveyId: number) =>
-  getNotificationsUrl() + `${surveyId}`;
+  getNotificationsUrl() + `/survey/time/${surveyId}`;
