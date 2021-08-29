@@ -31,9 +31,9 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
   const declarationsRows = searchResults.map((delcaration: DeclarationDetails, index: number) => {
     return (
       <tr key={index}>
-        <td>{delcaration.meetingId}</td>
         <td>{delcaration.title}</td>
         <td>{delcaration.description}</td>
+        <td>{delcaration.createdBy.email}</td>
       </tr>
     );
   });
@@ -48,9 +48,9 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
               <Table responsive="sm" className="mt-4">
                 <thead>
                   <tr>
-                    <th>Meeting id</th>
                     <th>Title</th>
                     <th>Description</th>
+                    <th>Created by</th>
                   </tr>
                 </thead>
                 <tbody>{declarationsRows}</tbody>

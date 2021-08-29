@@ -113,10 +113,17 @@ const Declaration = ({
       <hr className={styles.hrLine} />
       <div className="mt-3"> {declaration.description}</div>
       <div className={styles.footer}>
-        <LetterIcon firstLetter={declaration.createdBy.email.charAt(0)} />
+        <div title={user.email}>
+          <LetterIcon firstLetter={declaration.createdBy.email.charAt(0)} />
+        </div>
         <div className={styles.assignedContainer}>
           {declaration.assignees.map((assigned, i) => (
-            <div key={i} className={styles.userIcon} style={{ right: i * 20 }}>
+            <div
+              key={i}
+              className={styles.userIcon}
+              style={{ right: i * 20 }}
+              title={assigned.email}
+            >
               <LetterIcon firstLetter={assigned.email.charAt(0)} />
             </div>
           ))}

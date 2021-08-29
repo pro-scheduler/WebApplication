@@ -5,7 +5,7 @@ export const getDeclarationUrl = (declarationId: number) =>
   getDeclarationsUrl() + `/${declarationId}`;
 
 export const getAllMeetingDeclarationsUrl = (meetingId: number) =>
-  getDeclarationsUrl() + `?meetingId=${meetingId}`;
+  getDeclarationsUrl() + `/meeting/${meetingId}`;
 
 export const assignToDeclarationUrl = (declarationId: number) =>
   getDeclarationsUrl() + `/${declarationId}/assign`;
