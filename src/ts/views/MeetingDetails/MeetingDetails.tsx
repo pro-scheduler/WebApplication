@@ -18,6 +18,7 @@ import Row from 'react-bootstrap/Row';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
 import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
+import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 
 const MeetingDetails = ({ user }: { user: ProUser }) => {
   const { id }: any = useParams();
@@ -175,6 +176,17 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             isOrganizer={isOrganizer}
             reloadSurvey={reloadSurvey}
             state={meeting.state}
+          />
+        )}
+        {!showSettings && (
+          <MeetingDeclarations
+            meetingId={id}
+            user={{
+              id: user.id,
+              email: user.email,
+              username: user.nickname,
+            }}
+            isOrganizer={isOrganizer}
           />
         )}
       </Container>

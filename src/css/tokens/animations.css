@@ -33,6 +33,17 @@
     transform: rotate(-3deg);
   }
 }
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 :root {
   --animation-shake: shake;
+  --animation-show: show;
 }

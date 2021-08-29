@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { fetchCurrentUser } from './API/user/userService';
 import { defaultUser } from './auth/userContext';
 import { ProUser } from './model/user/ProUser';
+import Declarations from './views/Declarations/Declarations';
 const Routes = () => {
   const [user, setUser] = useState<ProUser>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
@@ -72,6 +73,10 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/time" isNotLoggedIn={response.isFailed}>
           <Time />
+        </ProtectedRoute>
+        <ProtectedRoute path="/declarations" isNotLoggedIn={response.isFailed}>
+          <Navbar />
+          <Declarations />
         </ProtectedRoute>
         <Route path="/">
           <LandingPage />

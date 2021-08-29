@@ -53,6 +53,7 @@ const MeetingDetailsInfo = ({
 
   // TODO connect to API
   const updateNameAndDescription = () => {
+    // TO-DO
     console.log(
       `Here please implement new api call with name and description update ${newName} ${newDescription}`
     );

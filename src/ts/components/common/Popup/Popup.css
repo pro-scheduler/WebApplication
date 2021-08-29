@@ -1,8 +1,14 @@
 .popupTitle {
-    font-size: var(--xs-font-size);
-    color: var(--medium-grey);
+  font-size: var(--xs-font-size);
+  color: var(--medium-grey);
 }
 
 .popup .modal-content {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
+  border-radius: 20px;
+}
+
+.showAnimation {
+  animation-name: var(--animation-show);
+  animation-duration: 0.4s;
 }
