@@ -46,3 +46,8 @@
   animation: var(--animation-shake) 1s;
   cursor: pointer;
 }
+
+.canceledMeetingInfo {
+  color: var(--light-red);
+  font-weight: var(--bold-font-weight);
+}

@@ -11,21 +11,24 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import QuestionCreate from '../../CreateSurvey/QuestionCreate';
 import PlusButton from '../../common/RoundButtons/PlusButton';
+import { MeetingState } from '../../../model/meeting/Meeting';
 
 const MeetingSurveyQuestions = ({
   survey,
-  setRefreshSurveySummary,
+  reloadSurveySummary,
   surveyToEdit,
   setSurveyToEdit,
   questionsToAdd,
   setQuestionsToAdd,
+  state,
 }: {
   survey: UserSurvey;
-  setRefreshSurveySummary: (value: number) => void;
+  reloadSurveySummary: Function;
   surveyToEdit?: SurveyWithQuestionsDTO;
   setSurveyToEdit?: (editedSurvey: SurveyWithQuestionsDTO) => void;
   questionsToAdd: Question[];
   setQuestionsToAdd: (newQuestions: Question[]) => void;
+  state: MeetingState;
 }) => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     { question: Question; answer: Answer | null }[]
@@ -40,7 +43,7 @@ const MeetingSurveyQuestions = ({
     if (saveResponse.isSuccess) {
       setDataUpdated(false);
       setButtonText('COMPLETE');
-      setRefreshSurveySummary(Math.random());
+      reloadSurveySummary();
     }
     // eslint-disable-next-line
   }, [saveResponse]);
@@ -122,7 +125,7 @@ const MeetingSurveyQuestions = ({
   return (
     <>
       <div>{questions}</div>
-      {survey.state === 'OPEN' && !surveyToEdit && (
+      {survey.state === 'OPEN' && !surveyToEdit && state === MeetingState.OPEN && (
         <div className="text-center mt-5">
           <ActionButton
             onclick={saveSurvey}
