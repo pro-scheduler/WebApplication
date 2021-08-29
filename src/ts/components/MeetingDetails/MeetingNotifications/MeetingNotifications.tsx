@@ -5,10 +5,12 @@ import MeetingReminder from './MeetingReminder';
 import SurveyReminder from './SurveyReminder';
 
 export type MeetingNotificationsProps = {
-  showSurveyNotifications: boolean;
+  meetingId: number;
+  surveyId?: number;
+  meetingName: string;
 };
 
-const MeetingNotifications = ({ showSurveyNotifications }: MeetingNotificationsProps) => {
+const MeetingNotifications = ({ meetingId, surveyId, meetingName }: MeetingNotificationsProps) => {
   return (
     <>
       <Row className="justify-content mt-5 ml-5 pl-5">
@@ -19,10 +21,10 @@ const MeetingNotifications = ({ showSurveyNotifications }: MeetingNotificationsP
           <MeetingReminder />
         </Col>
       </Row>
-      {showSurveyNotifications && (
+      {surveyId && (
         <Row className="justify-content-center ml-5 pl-5">
           <Col sm={12}>
-            <SurveyReminder />
+            <SurveyReminder meetingId={meetingId} surveyId={surveyId} meetingName={meetingName} />
           </Col>
         </Row>
       )}

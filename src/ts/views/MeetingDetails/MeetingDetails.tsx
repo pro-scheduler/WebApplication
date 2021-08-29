@@ -107,7 +107,9 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
           isOrganizer={isOrganizer}
           state={meeting.state}
         />
-        {showSettings && <MeetingSettings survey={survey} />}
+        {showSettings && (
+          <MeetingSettings survey={survey} meetingId={id} meetingName={meeting.name} />
+        )}
         {!showSettings && (
           <Row className="justify-content ml-5 pl-5">
             <Col lg={6}>
