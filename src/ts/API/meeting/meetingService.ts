@@ -25,6 +25,7 @@ export const fetchAllMeetings = (setMeetings: Function, setResponse?: Function) 
 export const removeAttendeeFromMeeting = (
   meetingId: number,
   attendeeId: number,
+  onSuccess?: Function,
   setData?: Function,
   setResponse?: Function
 ) =>
@@ -33,7 +34,8 @@ export const removeAttendeeFromMeeting = (
     setData,
     setResponse,
     true,
-    'User successfully removed from the meeting'
+    'User successfully removed from the meeting',
+    onSuccess
   );
 
 export const saveUserTimeRanges = (
