@@ -13,6 +13,11 @@
     width: 200px;
 }
 
+.sendReminderButton {
+    margin-top: 20px;
+    width: 200px;
+}
+
 @media only screen and (max-width: 600px) {
     .timePickerContainer {
         display: block;
