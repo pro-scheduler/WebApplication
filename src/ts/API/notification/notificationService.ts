@@ -1,12 +1,15 @@
 import { del, post, put } from '../genericApiCalls';
 import {
+  MeetingTimeReminderRequest,
   SurveyReminderRequest,
   SurveyTimeReminderRequest,
 } from '../../model/notification/Notification';
 import {
   getCreateSurveyReminderUrl,
   getCreateUpdateSurveyTimeReminderUrl,
+  getCreateUpdateTimeReminderUrl,
   getDeleteSurveyTimeReminderUrl,
+  getDeleteTimeReminderUrl,
 } from './urls';
 
 export const createSurveyReminder = (
@@ -24,22 +27,7 @@ export const createSurveyReminder = (
   );
 };
 
-export const createSurveyTimeReminder = (
-  surveyTimeReminderRequest: SurveyTimeReminderRequest,
-  setResponse?: Function,
-  setData?: Function
-) => {
-  post(
-    surveyTimeReminderRequest,
-    getCreateUpdateSurveyTimeReminderUrl(),
-    setData,
-    setResponse,
-    true,
-    'Survey reminder has been saved successfully'
-  );
-};
-
-export const updateSurveyTimeReminder = (
+export const createOrUpdateSurveyTimeReminder = (
   surveyTimeReminderRequest: SurveyTimeReminderRequest,
   setResponse?: Function,
   setData?: Function
@@ -65,5 +53,34 @@ export const deleteSurveyTimeReminder = (
     setResponse,
     true,
     'Survey reminder has been deleted successfully'
+  );
+};
+
+export const createOrUpdateMeetingTimeReminder = (
+  meetingTimeReminderRequest: MeetingTimeReminderRequest,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  put(
+    meetingTimeReminderRequest,
+    getCreateUpdateTimeReminderUrl(),
+    setData,
+    setResponse,
+    true,
+    'Time voting reminder has been updated  successfully'
+  );
+};
+
+export const deleteMeetingTimeReminder = (
+  meetingId: number,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  del(
+    getDeleteTimeReminderUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Time voting reminder has been deleted successfully'
   );
 };

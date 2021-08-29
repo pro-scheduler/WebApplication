@@ -2,7 +2,7 @@ import TimeReminder, { TimeUnit } from './TimeReminder';
 import { useState } from 'react';
 import {
   deleteSurveyTimeReminder,
-  updateSurveyTimeReminder,
+  createOrUpdateSurveyTimeReminder,
 } from '../../../API/notification/notificationService';
 
 export type SurveyTimeReminderProps = {
@@ -29,7 +29,7 @@ const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeRe
       date.setDate(surveyEndDate.getDate() - value);
     }
     if (reminder) {
-      updateSurveyTimeReminder({
+      createOrUpdateSurveyTimeReminder({
         meetingId: meetingId,
         surveyId: surveyId,
         timeToSendNotification: date,

@@ -11,3 +11,10 @@ export type SurveyTimeReminderRequest = {
   timeToSendNotification: Date;
   originalSurveyTime: Date;
 };
+
+export type MeetingTimeReminderRequest = {
+  meetingId: number;
+  meetingName: string;
+  newTimeToSendNotification: Date;
+  timePreferencesDeadline: Date;
+};

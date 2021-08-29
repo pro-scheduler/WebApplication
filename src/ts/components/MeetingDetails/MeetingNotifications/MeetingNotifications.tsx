@@ -2,7 +2,7 @@ import LineWithHeader from '../LineWithHeader';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SurveyReminder from './SurveyReminder';
-import MeetingTimeReminder from './MeetingTimeReminder';
+import MeetingTimeVotingReminder from './MeetingTimeVotingReminder';
 import SurveyTimeReminder from './SurveyTimeReminder';
 
 export type MeetingNotificationsProps = {
@@ -10,6 +10,8 @@ export type MeetingNotificationsProps = {
   surveyId?: number;
   meetingName: string;
   surveyEndDate?: string;
+  markTimeRangeDeadline?: string;
+  meetingFinalDate?: string;
 };
 
 const MeetingNotifications = ({
@@ -17,6 +19,8 @@ const MeetingNotifications = ({
   surveyId,
   meetingName,
   surveyEndDate,
+  markTimeRangeDeadline,
+  meetingFinalDate,
 }: MeetingNotificationsProps) => {
   return (
     <>
@@ -24,9 +28,15 @@ const MeetingNotifications = ({
         <LineWithHeader header={'Notifications'} />
       </Row>
       <Row className="justify-content-center ml-5 pl-5">
-        <Col sm={12}>
-          <MeetingTimeReminder />
-        </Col>
+        {markTimeRangeDeadline && (
+          <Col sm={12}>
+            <MeetingTimeVotingReminder
+              meetingId={meetingId}
+              meetingName={meetingName}
+              deadline={new Date(markTimeRangeDeadline)}
+            />
+          </Col>
+        )}
       </Row>
       {surveyId && (
         <Row className="justify-content-center ml-5 pl-5">
