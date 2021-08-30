@@ -32,6 +32,25 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
+  const setUser = (user: any) => {
+    let currentUser = meeting.attendees.find(
+      (a: MeetingAttendeeDetails) => a.attendeeId === user.attendeeId
+    );
+    setMeeting({
+      ...meeting,
+      attendees: currentUser
+        ? [
+            ...meeting.attendees.filter(
+              (a: MeetingAttendeeDetails) => a.attendeeId !== user.attendeeId
+            ),
+            {
+              ...currentUser,
+              markedTimeRanges: user.markedTimeRanges,
+            },
+          ]
+        : [...meeting.attendees],
+    });
+  };
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
   };
@@ -60,17 +79,15 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
     // eslint-disable-next-line
   }, []);
 
-  const refreshTimeData = () => {
+  useEffect(() => {
     if (meeting) {
       setAllUsersAnswers(
         meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
       );
-      // TODO add user time answers
-      setUserTimeAnswers([]);
+      setUserTimeAnswers(
+        meeting.attendees.find((a: any) => a.user.id === user.id).markedTimeRanges
+      );
     }
-  };
-  useEffect(() => {
-    refreshTimeData();
     // eslint-disable-next-line
   }, [meeting]);
 
@@ -160,7 +177,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers}
             userRanges={userTimeAnswers}
-            refreshTimeData={refreshTimeData}
+            setUser={setUser}
             timeDeadline={new Date(meeting.markTimeRangeDeadline)}
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}

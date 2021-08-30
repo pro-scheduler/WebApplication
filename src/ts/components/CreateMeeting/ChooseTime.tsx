@@ -58,8 +58,6 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
               let to: Date = new Date(timeRanges[key].date);
               from.setHours(parseInt(range.from.split(':')[0]), parseInt(range.from.split(':')[1]));
               to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
-              from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
-              to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
               rangesFiltered.push({ timeStart: from, timeEnd: to });
             });
           }

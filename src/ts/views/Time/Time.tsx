@@ -237,7 +237,6 @@ const Time = () => {
             attendeeId={0}
             timeRanges={timeRanges}
             answers={timeAnswers}
-            disabled={true}
             numberOfParticipants={10}
             isOrganizer={true}
             state={MeetingState.OPEN}

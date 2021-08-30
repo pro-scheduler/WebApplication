@@ -14,7 +14,7 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
 import { Collapse } from 'react-collapse';
-import { MeetingState } from '../../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -22,9 +22,8 @@ export type MeetingTimeProps = {
   timeRanges: TimeRangeDTO[];
   timeDeadline?: Date;
   answers?: TimeRangeDTO[];
-  disabled?: Boolean;
   userRanges?: TimeRangeDTO[];
-  refreshTimeData?: Function;
+  setUser?: Function;
   numberOfParticipants: number;
   isOrganizer: boolean;
   state: MeetingState;
@@ -39,9 +38,8 @@ const MeetingTime = ({
   attendeeId,
   answers,
   timeRanges,
-  disabled,
   userRanges = [],
-  refreshTimeData = () => {},
+  setUser = () => {},
   timeDeadline,
   numberOfParticipants,
   isOrganizer,
@@ -78,14 +76,12 @@ const MeetingTime = ({
           let to: Date = new Date(selectedRanges[key].date);
           from.setHours(parseInt(range.from.split(':')[0]), parseInt(range.from.split(':')[1]));
           to.setHours(parseInt(range.to.split(':')[0]), parseInt(range.to.split(':')[1]));
-          from.setTime(from.getTime() - from.getTimezoneOffset() * 60 * 1000);
-          to.setTime(to.getTime() - to.getTimezoneOffset() * 60 * 1000);
           rangesFiltered.push({ timeStart: from, timeEnd: to });
         });
       }
     }
-    saveUserTimeRanges(meetingId, attendeeId, rangesFiltered, () => {
-      refreshTimeData();
+    saveUserTimeRanges(meetingId, attendeeId, rangesFiltered, (user: MeetingAttendeeDetails) => {
+      setUser(user);
       setPreferencesChanged(false);
     });
   };
