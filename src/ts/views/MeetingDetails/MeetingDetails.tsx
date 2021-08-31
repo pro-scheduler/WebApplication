@@ -33,7 +33,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
   const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
-    let currentUser = meeting.attendees.find(
+    const currentUser = meeting.attendees.find(
       (a: MeetingAttendeeDetails) => a.attendeeId === attendeeDetails.attendeeId
     );
     setMeeting({
