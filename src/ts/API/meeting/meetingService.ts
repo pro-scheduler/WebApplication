@@ -42,16 +42,15 @@ export const saveUserTimeRanges = (
   meetingId: number,
   attendeeId: number,
   userMarkedTimeRanges: TimeRangeDTO[],
-  refreshTimeData: Function
+  setUser: Function
 ) =>
   put(
     { markedTimeRanges: userMarkedTimeRanges },
     getMeetingAttendeeUrl(meetingId, attendeeId),
-    () => {},
+    setUser,
     () => {},
     true,
-    'Time saved successfully',
-    refreshTimeData
+    'Time saved successfully'
   );
 
 export const leaveMeeting = (

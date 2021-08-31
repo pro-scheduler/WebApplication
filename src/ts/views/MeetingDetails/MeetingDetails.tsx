@@ -32,6 +32,25 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
+  const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
+    const currentUser = meeting.attendees.find(
+      (a: MeetingAttendeeDetails) => a.attendeeId === attendeeDetails.attendeeId
+    );
+    setMeeting({
+      ...meeting,
+      attendees: currentUser
+        ? [
+            ...meeting.attendees.filter(
+              (a: MeetingAttendeeDetails) => a.attendeeId !== attendeeDetails.attendeeId
+            ),
+            {
+              ...currentUser,
+              markedTimeRanges: attendeeDetails.markedTimeRanges,
+            },
+          ]
+        : [...meeting.attendees],
+    });
+  };
   const setMeetingNameAndDescription = (name: string, description: string) => {
     setMeeting({ ...meeting, name, description });
   };
@@ -64,17 +83,15 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
     // eslint-disable-next-line
   }, []);
 
-  const refreshTimeData = () => {
-    if (meeting) {
+  useEffect(() => {
+    if (meeting && meeting.availableTimeRanges) {
       setAllUsersAnswers(
         meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
       );
-      // TODO add user time answers
-      setUserTimeAnswers([]);
+      setUserTimeAnswers(
+        meeting.attendees.find((a: any) => a.user.id === user.id).markedTimeRanges
+      );
     }
-  };
-  useEffect(() => {
-    refreshTimeData();
     // eslint-disable-next-line
   }, [meeting]);
 
@@ -165,7 +182,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             timeRanges={meeting.availableTimeRanges}
             answers={allUsersAnswers}
             userRanges={userTimeAnswers}
-            refreshTimeData={refreshTimeData}
+            setUser={setUser}
             timeDeadline={new Date(meeting.markTimeRangeDeadline)}
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
