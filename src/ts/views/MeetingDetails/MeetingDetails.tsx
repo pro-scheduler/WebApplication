@@ -32,20 +32,20 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
 
-  const setUser = (user: any) => {
+  const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
     let currentUser = meeting.attendees.find(
-      (a: MeetingAttendeeDetails) => a.attendeeId === user.attendeeId
+      (a: MeetingAttendeeDetails) => a.attendeeId === attendeeDetails.attendeeId
     );
     setMeeting({
       ...meeting,
       attendees: currentUser
         ? [
             ...meeting.attendees.filter(
-              (a: MeetingAttendeeDetails) => a.attendeeId !== user.attendeeId
+              (a: MeetingAttendeeDetails) => a.attendeeId !== attendeeDetails.attendeeId
             ),
             {
               ...currentUser,
-              markedTimeRanges: user.markedTimeRanges,
+              markedTimeRanges: attendeeDetails.markedTimeRanges,
             },
           ]
         : [...meeting.attendees],
@@ -84,7 +84,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, []);
 
   useEffect(() => {
-    if (meeting) {
+    if (meeting && meeting.availableTimeRanges) {
       setAllUsersAnswers(
         meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
       );
