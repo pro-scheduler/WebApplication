@@ -51,6 +51,10 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
         : [...meeting.attendees],
     });
   };
+  const setMeetingNameAndDescription = (name: string, description: string) => {
+    setMeeting({ ...meeting, name, description });
+  };
+
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
   };
@@ -149,6 +153,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
                 meetingId={meeting.id}
                 state={meeting.state}
                 refreshMeeting={reloadMeeting}
+                refreshNameAndDescription={setMeetingNameAndDescription}
               />
             </Col>
             <Col lg={6}>

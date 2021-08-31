@@ -12,7 +12,11 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router';
-import { cancelMeeting, leaveMeeting } from '../../API/meeting/meetingService';
+import {
+  cancelMeeting,
+  leaveMeeting,
+  updateMeetingNameAndDescription,
+} from '../../API/meeting/meetingService';
 import { MeetingState } from '../../model/meeting/Meeting';
 
 export type MeetingDetailsInfoProps = {
@@ -27,6 +31,7 @@ export type MeetingDetailsInfoProps = {
   meetingId: number;
   state: MeetingState;
   refreshMeeting: Function;
+  refreshNameAndDescription: Function;
 };
 
 const MeetingDetailsInfo = ({
@@ -41,6 +46,7 @@ const MeetingDetailsInfo = ({
   meetingId,
   state,
   refreshMeeting,
+  refreshNameAndDescription,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -51,11 +57,17 @@ const MeetingDetailsInfo = ({
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
-  // TODO connect to API
   const updateNameAndDescription = () => {
-    // TO-DO
-    console.log(
-      `Here please implement new api call with name and description update ${newName} ${newDescription}`
+    updateMeetingNameAndDescription(
+      newName,
+      newDescription,
+      meetingId,
+      () => {},
+      () => {
+        setName(newName);
+        setDescription(newDescription);
+        refreshNameAndDescription(newName, newDescription);
+      }
     );
   };
 
