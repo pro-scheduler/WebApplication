@@ -104,3 +104,23 @@ export const cancelMeeting = (
     'You successfully canceled the meeting',
     onSuccess
   );
+
+export const updateMeetingNameAndDescription = (
+  name: string,
+  description: string,
+  meetingId: number,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      name,
+      description,
+    },
+    getMeetingUrl(meetingId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully updated meeting name and description',
+    onSuccess
+  );
