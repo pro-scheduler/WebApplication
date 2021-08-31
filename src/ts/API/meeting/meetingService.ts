@@ -121,6 +121,6 @@ export const updateMeetingNameAndDescription = (
     () => {},
     setResponse,
     true,
-    'You have successfully updated meeting name and decsription',
+    'You have successfully updated meeting name and description',
     onSuccess
   );
