@@ -209,6 +209,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
               username: user.nickname,
             }}
             isOrganizer={isOrganizer}
+            open={meeting.state === MeetingState.OPEN}
           />
         )}
       </Container>
