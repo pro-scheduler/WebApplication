@@ -6,6 +6,7 @@ import MeetingTimeVotingReminder from './MeetingTimeVotingReminder';
 import SurveyTimeReminder from './SurveyTimeReminder';
 import MeetingReminder from './MeetingReminder';
 import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
+import CustomReminder from './CustomReminder';
 
 export type MeetingNotificationsProps = {
   meetingId: number;
@@ -28,6 +29,11 @@ const MeetingNotifications = ({
     <>
       <Row className="justify-content mt-5 ml-5 pl-5">
         <LineWithHeader header={'Notifications'} />
+      </Row>
+      <Row className="justify-content-center ml-5 pl-5">
+        <Col sm={12}>
+          <CustomReminder meetingId={meetingId} meetingName={meetingName} />
+        </Col>
       </Row>
       <Row className="justify-content-center ml-5 pl-5">
         {markTimeRangeDeadline && (

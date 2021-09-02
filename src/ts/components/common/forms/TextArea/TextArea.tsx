@@ -11,6 +11,7 @@ export type TextAreaProps = {
   required?: boolean;
   validation?: Validation[];
   initialInvalidState?: boolean;
+  value?: string;
   defaultValue?: string;
   placeholder?: string;
 };
@@ -23,6 +24,7 @@ const TextArea = ({
   required,
   validation,
   initialInvalidState,
+  value,
   defaultValue,
   placeholder,
 }: TextAreaProps) => {
@@ -51,6 +53,7 @@ const TextArea = ({
       <textarea
         className={textAreaStyles}
         onChange={handleChange}
+        value={value}
         defaultValue={defaultValue}
         placeholder={placeholder}
         style={{ width: '100%' }}

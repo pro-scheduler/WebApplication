@@ -30,7 +30,6 @@ const MeetingReminder = ({ meetingName, finalDate, meetingId }: MeetingTimeVotin
   }, []);
 
   useEffect(() => {
-    console.log(finalDate);
     if (notificationSettings) {
       setReminderInfo({
         timeUnit: notificationSettings.timeUnit,

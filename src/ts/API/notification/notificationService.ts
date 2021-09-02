@@ -145,6 +145,7 @@ export const getMeetingReminder = (
 
 export const sendCustomNotification = (
   customMessage: CustomMessage,
+  onSuccess?: Function,
   setResponse?: Function,
   setData?: Function
 ) => {
@@ -154,6 +155,7 @@ export const sendCustomNotification = (
     setData,
     setResponse,
     true,
-    'Notification has been sent successfully'
+    'Notification has been sent successfully',
+    onSuccess
   );
 };
