@@ -6,6 +6,7 @@ import Card from '../common/Card/Card';
 import SearchBox from '../common/forms/Input/SearchBox';
 import { Table } from 'react-bootstrap';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
+import { useHistory } from 'react-router';
 
 export type DeclarationsListProps = {
   declarations: DeclarationDetails[];
@@ -14,6 +15,7 @@ export type DeclarationsListProps = {
 const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<DeclarationDetails[]>(declarations);
+  const history = useHistory();
   const handleChange = (event: any) => {
     setSearchTerm(event.target.value);
   };
@@ -30,7 +32,11 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
 
   const declarationsRows = searchResults.map((declaration: DeclarationDetails, index: number) => {
     return (
-      <tr key={index}>
+      <tr
+        onClick={() => history.push(`/meetings/${declaration.meetingId}`)}
+        key={index}
+        className={styles.declarationRow}
+      >
         <td>{declaration.title}</td>
         <td>{declaration.description}</td>
         <td>{declaration.createdBy.email}</td>

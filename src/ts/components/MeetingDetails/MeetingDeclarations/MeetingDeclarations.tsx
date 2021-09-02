@@ -21,9 +21,10 @@ export type MeetingDeclarationsProps = {
   meetingId: number;
   user: UserSummary;
   isOrganizer: boolean;
+  open: boolean;
 };
 
-const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclarationsProps) => {
+const MeetingDeclarations = ({ meetingId, user, isOrganizer, open }: MeetingDeclarationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [title, setTitle] = useState<string>('');
@@ -68,18 +69,21 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclaratio
                   setDeclarations(declarations.filter((d) => d.id !== id));
                 }}
                 key={i}
+                disabled={!open}
               />
             ))}
           </div>
-          <div className={styles.buttonContainer}>
-            <ActionButton
-              onclick={() => {
-                setShowAddDeclarationModal(true);
-              }}
-              text="Add new declaration"
-              className={styles.addNewButton}
-            />
-          </div>
+          {open && (
+            <div className={styles.buttonContainer}>
+              <ActionButton
+                onclick={() => {
+                  setShowAddDeclarationModal(true);
+                }}
+                text="Add new declaration"
+                className={styles.addNewButton}
+              />
+            </div>
+          )}
         </Collapse>
         <Popup
           show={showAddDeclarationModal}
@@ -107,15 +111,17 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer }: MeetingDeclaratio
               validation={[{ validation: maxSings(512), message: 'Max 512 signs' }]}
               placeholder="Please type declaration description ..."
             />
-            <div className={styles.buttonContainer}>
-              <ActionButton
-                onclick={() => {
-                  addDeclaration();
-                }}
-                disabled={invalidTitleOrDesc}
-                text="Save declaration"
-              />
-            </div>
+            {open && (
+              <div className={styles.buttonContainer}>
+                <ActionButton
+                  onclick={() => {
+                    addDeclaration();
+                  }}
+                  disabled={invalidTitleOrDesc}
+                  text="Save declaration"
+                />
+              </div>
+            )}
           </div>
         </Popup>
       </Col>

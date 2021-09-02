@@ -27,6 +27,7 @@ export type DeclarationProps = {
   isMeetingOrganizer: boolean;
   user: UserSummary;
   removeDeclaration: Function;
+  disabled: boolean;
 };
 
 const Declaration = ({
@@ -34,6 +35,7 @@ const Declaration = ({
   isMeetingOrganizer,
   user,
   removeDeclaration,
+  disabled,
 }: DeclarationProps) => {
   const [declaration, setDeclaration] = useState(defaultDeclaration);
   const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -91,14 +93,14 @@ const Declaration = ({
         <div className={styles.title}>{declaration.title}</div>
         <div className={styles.buttonContainer}>
           <LoadingSpinner active={response.isLoading} />
-          {isAssigned && (
+          {isAssigned && !disabled && (
             <ReturnButton
               className={styles.shake}
               onReturn={onReturn}
               hoverText="Unassign from the declaration"
             />
           )}
-          {isOwner && (
+          {isOwner && !disabled && (
             <RiPencilFill
               className={styles.pencilIcon}
               onClick={() => {
@@ -107,7 +109,9 @@ const Declaration = ({
               title="Edit declaration"
             />
           )}
-          {isOwner && <DeleteButton onDelete={onDelete} hoverText={'Remove declaration'} />}
+          {isOwner && !disabled && (
+            <DeleteButton onDelete={onDelete} hoverText={'Remove declaration'} />
+          )}
         </div>
       </div>
       <hr className={styles.hrLine} />
@@ -131,7 +135,7 @@ const Declaration = ({
             className={styles.currentUserIcon}
             style={{ right: declaration.assignees.length * 20 }}
           >
-            {!isAssigned && (
+            {!isAssigned && !disabled && (
               <>
                 <div className={styles.currentUserLetter}>
                   <LetterIcon firstLetter={user.email.charAt(0)} />
