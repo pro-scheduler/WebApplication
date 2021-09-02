@@ -1,3 +1,15 @@
+export enum TimeUnit {
+  HOURS = 'HOURS',
+  DAYS = 'DAYS',
+  MINUTES = 'MINUTES',
+}
+
+export type ReminderInfo = {
+  timeUnit: TimeUnit;
+  value: number;
+  sendReminder: boolean;
+};
+
 export type SurveyReminderRequest = {
   meetingId: number;
   surveyId: number;
@@ -8,20 +20,32 @@ export type SurveyReminderRequest = {
 export type SurveyTimeReminderRequest = {
   meetingId: number;
   surveyId: number;
-  timeToSendNotification: Date;
+  reminderInfo: ReminderInfo;
   originalSurveyTime: Date;
 };
 
 export type MeetingTimeReminderRequest = {
   meetingId: number;
   meetingName: string;
-  newTimeToSendNotification: Date;
+  reminderInfo: ReminderInfo;
   timePreferencesDeadline: Date;
 };
 
 export type MeetingReminderRequest = {
   meetingId: number;
   meetingName: string;
-  newTimeToSendNotification: Date;
+  reminderInfo: ReminderInfo;
   originalMeetingTime: Date;
+};
+
+export type NotificationSettings = {
+  timeUnit: TimeUnit;
+  value: number;
+  sendNotification: boolean;
+};
+
+export type CustomMessage = {
+  meetingId: number;
+  meetingName: string;
+  message: string;
 };

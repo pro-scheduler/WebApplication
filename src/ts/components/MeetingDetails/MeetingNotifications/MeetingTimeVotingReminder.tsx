@@ -1,9 +1,15 @@
-import TimeReminder, { TimeUnit } from './TimeReminder';
-import { useState } from 'react';
+import TimeReminder from './TimeReminder';
+import { useEffect, useState } from 'react';
 import {
-  deleteMeetingTimeReminder,
   createOrUpdateMeetingTimeReminder,
+  deleteMeetingTimeReminder,
+  getMeetingTimeReminder,
 } from '../../../API/notification/notificationService';
+import {
+  NotificationSettings,
+  ReminderInfo,
+  TimeUnit,
+} from '../../../model/notification/Notification';
 
 export type MeetingTimeVotingReminderProps = {
   meetingName: string;
@@ -15,26 +21,34 @@ const MeetingTimeVotingReminder = ({
   deadline,
   meetingId,
 }: MeetingTimeVotingReminderProps) => {
-  const [reminder, setReminder] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(15);
-  const [timeUnit, setTimeUnit] = useState<TimeUnit>(TimeUnit.MINUTES);
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>();
+  const [reminderInfo, setReminderInfo] = useState<ReminderInfo>({
+    timeUnit: TimeUnit.MINUTES,
+    value: 15,
+    sendReminder: false,
+  });
+
+  useEffect(() => {
+    getMeetingTimeReminder(meetingId, setNotificationSettings);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (notificationSettings) {
+      setReminderInfo({
+        timeUnit: notificationSettings.timeUnit,
+        value: notificationSettings.value,
+        sendReminder: notificationSettings.sendNotification,
+      });
+    }
+  }, [notificationSettings]);
 
   const sendReminders = () => {
-    const date = new Date(deadline);
-
-    // TODO remove when API will change
-    if (timeUnit === TimeUnit.MINUTES) {
-      date.setMinutes(deadline.getMinutes() - value);
-    } else if (timeUnit === TimeUnit.HOURS) {
-      date.setHours(deadline.getHours() - value);
-    } else {
-      date.setDate(deadline.getDate() - value);
-    }
-    if (reminder) {
+    if (reminderInfo.sendReminder) {
       createOrUpdateMeetingTimeReminder({
         meetingId: meetingId,
         meetingName: meetingName,
-        newTimeToSendNotification: date,
+        reminderInfo: reminderInfo,
         timePreferencesDeadline: deadline,
       });
     } else {
@@ -48,12 +62,8 @@ const MeetingTimeVotingReminder = ({
       cardHeader={'Voting meeting time reminder'}
       checkboxLabel={'Send reminder about the meeting voting deadline to all participants'}
       beforeLabel={'before the time voting ends'}
-      timeUnit={timeUnit}
-      setTimeUnit={setTimeUnit}
-      reminder={reminder}
-      setReminder={setReminder}
-      value={value}
-      setValue={setValue}
+      reminderInfo={reminderInfo}
+      setReminderInfo={setReminderInfo}
     />
   );
 };

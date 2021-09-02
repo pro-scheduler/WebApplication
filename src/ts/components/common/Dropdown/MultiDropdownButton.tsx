@@ -6,6 +6,7 @@ import React from 'react';
 export type DropdownButtonProps = {
   options: any;
   onChange: any;
+  value?: any;
   defaultValue?: any;
   className?: string;
   invalid?: boolean;

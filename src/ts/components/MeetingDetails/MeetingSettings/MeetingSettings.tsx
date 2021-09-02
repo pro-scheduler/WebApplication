@@ -1,11 +1,12 @@
 import MeetingNotifications from '../MeetingNotifications/MeetingNotifications';
 import { UserSurvey } from '../../../model/survey/Survey';
+import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
 export type MeetingSettingsProps = {
   survey: UserSurvey | undefined;
   meetingId: number;
   meetingName: string;
   markTimeRangeDeadline?: string;
-  meetingFinalDate?: string;
+  meetingFinalDate?: TimeRangeDTO;
 };
 
 const MeetingSettings = ({

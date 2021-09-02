@@ -84,7 +84,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
   }, []);
 
   useEffect(() => {
-    if (meeting && meeting.availableTimeRanges) {
+    if (meeting && meeting.availableTimeRanges && user.id) {
       setAllUsersAnswers(
         meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
       );

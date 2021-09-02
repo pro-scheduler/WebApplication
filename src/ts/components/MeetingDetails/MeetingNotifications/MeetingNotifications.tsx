@@ -5,6 +5,7 @@ import SurveyReminder from './SurveyReminder';
 import MeetingTimeVotingReminder from './MeetingTimeVotingReminder';
 import SurveyTimeReminder from './SurveyTimeReminder';
 import MeetingReminder from './MeetingReminder';
+import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
 
 export type MeetingNotificationsProps = {
   meetingId: number;
@@ -12,7 +13,7 @@ export type MeetingNotificationsProps = {
   meetingName: string;
   surveyEndDate?: string;
   markTimeRangeDeadline?: string;
-  meetingFinalDate?: string;
+  meetingFinalDate?: TimeRangeDTO;
 };
 
 const MeetingNotifications = ({
@@ -43,7 +44,7 @@ const MeetingNotifications = ({
             <MeetingReminder
               meetingId={meetingId}
               meetingName={meetingName}
-              finalDate={new Date(meetingFinalDate)}
+              finalDate={new Date(meetingFinalDate.timeStart)}
             />
           </Col>
         )}
