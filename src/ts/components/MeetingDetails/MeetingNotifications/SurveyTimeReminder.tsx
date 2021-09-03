@@ -32,7 +32,6 @@ const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeRe
 
   useEffect(() => {
     if (notificationSettings) {
-      console.log(notificationSettings);
       setReminderInfo({
         timeUnit: notificationSettings.timeUnit,
         value: notificationSettings.value,
