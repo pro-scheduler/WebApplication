@@ -7,6 +7,7 @@ import React from 'react';
 const SingleDropdownButton = ({
   options,
   defaultValue,
+  value,
   onChange,
   className,
   invalid,
@@ -19,6 +20,7 @@ const SingleDropdownButton = ({
     <>
       <div className={styles.label}>{label}</div>
       <Select
+        value={value}
         defaultValue={defaultValue}
         onChange={onChange}
         options={options}

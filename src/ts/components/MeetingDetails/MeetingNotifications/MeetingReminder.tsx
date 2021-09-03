@@ -1,9 +1,15 @@
-import TimeReminder, { TimeUnit } from './TimeReminder';
-import { useState } from 'react';
+import TimeReminder from './TimeReminder';
+import { useEffect, useState } from 'react';
 import {
   createOrUpdateMeetingReminder,
   deleteMeetingReminder,
+  getMeetingReminder,
 } from '../../../API/notification/notificationService';
+import {
+  NotificationSettings,
+  ReminderInfo,
+  TimeUnit,
+} from '../../../model/notification/Notification';
 
 export type MeetingTimeVotingReminderProps = {
   meetingName: string;
@@ -11,26 +17,34 @@ export type MeetingTimeVotingReminderProps = {
   meetingId: number;
 };
 const MeetingReminder = ({ meetingName, finalDate, meetingId }: MeetingTimeVotingReminderProps) => {
-  const [reminder, setReminder] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(15);
-  const [timeUnit, setTimeUnit] = useState<TimeUnit>(TimeUnit.MINUTES);
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>();
+  const [reminderInfo, setReminderInfo] = useState<ReminderInfo>({
+    timeUnit: TimeUnit.MINUTES,
+    value: 15,
+    sendReminder: false,
+  });
+
+  useEffect(() => {
+    getMeetingReminder(meetingId, setNotificationSettings);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (notificationSettings) {
+      setReminderInfo({
+        timeUnit: notificationSettings.timeUnit,
+        value: notificationSettings.value,
+        sendReminder: notificationSettings.sendNotification,
+      });
+    }
+  }, [notificationSettings]);
 
   const sendReminders = () => {
-    const date = new Date(finalDate);
-
-    // TODO remove when API will change
-    if (timeUnit === TimeUnit.MINUTES) {
-      date.setMinutes(finalDate.getMinutes() - value);
-    } else if (timeUnit === TimeUnit.HOURS) {
-      date.setHours(finalDate.getHours() - value);
-    } else {
-      date.setDate(finalDate.getDate() - value);
-    }
-    if (reminder) {
+    if (reminderInfo.sendReminder) {
       createOrUpdateMeetingReminder({
         meetingId: meetingId,
         meetingName: meetingName,
-        newTimeToSendNotification: date,
+        reminderInfo: reminderInfo,
         originalMeetingTime: finalDate,
       });
     } else {
@@ -44,12 +58,8 @@ const MeetingReminder = ({ meetingName, finalDate, meetingId }: MeetingTimeVotin
       cardHeader={'Meeting reminder'}
       checkboxLabel={'Send reminder about the meeting to all participants'}
       beforeLabel={'before the meeting starts'}
-      timeUnit={timeUnit}
-      setTimeUnit={setTimeUnit}
-      reminder={reminder}
-      setReminder={setReminder}
-      value={value}
-      setValue={setValue}
+      reminderInfo={reminderInfo}
+      setReminderInfo={setReminderInfo}
     />
   );
 };

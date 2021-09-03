@@ -1,5 +1,6 @@
-import { del, post, put } from '../genericApiCalls';
+import { del, get, post, put } from '../genericApiCalls';
 import {
+  CustomMessage,
   MeetingReminderRequest,
   MeetingTimeReminderRequest,
   SurveyReminderRequest,
@@ -10,9 +11,10 @@ import {
   getCreateUpdateMeetingReminderUrl,
   getCreateUpdateSurveyTimeReminderUrl,
   getCreateUpdateTimeReminderUrl,
-  getDeleteMeetingReminderUrl,
-  getDeleteSurveyTimeReminderUrl,
-  getDeleteTimeReminderUrl,
+  getCustomNotificationUrl,
+  getMeetingReminderUrl,
+  getSurveyTimeReminderUrl,
+  getTimeReminderUrl,
 } from './urls';
 
 export const createSurveyReminder = (
@@ -51,12 +53,20 @@ export const deleteSurveyTimeReminder = (
   setData?: Function
 ) => {
   del(
-    getDeleteSurveyTimeReminderUrl(surveyId),
+    getSurveyTimeReminderUrl(surveyId),
     setData,
     setResponse,
     true,
     'Survey reminder has been deleted successfully'
   );
+};
+
+export const getSurveyTimeReminder = (
+  surveyId: number,
+  setSurveyTimeReminder: Function,
+  setResponse?: Function
+) => {
+  get(getSurveyTimeReminderUrl(surveyId), setSurveyTimeReminder, setResponse);
 };
 
 export const createOrUpdateMeetingTimeReminder = (
@@ -80,12 +90,20 @@ export const deleteMeetingTimeReminder = (
   setData?: Function
 ) => {
   del(
-    getDeleteTimeReminderUrl(meetingId),
+    getTimeReminderUrl(meetingId),
     setData,
     setResponse,
     true,
     'Time voting reminder has been deleted successfully'
   );
+};
+
+export const getMeetingTimeReminder = (
+  meetingId: number,
+  setMeetingTimeReminder: Function,
+  setResponse?: Function
+) => {
+  get(getTimeReminderUrl(meetingId), setMeetingTimeReminder, setResponse);
 };
 
 export const createOrUpdateMeetingReminder = (
@@ -109,10 +127,35 @@ export const deleteMeetingReminder = (
   setData?: Function
 ) => {
   del(
-    getDeleteMeetingReminderUrl(meetingId),
+    getMeetingReminderUrl(meetingId),
     setData,
     setResponse,
     true,
     'Meeting reminder has been deleted successfully'
+  );
+};
+
+export const getMeetingReminder = (
+  meetingId: number,
+  setMeetingReminder: Function,
+  setResponse?: Function
+) => {
+  get(getMeetingReminderUrl(meetingId), setMeetingReminder, setResponse);
+};
+
+export const sendCustomNotification = (
+  customMessage: CustomMessage,
+  onSuccess?: Function,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  post(
+    customMessage,
+    getCustomNotificationUrl(),
+    setData,
+    setResponse,
+    true,
+    'Notification has been sent successfully',
+    onSuccess
   );
 };

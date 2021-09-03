@@ -6,61 +6,68 @@ import styles from './TimeReminder.module.css';
 import SingleDropdownButton from '../../common/Dropdown/SingleDropdownButton';
 import { ValueLabelPair } from '../../../model/utils/ValueLabelPair';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-export enum TimeUnit {
-  MINUTES = 'Minutes',
-  HOURS = 'Hours',
-  DAYS = 'Days',
-}
+import { ReminderInfo, TimeUnit } from '../../../model/notification/Notification';
+
 export type TimeReminderProps = {
   sendReminders: MouseEventHandler;
   cardHeader: string;
   checkboxLabel: string;
   beforeLabel: string;
-  timeUnit: TimeUnit;
-  setTimeUnit: (value: TimeUnit) => void;
-  reminder: boolean;
-  setReminder: (value: boolean) => void;
-  value: number;
-  setValue: (newValue: number) => void;
+  reminderInfo: ReminderInfo;
+  setReminderInfo: (value: ReminderInfo) => void;
 };
+
 const TimeReminder = ({
   sendReminders,
   cardHeader,
   checkboxLabel,
   beforeLabel,
-  timeUnit,
-  setTimeUnit,
-  reminder,
-  setReminder,
-  value,
-  setValue,
+  reminderInfo,
+  setReminderInfo,
 }: TimeReminderProps) => {
   const options: ValueLabelPair[] = [TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS].map(
     (option: string) => new ValueLabelPair(option, option)
   );
 
   const handleNewTimeUnit = ({ value, _ }: any) => {
-    setTimeUnit(value);
+    setReminderInfo({ ...reminderInfo, timeUnit: value });
+  };
+
+  const setSendReminder = (value: boolean) => {
+    setReminderInfo({ ...reminderInfo, sendReminder: value });
+  };
+
+  const setReminderValue = (value: number) => {
+    setReminderInfo({ ...reminderInfo, value: value });
   };
 
   return (
     <Card title={cardHeader}>
-      <Checkbox checked={reminder} setChecked={setReminder} label={checkboxLabel} />
+      <Checkbox
+        checked={reminderInfo.sendReminder}
+        setChecked={setSendReminder}
+        label={checkboxLabel}
+      />
       <div className={styles.timePickerContainer}>
         <div className={styles.amountInput}>
-          <SingleValueInput valueHandler={setValue} value={value} type={'number'} minValue={0} />
+          <SingleValueInput
+            valueHandler={setReminderValue}
+            value={reminderInfo.value}
+            type={'number'}
+            minValue={0}
+          />
         </div>
         <SingleDropdownButton
           options={options}
           onChange={handleNewTimeUnit}
-          defaultValue={new ValueLabelPair(timeUnit, timeUnit)}
+          value={new ValueLabelPair(reminderInfo.timeUnit, reminderInfo.timeUnit)}
           className={styles.dropdownButton}
         />
         <div>{beforeLabel}</div>
       </div>
       <ActionButton
         onclick={sendReminders}
-        text={reminder ? 'Save reminder' : 'Delete reminder'}
+        text={reminderInfo.sendReminder ? 'Save reminder' : 'Delete reminder'}
         className={styles.sendReminderButton}
       />
     </Card>

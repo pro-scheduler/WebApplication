@@ -1,9 +1,15 @@
-import TimeReminder, { TimeUnit } from './TimeReminder';
-import { useState } from 'react';
+import TimeReminder from './TimeReminder';
+import { useEffect, useState } from 'react';
 import {
-  deleteSurveyTimeReminder,
   createOrUpdateSurveyTimeReminder,
+  deleteSurveyTimeReminder,
+  getSurveyTimeReminder,
 } from '../../../API/notification/notificationService';
+import {
+  NotificationSettings,
+  ReminderInfo,
+  TimeUnit,
+} from '../../../model/notification/Notification';
 
 export type SurveyTimeReminderProps = {
   meetingId: number;
@@ -12,27 +18,34 @@ export type SurveyTimeReminderProps = {
 };
 
 const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeReminderProps) => {
-  // TODO replace by data from backend when API will be provided
-  const [reminder, setReminder] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(15);
-  const [timeUnit, setTimeUnit] = useState<TimeUnit>(TimeUnit.MINUTES);
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>();
+  const [reminderInfo, setReminderInfo] = useState<ReminderInfo>({
+    timeUnit: TimeUnit.MINUTES,
+    value: 15,
+    sendReminder: false,
+  });
+
+  useEffect(() => {
+    getSurveyTimeReminder(surveyId, setNotificationSettings);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (notificationSettings) {
+      setReminderInfo({
+        timeUnit: notificationSettings.timeUnit,
+        value: notificationSettings.value,
+        sendReminder: notificationSettings.sendNotification,
+      });
+    }
+  }, [notificationSettings]);
 
   const sendReminders = () => {
-    const date = new Date(surveyEndDate);
-
-    // TODO remove when API will change
-    if (timeUnit === TimeUnit.MINUTES) {
-      date.setMinutes(surveyEndDate.getMinutes() - value);
-    } else if (timeUnit === TimeUnit.HOURS) {
-      date.setHours(surveyEndDate.getHours() - value);
-    } else {
-      date.setDate(surveyEndDate.getDate() - value);
-    }
-    if (reminder) {
+    if (reminderInfo.sendReminder) {
       createOrUpdateSurveyTimeReminder({
         meetingId: meetingId,
         surveyId: surveyId,
-        timeToSendNotification: date,
+        reminderInfo: reminderInfo,
         originalSurveyTime: surveyEndDate,
       });
     } else {
@@ -46,12 +59,8 @@ const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeRe
       cardHeader={'Survey time reminder'}
       checkboxLabel={'Send reminder about the survey to all participants'}
       beforeLabel={'before the survey closes'}
-      timeUnit={timeUnit}
-      setTimeUnit={setTimeUnit}
-      reminder={reminder}
-      setReminder={setReminder}
-      value={value}
-      setValue={setValue}
+      reminderInfo={reminderInfo}
+      setReminderInfo={setReminderInfo}
     />
   );
 };

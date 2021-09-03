@@ -4,13 +4,13 @@ export const getNotificationsUrl = () =>
 // meeting reminders
 export const getCreateUpdateMeetingReminderUrl = () => getNotificationsUrl() + '/meeting';
 
-export const getDeleteMeetingReminderUrl = (meetingId: number) =>
+export const getMeetingReminderUrl = (meetingId: number) =>
   getNotificationsUrl() + `/meeting/${meetingId}`;
 
 // meeting time reminders
 export const getCreateUpdateTimeReminderUrl = () => getNotificationsUrl() + '/meeting/time';
 
-export const getDeleteTimeReminderUrl = (meetingId: number) =>
+export const getTimeReminderUrl = (meetingId: number) =>
   getNotificationsUrl() + `/meeting/time/${meetingId}`;
 
 // survey reminder
@@ -18,5 +18,7 @@ export const getCreateSurveyReminderUrl = () => getNotificationsUrl() + '/survey
 
 export const getCreateUpdateSurveyTimeReminderUrl = () => getNotificationsUrl() + '/survey/time';
 
-export const getDeleteSurveyTimeReminderUrl = (surveyId: number) =>
+export const getSurveyTimeReminderUrl = (surveyId: number) =>
   getNotificationsUrl() + `/survey/time/${surveyId}`;
+
+export const getCustomNotificationUrl = () => getNotificationsUrl() + '/custom';
