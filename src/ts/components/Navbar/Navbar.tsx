@@ -112,6 +112,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
                 }
               >
                 {user.username}
+                <Link to="/profile" />
               </MenuItem>
             )}
             <MenuItem icon={<FiLogOut />}>
