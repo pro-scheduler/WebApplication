@@ -3,3 +3,8 @@
     color: var(--medium-grey);
     margin-top: 15px;
 }
+
+.editButton {
+    margin-top: 10px;
+    width: 200px;
+}
