@@ -1,12 +1,10 @@
 import React from 'react';
-import { ProUser } from '../model/user/ProUser';
+import { UserSummary } from '../model/user/ProUser';
 
-const defaultUser: ProUser = {
+const defaultUser: UserSummary = {
   id: 0,
   email: '',
-  nickname: '',
-  organizedMeetings: [],
-  participatedMeetings: [],
+  username: '',
 };
 
 const userContext = React.createContext(defaultUser);

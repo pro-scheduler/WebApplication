@@ -5,7 +5,7 @@ import MeetingDescription from '../../components/MeetingDetails/MeetingDescripti
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { loadMeeting } from '../../API/meeting/meetingService';
-import { ProUser } from '../../model/user/ProUser';
+import { UserSummary } from '../../model/user/ProUser';
 import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
@@ -20,7 +20,7 @@ import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/Mee
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 
-const MeetingDetails = ({ user }: { user: ProUser }) => {
+const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
   const [userAttendeeId, setUserAttendeeId] = useState<number>(0);
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
@@ -173,6 +173,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
             finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
             finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
             hasBeenSet={meeting.finalDate != null}
+            isOrganizer={isOrganizer}
           />
         )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
@@ -203,11 +204,7 @@ const MeetingDetails = ({ user }: { user: ProUser }) => {
         {!showSettings && (
           <MeetingDeclarations
             meetingId={id}
-            user={{
-              id: user.id,
-              email: user.email,
-              username: user.nickname,
-            }}
+            user={user}
             isOrganizer={isOrganizer}
             open={meeting.state === MeetingState.OPEN}
           />

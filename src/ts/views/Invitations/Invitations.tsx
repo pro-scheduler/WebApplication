@@ -2,10 +2,10 @@ import Container from 'react-bootstrap/Container';
 import React, { useEffect, useState } from 'react';
 import InvitationList from '../../components/Invitations/InvitationList';
 import { fetchUserPendingInvitations } from '../../API/invitation/invitationService';
-import { ProUser } from '../../model/user/ProUser';
+import { UserSummary } from '../../model/user/ProUser';
 import { InvitationDetails } from '../../model/invitation/Invitation';
 
-const Invitations = ({ user }: { user: ProUser }) => {
+const Invitations = ({ user }: { user: UserSummary }) => {
   const [invitations, setInvitations] = useState<InvitationDetails[]>([]);
   const [refreshInvitations, setRefreshInvitations] = useState<number>(0);
 

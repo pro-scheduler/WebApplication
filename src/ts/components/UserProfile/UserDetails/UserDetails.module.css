@@ -1,0 +1,17 @@
+.userHeader {
+    font-weight: var(--bold-font-weight);
+    color: var(--medium-grey);
+    margin-top: 15px;
+}
+
+.editButton {
+    width: 200px;
+}
+
+.editButtonContainer {
+    text-align: right;
+}
+
+.userDetailsContainer {
+    height: 200px;
+}

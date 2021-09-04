@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import { ProUser } from '../../model/user/ProUser';
+import { UserSummary } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
 import { useState } from 'react';
 import { MeetingSummary } from '../../model/meeting/Meeting';
@@ -12,7 +12,7 @@ import CalendarIcon from '../../components/common/Icons/CalendarIcon';
 import styles from './Meetings.module.css';
 import { fetchAllMeetings } from '../../API/meeting/meetingService';
 
-const Meetings = ({ user }: { user: ProUser }) => {
+const Meetings = ({ user }: { user: UserSummary }) => {
   const [organizedMeetings, setOrganizedMeetings] = useState<MeetingSummary[]>([]);
   const [participatedMeetings, setParticipatedMeetings] = useState<MeetingSummary[]>([]);
 

@@ -78,7 +78,7 @@ const MeetingParticipants = ({
         <div key={index + invitationDetails.state}>
           <div className={styles.participantRow}>
             <div className={styles.userNameIcon}>
-              <UserNameIcon email={invitationDetails.user.email} />
+              <UserNameIcon email={invitationDetails.user.username} />
             </div>
           </div>
           <hr className={styles.hrLine} />
@@ -93,7 +93,7 @@ const MeetingParticipants = ({
         <div key={index + State.ACCEPTED}>
           <div className={styles.participantRow}>
             <div className={styles.userNameIcon}>
-              <UserNameIcon email={participant.user.email} />
+              <UserNameIcon email={participant.user.username} />
             </div>
             {isOrganizer && state === MeetingState.OPEN && (
               <div className={styles.deleteContainer}>
