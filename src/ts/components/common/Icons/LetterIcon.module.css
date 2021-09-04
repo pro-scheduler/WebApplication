@@ -8,6 +8,5 @@
     font-size: var(--s-font-size);
     border-radius: var(--circle-border-radius);
     box-shadow: var(--shadow);
-    background-color: var(--purple);
     color: white;
 }

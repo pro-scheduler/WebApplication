@@ -17,8 +17,10 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
+import { UserSummary } from '../../model/user/ProUser';
+import LetterIcon from '../common/Icons/LetterIcon';
 
-const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
+const Navbar = ({ user }: { user: UserSummary }) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
   const [activeIcon, setActiveIcon] = useState('');
 
@@ -34,86 +36,90 @@ const Navbar = ({ showDetails = true }: { showDetails?: boolean }) => {
           </Menu>
         </SidebarHeader>
 
-        {showDetails ? (
-          <SidebarContent>
-            <Menu iconShape="circle">
-              <hr className="newMeetingLine mt-3" />
+        <SidebarContent>
+          <Menu iconShape="circle">
+            <hr className="newMeetingLine mt-3" />
+            <MenuItem
+              icon={<AiOutlinePlus className="plusIcon" />}
+              active={activeIcon === 'Schedule'}
+              onClick={() => setActiveIcon('Schedule')}
+            >
+              New meeting
+              <Link to="/create" />
+            </MenuItem>
+            <hr className="newMeetingLine" />
+
+            <MenuItem
+              icon={<FiMonitor />}
+              active={activeIcon === 'Home'}
+              onClick={() => setActiveIcon('Home')}
+            >
+              Home
+            </MenuItem>
+
+            <MenuItem
+              icon={<FiFolder />}
+              active={activeIcon === 'Meetings'}
+              onClick={() => setActiveIcon('Meetings')}
+            >
+              Meetings
+              <Link to="/meetings" />
+            </MenuItem>
+
+            <MenuItem
+              icon={<FaRegClipboard />}
+              active={activeIcon === 'Surveys'}
+              onClick={() => setActiveIcon('Surveys')}
+            >
+              Surveys
+            </MenuItem>
+
+            <MenuItem
+              icon={<BsPencil />}
+              active={activeIcon === 'Declarations'}
+              onClick={() => setActiveIcon('Declarations')}
+            >
+              Declarations
+              <Link to="/declarations" />
+            </MenuItem>
+
+            <MenuItem
+              icon={<BsEnvelope />}
+              active={activeIcon === 'Invitations'}
+              onClick={() => setActiveIcon('Invitations')}
+            >
+              Invitations
+              <Link to="/invitations" />
+            </MenuItem>
+
+            <MenuItem
+              icon={<FaList />}
+              className="closeMenu"
+              onClick={() => setMenuCollapse(!menuCollapse)}
+            />
+          </Menu>
+        </SidebarContent>
+
+        <SidebarFooter>
+          <Menu iconShape="circle">
+            {user && user.username && (
               <MenuItem
-                icon={<AiOutlinePlus className="plusIcon" />}
-                active={activeIcon === 'Schedule'}
-                onClick={() => setActiveIcon('Schedule')}
+                icon={
+                  <LetterIcon
+                    firstLetter={user.username.charAt(0)}
+                    backgroundColor="var(--light-red)"
+                  />
+                }
               >
-                New meeting
-                <Link to="/create" />
+                {user.username}
               </MenuItem>
-              <hr className="newMeetingLine" />
-
-              <MenuItem
-                icon={<FiMonitor />}
-                active={activeIcon === 'Home'}
-                onClick={() => setActiveIcon('Home')}
-              >
-                Home
-              </MenuItem>
-
-              <MenuItem
-                icon={<FiFolder />}
-                active={activeIcon === 'Meetings'}
-                onClick={() => setActiveIcon('Meetings')}
-              >
-                Meetings
-                <Link to="/meetings" />
-              </MenuItem>
-
-              <MenuItem
-                icon={<FaRegClipboard />}
-                active={activeIcon === 'Surveys'}
-                onClick={() => setActiveIcon('Surveys')}
-              >
-                Surveys
-              </MenuItem>
-
-              <MenuItem
-                icon={<BsPencil />}
-                active={activeIcon === 'Declarations'}
-                onClick={() => setActiveIcon('Declarations')}
-              >
-                Declarations
-                <Link to="/declarations" />
-              </MenuItem>
-
-              <MenuItem
-                icon={<BsEnvelope />}
-                active={activeIcon === 'Invitations'}
-                onClick={() => setActiveIcon('Invitations')}
-              >
-                Invitations
-                <Link to="/invitations" />
-              </MenuItem>
-
-              <MenuItem
-                icon={<FaList />}
-                className="closeMenu"
-                onClick={() => setMenuCollapse(!menuCollapse)}
-              />
-            </Menu>
-          </SidebarContent>
-        ) : (
-          <div />
-        )}
-
-        {showDetails ? (
-          <SidebarFooter>
-            <Menu iconShape="circle">
-              <MenuItem icon={<FiLogOut />}>
-                Sign out
-                <Link to="/" />
-              </MenuItem>
-            </Menu>
-          </SidebarFooter>
-        ) : (
-          <div />
-        )}
+            )}
+            <MenuItem icon={<FiLogOut />}>
+              Sign out
+              <Link to="/" />
+            </MenuItem>
+          </Menu>
+        </SidebarFooter>
       </ProSidebar>
     </div>
   );

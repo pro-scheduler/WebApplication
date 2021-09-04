@@ -30,7 +30,7 @@ const MeetingDescription = ({
   const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
     return (
       <UserIcon
-        name={organizer.user.email}
+        name={organizer.user.username}
         meetingId={meetingId}
         attendeeId={organizer.attendeeId}
         canDelete={false}
