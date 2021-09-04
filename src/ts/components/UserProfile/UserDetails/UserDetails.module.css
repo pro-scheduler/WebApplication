@@ -5,6 +5,13 @@
 }
 
 .editButton {
-    margin-top: 10px;
     width: 200px;
+}
+
+.editButtonContainer {
+    text-align: right;
+}
+
+.userDetailsContainer {
+    height: 200px;
 }

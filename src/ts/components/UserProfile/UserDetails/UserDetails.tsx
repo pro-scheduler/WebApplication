@@ -19,25 +19,34 @@ const UserDetails = ({ user }: { user: UserSummary }) => {
   };
 
   return (
-    <Card title={'User details'} onEdit={() => setEditMode(!editMode)}>
-      <div className={styles.userHeader}>Username</div>
-      {editMode ? (
-        <>
+    <Card
+      title={'User details'}
+      onEdit={() => setEditMode(!editMode)}
+      footer={
+        editMode ? (
+          <div className={styles.editButtonContainer}>
+            <ActionButton
+              onclick={editUserDetails}
+              text={'Edit'}
+              disabled={userName === user.username || userName === ''}
+              className={styles.editButton}
+            />
+          </div>
+        ) : undefined
+      }
+    >
+      <div className={styles.userDetailsContainer}>
+        <div className={styles.userHeader}>Username</div>
+        {editMode ? (
           <SingleValueInput valueHandler={setUserName} value={userName} />
-          <ActionButton
-            onclick={editUserDetails}
-            text={'Edit'}
-            disabled={userName === user.username || userName === ''}
-            className={styles.editButton}
-          />
-        </>
-      ) : (
-        <>
-          <div>{user.username}</div>
-          <div className={styles.userHeader}>Email</div>
-          <div>{user.email}</div>
-        </>
-      )}
+        ) : (
+          <>
+            <div>{user.username}</div>
+            <div className={styles.userHeader}>Email</div>
+            <div>{user.email}</div>
+          </>
+        )}
+      </div>
     </Card>
   );
 };
