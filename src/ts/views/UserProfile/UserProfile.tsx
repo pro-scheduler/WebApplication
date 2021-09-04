@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import styles from './UserProfile.module.css';
 import UserDetails from '../../components/UserProfile/UserDetails/UserDetails';
 import NotificationSettings from '../../components/UserProfile/NotificationSettings/NotificationSettings';
+import RemoveAccount from '../../components/UserProfile/RemoveAccount/RemoveAccount';
 
 const UserProfile = ({ user }: { user: UserSummary }) => {
   return (
@@ -18,6 +19,9 @@ const UserProfile = ({ user }: { user: UserSummary }) => {
         </Col>
         <Col lg={12}>
           <NotificationSettings />
+        </Col>
+        <Col lg={12}>
+          <RemoveAccount user={user} />
         </Col>
       </Row>
     </Container>
