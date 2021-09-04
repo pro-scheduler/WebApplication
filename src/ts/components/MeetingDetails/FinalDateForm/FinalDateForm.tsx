@@ -11,6 +11,7 @@ export type FinalDateFormProps = {
   finalBeginDate: Date;
   finalEndDate: Date;
   hasBeenSet: boolean;
+  isOrganizer: boolean;
 };
 
 const FinalDateForm = ({
@@ -18,12 +19,14 @@ const FinalDateForm = ({
   finalBeginDate,
   finalEndDate,
   hasBeenSet,
+  isOrganizer,
 }: FinalDateFormProps) => {
   const [defaultBegin, setDefaultBegin] = useState<Date>(finalBeginDate);
   const [defaultEnd, setDefaultEnd] = useState<Date>(finalEndDate);
   const [beginDate, setBeginDate] = useState<Date>(finalBeginDate);
   const [endDate, setEndDate] = useState<Date>(finalEndDate);
   const [saved, setSaved] = useState<boolean>(hasBeenSet);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   const saveFinalDate = () => {
     updateFinalDate(
@@ -51,34 +54,37 @@ const FinalDateForm = ({
     <Row className="justify-content mt-5 ml-5 pl-5">
       <Col>
         <Card
-          title="Select final date"
+          title="Final date of the meeting"
+          onEdit={isOrganizer ? () => setEditMode(!editMode) : undefined}
           footer={
-            <div>
-              <div className={styles.buttonContainer}>
-                <Row className="justify-content">
-                  <Col lg={6}>
-                    <div className={styles.centerColumn}>
-                      <ActionButton
-                        onclick={saveFinalDate}
-                        text={saved ? 'Edit final date' : 'Save final date'}
-                        disabled={defaultEnd === endDate && defaultBegin === beginDate}
-                        className={styles.buttonAction}
-                      />
-                    </div>
-                  </Col>
-                  <Col lg={6} className="mt-2 mt-lg-0">
-                    <div className={styles.centerColumn}>
-                      <ActionButton
-                        onclick={reset}
-                        text="Reset"
-                        disabled={defaultEnd === endDate && defaultBegin === beginDate}
-                        className={styles.buttonAction}
-                      />
-                    </div>
-                  </Col>
-                </Row>
+            editMode ? (
+              <div>
+                <div className={styles.buttonContainer}>
+                  <Row className="justify-content">
+                    <Col lg={6}>
+                      <div className={styles.centerColumn}>
+                        <ActionButton
+                          onclick={saveFinalDate}
+                          text={saved ? 'Edit final date' : 'Save final date'}
+                          disabled={defaultEnd === endDate && defaultBegin === beginDate}
+                          className={styles.buttonAction}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6} className="mt-2 mt-lg-0">
+                      <div className={styles.centerColumn}>
+                        <ActionButton
+                          onclick={reset}
+                          text="Reset"
+                          disabled={defaultEnd === endDate && defaultBegin === beginDate}
+                          className={styles.buttonAction}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
               </div>
-            </div>
+            ) : undefined
           }
         >
           <div className={styles.finalDateContainer}>
@@ -88,8 +94,8 @@ const FinalDateForm = ({
                   <div>
                     Begin date:
                     <DateTimePicker
-                      dateLabel="Set meeting begin day"
-                      timeLabel="Set meeting begin time"
+                      dateLabel="Meeting begin day"
+                      timeLabel="Meeting begin time"
                       setDate={setBeginDate}
                       defaultDate={beginDate}
                     />
@@ -101,8 +107,8 @@ const FinalDateForm = ({
                   <div>
                     End date:
                     <DateTimePicker
-                      dateLabel="Set meeting end day"
-                      timeLabel="Set meeting end time"
+                      dateLabel="Meeting end day"
+                      timeLabel="Meeting end time"
                       setDate={setEndDate}
                       defaultDate={endDate}
                     />

@@ -173,6 +173,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
             finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
             finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
             hasBeenSet={meeting.finalDate != null}
+            isOrganizer={isOrganizer}
           />
         )}
         {meeting.availableTimeRanges.length > 0 && !showSettings && (
