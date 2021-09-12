@@ -7,7 +7,7 @@ import UserDetails from '../../components/UserProfile/UserDetails/UserDetails';
 import NotificationSettings from '../../components/UserProfile/NotificationSettings/NotificationSettings';
 import RemoveAccount from '../../components/UserProfile/RemoveAccount/RemoveAccount';
 
-const UserProfile = ({ user }: { user: UserSummary }) => {
+const UserProfile = ({ user, refreshUser }: { user: UserSummary; refreshUser: Function }) => {
   return (
     <Container fluid className="ml-xs-5 mt-5">
       <Row className="justify-content mt-5 ml-5 pl-5">
@@ -15,7 +15,7 @@ const UserProfile = ({ user }: { user: UserSummary }) => {
           <div className={styles.userProfileHeader}>Your profile</div>
         </Col>
         <Col lg={6}>
-          <UserDetails user={user} />
+          <UserDetails user={user} refreshUser={refreshUser} />
         </Col>
         <Col lg={12}>
           <NotificationSettings />

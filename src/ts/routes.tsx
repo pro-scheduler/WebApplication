@@ -23,8 +23,13 @@ import UserProfile from './views/UserProfile/UserProfile';
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
-  useEffect(() => {
+
+  const refreshUser = () => {
     fetchCurrentUser(setUser, setResponse);
+  };
+
+  useEffect(() => {
+    refreshUser();
   }, []);
 
   return (
@@ -81,7 +86,7 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/profile" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <UserProfile user={user} />
+          <UserProfile user={user} refreshUser={refreshUser} />
         </ProtectedRoute>
         <Route path="/">
           <LandingPage />
