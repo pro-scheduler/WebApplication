@@ -1,7 +1,12 @@
 .declarationsTable {
-  overflow-y: auto;
-  overflow-x: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
 .declarationRow:hover {
-  cursor: pointer;
+    cursor: pointer;
+}
+
+.pencilIcon {
+    color: var(--purple);
 }
