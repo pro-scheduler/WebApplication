@@ -5,7 +5,7 @@ import './Popup.css';
 export type PopupProps = {
   show: boolean;
   title: string;
-  onClose: Function;
+  onClose: () => void;
 };
 
 const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }) => {
