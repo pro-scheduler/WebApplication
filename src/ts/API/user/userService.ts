@@ -1,5 +1,5 @@
 import { getCurrentUserUrl, getUserUrl } from './urls';
-import { get, put } from '../genericApiCalls';
+import { del, get, put } from '../genericApiCalls';
 import { UserUpdateRequest } from '../../model/user/ProUser';
 
 export const fetchCurrentUser = (setUser: Function, setResponse?: Function) =>
@@ -22,3 +22,18 @@ export const editUser = (
     onSuccess
   );
 };
+
+export const deleteUser = (
+  userId: number,
+  onSuccess?: Function,
+  setData?: Function,
+  setResponse?: Function
+) =>
+  del(
+    getUserUrl(userId),
+    setData,
+    setResponse,
+    true,
+    'Your account has been removed successfully',
+    onSuccess
+  );
