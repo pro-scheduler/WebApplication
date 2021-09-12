@@ -88,7 +88,7 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer, open }: MeetingDecl
         <Popup
           show={showAddDeclarationModal}
           title="Add new declaration"
-          onClose={setShowAddDeclarationModal}
+          onClose={() => setShowAddDeclarationModal(false)}
         >
           <div className={styles.addDeclarationForm}>
             <p className={styles.titleLabel}>Declaration title</p>

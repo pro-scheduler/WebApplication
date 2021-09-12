@@ -4,17 +4,18 @@ import styles from './UserDetails.module.css';
 import { useEffect, useState } from 'react';
 import SingleValueInput from '../../common/forms/Input/SingleValueInput';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import { editUser } from '../../../API/user/userService';
 
-const UserDetails = ({ user }: { user: UserSummary }) => {
+const UserDetails = ({ user, refreshUser }: { user: UserSummary; refreshUser: Function }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(user.username);
+  const [username, setUsername] = useState<string>(user.username);
 
   useEffect(() => {
-    setUserName(user.username);
+    setUsername(user.username);
   }, [user.username]);
 
   const editUserDetails = () => {
-    // TODO connect with API
+    editUser(user.id, { username: username }, refreshUser);
     setEditMode(false);
   };
 
@@ -28,7 +29,7 @@ const UserDetails = ({ user }: { user: UserSummary }) => {
             <ActionButton
               onclick={editUserDetails}
               text={'Edit'}
-              disabled={userName === user.username || userName === ''}
+              disabled={username === user.username || username === ''}
               className={styles.editButton}
             />
           </div>
@@ -38,7 +39,7 @@ const UserDetails = ({ user }: { user: UserSummary }) => {
       <div className={styles.userDetailsContainer}>
         <div className={styles.userHeader}>Username</div>
         {editMode ? (
-          <SingleValueInput valueHandler={setUserName} value={userName} />
+          <SingleValueInput valueHandler={setUsername} value={username} />
         ) : (
           <>
             <div>{user.username}</div>

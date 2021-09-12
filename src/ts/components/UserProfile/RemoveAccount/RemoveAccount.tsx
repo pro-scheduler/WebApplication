@@ -6,6 +6,7 @@ import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import styles from './RemoveAccount.module.css';
 import YesNoPopup from '../../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router-dom';
+import { deleteUser } from '../../../API/user/userService';
 
 const RemoveAccount = ({ user }: { user: UserSummary }) => {
   const [email, setEmail] = useState<string>('');
@@ -13,9 +14,10 @@ const RemoveAccount = ({ user }: { user: UserSummary }) => {
   const history = useHistory();
 
   const removeAccount = () => {
-    // TODO connect with API
-    setShowModal(false);
-    history.push('/');
+    deleteUser(user.id, () => {
+      setShowModal(false);
+      history.push('/');
+    });
   };
 
   return (

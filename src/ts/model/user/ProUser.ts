@@ -19,3 +19,7 @@ export type UserSummary = {
   email: string;
   username: string;
 };
+
+export type UserUpdateRequest = {
+  username: string;
+};

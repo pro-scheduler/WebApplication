@@ -152,7 +152,7 @@ const Declaration = ({
           </div>
         </div>
       </div>
-      <Popup show={showEditModal} title="Edit declaration" onClose={setShowEditModal}>
+      <Popup show={showEditModal} title="Edit declaration" onClose={() => setShowEditModal(false)}>
         <div className={styles.editDeclarationForm}>
           <p className={styles.titleLabel}>Declaration title</p>
           <SingleValueInput
