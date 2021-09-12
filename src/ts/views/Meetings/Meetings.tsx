@@ -42,8 +42,12 @@ const Meetings = ({ user }: { user: UserSummary }) => {
     );
   };
 
-  useEffect(() => {
+  const refreshMeetings = () => {
     fetchAllMeetings(setUserMeetings, setMeetingsResponse);
+  };
+
+  useEffect(() => {
+    refreshMeetings();
     // eslint-disable-next-line
   }, [user.id]);
 
@@ -72,6 +76,7 @@ const Meetings = ({ user }: { user: UserSummary }) => {
             header={'Past meetings'}
             noMeetingsInfo={"You don't have any past meetings"}
             showRedirectButton={false}
+            refreshMeetings={refreshMeetings}
           />
         </>
       ) : (
