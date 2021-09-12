@@ -11,3 +11,6 @@ export const getFillSurveyUrl = () => getSurveysUrl() + '/fill';
 export const getSurveySummaryUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/summary`;
 
 export const getSurveyToEditUrl = (meetingId: number) => getSurveysUrl() + `/${meetingId}/basic`;
+
+export const getUserSurveysUrl = () =>
+  getSurveysUrl() + `/user?userStates=INCOMPLETE,EMPTY&surveyStates=OPEN`;

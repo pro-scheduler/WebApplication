@@ -1,5 +1,6 @@
 import { Answer } from './Answer';
 import { Question, QuestionType } from './Question';
+import { UserSummary } from '../user/ProUser';
 
 export type Survey = {
   id: number;
@@ -73,4 +74,16 @@ export type ChoiceInfo = {
   choice: string;
   point?: number;
   info: EntryInfo;
+};
+
+export type BasicUserSurveyInfo = {
+  id: number;
+  meetingId: number;
+  meetingName: string;
+  description: string;
+  userState: 'INCOMPLETE' | 'COMPLETE' | 'EMPTY';
+  state: 'OPEN' | 'CLOSED';
+  questionsCount: number;
+  surveyEndDate?: Date;
+  organizer: UserSummary;
 };

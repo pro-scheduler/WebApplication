@@ -72,6 +72,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
               onClick={() => setActiveIcon('Surveys')}
             >
               Surveys
+              <Link to="/surveys" />
             </MenuItem>
 
             <MenuItem

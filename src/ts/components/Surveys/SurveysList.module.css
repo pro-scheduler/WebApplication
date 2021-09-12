@@ -1,0 +1,12 @@
+.surveysTable {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.surveyRow:hover {
+    cursor: pointer;
+}
+
+.surveyIcon {
+    color: var(--purple);
+}

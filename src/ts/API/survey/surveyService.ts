@@ -9,6 +9,7 @@ import {
   getSurveysUrl,
   getSurveyToEditUrl,
   getSurveyUrl,
+  getUserSurveysUrl,
 } from './urls';
 import { Answer } from '../../model/survey/Answer';
 
@@ -98,4 +99,8 @@ export const editSurvey = (
     'Survey has been updated successfully',
     onSuccess
   );
+};
+
+export const getUserSurveys = (setSurveys: Function, setResponse?: Function) => {
+  get(getUserSurveysUrl(), setSurveys, setResponse);
 };
