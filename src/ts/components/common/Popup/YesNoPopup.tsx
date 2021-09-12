@@ -6,8 +6,8 @@ import Popup from './Popup';
 export type PopupProps = {
   show: boolean;
   title: string;
-  onAccept: () => void;
-  onDecline: () => void;
+  onAccept: Function;
+  onDecline: Function;
 };
 
 const YesNoPopup = ({ show, title, onAccept, onDecline }: PopupProps) => {
