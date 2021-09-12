@@ -20,6 +20,8 @@ import { defaultUser } from './auth/userContext';
 import { UserSummary } from './model/user/ProUser';
 import Declarations from './views/Declarations/Declarations';
 import UserProfile from './views/UserProfile/UserProfile';
+import Surveys from './views/Surveys/Surveys';
+
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
@@ -83,6 +85,10 @@ const Routes = () => {
         <ProtectedRoute path="/declarations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
           <Declarations />
+        </ProtectedRoute>
+        <ProtectedRoute path="/surveys" isNotLoggedIn={response.isFailed}>
+          <Navbar user={user} />
+          <Surveys />
         </ProtectedRoute>
         <ProtectedRoute path="/profile" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />

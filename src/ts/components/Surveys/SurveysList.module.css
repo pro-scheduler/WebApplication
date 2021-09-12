@@ -1,12 +1,12 @@
-.declarationsTable {
+.surveysTable {
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.declarationRow:hover {
+.surveyRow:hover {
     cursor: pointer;
 }
 
-.pencilIcon {
+.surveyIcon {
     color: var(--purple);
 }
