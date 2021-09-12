@@ -49,7 +49,13 @@ const MeetingList = ({
         <td>{meeting.name}</td>
         <td>{meeting.description}</td>
         <td>{meeting.organizer.email}</td>
-        <td>{meeting.type}</td>
+        <td>
+          {meeting.finalDate
+            ? new Date(meeting.finalDate.timeStart).toLocaleString() +
+              ' - ' +
+              new Date(meeting.finalDate.timeEnd).toLocaleString()
+            : 'not set'}
+        </td>
         <td>{meeting.state}</td>
       </tr>
     );
@@ -68,7 +74,7 @@ const MeetingList = ({
                     <th>Meeting name</th>
                     <th>Description</th>
                     <th>Organizer</th>
-                    <th>Type</th>
+                    <th>Date</th>
                     <th>State</th>
                     <th />
                   </tr>

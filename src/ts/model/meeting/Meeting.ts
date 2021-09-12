@@ -75,6 +75,7 @@ export type MeetingSummary = {
   type: MeetingType;
   organizer: UserSummary;
   state: MeetingState;
+  finalDate: TimeRangeDTO | undefined;
 };
 
 export class OnlineMeetingDetails implements MeetingDetails {
