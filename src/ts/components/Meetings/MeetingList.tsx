@@ -8,12 +8,15 @@ import Card from '../common/Card/Card';
 import SearchBox from '../common/forms/Input/SearchBox';
 import { Table } from 'react-bootstrap';
 import { useHistory } from 'react-router';
+import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
+import { leaveMeeting } from '../../API/meeting/meetingService';
 
 export type MeetingListProps = {
   header: string;
   noMeetingsInfo: string;
   meetings: MeetingSummary[];
   showRedirectButton?: boolean;
+  refreshMeetings?: Function;
 };
 
 const MeetingList = ({
@@ -21,6 +24,7 @@ const MeetingList = ({
   noMeetingsInfo,
   meetings,
   showRedirectButton = true,
+  refreshMeetings,
 }: MeetingListProps) => {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -41,16 +45,23 @@ const MeetingList = ({
 
   const meetingRows = searchResults.map((meeting: MeetingSummary, index: number) => {
     return (
-      <tr
-        key={index}
-        onClick={() => history.push(`/meetings/${meeting.id}`)}
-        className={styles.meetingRow}
-      >
-        <td>{meeting.name}</td>
-        <td>{meeting.description}</td>
-        <td>{meeting.organizer.email}</td>
-        <td>{meeting.type}</td>
-        <td>{meeting.state}</td>
+      <tr key={index} className={styles.meetingRow}>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.name}</td>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.description}</td>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.organizer.email}</td>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
+          {meeting.finalDate
+            ? new Date(meeting.finalDate.timeStart).toLocaleString() +
+              ' - ' +
+              new Date(meeting.finalDate.timeEnd).toLocaleString()
+            : 'not set'}
+        </td>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.state}</td>
+        {refreshMeetings && (
+          <td>
+            <DeleteButton onDelete={() => leaveMeeting(meeting.id, refreshMeetings)} />
+          </td>
+        )}
       </tr>
     );
   });
@@ -68,7 +79,7 @@ const MeetingList = ({
                     <th>Meeting name</th>
                     <th>Description</th>
                     <th>Organizer</th>
-                    <th>Type</th>
+                    <th>Date</th>
                     <th>State</th>
                     <th />
                   </tr>

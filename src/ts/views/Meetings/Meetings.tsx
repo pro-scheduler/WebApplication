@@ -15,16 +15,39 @@ import { fetchAllMeetings } from '../../API/meeting/meetingService';
 const Meetings = ({ user }: { user: UserSummary }) => {
   const [organizedMeetings, setOrganizedMeetings] = useState<MeetingSummary[]>([]);
   const [participatedMeetings, setParticipatedMeetings] = useState<MeetingSummary[]>([]);
+  const [pastMeetings, setPastMeetings] = useState<MeetingSummary[]>([]);
 
   const [meetingsResponse, setMeetingsResponse] = useState<ApiCall>(new ApiCall());
 
   const setUserMeetings = (meetings: MeetingSummary[]) => {
-    setOrganizedMeetings(meetings.filter((m) => m.organizer.id === user.id));
-    setParticipatedMeetings(meetings.filter((m) => m.organizer.id !== user.id));
+    setPastMeetings(
+      meetings.filter(
+        (meeting: MeetingSummary) =>
+          meeting.finalDate && new Date(meeting.finalDate.timeEnd) < new Date()
+      )
+    );
+    setOrganizedMeetings(
+      meetings.filter(
+        (meeting: MeetingSummary) =>
+          meeting.organizer.id === user.id &&
+          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
+      )
+    );
+    setParticipatedMeetings(
+      meetings.filter(
+        (meeting: MeetingSummary) =>
+          meeting.organizer.id !== user.id &&
+          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
+      )
+    );
+  };
+
+  const refreshMeetings = () => {
+    fetchAllMeetings(setUserMeetings, setMeetingsResponse);
   };
 
   useEffect(() => {
-    fetchAllMeetings(setUserMeetings, setMeetingsResponse);
+    refreshMeetings();
     // eslint-disable-next-line
   }, [user.id]);
 
@@ -36,25 +59,26 @@ const Meetings = ({ user }: { user: UserSummary }) => {
         </Col>
       </Row>
       {meetingsResponse.isSuccess ? (
-        <MeetingList
-          meetings={organizedMeetings}
-          header={'Meetings you organize'}
-          noMeetingsInfo={"You don't organize any meeting"}
-        />
-      ) : (
-        <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
-          <Col className="text-center mt-5">
-            <LoadingSpinner active={meetingsResponse.isLoading} />
-          </Col>
-        </Row>
-      )}
-      {meetingsResponse.isSuccess ? (
-        <MeetingList
-          meetings={participatedMeetings}
-          header={'Meetings you participate'}
-          noMeetingsInfo={"You don't participate in any meeting"}
-          showRedirectButton={false}
-        />
+        <>
+          <MeetingList
+            meetings={organizedMeetings}
+            header={'Meetings you organize'}
+            noMeetingsInfo={"You don't organize any meeting"}
+          />
+          <MeetingList
+            meetings={participatedMeetings}
+            header={'Meetings you participate'}
+            noMeetingsInfo={"You don't participate in any meeting"}
+            showRedirectButton={false}
+          />
+          <MeetingList
+            meetings={pastMeetings}
+            header={'Past meetings'}
+            noMeetingsInfo={"You don't have any past meetings"}
+            showRedirectButton={false}
+            refreshMeetings={refreshMeetings}
+          />
+        </>
       ) : (
         <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
           <Col className="text-center mt-5">
