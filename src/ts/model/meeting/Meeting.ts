@@ -117,3 +117,8 @@ export class MeetingAttendeeDetails {
     public role: MeetingRole = MeetingRole.ATTENDEE
   ) {}
 }
+
+export type UpdateMeetingAttendeeRequest = {
+  role: MeetingRole;
+  markedTimeRanges: TimeRangeDTO[];
+};

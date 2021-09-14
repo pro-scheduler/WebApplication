@@ -131,6 +131,10 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           setShowSettings={setShowSettings}
           isOrganizer={isOrganizer}
           state={meeting.state}
+          attendees={meeting.attendees.filter(
+            (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ATTENDEE
+          )}
+          reloadMeeting={reloadMeeting}
         />
         {showSettings && (
           <MeetingSettings
@@ -164,7 +168,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
                 meetingId={id}
                 isOrganizer={isOrganizer}
                 refreshParticipants={reloadMeeting}
-                participants={meeting.attendees}
+                participants={meeting.attendees.filter(
+                  (attendee: MeetingAttendeeDetails) => attendee.user.id !== user.id
+                )}
                 state={meeting.state}
               />
             </Col>

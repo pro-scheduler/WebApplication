@@ -12,7 +12,6 @@ import Card from '../../common/Card/Card';
 import DeleteButton from '../../common/SubmitButton/ActionButton/DeleteButton';
 import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
-import YesNoPopup from '../../common/Popup/YesNoPopup';
 import Popup from '../../common/Popup/Popup';
 import CreateInvitations from '../../CreateMeeting/CreateInvitations';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
@@ -39,7 +38,6 @@ const MeetingParticipants = ({
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [invitationState, setInvitationState] = useState<State>(State.ACCEPTED);
-  const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,7 +47,6 @@ const MeetingParticipants = ({
 
   const deleteParticipant = (attendeeId: number) => {
     removeAttendeeFromMeeting(meetingId, attendeeId, refreshParticipants);
-    setDeleteModalShow(false);
   };
 
   const sendInvitations = () => {
@@ -90,22 +87,16 @@ const MeetingParticipants = ({
   const acceptedInvitations = participants.map(
     (participant: MeetingAttendeeDetails, index: number) => {
       return (
-        <div key={index + State.ACCEPTED}>
+        <div key={participant.attendeeId}>
           <div className={styles.participantRow}>
             <div className={styles.userNameIcon}>
               <UserNameIcon email={participant.user.username} />
             </div>
             {isOrganizer && state === MeetingState.OPEN && (
               <div className={styles.deleteContainer}>
-                <DeleteButton onDelete={() => setDeleteModalShow(true)} />
+                <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
               </div>
             )}
-            <YesNoPopup
-              show={deleteModalShow}
-              title={'Are you sure you want to remove the participant from the meeting?'}
-              onDecline={() => setDeleteModalShow(false)}
-              onAccept={() => deleteParticipant(participant.attendeeId)}
-            />
           </div>
           <hr className={styles.hrLine} />
         </div>
