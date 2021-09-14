@@ -226,6 +226,7 @@ const Time = () => {
             numberOfParticipants={10}
             isOrganizer={true}
             state={MeetingState.OPEN}
+            setNewDeadline={() => {}}
           />
         </Col>
       </Row>
@@ -240,6 +241,7 @@ const Time = () => {
             numberOfParticipants={10}
             isOrganizer={true}
             state={MeetingState.OPEN}
+            setNewDeadline={() => {}}
           />
         </Col>
       </Row>

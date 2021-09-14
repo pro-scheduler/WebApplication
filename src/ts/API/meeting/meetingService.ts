@@ -123,3 +123,21 @@ export const updateMeetingNameAndDescription = (
     'You have successfully updated meeting name and description',
     onSuccess
   );
+
+export const updateMeetingTimeDeadline = (
+  deadline: Date,
+  meetingId: number,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      markTimeRangeDeadline: deadline,
+    },
+    getMeetingUrl(meetingId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully updated time voting deadline',
+    onSuccess
+  );

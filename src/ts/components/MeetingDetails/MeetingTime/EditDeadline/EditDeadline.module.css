@@ -1,0 +1,10 @@
+@media only screen and (max-width: 580px) {
+  .buttonAction {
+    width: 100% !important;
+  }
+}
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}

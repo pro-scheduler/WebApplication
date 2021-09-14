@@ -15,6 +15,7 @@ import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
 import { Collapse } from 'react-collapse';
 import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
+import EditDeadline from './EditDeadline/EditDeadline';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -27,6 +28,7 @@ export type MeetingTimeProps = {
   numberOfParticipants: number;
   isOrganizer: boolean;
   state: MeetingState;
+  setNewDeadline: Function;
 };
 
 interface RangesWithDay {
@@ -44,6 +46,7 @@ const MeetingTime = ({
   numberOfParticipants,
   isOrganizer,
   state,
+  setNewDeadline,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -51,6 +54,7 @@ const MeetingTime = ({
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
+  const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
   const [opened, setOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
@@ -166,10 +170,22 @@ const MeetingTime = ({
     <Row className="justify-content my-5 ml-5 pl-5">
       <LineWithHeader
         header={'When'}
-        iconAction={isOrganizer && state === MeetingState.OPEN ? () => {} : undefined}
+        iconAction={
+          isOrganizer && state === MeetingState.OPEN
+            ? () => {
+                setOpenedDeadlineEditing(!openedDeadlineEditing);
+              }
+            : undefined
+        }
         collapseAction={setOpened}
       />
       <Col>
+        <EditDeadline
+          isOpened={openedDeadlineEditing}
+          timeDeadline={timeDeadline}
+          meetingId={meetingId}
+          setDeadline={setNewDeadline}
+        />
         <Collapse isOpened={opened}>
           <Col lg={12} className="text-center mx-auto">
             <div className={styles.switchTime}>

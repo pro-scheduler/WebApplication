@@ -55,6 +55,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     setMeeting({ ...meeting, name, description });
   };
 
+  const setMeetingTimeDeadline = (deadline: Date) => {
+    setMeeting({ ...meeting, markTimeRangeDeadline: deadline });
+  };
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
   };
@@ -188,6 +191,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
             numberOfParticipants={meeting.attendees.length}
             isOrganizer={isOrganizer}
             state={meeting.state}
+            setNewDeadline={setMeetingTimeDeadline}
           />
         )}
         {survey && !showSettings && (
