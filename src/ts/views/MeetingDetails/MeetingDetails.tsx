@@ -169,7 +169,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
                 isOrganizer={isOrganizer}
                 refreshParticipants={reloadMeeting}
                 participants={meeting.attendees.filter(
-                  (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ATTENDEE
+                  (attendee: MeetingAttendeeDetails) => attendee.user.id !== user.id
                 )}
                 state={meeting.state}
               />

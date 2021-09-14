@@ -55,13 +55,12 @@ const MeetingDescription = ({
 
   const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
     return (
-      <div className={styles.organizer}>
+      <div className={styles.organizer} key={'organizer' + organizer.attendeeId}>
         <UserIcon
           name={organizer.user.username}
           meetingId={meetingId}
           attendeeId={organizer.attendeeId}
           canDelete={false}
-          key={'organizer' + organizer.attendeeId}
         />
       </div>
     );
@@ -69,13 +68,12 @@ const MeetingDescription = ({
 
   const attendeesIcons = searchResults.map((attendee: MeetingAttendeeDetails) => {
     return (
-      <div className={styles.attendeeContainer}>
+      <div className={styles.attendeeContainer} key={'attendee' + attendee.attendeeId}>
         <UserIcon
           name={attendee.user.username}
           meetingId={meetingId}
           attendeeId={attendee.attendeeId}
           canDelete={false}
-          key={'attendee' + attendee.attendeeId}
         />
         <div className={styles.buttonContainer}>
           <PlusButton
