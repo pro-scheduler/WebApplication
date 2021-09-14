@@ -6,9 +6,10 @@ import styles from './MeetingDescription.module.css';
 import UserIcon from './MeetingParticipants/UserIcon';
 import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import PlusButton from '../common/SubmitButton/ActionButton/PlusButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Popup from '../common/Popup/Popup';
 import { updateMeetingAttendee } from '../../API/meeting/meetingService';
+import SearchBox from '../common/forms/Input/SearchBox';
 
 export type MeetingDescriptionProps = {
   name: string;
@@ -36,6 +37,21 @@ const MeetingDescription = ({
   reloadMeeting,
 }: MeetingDescriptionProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<MeetingAttendeeDetails[]>(attendees);
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    setSearchResults(
+      searchTerm !== ''
+        ? attendees.filter((attendee: MeetingAttendeeDetails) =>
+            attendee.user.username.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        : attendees
+    );
+  }, [searchTerm, attendees]);
 
   const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
     return (
@@ -51,7 +67,7 @@ const MeetingDescription = ({
     );
   });
 
-  const attendeesIcons = attendees.map((attendee: MeetingAttendeeDetails) => {
+  const attendeesIcons = searchResults.map((attendee: MeetingAttendeeDetails) => {
     return (
       <div className={styles.attendeeContainer}>
         <UserIcon
@@ -128,6 +144,7 @@ const MeetingDescription = ({
         {description}
       </Col>
       <Popup show={modalShow} title={'Add organizers'} onClose={() => setModalShow(false)}>
+        <SearchBox value={searchTerm} onChange={handleChange} />
         <div className={styles.attendeesIcons}>{attendeesIcons}</div>
       </Popup>
     </Row>
