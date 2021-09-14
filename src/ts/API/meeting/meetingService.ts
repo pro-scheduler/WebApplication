@@ -7,7 +7,7 @@ import {
   getCancelMeetingUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import { CreateMeetingRequest } from '../../model/meeting/Meeting';
+import { CreateMeetingRequest, UpdateMeetingAttendeeRequest } from '../../model/meeting/Meeting';
 
 export const saveMeeting = (
   createRequest: CreateMeetingRequest,
@@ -139,5 +139,23 @@ export const updateMeetingTimeDeadline = (
     setResponse,
     true,
     'You have successfully updated time voting deadline',
+    onSuccess
+  );
+
+export const updateMeetingAttendee = (
+  meetingId: number,
+  attendeeId: number,
+  updateMeetingAttendeeRequest: UpdateMeetingAttendeeRequest,
+  onSuccess?: Function,
+  setData?: Function,
+  setResponse?: Function
+) =>
+  put(
+    updateMeetingAttendeeRequest,
+    getMeetingAttendeeUrl(meetingId, attendeeId),
+    setData,
+    setResponse,
+    true,
+    'Attendee role has been updated successfully',
     onSuccess
   );
