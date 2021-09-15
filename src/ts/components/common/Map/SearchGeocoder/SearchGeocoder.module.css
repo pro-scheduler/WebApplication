@@ -1,0 +1,29 @@
+.listProposition {
+  position: relative;
+  background-color: white;
+  border-width: 1px;
+  padding: 10px;
+  margin-right: 80px;
+}
+
+.listProposition:hover {
+  background-color: var(--light-purple);
+  cursor: pointer;
+}
+
+.flexContainer {
+  display: flex;
+}
+
+.searchContainer {
+  max-width: 600px;
+}
+
+.searchBar {
+  display: flex;
+}
+
+.addButton {
+  width: 80px;
+  margin-left: 5px;
+}

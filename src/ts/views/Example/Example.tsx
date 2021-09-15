@@ -13,6 +13,7 @@ import PlusButton from '../../components/common/RoundButtons/PlusButton';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import TextArea from '../../components/common/forms/TextArea/TextArea';
 import styles from './Example.module.css';
+import SearchGeocoder from '../../components/common/Map/SearchGeocoder/SearchGeocoder';
 
 const Example = () => {
   const [showText, setShowText] = useState(true);
@@ -77,6 +78,7 @@ const Example = () => {
       <SingleValueInput label="textInputLabel" valueHandler={setTextInpuValue} />
       <p>Text Area</p>
       <TextArea label="textAreaLabel" valueHandler={setTextInpuValue} />
+      <SearchGeocoder setSelectedPlace={() => {}} />
     </div>
   );
 };
