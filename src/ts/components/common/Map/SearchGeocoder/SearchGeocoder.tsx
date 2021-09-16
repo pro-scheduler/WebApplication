@@ -22,9 +22,13 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
 
   //TODO api call here (when geocoding will be done)
   useEffect(() => {
-    setTimeout(() => {
-      setPropositions(mockedPropositions.filter((_) => Math.random() < 0.5));
-    }, 1000);
+    if (searchText === '') {
+      setPropositions([]);
+    } else {
+      setTimeout(() => {
+        setPropositions(mockedPropositions.filter((_) => Math.random() < 0.5));
+      }, 500);
+    }
   }, [searchText]);
 
   const addProposition = (proposition: string) => {
@@ -38,6 +42,7 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
           valueHandler={setSearchText}
           placeholder={'search...'}
           value={searchText}
+          className={styles.customInput}
         />
         <ActionButton
           text="Add"

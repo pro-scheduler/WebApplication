@@ -55,7 +55,7 @@ const ChooseModules = ({
             header={'Place'}
             icon={<WorldIcon />}
             description={
-              'The place module allows you to enter a link and an optional password for the online\n' +
+              'The place module allows you to select between online or real meeting. You can customize all needed data about meeting place and perform place votig.\n' +
               '              meeting.'
             }
             onClick={() => setPlaceModule(!placeModule)}

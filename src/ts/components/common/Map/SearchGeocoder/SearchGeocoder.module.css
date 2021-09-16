@@ -3,7 +3,6 @@
   background-color: white;
   border-width: 1px;
   padding: 10px;
-  margin-right: 80px;
 }
 
 .listProposition:hover {
@@ -13,10 +12,12 @@
 
 .flexContainer {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .searchContainer {
   max-width: 600px;
+  width: 600px;
 }
 
 .searchBar {
@@ -25,5 +26,26 @@
 
 .addButton {
   width: 80px;
-  margin-left: 5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.customInput {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+}
+
+
+@media only screen and (max-width: 750px) {
+  .searchContainer {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .listProposition {
+    margin-right: 0;
+  }
 }

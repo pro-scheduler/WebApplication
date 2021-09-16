@@ -24,6 +24,12 @@ import ChooseModules from '../../components/CreateMeeting/ChooseModules';
 import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
 import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
 import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
+import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
+import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace';
+import { FaMapMarkedAlt } from 'react-icons/fa';
+import { BiWorld } from 'react-icons/bi';
+import MapIcon from '../../components/common/Icons/MapIcon';
+import WorldIcon from '../../components/common/Icons/WorldIcon';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -55,7 +61,7 @@ const CreateMeeting = () => {
   });
 
   const [state, setState] = useState<creatingMeetingState>('modules');
-
+  const [onlineMeeting, setOnlneMeeting] = useState<boolean>(false);
   const [surveyModule, setSurveyModule] = useState<boolean>(false);
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
@@ -191,12 +197,46 @@ const CreateMeeting = () => {
         setEmails={setEmails}
         setInvitationMessage={setInvitationMessage}
       />
+      <div hidden={state !== 'place'} className={styles.placegSwitchContainer}>
+        {onlineMeeting ? (
+          <>
+            <Row className="justify-content-center">
+              <Col xs="auto">
+                <WorldIcon />
+              </Col>
+            </Row>
+            <Row className="justify-content-center mt-4">
+              <h4>Online Meeting Details</h4>
+            </Row>
+          </>
+        ) : (
+          <>
+            <Row className="justify-content-center">
+              <Col xs="auto">
+                <MapIcon />
+              </Col>
+            </Row>
+            <Row className="justify-content-center mt-4">
+              <h4>Real Meeting Details</h4>
+            </Row>
+          </>
+        )}
+        <div>
+          <SwitchButton
+            onChange={() => setOnlneMeeting(!onlineMeeting)}
+            checkedIcon={<BiWorld className={styles.switchIcon} />}
+            unCheckedIcon={<FaMapMarkedAlt className={styles.switchIcon} />}
+          />
+        </div>
+      </div>
       <OnlineDetails
         state={state}
         onlineLink={onlineLink}
         setOnlineLink={setOnlineLink}
         setOnlinePassword={setOnlinePassword}
+        isOnlineMeeting={onlineMeeting}
       />
+      <ChoosePlace isOnlineMeeting={onlineMeeting} state={state} />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
       <Row className="justify-content-center mt-2">
         <Col xs="auto">
