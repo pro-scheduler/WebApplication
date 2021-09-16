@@ -25,7 +25,7 @@ const AddPlacePopup = ({
   const [description, setDescription] = useState<string>(defaultDescription);
   const [name, setName] = useState<string>(defaultName);
   const [address, setAddress] = useState<string>(defaultAddress);
-  const [invalid, setIvalid] = useState<boolean>(true);
+  const [invalid, setInvalid] = useState<boolean>(true);
 
   return (
     <Popup show={display} title="Fill place details" onClose={() => setShow(false)}>
@@ -34,7 +34,7 @@ const AddPlacePopup = ({
         <SingleValueInput
           value={name}
           valueHandler={setName}
-          setInvalid={setIvalid}
+          setInvalid={setInvalid}
           validation={[
             { validation: required, message: 'This field is required' },
             { validation: minSings(5), message: 'Min 5 signs' },
@@ -46,7 +46,7 @@ const AddPlacePopup = ({
         <TextArea
           defaultValue={description}
           valueHandler={setDescription}
-          setInvalid={setIvalid}
+          setInvalid={setInvalid}
           validation={[{ validation: maxSings(512), message: 'Max 512 signs' }]}
           placeholder="Please type place description ..."
         />
@@ -54,7 +54,7 @@ const AddPlacePopup = ({
         <SingleValueInput
           value={address}
           valueHandler={setAddress}
-          setInvalid={setIvalid}
+          setInvalid={setInvalid}
           validation={[{ validation: maxSings(255), message: 'Max 255 signs' }]}
           placeholder="Please type palce address ..."
         />
@@ -71,6 +71,7 @@ const AddPlacePopup = ({
                 setDescription('');
                 setName('');
                 setAddress('');
+                setInvalid(true);
               }}
               disabled={invalid}
               text="Save declaration"
