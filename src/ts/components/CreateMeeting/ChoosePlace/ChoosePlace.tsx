@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PlaceDetails } from '../../../model/geo/Geo';
+import MapIcon from '../../common/Icons/MapIcon';
 import MapWithPlaces from '../../common/Map/MapWithPlaces/MapWithPlaces';
 import SearchGeocoder from '../../common/Map/SearchGeocoder/SearchGeocoder';
 import styles from './ChoosePlace.module.css';
@@ -45,10 +46,26 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
   }, [selectedPlace]);
 
   return (
-    <div hidden={isOnlineMeeting || state !== 'place'} className={styles.choosePlaceContainer}>
-      <Row className="justify-content-center mt-4">
-        <h5>Add new place by searching or clicking on the map</h5>
-      </Row>
+    <div
+      hidden={isOnlineMeeting || !(state === 'place' || state === 'summary')}
+      className={styles.choosePlaceContainer}
+    >
+      {state !== 'summary' ? (
+        <Row className="justify-content-center mt-4">
+          <h5>Add new place by searching or clicking on the map</h5>
+        </Row>
+      ) : (
+        <>
+          <Row className="justify-content-center mt-5">
+            <Col xs="auto">
+              <MapIcon />
+            </Col>
+          </Row>
+          <Row className="justify-content-center mt-4">
+            <div className={styles.createHeader}>Selected palces</div>
+          </Row>
+        </>
+      )}
       <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.searchContainer}>
           <SearchGeocoder setSelectedPlace={setSeletedPlace} />
@@ -64,6 +81,8 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
               mainButtonTooltipName={'Vote for that place'}
               displayMainButton={false}
               displayRemoveButton={true}
+              mainButtonAction={() => {}}
+              allowAdding={true}
             />
           </div>
         </Col>

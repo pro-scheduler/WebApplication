@@ -1,4 +1,9 @@
 .mapContainer {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+.insertModelButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }

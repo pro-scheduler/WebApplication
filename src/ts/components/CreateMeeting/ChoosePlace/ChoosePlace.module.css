@@ -8,6 +8,9 @@
 .choosePlaceContainer {
   margin-left: 35px;
 }
+.createHeader {
+  font-size: var(--s-font-size);
+}
 .mapContainer {
   z-index: -1;
   margin-top: 40px;
@@ -20,7 +23,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .searchContainer {
-      top: 460px;
-    }
+  .searchContainer {
+    top: 460px;
   }
+}

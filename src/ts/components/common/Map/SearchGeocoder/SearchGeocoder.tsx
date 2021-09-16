@@ -33,6 +33,9 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
 
   const addProposition = (proposition: string) => {
     setSearchText(proposition);
+    setTimeout(() => {
+      setPropositions([]);
+    }, 1000);
   };
 
   return (
