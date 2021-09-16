@@ -55,6 +55,55 @@ const MapWithPlaces = ({
     setter(newProperty);
     return newProperty;
   };
+  const mapWidthToZoom = (width: number) => {
+    if (width <= 0.0014) return 18;
+    if (width <= 0.003) return 17;
+    if (width <= 0.0059) return 16;
+    if (width <= 0.0118) return 15;
+    if (width <= 0.027) return 14;
+    if (width <= 0.52) return 13;
+    if (width <= 0.1) return 12;
+    if (width <= 0.21) return 11;
+    if (width <= 0.4) return 10;
+    if (width <= 0.8) return 9;
+    if (width <= 1.6) return 8;
+    if (width <= 3.0) return 7;
+    if (width <= 6.0) return 6;
+    if (width <= 11.0) return 5;
+    if (width <= 20.0) return 4;
+    if (width <= 45) return 3;
+    return 2;
+  };
+  //calculate center and zoom to obatin all places
+  useEffect(() => {
+    if (placesToDisplay.length > 0) {
+      let latAvg =
+        placesToDisplay.map((p) => p.lat).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+      let longAvg =
+        placesToDisplay.map((p) => p.long).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+      let width =
+        Math.max.apply(
+          null,
+          placesToDisplay.map((p) => p.lat)
+        ) -
+        Math.min.apply(
+          null,
+          placesToDisplay.map((p) => p.lat)
+        );
+      let height =
+        Math.max.apply(
+          null,
+          placesToDisplay.map((p) => p.long)
+        ) -
+        Math.min.apply(
+          null,
+          placesToDisplay.map((p) => p.long)
+        );
+      setCenter([latAvg, longAvg]);
+      setZoom(mapWidthToZoom(width > height ? width : height));
+    }
+    // eslint-disable-next-line
+  }, [placesToDisplay]);
 
   useEffect(() => {
     resetProperties(setColors, 'var(--purple)');
