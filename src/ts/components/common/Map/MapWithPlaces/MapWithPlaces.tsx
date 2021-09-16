@@ -10,36 +10,47 @@ export type MapWithPlacesProps = {
   setPlacesToDisplay?: Function;
   addNewPlace?: Function;
   mainButtonTooltipName: string;
+  displayRemoveButton: boolean;
+  displayMainButton: boolean;
 };
 
 interface Colors {
   [key: number]: string;
+}
+interface Hidden {
+  [key: number]: boolean;
 }
 
 const MapWithPlaces = ({
   placesToDisplay,
   setPlacesToDisplay,
   mainButtonTooltipName,
+  displayRemoveButton,
+  displayMainButton,
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
   const [colors, setColors] = useState<Colors>({});
+  const [hidden, setHidden] = useState<Hidden>({});
 
-  const resetAllColors = () => {
+  const resetProperties = (setter: Function, value: any) => {
+    let newProperties: any = {};
     placesToDisplay.forEach((place) => {
-      let newColors = { ...colors };
-      newColors[place.id] = 'var(--purple)';
-      setColors(newColors);
+      newProperties[place.id] = value;
     });
+    setter(newProperties);
+    return newProperties;
   };
-  const changeColor = (id: number, color: string) => {
-    let newColors = { ...colors };
-    newColors[id] = color;
-    setColors(newColors);
+  const changeProperty = (id: number, setter: Function, old: any, value: any) => {
+    let newProperty = { ...old };
+    newProperty[id] = value;
+    setter(newProperty);
+    return newProperty;
   };
 
   useEffect(() => {
-    resetAllColors();
+    resetProperties(setColors, 'var(--purple)');
+    resetProperties(setHidden, true);
     // eslint-disable-next-line
   }, [placesToDisplay]);
 
@@ -55,7 +66,8 @@ const MapWithPlaces = ({
         }}
         defaultZoom={11}
         onClick={(e) => {
-          resetAllColors();
+          resetProperties(setColors, 'var(--purple)');
+          resetProperties(setHidden, true);
         }}
       >
         <ZoomControl />
@@ -67,41 +79,49 @@ const MapWithPlaces = ({
               anchor={[place.lat, place.long]}
               color={colors[place.id]}
               onClick={() => {
-                changeColor(place.id, 'var(--red)');
+                console.log(place.id);
+                let newColorProperties = resetProperties(setColors, 'var(--purple)');
+                let newHiddenProperties = resetProperties(setHidden, true);
+                changeProperty(
+                  place.id,
+                  setColors,
+                  newColorProperties,
+                  colors[place.id] === 'var(--red)' ? 'var(--purple)' : 'var(--red)'
+                );
+                changeProperty(place.id, setHidden, newHiddenProperties, !hidden[place.id]);
               }}
             />
           );
         })}
-        {placesToDisplay.map((place) => {
-          //   console.log(
-          //     (place.description.length + (place.address ? place.address.length + 9 : 0)) / 51
-          //   );
+        {placesToDisplay.map((place, i) => {
           return (
-            <Overlay
-              key={place.id}
-              anchor={[place.lat, place.long]}
-              //   offset={[
-              //     10,
-              //     210 +
-              //       (16 *
-              //         (place.description.length + (place.address ? place.address.length + 9 : 0))) /
-              //         51,
-              //   ]}
-              offset={[0, 0]}
-            >
-              <MapToolTip
-                name={place.name}
-                description={place.description}
-                address={place.address}
-                mainButtonName={mainButtonTooltipName}
-                next={() => {}}
-                mainButtonAction={() => {}}
-                removeButtonAction={() => {}}
-                closeAction={() => {}}
-                displayNext={true}
-                displayRemoveButton={true}
-                displayMainButton={true}
-              />
+            <Overlay key={place.id} anchor={[place.lat, place.long]} offset={[0, 0]}>
+              <div hidden={hidden[place.id]}>
+                <MapToolTip
+                  name={place.name}
+                  description={place.description}
+                  address={place.address}
+                  mainButtonName={mainButtonTooltipName}
+                  next={() => {
+                    let nextPlaceIndex = (i + 1) % placesToDisplay.length;
+                    let nextPlace = placesToDisplay[nextPlaceIndex];
+                    let newHidden = changeProperty(place.id, setHidden, hidden, true);
+                    let newColor = changeProperty(place.id, setColors, colors, 'var(--purple)');
+                    changeProperty(nextPlace.id, setHidden, newHidden, false);
+                    changeProperty(nextPlace.id, setColors, newColor, 'var(--red)');
+                    setCenter([nextPlace.lat, nextPlace.long]);
+                  }}
+                  mainButtonAction={() => {}}
+                  removeButtonAction={() => {}}
+                  closeAction={() => {
+                    changeProperty(place.id, setHidden, hidden, true);
+                    changeProperty(place.id, setColors, colors, 'var(--purple)');
+                  }}
+                  displayNext={placesToDisplay.length > 1}
+                  displayRemoveButton={displayRemoveButton}
+                  displayMainButton={displayMainButton}
+                />
+              </div>
             </Overlay>
           );
         })}

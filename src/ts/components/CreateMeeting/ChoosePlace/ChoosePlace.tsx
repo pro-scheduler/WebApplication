@@ -20,6 +20,22 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
       description: 'Nasz ulubione miejsce',
       address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
     },
+    {
+      id: 1,
+      lat: 50.061781852877736,
+      long: 19.93740285479882,
+      name: 'Rynek główny',
+      description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+      address: '',
+    },
+    {
+      id: 2,
+      lat: 50.061781852877736,
+      long: 19.92740285479882,
+      name: 'Rynek główny',
+      description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+      address: '',
+    },
   ]);
   //TODO modifie adding by search when api will be ready
   useEffect(() => {
@@ -46,6 +62,8 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
               placesToDisplay={selectedPlaces}
               setPlacesToDisplay={setSelectedPlaces}
               mainButtonTooltipName={'Vote for that place'}
+              displayMainButton={false}
+              displayRemoveButton={true}
             />
           </div>
         </Col>

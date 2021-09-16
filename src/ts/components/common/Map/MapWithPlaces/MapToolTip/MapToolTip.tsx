@@ -37,7 +37,6 @@ const MapToolTip = ({
     if (ref) if (ref.current) setHeight(ref.current.clientHeight);
   });
 
-  useEffect(() => console.log(height), [height]);
   return (
     <div
       className={styles.toolTipContainer}
