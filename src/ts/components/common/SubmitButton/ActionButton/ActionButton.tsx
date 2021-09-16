@@ -8,12 +8,19 @@ export type ActionButtonProps = {
   text: string;
   className?: string;
   disabled?: boolean;
+  color?: string;
 };
 
-const ActionButton = ({ onclick, text, className, disabled }: ActionButtonProps) => {
+const ActionButton = ({ onclick, text, className, disabled, color }: ActionButtonProps) => {
   const buttonStyles = cx(disabled ? styles.button_disabled : styles.button, className);
   return (
-    <button className={buttonStyles} type="submit" onClick={onclick} disabled={disabled}>
+    <button
+      className={buttonStyles}
+      style={{ backgroundColor: color ? color : 'var(--bright-green)' }}
+      type="submit"
+      onClick={onclick}
+      disabled={disabled}
+    >
       {text}
     </button>
   );

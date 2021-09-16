@@ -1,7 +1,26 @@
 .searchContainer {
-    align-self: center;
-    margin-right: 50px;
+  align-self: center;
+  margin-right: 50px;
+  position: absolute;
+  z-index: 1;
+  top: 420px;
 }
 .choosePlaceContainer {
-    margin-left: 35px;
+  margin-left: 35px;
 }
+.mapContainer {
+  z-index: -1;
+  margin-top: 40px;
+}
+
+@media only screen and (max-width: 980px) {
+  .searchContainer {
+    top: 435px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+    .searchContainer {
+      top: 460px;
+    }
+  }
