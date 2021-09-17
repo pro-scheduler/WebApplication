@@ -12,32 +12,33 @@ export type ChoosePlaceProps = {
 
 const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
   const [selectedPlace, setSeletedPlace] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<PlaceDetails[]>([
-    {
-      id: 0,
-      lat: 50.068074402115116,
-      long: 19.912639700937756,
-      name: 'Katedra Informatki AGH',
-      description: 'Nasz ulubione miejsce',
-      address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-    },
-    {
-      id: 1,
-      lat: 50.061781852877736,
-      long: 19.93740285479882,
-      name: 'Rynek główny',
-      description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-      address: '',
-    },
-    {
-      id: 2,
-      lat: 50.061781852877736,
-      long: 19.92740285479882,
-      name: 'Rynek główny',
-      description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-      address: '',
-    },
-  ]);
+  const [selectedPlaces, setSelectedPlaces] = useState<PlaceDetails[]>(
+    [
+      {
+        lat: 50.068074402115116,
+        long: 19.912639700937756,
+        name: 'Katedra Informatki AGH',
+        description: 'Nasz ulubione miejsce',
+        address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
+      },
+      {
+        lat: 50.061781852877736,
+        long: 19.93740285479882,
+        name: 'Rynek główny',
+        description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+        address: '',
+      },
+      {
+        lat: 50.061781852877736,
+        long: 19.92740285479882,
+        name: 'Rynek główny',
+        description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+        address: '',
+      },
+    ].map((place, i) => {
+      return { ...place, id: i, votes: [] };
+    })
+  );
   //TODO modifie adding by search when api will be ready
   useEffect(() => {
     if (selectedPlace !== '') {
