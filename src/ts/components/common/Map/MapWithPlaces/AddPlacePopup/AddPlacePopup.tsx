@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { maxSings, minSings, required } from '../../../../../tools/validator';
 import SingleValueInput from '../../../forms/Input/SingleValueInput';
 import TextArea from '../../../forms/TextArea/TextArea';
@@ -27,6 +27,11 @@ const AddPlacePopup = ({
   const [address, setAddress] = useState<string>(defaultAddress);
   const [invalid, setInvalid] = useState<boolean>(true);
 
+  useEffect(() => {
+    setName(defaultName);
+    setAddress(defaultAddress);
+    setDescription(defaultDescription);
+  }, [defaultName, defaultAddress, defaultDescription]);
   return (
     <Popup show={display} title="Fill place details" onClose={() => setShow(false)}>
       <div className={styles.addPlaceDetailsForm}>

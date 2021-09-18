@@ -30,6 +30,8 @@ import { FaMapMarkedAlt } from 'react-icons/fa';
 import { BiWorld } from 'react-icons/bi';
 import MapIcon from '../../components/common/Icons/MapIcon';
 import WorldIcon from '../../components/common/Icons/WorldIcon';
+import { PlaceDTO } from '../../model/geo/Geo';
+import { savePlaces } from '../../API/geo/geo';
 export type creatingMeetingState =
   | 'modules'
   | 'name'
@@ -54,6 +56,8 @@ const CreateMeeting = () => {
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
+  const [savePlacesResponse, setSavePlacesResponse] = useState<ApiCall>(new ApiCall());
+  const [selectedPlaces, setSelectedPlaces] = useState<PlaceDTO[]>([]);
   const [survey, setSurvey] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: -1,
@@ -120,6 +124,11 @@ const CreateMeeting = () => {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse, () =>
           history.push('/meetings/' + meetingId.id)
         );
+      }
+      if (!onlineMeeting) {
+        savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse, () => {
+          history.push('/meetings/' + meetingId.id);
+        });
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
       history.push('/meetings/' + meetingId.id);
@@ -236,7 +245,11 @@ const CreateMeeting = () => {
         setOnlinePassword={setOnlinePassword}
         isOnlineMeeting={onlineMeeting}
       />
-      <ChoosePlace isOnlineMeeting={onlineMeeting} state={state} />
+      <ChoosePlace
+        isOnlineMeeting={onlineMeeting}
+        state={state}
+        setSelectedPlaces={setSelectedPlaces}
+      />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
       <Row className="justify-content-center mt-2">
         <Col xs="auto">
@@ -274,7 +287,8 @@ const CreateMeeting = () => {
             active={
               saveMeetingResponse.isLoading ||
               saveInvitationsResponse.isLoading ||
-              saveSurveyResponse.isLoading
+              saveSurveyResponse.isLoading ||
+              savePlacesResponse.isLoading
             }
           />
         </Col>

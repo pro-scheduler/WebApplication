@@ -1,10 +1,11 @@
-import { PlaceDetails } from '../../../../model/geo/Geo';
+import { PlaceDetails, PlaceDTO } from '../../../../model/geo/Geo';
 import styles from './MapWithPlaces.module.css';
 import { Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
 import MapToolTip from './MapToolTip/MapToolTip';
 import ActionButton from '../../SubmitButton/ActionButton/ActionButton';
 import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
+import { geocodeByLocation } from '../../../../API/geo/geo';
 
 export type MapWithPlacesProps = {
   placesToDisplay: PlaceDetails[];
@@ -24,6 +25,7 @@ interface Hidden {
   [key: number]: boolean;
 }
 
+const defaultProposals = { address: '', description: '', name: '' };
 const MapWithPlaces = ({
   placesToDisplay,
   setPlacesToDisplay,
@@ -41,6 +43,11 @@ const MapWithPlaces = ({
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [insertingMode, setInsertingMode] = useState<boolean>(false);
 
+  const [proposalDetails, setProposalDetails] = useState<{
+    address: string;
+    description: string;
+    name: string;
+  }>(defaultProposals);
   const resetProperties = (setter: Function, value: any) => {
     let newProperties: any = {};
     placesToDisplay.forEach((place) => {
@@ -134,6 +141,15 @@ const MapWithPlaces = ({
               setNewCoordinates(cords.latLng);
               setShowPopup(true);
               setInsertingMode(false);
+              geocodeByLocation(cords.latLng[0], cords.latLng[1], (places: PlaceDTO[]) => {
+                if (places.length > 0) {
+                  setProposalDetails({
+                    address: places[0].address,
+                    name: places[0].name,
+                    description: places[0].description,
+                  });
+                }
+              });
             }
             resetProperties(setColors, 'var(--purple)');
             resetProperties(setHidden, true);
@@ -214,10 +230,9 @@ const MapWithPlaces = ({
         )}
       </div>
       <AddPlacePopup
-        //TODO autofill here when geodocing will be ready (lat, long) => (name, address,de scription)
-        defaultAddress={''}
-        defaultDescription={''}
-        defaultName={''}
+        defaultAddress={proposalDetails.address}
+        defaultDescription={proposalDetails.description}
+        defaultName={proposalDetails.name}
         setShow={setShowPopup}
         display={showPopup}
         addNewPlace={(details: { name: string; address: string; descrption: string }) => {

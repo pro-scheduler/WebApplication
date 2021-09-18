@@ -1,4 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
+import { geocodeByText } from '../../../../API/geo/geo';
+import { PlaceDTO } from '../../../../model/geo/Geo';
 import SingleValueInput from '../../forms/Input/SingleValueInput';
 import ActionButton from '../../SubmitButton/ActionButton/ActionButton';
 import styles from './SearchGeocoder.module.css';
@@ -7,35 +9,23 @@ export type SearchGeocoderProps = {
   setSelectedPlace: Function;
 };
 
-const mockedPropositions = [
-  'Ramen People Kraków ul. Długa 42',
-  'Tauron Arena Kraków ul. Krakowska 1',
-  'Kebab Kraków ul. Krótka 3',
-  'MacDOnald Kraków ul. średnio długa 23',
-  'Dworzec Główny Kraków ul. kosciuszkowska 5',
-  'Jezioro Kraków ul. Long 5a',
-  'Park Kraków ul. Short 32',
-];
 const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPlace }) => {
   const [searchText, setSearchText] = useState<string>('');
-  const [propositions, setPropositions] = useState<string[]>([]);
+  const [newPlace, setNewPlace] = useState<PlaceDTO | undefined>(undefined);
+  const [propositions, setPropositions] = useState<PlaceDTO[]>([]);
 
-  //TODO api call here (when geocoding will be done)
   useEffect(() => {
     if (searchText === '') {
       setPropositions([]);
     } else {
-      setTimeout(() => {
-        setPropositions(mockedPropositions.filter((_) => Math.random() < 0.5));
-      }, 500);
+      geocodeByText(searchText, setPropositions);
     }
   }, [searchText]);
 
-  const addProposition = (proposition: string) => {
-    setSearchText(proposition);
-    setTimeout(() => {
-      setPropositions([]);
-    }, 1000);
+  const addProposition = (proposition: PlaceDTO) => {
+    setSearchText(proposition.name);
+    setPropositions([]);
+    setNewPlace(proposition);
   };
 
   return (
@@ -51,7 +41,7 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
           text="Add"
           className={styles.addButton}
           onclick={() => {
-            setSelectedPlace(searchText);
+            setSelectedPlace(newPlace);
             setSearchText('');
           }}
         />
@@ -64,7 +54,7 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
             addProposition(proposition);
           }}
         >
-          {proposition}
+          {proposition.name}
         </div>
       ))}
     </div>

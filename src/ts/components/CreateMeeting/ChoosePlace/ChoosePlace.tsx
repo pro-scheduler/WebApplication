@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PlaceDetails } from '../../../model/geo/Geo';
+import { PlaceDetails, PlaceDTO } from '../../../model/geo/Geo';
 import MapIcon from '../../common/Icons/MapIcon';
 import MapWithPlaces from '../../common/Map/MapWithPlaces/MapWithPlaces';
 import SearchGeocoder from '../../common/Map/SearchGeocoder/SearchGeocoder';
@@ -8,11 +8,11 @@ import styles from './ChoosePlace.module.css';
 export type ChoosePlaceProps = {
   isOnlineMeeting: boolean;
   state: string;
+  setSelectedPlaces: Function;
 };
 
-const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
-  const [selectedPlace, setSeletedPlace] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<PlaceDetails[]>(
+const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceProps) => {
+  const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>(
     [
       {
         lat: 50.068074402115116,
@@ -39,12 +39,10 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
       return { ...place, id: i, votes: [] };
     })
   );
-  //TODO modifie adding by search when api will be ready
+
   useEffect(() => {
-    if (selectedPlace !== '') {
-      console.log('Add new palce', selectedPlace);
-    }
-  }, [selectedPlace]);
+    setSelectedPlaces(newPlaces);
+  }, [newPlaces, setSelectedPlaces]);
 
   return (
     <div
@@ -69,7 +67,18 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
       )}
       <Row className="justify-content-center mt-4 ml-sm-5">
         <div className={styles.searchContainer}>
-          <SearchGeocoder setSelectedPlace={setSeletedPlace} />
+          <SearchGeocoder
+            setSelectedPlace={(newPlace: PlaceDTO) => {
+              setNewPlaces([
+                ...newPlaces,
+                {
+                  ...newPlace,
+                  id: Math.random() * 1000,
+                  votes: [],
+                },
+              ]);
+            }}
+          />
         </div>
       </Row>
       <Row>
@@ -77,8 +86,8 @@ const ChoosePlace = ({ isOnlineMeeting, state }: ChoosePlaceProps) => {
           <div className={styles.mapContainer}>
             <MapWithPlaces
               disabled={false}
-              placesToDisplay={selectedPlaces}
-              setPlacesToDisplay={setSelectedPlaces}
+              placesToDisplay={newPlaces}
+              setPlacesToDisplay={setNewPlaces}
               mainButtonTooltipName={'Vote for that place'}
               displayMainButton={false}
               displayRemoveButton={true}

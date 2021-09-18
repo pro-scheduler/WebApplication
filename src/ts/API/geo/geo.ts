@@ -91,10 +91,16 @@ let mockedPlace = {
   address: '',
   votes: [],
 };
-export const savePlaces = (places: PlaceDTO[], meetingId: number, setResponse?: Function) => {
+export const savePlaces = (
+  places: PlaceDTO[],
+  meetingId: number,
+  setResponse?: Function,
+  onSuccess?: Function
+) => {
   setLoading(setResponse);
   setTimeout(() => {
     setSuccess(setResponse);
+    if (onSuccess) onSuccess();
   }, 500);
   return;
   // eslint-disable-next-line
