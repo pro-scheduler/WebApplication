@@ -1,0 +1,13 @@
+.mapContainer {
+  margin: 40px;
+}
+.voteContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.checkboxInline {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
