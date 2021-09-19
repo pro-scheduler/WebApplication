@@ -4,6 +4,7 @@ import {
   getGeocoderUrl,
   getMeetingPlacesUrl,
   getNewMeetingPlaceUrl,
+  getPlacesVotesUrl,
   getPlaceUrl,
   getVotePlaceUrl,
 } from './urls';
@@ -28,6 +29,7 @@ const setSuccess = (setResponse?: Function) => {
   }
 };
 
+const testingUser = { id: 2, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' };
 const mockedProposalPlaces = [
   {
     lat: 50.068074402115116,
@@ -60,7 +62,41 @@ const mockedPlaces = [
     name: 'Katedra Informatki AGH',
     description: 'Nasz ulubione miejsce',
     address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-    votes: [],
+    votes: [testingUser],
+  },
+  {
+    id: 1,
+    lat: 50.061781852877736,
+    long: 19.93740285479882,
+    name: 'Rynek główny',
+    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+    address: '',
+    votes: [
+      testingUser,
+      { id: 3, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' },
+      { id: 1, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' },
+    ],
+  },
+  {
+    id: 2,
+    lat: 50.061781852877736,
+    long: 19.92740285479882,
+    name: 'Rynek główny',
+    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
+    address: '',
+    votes: [{ id: 234, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' }],
+  },
+];
+
+const mockedPlacesAfterVotes = [
+  {
+    id: 0,
+    lat: 50.068074402115116,
+    long: 19.912639700937756,
+    name: 'Katedra Informatki AGH',
+    description: 'Nasz ulubione miejsce',
+    address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
+    votes: [testingUser],
   },
   {
     id: 1,
@@ -81,7 +117,6 @@ const mockedPlaces = [
     votes: [],
   },
 ];
-
 let mockedPlace = {
   id: 2,
   lat: 50.061781852877736,
@@ -111,6 +146,34 @@ export const savePlaces = (
     },
     getMeetingPlacesUrl(meetingId),
     () => {},
+    setResponse,
+    true,
+    'You have successfully saved selected places'
+  );
+};
+
+export const updatePlaces = (
+  places: PlaceDTO[],
+  meetingId: number,
+  setNewPlaces?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) => {
+  setLoading(setResponse);
+  setTimeout(() => {
+    setSuccess(setResponse);
+    if (onSuccess) onSuccess();
+    if (setNewPlaces) setNewPlaces(places);
+  }, 500);
+  return;
+  // eslint-disable-next-line
+  put(
+    {
+      places,
+      meetingId,
+    },
+    getMeetingPlacesUrl(meetingId),
+    setNewPlaces,
     setResponse,
     true,
     'You have successfully saved selected places'
@@ -210,11 +273,23 @@ export const deletePlace = (placeId: number, setResponse?: Function, onSuccess?:
   );
 };
 
-export const voteForPlace = (palceId: number, setResponse?: Function, onSuccess?: Function) => {
+export const voteForPlace = (
+  palceId: number,
+  setNewPlaceDetails: Function,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
   setLoading(setResponse);
   setTimeout(() => {
     setSuccess(setResponse);
     if (onSuccess) onSuccess();
+    setNewPlaceDetails(
+      mockedPlacesAfterVotes
+        .filter((p) => p.id === palceId)
+        .map((place) => {
+          return { ...place, votes: [...place.votes, testingUser] };
+        })[0]
+    );
   }, 500);
   return;
   // eslint-disable-next-line
@@ -229,11 +304,23 @@ export const voteForPlace = (palceId: number, setResponse?: Function, onSuccess?
   );
 };
 
-export const unvoteForPlace = (palceId: number, setResponse?: Function, onSuccess?: Function) => {
+export const voteBackForPlace = (
+  palceId: number,
+  setNewPlaceDetails: Function,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
   setLoading(setResponse);
   setTimeout(() => {
     setSuccess(setResponse);
     if (onSuccess) onSuccess();
+    setNewPlaceDetails(
+      mockedPlacesAfterVotes
+        .filter((p) => p.id === palceId)
+        .map((place) => {
+          return { ...place, votes: [...place.votes.filter((vote) => vote.id !== testingUser.id)] };
+        })[0]
+    );
   }, 500);
   return;
   // eslint-disable-next-line
@@ -243,6 +330,32 @@ export const unvoteForPlace = (palceId: number, setResponse?: Function, onSucces
     setResponse,
     true,
     'You have successfully removed your vote',
+    onSuccess
+  );
+};
+
+export const updateVotes = (
+  meetingId: number,
+  votes: number[],
+  setPlaces: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) => {
+  setLoading(setResponse);
+  setTimeout(() => {
+    setSuccess(setResponse);
+    if (onSuccess) onSuccess();
+    setPlaces([...mockedPlacesAfterVotes]);
+  }, 500);
+  return;
+  // eslint-disable-next-line
+  put(
+    { votes },
+    getPlacesVotesUrl(meetingId),
+    setPlaces,
+    setResponse,
+    true,
+    'You have successfully edited your votes',
     onSuccess
   );
 };

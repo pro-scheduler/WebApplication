@@ -11,3 +11,14 @@
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 450px) {
+  .barchart {
+    display: none;
+  }
+}

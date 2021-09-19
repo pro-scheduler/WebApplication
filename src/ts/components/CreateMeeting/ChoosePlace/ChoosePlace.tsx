@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Col, Row, Table } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { PlaceDetails, PlaceDTO } from '../../../model/geo/Geo';
-import Card from '../../common/Card/Card';
-import SquareCheckbox from '../../common/forms/SquareCheckbox/SquareCheckbox';
 import MapIcon from '../../common/Icons/MapIcon';
 import MapWithPlaces from '../../common/Map/MapWithPlaces/MapWithPlaces';
 import SearchGeocoder from '../../common/Map/SearchGeocoder/SearchGeocoder';
-import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import styles from './ChoosePlace.module.css';
+import PlacesTable from './PlacesTable/PlacesTable';
 export type ChoosePlaceProps = {
   isOnlineMeeting: boolean;
   state: string;
@@ -42,30 +40,10 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
       return { ...place, id: i, votes: [] };
     })
   );
-  const [checkedPlaces, setCheckedPlaces] = useState<number[]>([]);
 
   useEffect(() => {
     setSelectedPlaces(newPlaces);
   }, [newPlaces, setSelectedPlaces]);
-
-  const placesRows = newPlaces.map((place: PlaceDTO, index: number) => {
-    return (
-      <tr key={index} className={styles.declarationRow}>
-        <td>
-          <SquareCheckbox
-            checked={checkedPlaces.includes(index)}
-            setChecked={(state) => {
-              if (state) setCheckedPlaces([...checkedPlaces, index]);
-              else setCheckedPlaces(checkedPlaces.filter((place) => place !== index));
-            }}
-          />
-        </td>
-        <td>{place.name}</td>
-        <td>{place.description}</td>
-        <td>{place.address}</td>
-      </tr>
-    );
-  });
 
   return (
     <div
@@ -88,7 +66,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4 ml-sm-5" hidden={state === 'summary'}>
         <div className={styles.searchContainer}>
           <SearchGeocoder
             setSelectedPlace={(newPlace: PlaceDTO) => {
@@ -111,7 +89,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
               disabled={false}
               placesToDisplay={newPlaces}
               setPlacesToDisplay={setNewPlaces}
-              mainButtonTooltipName={'Vote for that place'}
+              mainButtonTooltipNameMapper={() => ''}
               displayMainButton={false}
               displayRemoveButton={true}
               mainButtonAction={() => {}}
@@ -120,47 +98,12 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
           </div>
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5" hidden={state === 'summary'}>
-        <Col>
-          <Card
-            title="Selected places"
-            displayTopHr={false}
-            footer={
-              <div className={styles.buttonContainer}>
-                <ActionButton
-                  onclick={() => {
-                    setNewPlaces(newPlaces.filter((_, i) => !checkedPlaces.includes(i)));
-                    setCheckedPlaces([]);
-                  }}
-                  text={'Remove places'}
-                  className={styles.removeFromListButton}
-                  disabled={checkedPlaces.length === 0}
-                />
-              </div>
-            }
-          >
-            {newPlaces.length > 0 ? (
-              <div className={styles.placesTable}>
-                <Table responsive="sm" className="mt-4">
-                  <thead>
-                    <tr>
-                      <th>Action</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Address</th>
-                    </tr>
-                  </thead>
-                  <tbody>{placesRows}</tbody>
-                </Table>
-              </div>
-            ) : (
-              <div className="text-center mt-3">
-                <div>You didn't selected any places</div>
-              </div>
-            )}
-          </Card>
-        </Col>
-      </Row>
+      <PlacesTable
+        hidden={state === 'summary'}
+        places={newPlaces}
+        setSelectedPlaces={setNewPlaces}
+        emptyText="You didn't selected any places"
+      />
     </div>
   );
 };

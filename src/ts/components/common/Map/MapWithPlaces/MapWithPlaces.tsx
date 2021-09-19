@@ -11,7 +11,7 @@ export type MapWithPlacesProps = {
   placesToDisplay: PlaceDetails[];
   disabled: boolean;
   setPlacesToDisplay?: Function;
-  mainButtonTooltipName: string;
+  mainButtonTooltipNameMapper: Function;
   displayRemoveButton: boolean;
   displayMainButton: boolean;
   mainButtonAction: Function;
@@ -29,7 +29,7 @@ const defaultProposals = { address: '', description: '', name: '' };
 const MapWithPlaces = ({
   placesToDisplay,
   setPlacesToDisplay,
-  mainButtonTooltipName,
+  mainButtonTooltipNameMapper,
   displayRemoveButton,
   displayMainButton,
   mainButtonAction,
@@ -189,7 +189,7 @@ const MapWithPlaces = ({
                     name={place.name}
                     description={place.description}
                     address={place.address}
-                    mainButtonName={mainButtonTooltipName}
+                    mainButtonName={mainButtonTooltipNameMapper(place.id)}
                     next={() => {
                       let nextPlaceIndex = (i + 1) % placesToDisplay.length;
                       let nextPlace = placesToDisplay[nextPlaceIndex];
@@ -200,7 +200,9 @@ const MapWithPlaces = ({
                       setCenter([nextPlace.lat, nextPlace.long]);
                       setZoom(15);
                     }}
-                    mainButtonAction={mainButtonAction}
+                    mainButtonAction={() => {
+                      mainButtonAction(place.id);
+                    }}
                     removeButtonAction={() => {
                       if (setPlacesToDisplay)
                         setPlacesToDisplay(placesToDisplay.filter((p) => p.id !== place.id));
