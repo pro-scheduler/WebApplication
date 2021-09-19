@@ -27,3 +27,13 @@
     top: 460px;
   }
 }
+
+.placesTable {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}

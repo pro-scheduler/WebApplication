@@ -16,7 +16,7 @@
     border: none;
     text-align: center;
     color: white;
-    background-color: var(--light-grey);
+    background-color: var(--light-grey) !important;
     font-size: var(--button-font-size);
     cursor: not-allowed;
     border-radius: var(--border-radius);

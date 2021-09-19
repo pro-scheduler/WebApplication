@@ -12,6 +12,7 @@ export type CardProps = {
   onEdit?: Function;
   miniCard?: boolean;
   sharpLeftBottomBorder?: boolean;
+  displayTopHr?: boolean;
 };
 
 const Card: FunctionComponent<CardProps> = ({
@@ -23,6 +24,7 @@ const Card: FunctionComponent<CardProps> = ({
   onEdit,
   miniCard,
   sharpLeftBottomBorder,
+  displayTopHr = true,
 }) => {
   return (
     <div
@@ -62,14 +64,16 @@ const Card: FunctionComponent<CardProps> = ({
           </div>
         )}
       </div>
-      <hr
-        className={styles.hrLine}
-        style={{
-          marginTop: miniCard ? 5 : 16,
-          marginBottom: miniCard ? 5 : 16,
-        }}
-      />
-      <div className="mt-3"> {children}</div>
+      {displayTopHr && (
+        <hr
+          className={styles.hrLine}
+          style={{
+            marginTop: miniCard ? 5 : 16,
+            marginBottom: miniCard ? 5 : 16,
+          }}
+        />
+      )}
+      <div className={displayTopHr ? 'mt-3' : 'mt-0'}> {children}</div>
       {footer && (
         <>
           <hr
