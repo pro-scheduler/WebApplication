@@ -251,7 +251,7 @@ const CreateMeeting = () => {
         setSelectedPlaces={setSelectedPlaces}
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
-      <Row className="justify-content-center mt-2">
+      <Row className="justify-content-center mt-5">
         <Col xs="auto">
           {state !== 'modules' && (
             <div className={styles.navigationContainer}>

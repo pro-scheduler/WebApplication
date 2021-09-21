@@ -46,10 +46,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
   }, [newPlaces, setSelectedPlaces]);
 
   return (
-    <div
-      hidden={isOnlineMeeting || !(state === 'place' || state === 'summary')}
-      className={styles.choosePlaceContainer}
-    >
+    <div hidden={isOnlineMeeting || !(state === 'place' || state === 'summary')}>
       {state !== 'summary' ? (
         <Row className="justify-content-center mt-4">
           <h5>Add new place by searching or clicking on the map</h5>
@@ -62,7 +59,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
             </Col>
           </Row>
           <Row className="justify-content-center mt-4">
-            <div className={styles.createHeader}>Selected palces</div>
+            <div className={styles.createHeader}>Selected places</div>
           </Row>
         </>
       )}
@@ -82,7 +79,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
           />
         </div>
       </Row>
-      <Row>
+      <Row className="justify-content-center mt-4">
         <Col>
           <div className={styles.mapContainer}>
             <MapWithPlaces
@@ -98,12 +95,15 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
           </div>
         </Col>
       </Row>
-      <PlacesTable
-        hidden={state === 'summary'}
-        places={newPlaces}
-        setSelectedPlaces={setNewPlaces}
-        emptyText="You didn't selected any places"
-      />
+      <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
+        <Col>
+          <PlacesTable
+            places={newPlaces}
+            setSelectedPlaces={setNewPlaces}
+            emptyText="You didn't select any place"
+          />
+        </Col>
+      </Row>
     </div>
   );
 };

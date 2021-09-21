@@ -34,7 +34,7 @@ const MapToolTip = ({
 
   // eslint-disable-next-line
   useEffect(() => {
-    if (ref) if (ref.current) setHeight(ref.current.clientHeight);
+    if (ref && ref.current) setHeight(ref.current.clientHeight);
   });
 
   return (
