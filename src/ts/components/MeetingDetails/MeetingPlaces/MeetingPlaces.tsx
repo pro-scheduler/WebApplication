@@ -5,6 +5,8 @@ import { Collapse } from 'react-collapse';
 import LineWithHeader from '../LineWithHeader';
 import { PlaceDetails } from '../../../model/geo/Geo';
 import {
+  addNewPlace,
+  deletePlace,
   getMeetingPlaces,
   updatePlaces,
   updateVotes,
@@ -88,19 +90,34 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
         <Collapse isOpened={opened}>
           <div className={styles.mapContainer}>
             <MapWithPlaces
-              //TO DO edit places
-              disabled={true}
+              disabled={!isOrganizer}
               placesToDisplay={places}
               setPlacesToDisplay={setPlaces}
               mainButtonTooltipNameMapper={tooltipMapping}
               displayMainButton={true}
-              //TO DO edit places
-              displayRemoveButton={false}
+              displayRemoveButton={true}
               mainButtonAction={(placeId: number) => {
                 toggleVote(placeId);
               }}
-              //TO DO edit places
-              allowAdding={false}
+              removeButtonAction={(placeId: number) => {
+                deletePlace(placeId, () => {
+                  setPlaces(places.filter((place: PlaceDetails) => place.id !== placeId));
+                });
+              }}
+              allowAdding={true}
+              addPlaceAction={(place: PlaceDetails) => {
+                addNewPlace(
+                  {
+                    name: place.name,
+                    description: place.description,
+                    address: place.address,
+                    lat: place.lat,
+                    long: place.long,
+                  },
+                  (place: PlaceDetails) => setPlaces([...places, place]),
+                  meetingId
+                );
+              }}
             />
           </div>
         </Collapse>
