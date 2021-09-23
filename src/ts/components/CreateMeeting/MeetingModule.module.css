@@ -1,7 +1,7 @@
 .meetingModuleContainer {
     display: block;
     width: 250px;
-    height: 300px;
+    height: 320px;
     background-color: white;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);

@@ -3,14 +3,12 @@
   border-radius: 20px;
   box-shadow: var(--shadow);
   color: var(--gray);
-  padding: 20px 23px 23px;
   margin: 20px;
 }
 
 .title {
   text-align: left !important;
   font-weight: 600;
-  font-size: 20px;
 }
 
 .containerHeader {
@@ -24,7 +22,8 @@
 
 @media only screen and (max-width: 600px) {
   .container {
-    margin: 50px;
+    margin: 0;
+    margin-bottom: 20px;
   }
 }
 

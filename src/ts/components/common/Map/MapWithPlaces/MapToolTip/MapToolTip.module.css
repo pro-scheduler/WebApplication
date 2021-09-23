@@ -1,0 +1,19 @@
+.button {
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 13px;
+  height: 40px;
+  margin-left: 5px;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.toolTipContainer {
+  max-width: 500px;
+}
+.tooltipDescription {
+  font-size: 13px;
+}

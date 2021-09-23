@@ -10,6 +10,9 @@ export type CardProps = {
   onAdd?: Function;
   footer?: JSX.Element;
   onEdit?: Function;
+  miniCard?: boolean;
+  sharpLeftBottomBorder?: boolean;
+  displayTopHr?: boolean;
 };
 
 const Card: FunctionComponent<CardProps> = ({
@@ -19,11 +22,27 @@ const Card: FunctionComponent<CardProps> = ({
   footer,
   children,
   onEdit,
+  miniCard,
+  sharpLeftBottomBorder,
+  displayTopHr = true,
 }) => {
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{
+        padding: miniCard ? '10px 15px 10px' : '20px 23px 23px',
+        borderBottomLeftRadius: sharpLeftBottomBorder ? 0 : 20,
+      }}
+    >
       <div className={styles.containerHeader}>
-        <div className={styles.title}>{title}</div>
+        <div
+          className={styles.title}
+          style={{
+            fontSize: miniCard ? 15 : 20,
+          }}
+        >
+          {title}
+        </div>
         {onDelete && (
           <div className={styles.buttonContainer}>
             <DeleteButton onDelete={onDelete} />
@@ -45,11 +64,25 @@ const Card: FunctionComponent<CardProps> = ({
           </div>
         )}
       </div>
-      <hr className={styles.hrLine} />
-      <div className="mt-3"> {children}</div>
+      {displayTopHr && (
+        <hr
+          className={styles.hrLine}
+          style={{
+            marginTop: miniCard ? 5 : 16,
+            marginBottom: miniCard ? 5 : 16,
+          }}
+        />
+      )}
+      <div className={displayTopHr ? 'mt-3' : 'mt-0'}> {children}</div>
       {footer && (
         <>
-          <hr className={styles.hrLine} />
+          <hr
+            className={styles.hrLine}
+            style={{
+              marginTop: miniCard ? 5 : 16,
+              marginBottom: miniCard ? 5 : 16,
+            }}
+          />
           {footer}
         </>
       )}

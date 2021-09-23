@@ -1,0 +1,50 @@
+.listProposition {
+  position: relative;
+  background-color: white;
+  padding: 10px;
+}
+
+.listProposition:hover {
+  background-color: var(--light-purple);
+  cursor: pointer;
+}
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.searchContainer {
+  max-width: 600px;
+  width: 600px;
+}
+
+.searchBar {
+  display: flex;
+}
+
+.addButton {
+  width: 80px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.customInput {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin: 0;
+}
+
+
+@media only screen and (max-width: 750px) {
+  .searchContainer {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .listProposition {
+    margin-right: 0;
+  }
+}

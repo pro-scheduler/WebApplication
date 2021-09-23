@@ -19,6 +19,7 @@ import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsIn
 import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
+import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
@@ -213,6 +214,14 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         )}
         {!showSettings && (
           <MeetingDeclarations
+            meetingId={id}
+            user={user}
+            isOrganizer={isOrganizer}
+            open={meeting.state === MeetingState.OPEN}
+          />
+        )}
+        {!showSettings && (
+          <MeetingPlaces
             meetingId={id}
             user={user}
             isOrganizer={isOrganizer}
