@@ -79,7 +79,7 @@ const MapToolTip = ({
                 onclick={() => {
                   next();
                 }}
-                text="Next"
+                text="Next place"
                 className={styles.button}
               />
             )}

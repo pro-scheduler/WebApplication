@@ -35,7 +35,7 @@ const PlacesTable = ({ places, setSelectedPlaces, emptyText }: PlacesTableProps)
 
   return (
     <Card
-      title="Selected places"
+      title="Possible places"
       displayTopHr={false}
       footer={
         <div className={styles.buttonContainer}>

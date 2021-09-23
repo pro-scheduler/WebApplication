@@ -1,4 +1,4 @@
-export const getPlacesUrl = () => `${process.env.REACT_APP_DECLARATION_SERVICE_URL}places`;
+export const getPlacesUrl = () => `${process.env.REACT_APP_GEO_SERVICE_URL}places`;
 
 export const getPlaceUrl = (placeId: number) => getPlacesUrl() + `/${placeId}`;
 

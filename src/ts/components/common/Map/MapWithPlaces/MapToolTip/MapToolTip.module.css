@@ -9,6 +9,7 @@
 .buttonContainer {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 .toolTipContainer {
   max-width: 500px;
