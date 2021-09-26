@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
@@ -20,12 +20,20 @@ import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/Mee
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
+import {
+  createNewMeetingChatMessage,
+  loadMeetingChatMessages,
+  subscribeToChat,
+} from '../../API/meetingChat/meetingChatService';
+import { MeetingChatMessageDetails } from '../../model/meetingChat/MeetingChatMessage';
+import MeetingChat from '../../components/MeetingDetails/MeetingChat/MeetingChat';
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
   const [userAttendeeId, setUserAttendeeId] = useState<number>(0);
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
+  const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
   const [showSettings, setShowSettings] = useState<Boolean>(false);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
@@ -65,6 +73,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   const reloadMeeting = () => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
+    loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
   };
 
   const reloadSurvey = () => {
@@ -73,6 +82,12 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   const reloadSurveySummary = () => {
     getSurveySummary(id, setSurveySummary);
+  };
+
+  const sendNewMeetingChatMessage = (message: string) => {
+    createNewMeetingChatMessage(id, { message: message }, (newMessage: MeetingChatMessageDetails) =>
+      console.log('successfully send message')
+    );
   };
 
   useEffect(() => {
@@ -84,7 +99,14 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   useEffect(() => {
     reloadMeeting();
-    // eslint-disable-next-line
+
+    const chatWebSocket = subscribeToChat(id, (newMessage: MeetingChatMessageDetails) =>
+      setMeetingChatMessages(meetingChatMessages.concat(newMessage))
+    );
+
+    return () => {
+      chatWebSocket.close();
+    };
   }, []);
 
   useEffect(() => {
@@ -177,6 +199,11 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
             </Col>
           </Row>
         )}
+        <MeetingChat
+          messages={meetingChatMessages}
+          onSendNewMessage={sendNewMeetingChatMessage}
+          userId={user.id}
+        />
         {!showSettings && meeting.state === MeetingState.OPEN && (
           <FinalDateForm
             meetingId={id}
