@@ -14,12 +14,14 @@ export type MapToolTipProps = {
   closeAction: Function;
   displayNext: boolean;
   displayMainButton: boolean;
+  placeId: number;
 };
 
 const MapToolTip = ({
   name,
   description,
   address,
+  placeId,
   mainButtonName,
   next,
   mainButtonAction,
@@ -66,7 +68,7 @@ const MapToolTip = ({
               {displayRemoveButton && (
                 <ActionButton
                   onclick={() => {
-                    removeButtonAction();
+                    removeButtonAction(placeId);
                   }}
                   text={'Remove'}
                   className={styles.button}

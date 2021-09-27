@@ -79,7 +79,7 @@ const AddPlacePopup = ({
                 setInvalid(true);
               }}
               disabled={invalid}
-              text="Save declaration"
+              text="Save place"
             />
           </div>
         )}
