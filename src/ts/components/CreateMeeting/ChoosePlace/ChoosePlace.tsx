@@ -91,8 +91,8 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
               displayRemoveButton={true}
               mainButtonAction={() => {}}
               allowAdding={true}
-              addPlaceAction={(palce: PlaceDetails) => {
-                setNewPlaces([...newPlaces, palce]);
+              addPlaceAction={(place: PlaceDetails) => {
+                setNewPlaces([...newPlaces, place]);
               }}
               removeButtonAction={(id: number) => {
                 setNewPlaces(newPlaces.filter((p) => p.id !== id));
