@@ -29,14 +29,14 @@ const Meetings = ({ user }: { user: UserSummary }) => {
     setOrganizedMeetings(
       meetings.filter(
         (meeting: MeetingSummary) =>
-          meeting.organizer.id === user.id &&
+          meeting.organizers.find((organizer: UserSummary) => organizer.id === user.id) &&
           (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
       )
     );
     setParticipatedMeetings(
       meetings.filter(
         (meeting: MeetingSummary) =>
-          meeting.organizer.id !== user.id &&
+          meeting.organizers.find((organizer: UserSummary) => organizer.id !== user.id) &&
           (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
       )
     );
