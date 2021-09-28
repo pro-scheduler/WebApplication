@@ -10,6 +10,7 @@ import { Table } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import { leaveMeeting } from '../../API/meeting/meetingService';
+import { UserSummary } from '../../model/user/ProUser';
 
 export type MeetingListProps = {
   header: string;
@@ -48,7 +49,11 @@ const MeetingList = ({
       <tr key={index} className={styles.meetingRow}>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.name}</td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.description}</td>
-        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.organizer.email}</td>
+        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
+          {meeting.organizers.map((organizer: UserSummary) => (
+            <p key={organizer.id}>{organizer.email}</p>
+          ))}
+        </td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
           {meeting.finalDate
             ? new Date(meeting.finalDate.timeStart).toLocaleString() +
@@ -78,7 +83,7 @@ const MeetingList = ({
                   <tr>
                     <th>Meeting name</th>
                     <th>Description</th>
-                    <th>Organizer</th>
+                    <th>Organizers</th>
                     <th>Date</th>
                     <th>State</th>
                     <th />

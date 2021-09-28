@@ -73,7 +73,7 @@ export type MeetingSummary = {
   name: string;
   description: string;
   type: MeetingType;
-  organizer: UserSummary;
+  organizers: UserSummary[];
   state: MeetingState;
   finalDate: TimeRangeDTO | undefined;
 };

@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import SurveyIcon from '../common/Icons/SurveyIcon';
 import Timer from '../common/Timer/Timer';
+import { UserSummary } from '../../model/user/ProUser';
 
 export type SurveysListProps = {
   surveys: BasicUserSurveyInfo[];
@@ -40,7 +41,11 @@ const SurveysList = ({ surveys }: SurveysListProps) => {
       >
         <td>{survey.meetingName}</td>
         <td>{survey.description}</td>
-        <td>{survey.organizer.username}</td>
+        <td>
+          {survey.organizers.map((organizer: UserSummary) => (
+            <p key={organizer.id}>{organizer.email}</p>
+          ))}
+        </td>
         <td>
           <Timer
             date={survey.surveyEndDate}
@@ -71,7 +76,7 @@ const SurveysList = ({ surveys }: SurveysListProps) => {
                     <tr>
                       <th>Meeting name</th>
                       <th>Survey description</th>
-                      <th>Organizer</th>
+                      <th>Organizers</th>
                       <th>Time left</th>
                       <th>Number of questions</th>
                     </tr>
