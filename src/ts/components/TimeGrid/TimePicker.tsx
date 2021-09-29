@@ -49,7 +49,7 @@ const TimePicker = ({
   }, [start, days, count, setRanges]);
 
   return (
-    <Row className="justify-content-center" style={{ position: 'relative', marginLeft: 10 }}>
+    <Row className="justify-content-center" style={{ position: 'relative' }}>
       <div className={styles.leftArrow}>
         {days.length > count && (
           <NextLeftButton onclick={() => setStart(start - 1)} disabled={start === 0} />

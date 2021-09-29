@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PlaceDetails, PlaceDTO } from '../../../model/geo/Geo';
 import MapIcon from '../../common/Icons/MapIcon';
@@ -54,16 +54,16 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
       ) : (
         <>
           <Row className="justify-content-center mt-5">
-            <Col xs="auto">
+            <Col lg={12} className="text-center">
               <MapIcon />
             </Col>
           </Row>
           <Row className="justify-content-center mt-4">
-            <div className={styles.createHeader}>Selected places</div>
+            <div className={styles.createHeader}>Meeting place details</div>
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-4 ml-sm-5" hidden={state === 'summary'}>
+      <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
         <div className={styles.searchContainer}>
           <SearchGeocoder
             setSelectedPlace={(newPlace: PlaceDTO) => {
