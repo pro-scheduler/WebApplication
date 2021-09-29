@@ -65,7 +65,7 @@ const CreateMeeting = () => {
   });
 
   const [state, setState] = useState<creatingMeetingState>('modules');
-  const [onlineMeeting, setOnlneMeeting] = useState<boolean>(false);
+  const [onlineMeeting, setOnlineMeeting] = useState<boolean>(false);
   const [surveyModule, setSurveyModule] = useState<boolean>(false);
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
@@ -206,7 +206,7 @@ const CreateMeeting = () => {
         setEmails={setEmails}
         setInvitationMessage={setInvitationMessage}
       />
-      <div hidden={state !== 'place'} className={styles.placegSwitchContainer}>
+      <div hidden={state !== 'place'} className={styles.placeSwitchContainer}>
         <Row className="justify-content-center mt-5">
           <Col lg={12} className="text-center">
             {onlineMeeting ? <WorldIcon /> : <MapIcon />}
@@ -217,7 +217,7 @@ const CreateMeeting = () => {
         </Row>
         <div>
           <SwitchButton
-            onChange={() => setOnlneMeeting(!onlineMeeting)}
+            onChange={() => setOnlineMeeting(!onlineMeeting)}
             checkedIcon={<BiWorld className={styles.switchIcon} />}
             unCheckedIcon={<FaMapMarkedAlt className={styles.switchIcon} />}
           />
