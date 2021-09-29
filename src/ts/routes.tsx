@@ -21,6 +21,7 @@ import Surveys from './views/Surveys/Surveys';
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
+  const marginLeft: number = 80;
 
   const refreshUser = () => {
     fetchCurrentUser(setUser, setResponse);
@@ -49,43 +50,43 @@ const Routes = () => {
         </Route>
         <ProtectedRoute path="/create" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <CreateMeeting />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/meetings/:id" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <MeetingDetails user={user} />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/meetings" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <Meetings user={user} />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/invitations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <Invitations user={user} />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/declarations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <Declarations />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/surveys" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <Surveys />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/profile" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <div style={{ marginLeft: 80 }}>
+          <div style={{ marginLeft: marginLeft }}>
             <UserProfile user={user} refreshUser={refreshUser} />
           </div>
         </ProtectedRoute>
