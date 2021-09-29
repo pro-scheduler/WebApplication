@@ -84,7 +84,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
   };
 
   return (
-    <Row className="justify-content my-5 ml-5 pl-5">
+    <Row className="justify-content my-5">
       <LineWithHeader header={'Places'} collapseAction={setOpened} />
       <Col lg={12}>
         <Collapse isOpened={opened}>

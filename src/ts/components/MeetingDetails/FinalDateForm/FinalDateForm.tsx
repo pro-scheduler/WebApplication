@@ -51,7 +51,7 @@ const FinalDateForm = ({
   };
 
   return (
-    <Row className="justify-content mt-5 ml-5 pl-5">
+    <Row className="justify-content mt-5">
       <Col>
         <Card
           title="Final date of the meeting"

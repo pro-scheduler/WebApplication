@@ -71,7 +71,9 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/meetings/:id" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <MeetingDetails user={user} />
+          <div style={{ marginLeft: 80 }}>
+            <MeetingDetails user={user} />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/meetings" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
