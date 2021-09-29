@@ -98,6 +98,7 @@ const FinalDateForm = ({
                       timeLabel="Meeting begin time"
                       setDate={setBeginDate}
                       defaultDate={beginDate}
+                      disabled={!isOrganizer}
                     />
                   </div>
                 </div>
@@ -111,6 +112,7 @@ const FinalDateForm = ({
                       timeLabel="Meeting end time"
                       setDate={setEndDate}
                       defaultDate={endDate}
+                      disabled={!isOrganizer}
                     />
                   </div>
                 </div>

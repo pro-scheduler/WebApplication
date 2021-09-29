@@ -13,6 +13,7 @@ export type DateTimePickerProps = {
   timeLabel: String;
   dateLabel: String;
   defaultDate: Date;
+  disabled?: boolean;
 };
 const theme = createTheme({
   palette: {
@@ -22,7 +23,13 @@ const theme = createTheme({
   },
 });
 
-const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTimePickerProps) => {
+const DateTimePicker = ({
+  setDate,
+  defaultDate,
+  timeLabel,
+  dateLabel,
+  disabled = false,
+}: DateTimePickerProps) => {
   const [currentDate, setCurrentDate] = useState<Date>(defaultDate);
   const handleDateChange = (date: Date | null) => {
     if (date) {
@@ -50,6 +57,7 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
+              disabled={disabled}
             />
           </div>
           <div className={styles.timePickerContainer}>
@@ -62,6 +70,7 @@ const DateTimePicker = ({ setDate, defaultDate, timeLabel, dateLabel }: DateTime
               KeyboardButtonProps={{
                 'aria-label': 'change time',
               }}
+              disabled={disabled}
             />
           </div>
         </div>

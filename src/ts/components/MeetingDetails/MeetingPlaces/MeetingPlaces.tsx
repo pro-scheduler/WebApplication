@@ -123,52 +123,58 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
         </Collapse>
       </Col>
       <Col lg={6}>
-        <Card
-          title="Your votes"
-          miniCard={false}
-          footer={
-            <div className={styles.buttonContainer}>
-              <ActionButton
-                onclick={sendNewVotes}
-                text={'Edit my votes'}
-                disabled={
-                  newVotes.every((p) => myVotes.includes(p)) &&
-                  myVotes.every((p) => newVotes.includes(p))
-                }
-              />
-            </div>
-          }
-        >
-          {places.map((place, i) => (
-            <div key={i}>
-              <div className={styles.checkboxInline}>
-                <SquareCheckbox
-                  checked={newVotes.includes(place.id)}
-                  setChecked={(check) => {
-                    if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
-                    else setNewVotes([...newVotes, place.id]);
-                  }}
+        <Collapse isOpened={opened}>
+          <Card
+            title="Your votes"
+            miniCard={false}
+            footer={
+              <div className={styles.buttonContainer}>
+                <ActionButton
+                  onclick={sendNewVotes}
+                  text={'Edit my votes'}
+                  disabled={
+                    newVotes.every((p) => myVotes.includes(p)) &&
+                    myVotes.every((p) => newVotes.includes(p))
+                  }
                 />
               </div>
-              {place.name}
-            </div>
-          ))}
-        </Card>
+            }
+          >
+            {places.map((place, i) => (
+              <div key={i}>
+                <div className={styles.checkboxInline}>
+                  <SquareCheckbox
+                    checked={newVotes.includes(place.id)}
+                    setChecked={(check) => {
+                      if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
+                      else setNewVotes([...newVotes, place.id]);
+                    }}
+                  />
+                </div>
+                {place.name}
+              </div>
+            ))}
+          </Card>
+        </Collapse>
       </Col>
       <Col lg={6} className={styles.barchart}>
-        <Card title="Voting results" miniCard={false}>
-          <PlacesBarChart placesToDisplay={places} />
-        </Card>
+        <Collapse isOpened={opened}>
+          <Card title="Voting results" miniCard={false}>
+            <PlacesBarChart placesToDisplay={places} />
+          </Card>
+        </Collapse>
       </Col>
       {isOrganizer && (
         <Col>
-          <PlacesTable
-            places={newPlaces}
-            setSelectedPlaces={(newPlaces: PlaceDetails[]) => {
-              updatePlaces(newPlaces, meetingId, setPlaces);
-            }}
-            emptyText={'Meeting has no places'}
-          />
+          <Collapse isOpened={opened}>
+            <PlacesTable
+              places={newPlaces}
+              setSelectedPlaces={(newPlaces: PlaceDetails[]) => {
+                updatePlaces(newPlaces, meetingId, setPlaces);
+              }}
+              emptyText={'Meeting has no places'}
+            />
+          </Collapse>
         </Col>
       )}
     </Row>
