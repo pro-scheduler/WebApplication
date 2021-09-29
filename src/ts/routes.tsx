@@ -100,7 +100,9 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/profile" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <UserProfile user={user} refreshUser={refreshUser} />
+          <div style={{ marginLeft: 80 }}>
+            <UserProfile user={user} refreshUser={refreshUser} />
+          </div>
         </ProtectedRoute>
         <Route path="/">
           <LandingPage />
