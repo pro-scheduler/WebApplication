@@ -88,7 +88,9 @@ const Routes = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/declarations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <Declarations />
+          <div style={{ marginLeft: 80 }}>
+            <Declarations />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/surveys" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
