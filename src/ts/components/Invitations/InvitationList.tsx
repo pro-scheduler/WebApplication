@@ -1,6 +1,3 @@
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import EnvelopIcon from '../common/Icons/EnvelopIcon';
 import styles from './InvitationList.module.css';
 import { InvitationDetails } from '../../model/invitation/Invitation';
 import Card from '../common/Card/Card';
@@ -13,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 export type InvitationListProps = {
   invitations: InvitationDetails[];
-  refreshInvitations: (value: number) => void;
+  refreshInvitations: Function;
 };
 const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -41,14 +38,10 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
         <td>
           <div className={styles.acceptRejectContainer}>
             <YesButton
-              onAccept={() =>
-                acceptInvitation(invitation.id, () => refreshInvitations(Math.random()))
-              }
+              onAccept={() => acceptInvitation(invitation.id, () => refreshInvitations())}
             />
             <DeleteButton
-              onDelete={() =>
-                rejectInvitation(invitation.id, () => refreshInvitations(Math.random()))
-              }
+              onDelete={() => rejectInvitation(invitation.id, () => refreshInvitations())}
             />
           </div>
         </td>
@@ -57,37 +50,26 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
   });
 
   return (
-    <>
-      <Row className="justify-content-center mt-4 mr-5" style={{ marginLeft: '6%' }}>
-        <Col lg={12} className="text-center mt-5">
-          <EnvelopIcon className={styles.invitationListIcon} />
-        </Col>
-      </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
-        <Col>
-          <Card title={'Your invitations'}>
-            {invitations.length > 0 ? (
-              <div className={styles.invitationsTable}>
-                <SearchBox value={searchTerm} onChange={handleChange} />
-                <Table responsive="sm" className="mt-4">
-                  <thead>
-                    <tr>
-                      <th>Meeting name</th>
-                      <th>Description</th>
-                      <th>Invited by</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>{invitationRows}</tbody>
-                </Table>
-              </div>
-            ) : (
-              <div>You don't have any invitations</div>
-            )}
-          </Card>
-        </Col>
-      </Row>
-    </>
+    <Card title={'Your invitations'}>
+      {invitations.length > 0 ? (
+        <div className={styles.invitationsTable}>
+          <SearchBox value={searchTerm} onChange={handleChange} />
+          <Table responsive="sm" className="mt-4">
+            <thead>
+              <tr>
+                <th>Meeting name</th>
+                <th>Description</th>
+                <th>Invited by</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>{invitationRows}</tbody>
+          </Table>
+        </div>
+      ) : (
+        <div>You don't have any invitations</div>
+      )}
+    </Card>
   );
 };
 
