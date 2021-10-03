@@ -15,7 +15,7 @@ const LineWithHeader = ({
   const [collapsed, setCollapsed] = useState<Boolean>(true);
 
   return (
-    <Col lg={12} className="my-0 py-0 pr-5">
+    <Col lg={12} className="my-0 py-0 px-4">
       <div className={styles.meetingDetailsHeader}>
         <div>{header}</div>
         <div>

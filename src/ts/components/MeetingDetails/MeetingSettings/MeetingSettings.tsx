@@ -17,16 +17,14 @@ const MeetingSettings = ({
   meetingFinalDate,
 }: MeetingSettingsProps) => {
   return (
-    <>
-      <MeetingNotifications
-        meetingId={meetingId}
-        meetingName={meetingName}
-        surveyId={survey?.id}
-        surveyEndDate={survey?.surveyEndDate}
-        markTimeRangeDeadline={markTimeRangeDeadline}
-        meetingFinalDate={meetingFinalDate}
-      />
-    </>
+    <MeetingNotifications
+      meetingId={meetingId}
+      meetingName={meetingName}
+      surveyId={survey?.id}
+      surveyEndDate={survey?.surveyEndDate}
+      markTimeRangeDeadline={markTimeRangeDeadline}
+      meetingFinalDate={meetingFinalDate}
+    />
   );
 };
 export default MeetingSettings;

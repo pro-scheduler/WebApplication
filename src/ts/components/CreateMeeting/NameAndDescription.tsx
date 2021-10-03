@@ -7,6 +7,7 @@ import TextArea from '../common/forms/TextArea/TextArea';
 import { minSings, maxSings, required } from '../../tools/validator';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../../components/common/Card/Card';
+import React from 'react';
 
 export type NameAndDescriptionProps = {
   state: creatingMeetingState;
@@ -24,14 +25,14 @@ const NameAndDescription = ({
   return (
     <div className={state !== 'name' && state !== 'summary' ? styles.hidden : ''}>
       <Row className="justify-content-center mt-5">
-        <Col xs="auto">
+        <Col lg={12} className="text-center">
           <PencilIcon />
         </Col>
       </Row>
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Describe Meeting</div>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <Col>
           <Card title={'Meeting name *'}>
             <SingleValueInput

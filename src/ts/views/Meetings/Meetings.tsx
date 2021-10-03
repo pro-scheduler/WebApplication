@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { UserSummary } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
@@ -52,35 +52,41 @@ const Meetings = ({ user }: { user: UserSummary }) => {
   }, [user.id]);
 
   return (
-    <Container fluid className="ml-5 ml-sm-auto">
-      <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+    <Container fluid>
+      <Row className="justify-content-center mt-4 mb-5">
         <Col lg={12} className="text-center mt-5">
           <CalendarIcon className={styles.meetingListIcon} />
         </Col>
       </Row>
       {meetingsResponse.isSuccess ? (
-        <>
-          <MeetingList
-            meetings={organizedMeetings}
-            header={'Meetings you organize'}
-            noMeetingsInfo={"You don't organize any meeting"}
-          />
-          <MeetingList
-            meetings={participatedMeetings}
-            header={'Meetings you participate'}
-            noMeetingsInfo={"You don't participate in any meeting"}
-            showRedirectButton={false}
-          />
-          <MeetingList
-            meetings={pastMeetings}
-            header={'Past meetings'}
-            noMeetingsInfo={"You don't have any past meetings"}
-            showRedirectButton={false}
-            refreshMeetings={refreshMeetings}
-          />
-        </>
+        <Row className="justify-content-center mt-4">
+          <Col lg={12}>
+            <MeetingList
+              meetings={organizedMeetings}
+              header={'Meetings you organize'}
+              noMeetingsInfo={"You don't organize any meetings"}
+            />
+          </Col>
+          <Col lg={12}>
+            <MeetingList
+              meetings={participatedMeetings}
+              header={'Meetings you participate'}
+              noMeetingsInfo={"You don't participate in any meetings"}
+              showRedirectButton={false}
+            />
+          </Col>
+          <Col lg={12}>
+            <MeetingList
+              meetings={pastMeetings}
+              header={'Past meetings'}
+              noMeetingsInfo={"You don't have any past meetings"}
+              showRedirectButton={false}
+              refreshMeetings={refreshMeetings}
+            />
+          </Col>
+        </Row>
       ) : (
-        <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+        <Row className="justify-content-center mt-4 mb-5">
           <Col className="text-center mt-5">
             <LoadingSpinner active={meetingsResponse.isLoading} />
           </Col>

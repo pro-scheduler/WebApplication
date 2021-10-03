@@ -4,7 +4,7 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import styles from './ChooseTime.module.css';
 import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
@@ -99,15 +99,15 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
         state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
       }
     >
-      <Row className="justify-content-center mt-5 ml-sm-5">
-        <Col xs="auto">
+      <Row className="justify-content-center mt-5">
+        <Col lg={12} className="text-center">
           <CalendarIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Set time of the meeting</div>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <Col sm={12}>
           <Card title="Deadline for time voting">
             <DateTimePicker
@@ -122,10 +122,10 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
           </Card>
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <div className={styles.possibleTimeHeader}>Select a possible meeting time</div>
       </Row>
-      <Row className="justify-content-center mt-1 ml-sm-5">
+      <Row className="justify-content-center mt-1">
         <Col className="text-center">
           <Card title="Meeting dates">
             <div className={styles.meetingDates}>
@@ -159,7 +159,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
           </Card>
         </Col>
       </Row>
-      <div style={{ marginRight: width < 576 ? 45 : 0 }} className="mt-5">
+      <div className="mt-5">
         <TimePicker
           days={selectedDays}
           count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}

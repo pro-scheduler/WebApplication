@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import ModuleIcon from '../common/Icons/ModuleIcon';
 import styles from './ChooseModules.module.css';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import MeetingModule from './MeetingModule';
 import CalendarIcon from '../common/Icons/CalendarIcon';
 import WorldIcon from '../common/Icons/WorldIcon';
@@ -30,12 +30,12 @@ const ChooseModules = ({
 }: ChooseModulesProps) => {
   return (
     <>
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
+      <Row className="justify-content-center mt-4 mb-3">
+        <Col lg={12} className="text-center mt-5">
           <ModuleIcon />
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4">
+      <Row className="justify-content-center">
         <div className={styles.modulesHeader}>Choose modules</div>
       </Row>
       <Row className="justify-content-center mt-5">

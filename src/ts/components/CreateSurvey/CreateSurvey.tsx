@@ -4,7 +4,7 @@ import SurveyIcon from '../common/Icons/SurveyIcon';
 import PlusButton from '../common/RoundButtons/PlusButton';
 import styles from './CreateSurvey.module.css';
 import QuestionCreate from './QuestionCreate';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
@@ -63,7 +63,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
       }
     >
       <Row className="justify-content-center mt-5">
-        <Col xs="auto">
+        <Col lg={12} className="text-center">
           <SurveyIcon />
         </Col>
       </Row>
@@ -72,7 +72,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
         <div className={styles.createHeader}>Create survey</div>
       </Row>
 
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <Col>
           <Card title="Deadline for completing the survey">
             <DateTimePicker
@@ -85,7 +85,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
         </Col>
       </Row>
 
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      <Row className="justify-content-center mt-4">
         <Col>
           <Card title={'Survey Description'}>
             <TextArea
@@ -98,7 +98,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
 
       {questions.map((id: number, index: number) => {
         return (
-          <Row className="justify-content-center mt-2 ml-sm-5" key={id}>
+          <Row className="justify-content-center mt-2" key={id}>
             <Col>
               <QuestionCreate
                 questionNumber={index + 1}

@@ -1,5 +1,3 @@
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import RedirectButton from '../common/SubmitButton/RedirectButton/RedirectButton';
 import React, { useEffect, useState } from 'react';
 import { MeetingSummary } from '../../model/meeting/Meeting';
@@ -72,41 +70,37 @@ const MeetingList = ({
   });
 
   return (
-    <Row className="justify-content-center mt-4 ml-sm-5">
-      <Col>
-        <Card title={header}>
-          {meetings.length > 0 ? (
-            <div className={styles.meetingsTable}>
-              <SearchBox value={searchTerm} onChange={handleChange} />
-              <Table responsive="sm" className="mt-4">
-                <thead>
-                  <tr>
-                    <th>Meeting name</th>
-                    <th>Description</th>
-                    <th>Organizers</th>
-                    <th>Date</th>
-                    <th>State</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>{meetingRows}</tbody>
-              </Table>
-            </div>
-          ) : (
-            <div className="text-center mt-3">
-              <div>{noMeetingsInfo}</div>
-              {showRedirectButton && (
-                <RedirectButton
-                  className={styles.noMeetingButton}
-                  redirectTO="/create"
-                  text="Add new meeting"
-                />
-              )}
-            </div>
+    <Card title={header}>
+      {meetings.length > 0 ? (
+        <div className={styles.meetingsTable}>
+          <SearchBox value={searchTerm} onChange={handleChange} />
+          <Table responsive="sm" className="mt-4">
+            <thead>
+              <tr>
+                <th>Meeting name</th>
+                <th>Description</th>
+                <th>Organizers</th>
+                <th>Date</th>
+                <th>State</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>{meetingRows}</tbody>
+          </Table>
+        </div>
+      ) : (
+        <div className="text-center">
+          <div>{noMeetingsInfo}</div>
+          {showRedirectButton && (
+            <RedirectButton
+              className={styles.noMeetingButton}
+              redirectTO="/create"
+              text="Add new meeting"
+            />
           )}
-        </Card>
-      </Col>
-    </Row>
+        </div>
+      )}
+    </Card>
   );
 };
 

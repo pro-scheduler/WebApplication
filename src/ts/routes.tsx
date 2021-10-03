@@ -3,13 +3,9 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Navbar from './components/Navbar/Navbar';
 import SignIn from './views/Auth/SignIn';
 import CreateMeeting from './views/CreateMeeting/CreateMeeting';
-import Example from './views/Example/Example';
 import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
 import MeetingDetails from './views/MeetingDetails/MeetingDetails';
-import Time from './views/Time/Time';
-import ExampleInvalid from './views/Example/ExampleInvalid';
-import ExampleValidation from './views/Example/ExampleValidation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Invitations from './views/Invitations/Invitations';
@@ -25,6 +21,7 @@ import Surveys from './views/Surveys/Surveys';
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
+  const marginLeft: number = 80;
 
   const refreshUser = () => {
     fetchCurrentUser(setUser, setResponse);
@@ -48,51 +45,50 @@ const Routes = () => {
         pauseOnHover
       />
       <Switch>
-        <ProtectedRoute path="/example" isNotLoggedIn={response.isFailed}>
-          <Navbar user={user} />
-          <Example />
-        </ProtectedRoute>
-        <ProtectedRoute path="/invalid" isNotLoggedIn={response.isFailed}>
-          <Navbar user={user} />
-          <ExampleInvalid />
-        </ProtectedRoute>
-        <ProtectedRoute path="/validation" isNotLoggedIn={response.isFailed}>
-          <Navbar user={user} />
-          <ExampleValidation />
-        </ProtectedRoute>
         <Route path="/signin">
           <SignIn />
         </Route>
         <ProtectedRoute path="/create" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <CreateMeeting />
+          <div style={{ marginLeft: marginLeft }}>
+            <CreateMeeting />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/meetings/:id" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <MeetingDetails user={user} />
+          <div style={{ marginLeft: marginLeft }}>
+            <MeetingDetails user={user} />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/meetings" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <Meetings user={user} />
+          <div style={{ marginLeft: marginLeft }}>
+            <Meetings user={user} />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/invitations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <Invitations user={user} />
-        </ProtectedRoute>
-        <ProtectedRoute path="/time" isNotLoggedIn={response.isFailed}>
-          <Time />
+          <div style={{ marginLeft: marginLeft }}>
+            <Invitations user={user} />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/declarations" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <Declarations />
+          <div style={{ marginLeft: marginLeft }}>
+            <Declarations />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/surveys" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <Surveys />
+          <div style={{ marginLeft: marginLeft }}>
+            <Surveys />
+          </div>
         </ProtectedRoute>
         <ProtectedRoute path="/profile" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
-          <UserProfile user={user} refreshUser={refreshUser} />
+          <div style={{ marginLeft: marginLeft }}>
+            <UserProfile user={user} refreshUser={refreshUser} />
+          </div>
         </ProtectedRoute>
         <Route path="/">
           <LandingPage />
