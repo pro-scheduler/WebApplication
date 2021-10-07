@@ -1,0 +1,37 @@
+.moduleContainer {
+    text-decoration: none;
+    display: block;
+    width: 250px;
+    background-color: white;
+    color: black;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+}
+
+.moduleContainer:hover {
+    text-decoration: none;
+    color: black;
+    opacity: 0.7;
+}
+
+.moduleIcon {
+    font-size: var(--xl-font-size);
+    margin-top: 15px;
+}
+
+.number {
+    font-size: var(--xl-font-size);
+    font-weight: var(--bold-font-weight);
+    margin-top: 30px;
+}
+
+.moduleName {
+    font-size: var(--s-font-size);
+    margin-top: 15px;
+    margin-bottom: 30px;
+}

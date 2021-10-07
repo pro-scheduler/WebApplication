@@ -31,7 +31,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
           <Menu iconShape="circle">
             <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
               ProScheduler
-              <Link to="/meetings" />
+              <Link to="/home" />
             </MenuItem>
           </Menu>
         </SidebarHeader>
@@ -55,6 +55,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
               onClick={() => setActiveIcon('Home')}
             >
               Home
+              <Link to="/home" />
             </MenuItem>
 
             <MenuItem

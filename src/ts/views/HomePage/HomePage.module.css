@@ -1,0 +1,11 @@
+.welcomeHeader {
+    font-size: var(--motto-font-size);
+    margin-bottom: 10px;
+    color: var(--medium-grey);
+}
+
+@media only screen and (max-width: 600px) {
+    .welcomeHeader {
+        font-size: var(--xl-font-size);
+    }
+}
