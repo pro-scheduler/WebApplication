@@ -7,7 +7,6 @@ import { PlaceDetails } from '../../../model/geo/Geo';
 import {
   addNewPlace,
   deletePlace,
-  getMeetingPlaces,
   updatePlaces,
   updateVotes,
   voteBackForPlace,
@@ -26,14 +25,14 @@ export type MeetingPlacesProps = {
   user: UserSummary;
   isOrganizer: boolean;
   open: boolean;
+  places: PlaceDetails[];
+  setPlaces: Function;
 };
 
-const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => {
+const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: MeetingPlacesProps) => {
   const [opened, setOpened] = useState<boolean>(true);
-  const [places, setPlaces] = useState<PlaceDetails[]>([]);
   const [myVotes, setMyVotes] = useState<number[]>([]);
   const [newVotes, setNewVotes] = useState<number[]>([]);
-  const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>([]);
 
   const tooltipMapping = useCallback(
     (placeId: number) =>
@@ -42,16 +41,6 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
         : 'Vote for that place',
     [places, user]
   );
-
-  useEffect(() => {
-    if (meetingId) {
-      getMeetingPlaces(meetingId, setPlaces);
-    }
-  }, [meetingId]);
-
-  useEffect(() => {
-    setNewPlaces(places);
-  }, [places]);
 
   useEffect(() => {
     if (places) {
@@ -111,10 +100,10 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
                     name: place.name,
                     description: place.description,
                     address: place.address,
-                    lat: place.lat,
-                    long: place.long,
+                    latitude: place.latitude,
+                    longitude: place.longitude,
                   },
-                  (place: PlaceDetails) => setPlaces([...places, place]),
+                  setPlaces,
                   meetingId
                 );
               }}
@@ -168,7 +157,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
         <Col>
           <Collapse isOpened={opened}>
             <PlacesTable
-              places={newPlaces}
+              places={places}
               setSelectedPlaces={(newPlaces: PlaceDetails[]) => {
                 updatePlaces(newPlaces, meetingId, setPlaces);
               }}
