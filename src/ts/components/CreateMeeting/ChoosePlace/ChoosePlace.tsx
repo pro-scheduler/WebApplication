@@ -13,40 +13,18 @@ export type ChoosePlaceProps = {
 };
 
 const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceProps) => {
-  const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>(
-    [
-      {
-        latitude: 50.068074402115116,
-        longitude: 19.912639700937756,
-        name: 'Katedra Informatki AGH',
-        description: 'Nasz ulubione miejsce',
-        address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-      },
-      {
-        latitude: 50.061781852877736,
-        longitude: 19.93740285479882,
-        name: 'Rynek główny',
-        description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-        address: '',
-      },
-      {
-        latitude: 50.061781852877736,
-        longitude: 19.92740285479882,
-        name: 'Rynek główny',
-        description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-        address: '',
-      },
-    ].map((place, i) => {
-      return { ...place, id: i, votes: [] };
-    })
-  );
+  const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>([]);
 
   useEffect(() => {
     setSelectedPlaces(newPlaces);
   }, [newPlaces, setSelectedPlaces]);
 
   return (
-    <div hidden={isOnlineMeeting || !(state === 'place' || state === 'summary')}>
+    <div
+      hidden={
+        isOnlineMeeting || (state !== 'place' && (state !== 'summary' || newPlaces.length === 0))
+      }
+    >
       {state !== 'summary' ? (
         <Row className="justify-content-center mt-4">
           <h5>Add new place by searching or clicking on the map</h5>

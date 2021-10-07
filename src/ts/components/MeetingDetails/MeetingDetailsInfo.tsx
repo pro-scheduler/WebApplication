@@ -25,6 +25,7 @@ export type MeetingDetailsInfoProps = {
   hasTime: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
+  places: boolean;
   name: string;
   description: string;
   isOrganizer: boolean;
@@ -40,6 +41,7 @@ const MeetingDetailsInfo = ({
   hasTime,
   meetingLink,
   meetingPassword,
+  places,
   name,
   description,
   isOrganizer,
@@ -140,6 +142,8 @@ const MeetingDetailsInfo = ({
                   </>
                 )}
               </>
+            ) : places ? (
+              'Places available'
             ) : (
               'No place available'
             )}
