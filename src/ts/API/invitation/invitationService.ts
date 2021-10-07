@@ -27,8 +27,11 @@ export const createInvitations = (
 export const fetchMeetingInvitations = (meetingId: number, setResponse: Function) =>
   get(getMeetingInvitationsUrl(meetingId), setResponse);
 
-export const fetchUserPendingInvitations = (userId: number, setData: Function) =>
-  get(getUserPendingInvitationsUrl(userId), setData);
+export const fetchUserPendingInvitations = (
+  userId: number,
+  setData: Function,
+  setResponse?: Function
+) => get(getUserPendingInvitationsUrl(userId), setData, setResponse);
 
 export const acceptInvitation = (
   invitationId: number,

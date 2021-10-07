@@ -9,8 +9,8 @@ import RemoveAccount from '../../components/UserProfile/RemoveAccount/RemoveAcco
 
 const UserProfile = ({ user, refreshUser }: { user: UserSummary; refreshUser: Function }) => {
   return (
-    <Container fluid className="ml-xs-5 mt-5">
-      <Row className="justify-content mt-5 ml-5 pl-5">
+    <Container fluid>
+      <Row className="justify-content mt-5">
         <Col lg={12}>
           <div className={styles.userProfileHeader}>Your profile</div>
         </Col>

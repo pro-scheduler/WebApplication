@@ -8,7 +8,7 @@ import {
   getPlaceUrl,
   getVotePlaceUrl,
 } from './urls';
-
+//TODO remove mocks and integrate with geo service
 const setLoading = (setResponse?: Function) => {
   if (setResponse) {
     setResponse({
@@ -136,7 +136,7 @@ export const updatePlace = (
   );
 };
 
-export const deletePlace = (placeId: number, setResponse?: Function, onSuccess?: Function) => {
+export const deletePlace = (placeId: number, onSuccess?: Function, setResponse?: Function) => {
   del(
     getPlaceUrl(placeId),
     () => {},

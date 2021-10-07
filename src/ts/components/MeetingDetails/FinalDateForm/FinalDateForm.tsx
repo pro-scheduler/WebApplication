@@ -51,7 +51,7 @@ const FinalDateForm = ({
   };
 
   return (
-    <Row className="justify-content mt-5 ml-5 pl-5">
+    <Row className="justify-content mt-5">
       <Col>
         <Card
           title="Final date of the meeting"
@@ -98,6 +98,7 @@ const FinalDateForm = ({
                       timeLabel="Meeting begin time"
                       setDate={setBeginDate}
                       defaultDate={beginDate}
+                      disabled={!isOrganizer}
                     />
                   </div>
                 </div>
@@ -111,6 +112,7 @@ const FinalDateForm = ({
                       timeLabel="Meeting end time"
                       setDate={setEndDate}
                       defaultDate={endDate}
+                      disabled={!isOrganizer}
                     />
                   </div>
                 </div>

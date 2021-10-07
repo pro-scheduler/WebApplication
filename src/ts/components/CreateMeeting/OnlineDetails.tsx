@@ -4,6 +4,8 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import styles from './OnlineDetails.module.css';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../../components/common/Card/Card';
+import WorldIcon from '../common/Icons/WorldIcon';
+import React from 'react';
 
 export type OnlineDetailsProps = {
   state: creatingMeetingState;
@@ -28,7 +30,19 @@ const OnlineDetails = ({
           : ''
       }
     >
-      <Row className="justify-content-center mt-4 ml-sm-5">
+      {state === `summary` && (
+        <>
+          <Row className="justify-content-center mt-5">
+            <Col lg={12} className="text-center">
+              <WorldIcon />
+            </Col>
+          </Row>
+          <Row className="justify-content-center mt-4">
+            <h4>Meeting place details</h4>
+          </Row>
+        </>
+      )}
+      <Row className="justify-content-center mt-4">
         <Col>
           <Card title="Meeting link">
             <SingleValueInput

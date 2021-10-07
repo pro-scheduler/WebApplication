@@ -95,7 +95,7 @@ const MeetingDescription = ({
   });
 
   return (
-    <Row className="justify-content mt-5 ml-5 pl-5">
+    <Row className="justify-content mt-5 ml-3">
       <Col lg={12} className={styles.meetingDescriptionName}>
         <div className={styles.titleContainer}>
           {name}

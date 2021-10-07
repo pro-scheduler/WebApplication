@@ -5,6 +5,8 @@ import { Collapse } from 'react-collapse';
 import LineWithHeader from '../LineWithHeader';
 import { PlaceDetails } from '../../../model/geo/Geo';
 import {
+  addNewPlace,
+  deletePlace,
   getMeetingPlaces,
   updatePlaces,
   updateVotes,
@@ -82,76 +84,97 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
   };
 
   return (
-    <Row className="justify-content my-5 ml-5 pl-5">
+    <Row className="justify-content my-5">
       <LineWithHeader header={'Places'} collapseAction={setOpened} />
       <Col lg={12}>
         <Collapse isOpened={opened}>
           <div className={styles.mapContainer}>
             <MapWithPlaces
-              //TO DO edit places
-              disabled={true}
+              disabled={!isOrganizer}
               placesToDisplay={places}
               setPlacesToDisplay={setPlaces}
               mainButtonTooltipNameMapper={tooltipMapping}
               displayMainButton={true}
-              //TO DO edit places
-              displayRemoveButton={false}
+              displayRemoveButton={true}
               mainButtonAction={(placeId: number) => {
                 toggleVote(placeId);
               }}
-              //TO DO edit places
-              allowAdding={false}
+              removeButtonAction={(placeId: number) => {
+                deletePlace(placeId, () => {
+                  setPlaces(places.filter((place: PlaceDetails) => place.id !== placeId));
+                });
+              }}
+              allowAdding={true}
+              addPlaceAction={(place: PlaceDetails) => {
+                addNewPlace(
+                  {
+                    name: place.name,
+                    description: place.description,
+                    address: place.address,
+                    latitude: place.latitude,
+                    longitude: place.longitude,
+                  },
+                  (place: PlaceDetails) => setPlaces([...places, place]),
+                  meetingId
+                );
+              }}
             />
           </div>
         </Collapse>
       </Col>
       <Col lg={6}>
-        <Card
-          title="Your votes"
-          miniCard={false}
-          footer={
-            <div className={styles.buttonContainer}>
-              <ActionButton
-                onclick={sendNewVotes}
-                text={'Edit my votes'}
-                disabled={
-                  newVotes.every((p) => myVotes.includes(p)) &&
-                  myVotes.every((p) => newVotes.includes(p))
-                }
-              />
-            </div>
-          }
-        >
-          {places.map((place, i) => (
-            <div key={i}>
-              <div className={styles.checkboxInline}>
-                <SquareCheckbox
-                  checked={newVotes.includes(place.id)}
-                  setChecked={(check) => {
-                    if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
-                    else setNewVotes([...newVotes, place.id]);
-                  }}
+        <Collapse isOpened={opened}>
+          <Card
+            title="Your votes"
+            miniCard={false}
+            footer={
+              <div className={styles.buttonContainer}>
+                <ActionButton
+                  onclick={sendNewVotes}
+                  text={'Edit my votes'}
+                  disabled={
+                    newVotes.every((p) => myVotes.includes(p)) &&
+                    myVotes.every((p) => newVotes.includes(p))
+                  }
                 />
               </div>
-              {place.name}
-            </div>
-          ))}
-        </Card>
+            }
+          >
+            {places.map((place, i) => (
+              <div key={i}>
+                <div className={styles.checkboxInline}>
+                  <SquareCheckbox
+                    checked={newVotes.includes(place.id)}
+                    setChecked={(check) => {
+                      if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
+                      else setNewVotes([...newVotes, place.id]);
+                    }}
+                  />
+                </div>
+                {place.name}
+              </div>
+            ))}
+          </Card>
+        </Collapse>
       </Col>
       <Col lg={6} className={styles.barchart}>
-        <Card title="Voting results" miniCard={false}>
-          <PlacesBarChart placesToDisplay={places} />
-        </Card>
+        <Collapse isOpened={opened}>
+          <Card title="Voting results" miniCard={false}>
+            <PlacesBarChart placesToDisplay={places} />
+          </Card>
+        </Collapse>
       </Col>
       {isOrganizer && (
         <Col>
-          <PlacesTable
-            places={newPlaces}
-            setSelectedPlaces={(newPlaces: PlaceDetails[]) => {
-              updatePlaces(newPlaces, meetingId, setPlaces);
-            }}
-            emptyText={'Meeting has no places'}
-          />
+          <Collapse isOpened={opened}>
+            <PlacesTable
+              places={newPlaces}
+              setSelectedPlaces={(newPlaces: PlaceDetails[]) => {
+                updatePlaces(newPlaces, meetingId, setPlaces);
+              }}
+              emptyText={'Meeting has no places'}
+            />
+          </Collapse>
         </Col>
       )}
     </Row>

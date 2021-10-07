@@ -6,7 +6,3 @@
 .declarationRow:hover {
     cursor: pointer;
 }
-
-.pencilIcon {
-    color: var(--purple);
-}

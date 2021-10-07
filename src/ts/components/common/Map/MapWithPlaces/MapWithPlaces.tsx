@@ -16,6 +16,8 @@ export type MapWithPlacesProps = {
   displayMainButton: boolean;
   mainButtonAction: Function;
   allowAdding: boolean;
+  addPlaceAction: Function;
+  removeButtonAction: Function;
 };
 
 interface Colors {
@@ -34,6 +36,8 @@ const MapWithPlaces = ({
   displayMainButton,
   mainButtonAction,
   allowAdding,
+  addPlaceAction,
+  removeButtonAction,
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
@@ -189,6 +193,7 @@ const MapWithPlaces = ({
                     name={place.name}
                     description={place.description}
                     address={place.address}
+                    placeId={place.id}
                     mainButtonName={mainButtonTooltipNameMapper(place.id)}
                     next={() => {
                       let nextPlaceIndex = (i + 1) % placesToDisplay.length;
@@ -203,10 +208,7 @@ const MapWithPlaces = ({
                     mainButtonAction={() => {
                       mainButtonAction(place.id);
                     }}
-                    removeButtonAction={() => {
-                      if (setPlacesToDisplay)
-                        setPlacesToDisplay(placesToDisplay.filter((p) => p.id !== place.id));
-                    }}
+                    removeButtonAction={removeButtonAction}
                     closeAction={() => {
                       changeProperty(place.id, setHidden, hidden, true);
                       changeProperty(place.id, setColors, colors, 'var(--purple)');
@@ -224,7 +226,7 @@ const MapWithPlaces = ({
       <div className={styles.insertModelButton}>
         {allowAdding && (
           <ActionButton
-            text="Add marker"
+            text="Add new place"
             onclick={() => {
               setInsertingMode(true);
             }}
@@ -238,16 +240,13 @@ const MapWithPlaces = ({
         setShow={setShowPopup}
         display={showPopup}
         addNewPlace={(details: { name: string; address: string; descrption: string }) => {
-          if (setPlacesToDisplay) {
-            setPlacesToDisplay([
-              ...placesToDisplay,
-              {
-                ...details,
-                id: placesToDisplay.length,
-                latitude: newCoordinates[0],
-                longitude: newCoordinates[1],
-              },
-            ]);
+          if (addPlaceAction) {
+            addPlaceAction({
+              ...details,
+              id: placesToDisplay.length,
+              latitude: newCoordinates[0],
+              longitude: newCoordinates[1],
+            });
           }
         }}
       />
