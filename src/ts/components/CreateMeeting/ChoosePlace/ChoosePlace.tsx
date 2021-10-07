@@ -16,22 +16,22 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
   const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>(
     [
       {
-        lat: 50.068074402115116,
-        long: 19.912639700937756,
+        latitude: 50.068074402115116,
+        longitude: 19.912639700937756,
         name: 'Katedra Informatki AGH',
         description: 'Nasz ulubione miejsce',
         address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
       },
       {
-        lat: 50.061781852877736,
-        long: 19.93740285479882,
+        latitude: 50.061781852877736,
+        longitude: 19.93740285479882,
         name: 'Rynek główny',
         description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
         address: '',
       },
       {
-        lat: 50.061781852877736,
-        long: 19.92740285479882,
+        latitude: 50.061781852877736,
+        longitude: 19.92740285479882,
         name: 'Rynek główny',
         description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
         address: '',

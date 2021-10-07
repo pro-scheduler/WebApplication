@@ -85,26 +85,26 @@ const MapWithPlaces = ({
   useEffect(() => {
     if (placesToDisplay.length > 0) {
       let latAvg =
-        placesToDisplay.map((p) => p.lat).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+        placesToDisplay.map((p) => p.latitude).reduce((a, b) => a + b, 0) / placesToDisplay.length;
       let longAvg =
-        placesToDisplay.map((p) => p.long).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+        placesToDisplay.map((p) => p.longitude).reduce((a, b) => a + b, 0) / placesToDisplay.length;
       let width =
         Math.max.apply(
           null,
-          placesToDisplay.map((p) => p.lat)
+          placesToDisplay.map((p) => p.latitude)
         ) -
         Math.min.apply(
           null,
-          placesToDisplay.map((p) => p.lat)
+          placesToDisplay.map((p) => p.latitude)
         );
       let height =
         Math.max.apply(
           null,
-          placesToDisplay.map((p) => p.long)
+          placesToDisplay.map((p) => p.longitude)
         ) -
         Math.min.apply(
           null,
-          placesToDisplay.map((p) => p.long)
+          placesToDisplay.map((p) => p.longitude)
         );
       setCenter([latAvg, longAvg]);
       setZoom(mapWidthToZoom(width > height ? width : height));
@@ -161,14 +161,14 @@ const MapWithPlaces = ({
               <Marker
                 key={place.id}
                 width={60}
-                anchor={[place.lat, place.long]}
+                anchor={[place.latitude, place.longitude]}
                 color={colors[place.id]}
                 onClick={() => {
                   let newColorProperties = resetProperties(setColors, 'var(--purple)');
                   let newHiddenProperties = resetProperties(setHidden, true);
                   if (hidden[place.id]) {
                     setZoom(15);
-                    setCenter([place.lat, place.long]);
+                    setCenter([place.latitude, place.longitude]);
                   }
                   changeProperty(
                     place.id,
@@ -183,7 +183,7 @@ const MapWithPlaces = ({
           })}
           {placesToDisplay.map((place, i) => {
             return (
-              <Overlay key={place.id} anchor={[place.lat, place.long]} offset={[0, 0]}>
+              <Overlay key={place.id} anchor={[place.latitude, place.longitude]} offset={[0, 0]}>
                 <div hidden={hidden[place.id]}>
                   <MapToolTip
                     name={place.name}
@@ -197,7 +197,7 @@ const MapWithPlaces = ({
                       let newColor = changeProperty(place.id, setColors, colors, 'var(--purple)');
                       changeProperty(nextPlace.id, setHidden, newHidden, false);
                       changeProperty(nextPlace.id, setColors, newColor, 'var(--red)');
-                      setCenter([nextPlace.lat, nextPlace.long]);
+                      setCenter([nextPlace.latitude, nextPlace.longitude]);
                       setZoom(15);
                     }}
                     mainButtonAction={() => {
@@ -244,8 +244,8 @@ const MapWithPlaces = ({
               {
                 ...details,
                 id: placesToDisplay.length,
-                lat: newCoordinates[0],
-                long: newCoordinates[1],
+                latitude: newCoordinates[0],
+                longitude: newCoordinates[1],
               },
             ]);
           }
