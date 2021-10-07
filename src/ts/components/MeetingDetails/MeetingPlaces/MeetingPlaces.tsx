@@ -114,7 +114,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer }: MeetingPlacesProps) => 
                     latitude: place.latitude,
                     longitude: place.longitude,
                   },
-                  (place: PlaceDetails) => setPlaces([...places, place]),
+                  setPlaces,
                   meetingId
                 );
               }}

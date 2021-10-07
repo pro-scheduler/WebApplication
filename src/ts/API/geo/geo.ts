@@ -92,14 +92,16 @@ export const updatePlaces = (
 
 export const addNewPlace = (
   place: PlaceDTO,
-  setNewPlace: Function,
+  setPlaces: Function,
   meetingId: number,
   setResponse?: Function
 ) => {
   post(
     place,
     getNewMeetingPlaceUrl(meetingId),
-    setNewPlace,
+    ({ places }: any) => {
+      setPlaces(places);
+    },
     setResponse,
     true,
     'You have successfully added new place'
