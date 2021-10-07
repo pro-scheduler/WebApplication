@@ -20,6 +20,8 @@ import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/Mee
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
+import { getMeetingPlaces } from '../../API/geo/geo';
+import { PlaceDetails } from '../../model/geo/Geo';
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
@@ -32,6 +34,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
+  const [places, setPlaces] = useState<PlaceDetails[]>([]);
 
   const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
     const currentUser = meeting.attendees.find(
@@ -101,6 +104,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   useEffect(() => {
     reloadSurvey();
+    getMeetingPlaces(id, setPlaces);
     // eslint-disable-next-line
   }, [id]);
 
@@ -154,6 +158,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               hasTime={meeting.availableTimeRanges.length > 0}
               meetingLink={meeting.link}
               meetingPassword={meeting.password}
+              places={places.length > 0}
               name={meeting.name}
               description={meeting.description}
               isOrganizer={isOrganizer}
@@ -219,12 +224,14 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           open={meeting.state === MeetingState.OPEN}
         />
       )}
-      {!showSettings && (
+      {places.length > 0 && !showSettings && (
         <MeetingPlaces
           meetingId={id}
           user={user}
           isOrganizer={isOrganizer}
           open={meeting.state === MeetingState.OPEN}
+          places={places}
+          setPlaces={setPlaces}
         />
       )}
     </Container>

@@ -29,126 +29,22 @@ const setSuccess = (setResponse?: Function) => {
   }
 };
 
-const testingUser = { id: 2, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' };
-const mockedProposalPlaces = [
-  {
-    lat: 50.068074402115116,
-    long: 19.912639700937756,
-    name: 'Katedra Informatki AGH',
-    description: 'Nasz ulubione miejsce',
-    address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-  },
-  {
-    lat: 50.061781852877736,
-    long: 19.93740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-  },
-  {
-    lat: 50.061781852877736,
-    long: 19.92740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-  },
-];
+const mockedProposalPlaces: PlaceDTO[] = [];
 
-const mockedPlaces = [
-  {
-    id: 0,
-    lat: 50.068074402115116,
-    long: 19.912639700937756,
-    name: 'Katedra Informatki AGH',
-    description: 'Nasz ulubione miejsce',
-    address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-    votes: [testingUser],
-  },
-  {
-    id: 1,
-    lat: 50.061781852877736,
-    long: 19.93740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-    votes: [
-      testingUser,
-      { id: 3, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' },
-      { id: 1, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' },
-    ],
-  },
-  {
-    id: 2,
-    lat: 50.061781852877736,
-    long: 19.92740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-    votes: [{ id: 234, email: 'radek4ec@gmail.com', username: 'radek4ec@gmail.com' }],
-  },
-];
-
-const mockedPlacesAfterVotes = [
-  {
-    id: 0,
-    lat: 50.068074402115116,
-    long: 19.912639700937756,
-    name: 'Katedra Informatki AGH',
-    description: 'Nasz ulubione miejsce',
-    address: 'Akademia Górniczo-Hutnicza im. Stanisława Staszica w Krakowie, 30-001 Kraków',
-    votes: [testingUser],
-  },
-  {
-    id: 1,
-    lat: 50.061781852877736,
-    long: 19.93740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-    votes: [],
-  },
-  {
-    id: 2,
-    lat: 50.061781852877736,
-    long: 19.92740285479882,
-    name: 'Rynek główny',
-    description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-    address: '',
-    votes: [],
-  },
-];
-let mockedPlace = {
-  id: 2,
-  lat: 50.061781852877736,
-  long: 19.92740285479882,
-  name: 'Rynek główny',
-  description: 'Jedna z opcji, możemy spotkać się przy rynku głównym',
-  address: '',
-  votes: [],
-};
 export const savePlaces = (
   places: PlaceDTO[],
   meetingId: number,
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-  }, 500);
-  return;
-  // eslint-disable-next-line
   post(
-    {
-      places,
-      meetingId,
-    },
+    places,
     getMeetingPlacesUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully saved selected places'
+    'You have successfully saved selected places',
+    onSuccess
   );
 };
 
@@ -159,44 +55,31 @@ export const updatePlaces = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-    if (setNewPlaces) setNewPlaces(places);
-  }, 500);
-  return;
-  // eslint-disable-next-line
   put(
-    {
-      places,
-      meetingId,
-    },
+    places,
     getMeetingPlacesUrl(meetingId),
-    setNewPlaces,
+    ({ places }: any) => {
+      if (setNewPlaces) setNewPlaces(places);
+    },
     setResponse,
     true,
-    'You have successfully saved selected places'
+    'You have successfully saved selected places',
+    onSuccess
   );
 };
 
 export const addNewPlace = (
   place: PlaceDTO,
-  setNewPlace: Function,
+  setPlaces: Function,
   meetingId: number,
   setResponse?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setNewPlace({ ...place, id: Math.random() * 1000, votes: [] });
-  }, 500);
-  return;
-  // eslint-disable-next-line
   post(
     place,
     getNewMeetingPlaceUrl(meetingId),
-    setNewPlace,
+    ({ places }: any) => {
+      setPlaces(places);
+    },
     setResponse,
     true,
     'You have successfully added new place'
@@ -208,24 +91,10 @@ export const getMeetingPlaces = (
   setPlaces: Function,
   setResponse?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setPlaces(mockedPlaces);
-  }, 500);
-  return;
-  // eslint-disable-next-line
   get(getMeetingPlacesUrl(meetingId), setPlaces, setResponse);
 };
 
 export const getPlaceDetails = (placeId: number, setPlace: Function, setResponse?: Function) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setPlace(mockedPlace);
-  }, 500);
-  return;
-  // eslint-disable-next-line
   get(getPlaceUrl(placeId), setPlace, setResponse);
 };
 
@@ -236,14 +105,6 @@ export const updatePlace = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setEditedPlace({ ...placeDetails, id: Math.random() * 1000, votes: [] });
-    if (onSuccess) onSuccess();
-  }, 500);
-  return;
-  // eslint-disable-next-line
   put(
     placeDetails,
     getPlaceUrl(placeId),
@@ -256,13 +117,6 @@ export const updatePlace = (
 };
 
 export const deletePlace = (placeId: number, onSuccess?: Function, setResponse?: Function) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-  }, 500);
-  return;
-  // eslint-disable-next-line
   del(
     getPlaceUrl(placeId),
     () => {},
@@ -279,24 +133,10 @@ export const voteForPlace = (
   onSuccess?: Function,
   setResponse?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-    setNewPlaceDetails(
-      mockedPlacesAfterVotes
-        .filter((p) => p.id === palceId)
-        .map((place) => {
-          return { ...place, votes: [...place.votes, testingUser] };
-        })[0]
-    );
-  }, 500);
-  return;
-  // eslint-disable-next-line
   post(
     {},
     getVotePlaceUrl(palceId),
-    () => {},
+    setNewPlaceDetails,
     setResponse,
     true,
     'You have successfully voted for the place',
@@ -310,23 +150,9 @@ export const voteBackForPlace = (
   onSuccess?: Function,
   setResponse?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-    setNewPlaceDetails(
-      mockedPlacesAfterVotes
-        .filter((p) => p.id === palceId)
-        .map((place) => {
-          return { ...place, votes: [...place.votes.filter((vote) => vote.id !== testingUser.id)] };
-        })[0]
-    );
-  }, 500);
-  return;
-  // eslint-disable-next-line
   del(
     getVotePlaceUrl(palceId),
-    () => {},
+    setNewPlaceDetails,
     setResponse,
     true,
     'You have successfully removed your vote',
@@ -341,14 +167,6 @@ export const updateVotes = (
   setResponse?: Function,
   onSuccess?: Function
 ) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-    setPlaces([...mockedPlacesAfterVotes]);
-  }, 500);
-  return;
-  // eslint-disable-next-line
   put(
     { votes },
     getPlacesVotesUrl(meetingId),
@@ -384,8 +202,8 @@ export const geocodeByText = (
 };
 
 export const geocodeByLocation = (
-  lat: number,
-  long: number,
+  latitude: number,
+  longitude: number,
   setProposalPlaces: Function,
   setResponse?: Function
 ) => {
@@ -398,8 +216,8 @@ export const geocodeByLocation = (
   // eslint-disable-next-line
   post(
     {
-      lat,
-      long,
+      latitude,
+      longitude,
     },
     getGeocoderUrl() + '?type=' + GeocodeType.LOCATION,
     setProposalPlaces,
