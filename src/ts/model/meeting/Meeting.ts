@@ -124,9 +124,6 @@ export type UpdateMeetingAttendeeRequest = {
 };
 
 export type HomeInfo = {
-  declarations: number;
-  invitations: number;
-  surveys: number;
   upcomingMeetings: MeetingSummary[];
   todayMeetings: MeetingSummary[];
 };

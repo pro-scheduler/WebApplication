@@ -125,7 +125,7 @@ const CreateMeeting = () => {
           history.push('/meetings/' + meetingId.id)
         );
       }
-      if (!onlineMeeting) {
+      if (!onlineMeeting && selectedPlaces.length > 0) {
         savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse, () => {
           history.push('/meetings/' + meetingId.id);
         });

@@ -166,40 +166,10 @@ export const updateMeetingAttendee = (
     onSuccess
   );
 
+// TODO connect with backend if present
 export const getHomeInfo = (setHomeInfo: Function, setResponse?: Function) => {
   const homeInfo: HomeInfo = {
-    declarations: 5,
-    invitations: 1,
-    surveys: 0,
-    upcomingMeetings: [
-      {
-        id: 0,
-        name: 'Cooking workshop',
-        description: 'Ala ma kota i kot ma ale',
-        type: MeetingType.REAL,
-        organizers: [{ id: 0, username: 'Ola', email: 'ola@mail.com' }],
-        state: MeetingState.OPEN,
-        finalDate: {
-          timeStart: new Date(),
-          timeEnd: new Date(),
-        },
-      },
-      {
-        id: 1,
-        name: 'Meet Joe',
-        description: 'Ala ma kota i kot ma ale',
-        type: MeetingType.REAL,
-        organizers: [
-          { id: 0, username: 'Ola', email: 'ola@mail.com' },
-          { id: 1, username: 'Ala', email: 'ola@mail.com' },
-        ],
-        state: MeetingState.OPEN,
-        finalDate: {
-          timeStart: new Date(),
-          timeEnd: new Date(),
-        },
-      },
-    ],
+    upcomingMeetings: [],
     todayMeetings: [],
   };
   setHomeInfo(homeInfo);

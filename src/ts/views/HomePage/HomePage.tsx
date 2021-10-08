@@ -14,14 +14,26 @@ import Carousel from 'react-bootstrap/Carousel';
 import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
 import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
 import useWindowDimensions from '../../components/common/window/WindowDimension';
+import { fetchUserPendingInvitations } from '../../API/invitation/invitationService';
+import { InvitationDetails } from '../../model/invitation/Invitation';
+import { getUserSurveys } from '../../API/survey/surveyService';
+import { BasicUserSurveyInfo } from '../../model/survey/Survey';
+import { DeclarationDetails } from '../../model/declaration/Declaration';
+import { loadUserDeclarations } from '../../API/declarations/declarationsService';
 
 const HomePage = ({ user }: { user: UserSummary }) => {
   const [homeInfo, setHomeInfo] = useState<HomeInfo>();
+  const [pendingInvitations, setPendingInvitations] = useState<InvitationDetails[]>([]);
+  const [surveys, setSurveys] = useState<BasicUserSurveyInfo[]>([]);
+  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   // eslint-disable-next-line
   const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     getHomeInfo(setHomeInfo);
+    fetchUserPendingInvitations(setPendingInvitations);
+    getUserSurveys(setSurveys);
+    loadUserDeclarations(setDeclarations);
   }, []);
 
   return (
@@ -31,7 +43,7 @@ const HomePage = ({ user }: { user: UserSummary }) => {
           Welcome back, {user.username}!
         </Col>
       </Row>
-      {homeInfo && (
+      {homeInfo && homeInfo.upcomingMeetings.length > 0 && (
         <Row className="justify-content-center mt-4 mb-5">
           <Col lg={12} className="text-center mt-5">
             <Carousel
@@ -49,28 +61,28 @@ const HomePage = ({ user }: { user: UserSummary }) => {
           </Col>
         </Row>
       )}
-      <Row className="justify-content-center mt-4 mb-5">
-        <Col lg={4} className="text-center mt-5">
+      <Row className="justify-content-md-center mt-5 mb-5">
+        <Col xs lg={3} className="text-center mt-5">
           <ModuleCard
             icon={<BsPencil />}
-            number={homeInfo ? homeInfo.declarations : 0}
-            name={'Declarations'}
+            number={declarations.length}
+            name={declarations.length === 1 ? 'Declaration' : 'Declarations'}
             redirectTo={'/declarations'}
           />
         </Col>
-        <Col lg={4} className="text-center mt-5">
+        <Col xs lg={3} className="text-center mt-5">
           <ModuleCard
             icon={<BsEnvelope />}
-            number={homeInfo ? homeInfo.invitations : 0}
-            name={'Invitations'}
+            number={pendingInvitations.length}
+            name={pendingInvitations.length === 1 ? 'Invitation' : 'Invitations'}
             redirectTo={'/invitations'}
           />
         </Col>
-        <Col lg={4} className="text-center mt-5">
+        <Col xs lg={3} className="text-center mt-5">
           <ModuleCard
             icon={<FaRegClipboard />}
-            number={homeInfo ? homeInfo.surveys : 0}
-            name={'Surveys'}
+            number={surveys.length}
+            name={surveys.length === 1 ? 'Survey' : 'Surveys'}
             redirectTo={'surveys'}
           />
         </Col>

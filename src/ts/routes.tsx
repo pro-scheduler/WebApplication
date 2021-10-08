@@ -91,12 +91,12 @@ const Routes = () => {
             <UserProfile user={user} refreshUser={refreshUser} />
           </div>
         </ProtectedRoute>
-        <Route path="/home">
+        <ProtectedRoute path="/home" isNotLoggedIn={response.isFailed}>
           <Navbar user={user} />
           <div style={{ marginLeft: marginLeft }}>
             <HomePage user={user} />
           </div>
-        </Route>
+        </ProtectedRoute>
         <Route path="/">
           <LandingPage />
         </Route>
