@@ -10,12 +10,19 @@ import {
 import { ApiCall } from '../../../API/genericApiCalls';
 import Card from '../../common/Card/Card';
 import DeleteButton from '../../common/SubmitButton/ActionButton/DeleteButton';
-import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
+import {
+  generateSharedMeetingEndpoint,
+  removeAttendeeFromMeeting,
+} from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
 import Popup from '../../common/Popup/Popup';
 import CreateInvitations from '../../CreateMeeting/CreateInvitations';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
+import {
+  MeetingAttendeeDetails,
+  MeetingState,
+  SharedMeetingDetails,
+} from '../../../model/meeting/Meeting';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
@@ -39,6 +46,8 @@ const MeetingParticipants = ({
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [invitationState, setInvitationState] = useState<State>(State.ACCEPTED);
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
+  const [sharedMeetingDetails, setSharedMeetingDetails] = useState<SharedMeetingDetails>();
+  const [showInvitationLink, setShowInvitationLink] = useState<boolean>(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
@@ -61,6 +70,12 @@ const MeetingParticipants = ({
     setAddModalShow(false);
   };
 
+  const generateInvitationLink = () => {
+    generateSharedMeetingEndpoint(meetingId, setSharedMeetingDetails, () =>
+      setShowInvitationLink(true)
+    );
+  };
+
   useEffect(() => {
     if (saveResponse.isSuccess) {
       setEmails([]);
@@ -69,6 +84,9 @@ const MeetingParticipants = ({
     // eslint-disable-next-line
   }, [saveResponse]);
 
+  useEffect(() => {
+    console.log(window.location.origin);
+  }, []);
   const invitationsToList = (invitationDetailsList: InvitationDetails[]) => {
     return invitationDetailsList.map((invitationDetails: InvitationDetails, index: number) => {
       return (
@@ -120,6 +138,17 @@ const MeetingParticipants = ({
     <Card
       title={'Who'}
       onAdd={isOrganizer && state === MeetingState.OPEN ? () => setAddModalShow(true) : undefined}
+      footer={
+        isOrganizer ? (
+          <div className={styles.actionButtonContainer}>
+            <ActionButton
+              onclick={generateInvitationLink}
+              text={'Generate invitation link'}
+              className={styles.actionButton}
+            />
+          </div>
+        ) : undefined
+      }
     >
       <ParticipantsStatusNavbar
         accepted={acceptedInvitations.length}
@@ -166,6 +195,18 @@ const MeetingParticipants = ({
           text={'Send invitations'}
           className={styles.inviteButton}
         />
+      </Popup>
+      <Popup
+        show={showInvitationLink && sharedMeetingDetails !== undefined}
+        title={'Invitation link'}
+        onClose={() => setShowInvitationLink(false)}
+      >
+        <div>Only logged in users can use below link</div>
+        <div className="mt-4">
+          <a href={window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}>
+            {window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}
+          </a>
+        </div>
       </Popup>
     </Card>
   );
