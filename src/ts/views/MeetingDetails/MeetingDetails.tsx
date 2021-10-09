@@ -147,6 +147,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meetingName={meeting.name}
           markTimeRangeDeadline={meeting.markTimeRangeDeadline}
           meetingFinalDate={meeting.finalDate}
+          showPlacesSettings={places.length > 0}
         />
       )}
       {!showSettings && (

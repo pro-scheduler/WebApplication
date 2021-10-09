@@ -22,3 +22,7 @@ export enum GeocodeType {
   LOCATION = 'LOCATION',
   TEXT = 'TEXT',
 }
+
+export type PlacesSettings = {
+  onlyOrganizerCanAddPlaceToMeeting: boolean;
+};

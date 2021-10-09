@@ -1,4 +1,4 @@
-import { GeocodeType, PlaceDTO } from '../../model/geo/Geo';
+import { GeocodeType, PlaceDTO, PlacesSettings } from '../../model/geo/Geo';
 import { post, get, put, del } from '../genericApiCalls';
 import {
   getGeocoderUrl,
@@ -7,6 +7,7 @@ import {
   getPlacesVotesUrl,
   getPlaceUrl,
   getVotePlaceUrl,
+  getPlacesSettingsUrl,
 } from './urls';
 //TODO remove mocks and integrate with geo service
 const setLoading = (setResponse?: Function) => {
@@ -223,5 +224,46 @@ export const geocodeByLocation = (
     setProposalPlaces,
     setResponse,
     true
+  );
+};
+
+export const getPlacesSettings = (
+  meetingsId: number,
+  setSettings: Function,
+  setResponse?: Function
+) => {
+  setLoading(setResponse);
+  setTimeout(() => {
+    setSuccess(setResponse);
+    setSettings({
+      onlyOrganizerCanAddPlaceToMeeting: false,
+    });
+  }, 200);
+  return;
+  // eslint-disable-next-line
+  get(getPlacesSettingsUrl(meetingsId), setSettings, setResponse, true);
+};
+
+export const savePlacesSettings = (
+  meetingsId: number,
+  newSettings: PlacesSettings,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
+  setLoading(setResponse);
+  setTimeout(() => {
+    setSuccess(setResponse);
+    if (onSuccess) onSuccess();
+  }, 200);
+  return;
+  // eslint-disable-next-line
+  put(
+    newSettings,
+    getPlacesSettingsUrl(meetingsId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully changed settings.',
+    onSuccess
   );
 };
