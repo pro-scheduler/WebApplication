@@ -58,7 +58,7 @@ const PlaceSettings = ({ meetingId }: PlaceSettingsProps) => {
               />
               <ActionButton
                 onclick={saveSettings}
-                text={'Modify palces settings'}
+                text={'Modify places settings'}
                 disabled={JSON.stringify(settings) === JSON.stringify(newSettings)}
               />
             </Card>

@@ -6,6 +6,7 @@ export type MeetingSettingsProps = {
   survey: UserSurvey | undefined;
   meetingId: number;
   meetingName: string;
+  showPlacesSettings: boolean;
   markTimeRangeDeadline?: string;
   meetingFinalDate?: TimeRangeDTO;
 };
@@ -14,6 +15,7 @@ const MeetingSettings = ({
   survey,
   meetingId,
   meetingName,
+  showPlacesSettings,
   markTimeRangeDeadline,
   meetingFinalDate,
 }: MeetingSettingsProps) => {
@@ -27,7 +29,7 @@ const MeetingSettings = ({
         markTimeRangeDeadline={markTimeRangeDeadline}
         meetingFinalDate={meetingFinalDate}
       />
-      <PlaceSettings meetingId={meetingId} />
+      {showPlacesSettings && <PlaceSettings meetingId={meetingId} />}
     </>
   );
 };
