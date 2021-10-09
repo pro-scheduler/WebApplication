@@ -99,7 +99,10 @@ const MeetingInvitation = () => {
             <ActionButton
               onclick={joinMeeting}
               text={'Join'}
-              disabled={userResponse.isFailed}
+              disabled={
+                userResponse.isFailed ||
+                meeting.organizers.find((organizer: UserSummary) => organizer.id === user.id)
+              }
               className={styles.joinButton}
             />
             {userResponse.isFailed && (
