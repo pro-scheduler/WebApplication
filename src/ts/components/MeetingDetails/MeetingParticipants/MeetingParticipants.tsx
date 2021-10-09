@@ -196,8 +196,7 @@ const MeetingParticipants = ({
         title={'Invitation link'}
         onClose={() => setShowInvitationLink(false)}
       >
-        <div>Copy below link</div>
-        <div className={styles.linkDescription}>(Only logged in users can use this link)</div>
+        <div>Copy the below link and send it to others</div>
         <div className="mt-4">
           <a href={window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}>
             {window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}
