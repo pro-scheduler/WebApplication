@@ -3,10 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Collapse } from 'react-collapse';
 import LineWithHeader from '../LineWithHeader';
-import { PlaceDetails } from '../../../model/geo/Geo';
+import { PlaceDetails, PlacesSettings } from '../../../model/geo/Geo';
 import {
   addNewPlace,
   deletePlace,
+  getPlacesSettings,
   updatePlaces,
   updateVotes,
   voteBackForPlace,
@@ -33,7 +34,9 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
   const [opened, setOpened] = useState<boolean>(true);
   const [myVotes, setMyVotes] = useState<number[]>([]);
   const [newVotes, setNewVotes] = useState<number[]>([]);
-
+  const [placesSettings, setPlacesSettings] = useState<PlacesSettings>({
+    onlyOrganizerCanAddPlaceToMeeting: false,
+  });
   const tooltipMapping = useCallback(
     (placeId: number) =>
       places.some((place) => place.id === placeId && place.votes.some((u) => (u.id = user.id)))
@@ -41,6 +44,10 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
         : 'Vote for that place',
     [places, user]
   );
+
+  useEffect(() => {
+    getPlacesSettings(meetingId, setPlacesSettings);
+  }, [meetingId]);
 
   useEffect(() => {
     if (places) {
@@ -79,12 +86,12 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
         <Collapse isOpened={opened}>
           <div className={styles.mapContainer}>
             <MapWithPlaces
-              disabled={!isOrganizer}
+              disabled={!isOrganizer && placesSettings.onlyOrganizerCanAddPlaceToMeeting}
               placesToDisplay={places}
               setPlacesToDisplay={setPlaces}
               mainButtonTooltipNameMapper={tooltipMapping}
               displayMainButton={true}
-              displayRemoveButton={true}
+              displayRemoveButton={isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting}
               mainButtonAction={(placeId: number) => {
                 toggleVote(placeId);
               }}
@@ -93,7 +100,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
                   setPlaces(places.filter((place: PlaceDetails) => place.id !== placeId));
                 });
               }}
-              allowAdding={true}
+              allowAdding={isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting}
               addPlaceAction={(place: PlaceDetails) => {
                 addNewPlace(
                   {
@@ -153,7 +160,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
           </Card>
         </Collapse>
       </Col>
-      {isOrganizer && (
+      {(isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && (
         <Col>
           <Collapse isOpened={opened}>
             <PlacesTable
