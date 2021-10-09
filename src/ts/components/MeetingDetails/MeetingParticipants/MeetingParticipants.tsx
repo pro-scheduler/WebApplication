@@ -10,12 +10,19 @@ import {
 import { ApiCall } from '../../../API/genericApiCalls';
 import Card from '../../common/Card/Card';
 import DeleteButton from '../../common/SubmitButton/ActionButton/DeleteButton';
-import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
+import {
+  generateSharedMeetingEndpoint,
+  removeAttendeeFromMeeting,
+} from '../../../API/meeting/meetingService';
 import ParticipantsStatusNavbar from './ParticipantsStatusNavbar';
 import Popup from '../../common/Popup/Popup';
 import CreateInvitations from '../../CreateMeeting/CreateInvitations';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
+import {
+  MeetingAttendeeDetails,
+  MeetingState,
+  SharedMeetingDetails,
+} from '../../../model/meeting/Meeting';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
@@ -39,6 +46,8 @@ const MeetingParticipants = ({
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [invitationState, setInvitationState] = useState<State>(State.ACCEPTED);
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
+  const [sharedMeetingDetails, setSharedMeetingDetails] = useState<SharedMeetingDetails>();
+  const [showInvitationLink, setShowInvitationLink] = useState<boolean>(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
@@ -59,6 +68,12 @@ const MeetingParticipants = ({
       setSaveResponse
     );
     setAddModalShow(false);
+  };
+
+  const generateInvitationLink = () => {
+    generateSharedMeetingEndpoint(meetingId, setSharedMeetingDetails, () =>
+      setShowInvitationLink(true)
+    );
   };
 
   useEffect(() => {
@@ -84,25 +99,23 @@ const MeetingParticipants = ({
     });
   };
 
-  const acceptedInvitations = participants.map(
-    (participant: MeetingAttendeeDetails, index: number) => {
-      return (
-        <div key={participant.attendeeId}>
-          <div className={styles.participantRow}>
-            <div className={styles.userNameIcon}>
-              <UserNameIcon email={participant.user.username} />
-            </div>
-            {isOrganizer && state === MeetingState.OPEN && (
-              <div className={styles.deleteContainer}>
-                <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
-              </div>
-            )}
+  const acceptedInvitations = participants.map((participant: MeetingAttendeeDetails) => {
+    return (
+      <div key={participant.attendeeId}>
+        <div className={styles.participantRow}>
+          <div className={styles.userNameIcon}>
+            <UserNameIcon email={participant.user.username} />
           </div>
-          <hr className={styles.hrLine} />
+          {isOrganizer && state === MeetingState.OPEN && (
+            <div className={styles.deleteContainer}>
+              <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
+            </div>
+          )}
         </div>
-      );
-    }
-  );
+        <hr className={styles.hrLine} />
+      </div>
+    );
+  });
 
   const pendingInvitations = invitationsToList(
     invitations.filter(
@@ -120,6 +133,17 @@ const MeetingParticipants = ({
     <Card
       title={'Who'}
       onAdd={isOrganizer && state === MeetingState.OPEN ? () => setAddModalShow(true) : undefined}
+      footer={
+        isOrganizer ? (
+          <div className={styles.actionButtonContainer}>
+            <ActionButton
+              onclick={generateInvitationLink}
+              text={'Generate invitation link'}
+              className={styles.actionButton}
+            />
+          </div>
+        ) : undefined
+      }
     >
       <ParticipantsStatusNavbar
         accepted={acceptedInvitations.length}
@@ -166,6 +190,18 @@ const MeetingParticipants = ({
           text={'Send invitations'}
           className={styles.inviteButton}
         />
+      </Popup>
+      <Popup
+        show={showInvitationLink && sharedMeetingDetails !== undefined}
+        title={'Invitation link'}
+        onClose={() => setShowInvitationLink(false)}
+      >
+        <div>Copy the below link and send it to others</div>
+        <div className="mt-4">
+          <a href={window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}>
+            {window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}
+          </a>
+        </div>
       </Popup>
     </Card>
   );

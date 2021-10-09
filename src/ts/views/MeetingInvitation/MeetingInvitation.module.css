@@ -1,0 +1,31 @@
+.invitationHeaderContainer {
+    font-size: var(--s-font-size);
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.meetingDetails {
+    font-weight: var(--bold-font-weight);
+}
+
+.greyFont {
+    color: var(--medium-grey);
+}
+
+.signInInfo {
+    font-size: 14px;
+    color: var(--medium-grey);
+    margin-top: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .invitationHeaderContainer {
+        display: block;
+        text-align: center;
+    }
+
+    .joinButton {
+        width: 210px;
+    }
+}

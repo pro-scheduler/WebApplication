@@ -5,11 +5,12 @@ import Header from '../../components/LandingPage/Header/Header';
 import Content from '../../components/LandingPage/Content/Content';
 import Footer from '../../components/LandingPage/Footer/Footer';
 import LandingPageNavbar from '../../components/LandingPage/LandingPageNavbar/LandingPageNavbar';
+import { UserSummary } from '../../model/user/ProUser';
 
-const LandingPage = () => {
+const LandingPage = ({ user }: { user: UserSummary }) => {
   return (
     <>
-      <LandingPageNavbar />
+      <LandingPageNavbar user={user} />
       <Container fluid className="m-0 p-0">
         <Header />
         <Content />

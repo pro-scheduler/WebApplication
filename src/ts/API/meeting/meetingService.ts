@@ -1,8 +1,11 @@
 import { del, get, post, put } from '../genericApiCalls';
 import {
   getCancelMeetingUrl,
+  getGenerateSharedMeetingUrl,
+  getJoinMeetingByGeneratedEndpointUrl,
   getLeaveMeetingUrl,
   getMeetingAttendeeUrl,
+  getMeetingByGeneratedEndpointUrl,
   getMeetingsUrl,
   getMeetingUrl,
 } from './urls';
@@ -10,8 +13,6 @@ import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import {
   CreateMeetingRequest,
   HomeInfo,
-  MeetingState,
-  MeetingType,
   UpdateMeetingAttendeeRequest,
 } from '../../model/meeting/Meeting';
 
@@ -173,4 +174,46 @@ export const getHomeInfo = (setHomeInfo: Function, setResponse?: Function) => {
     todayMeetings: [],
   };
   setHomeInfo(homeInfo);
+};
+
+export const generateSharedMeetingEndpoint = (
+  meetingId: number,
+  setData: Function,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
+  post(
+    {
+      meetingId,
+    },
+    getGenerateSharedMeetingUrl(),
+    setData,
+    setResponse,
+    true,
+    undefined,
+    onSuccess
+  );
+};
+
+export const getMeetingByGeneratedEndpoint = (
+  generatedEndpoint: string,
+  setMeeting: Function,
+  setResponse?: Function
+) => get(getMeetingByGeneratedEndpointUrl(generatedEndpoint), setMeeting, setResponse);
+
+export const joinMeetingByGeneratedEndpoint = (
+  generatedEndpoint: string,
+  onSuccess?: Function,
+  setData?: Function,
+  setResponse?: Function
+) => {
+  post(
+    {},
+    getJoinMeetingByGeneratedEndpointUrl(generatedEndpoint),
+    setData,
+    setResponse,
+    true,
+    'You successfully joined the meeting',
+    onSuccess
+  );
 };

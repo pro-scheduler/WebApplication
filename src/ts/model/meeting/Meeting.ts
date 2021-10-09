@@ -127,3 +127,8 @@ export type HomeInfo = {
   upcomingMeetings: MeetingSummary[];
   todayMeetings: MeetingSummary[];
 };
+
+export type SharedMeetingDetails = {
+  meetingId: number;
+  generatedEndpoint: string;
+};
