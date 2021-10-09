@@ -17,6 +17,7 @@ import { UserSummary } from './model/user/ProUser';
 import Declarations from './views/Declarations/Declarations';
 import UserProfile from './views/UserProfile/UserProfile';
 import Surveys from './views/Surveys/Surveys';
+import HomePage from './views/HomePage/HomePage';
 
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
@@ -88,6 +89,12 @@ const Routes = () => {
           <Navbar user={user} />
           <div style={{ marginLeft: marginLeft }}>
             <UserProfile user={user} refreshUser={refreshUser} />
+          </div>
+        </ProtectedRoute>
+        <ProtectedRoute path="/home" isNotLoggedIn={response.isFailed}>
+          <Navbar user={user} />
+          <div style={{ marginLeft: marginLeft }}>
+            <HomePage user={user} />
           </div>
         </ProtectedRoute>
         <Route path="/">

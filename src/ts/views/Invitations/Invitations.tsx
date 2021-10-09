@@ -16,7 +16,7 @@ const Invitations = ({ user }: { user: UserSummary }) => {
   const [invitationsResponse, setInvitationsResponse] = useState<ApiCall>(new ApiCall());
 
   const refreshInvitations = () => {
-    fetchUserPendingInvitations(user.id, setInvitations, setInvitationsResponse);
+    fetchUserPendingInvitations(setInvitations, setInvitationsResponse);
   };
 
   useEffect(() => {

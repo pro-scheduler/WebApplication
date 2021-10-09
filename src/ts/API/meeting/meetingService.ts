@@ -1,13 +1,19 @@
-import { post, get, put, del } from '../genericApiCalls';
+import { del, get, post, put } from '../genericApiCalls';
 import {
-  getMeetingsUrl,
-  getMeetingUrl,
+  getCancelMeetingUrl,
   getLeaveMeetingUrl,
   getMeetingAttendeeUrl,
-  getCancelMeetingUrl,
+  getMeetingsUrl,
+  getMeetingUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import { CreateMeetingRequest, UpdateMeetingAttendeeRequest } from '../../model/meeting/Meeting';
+import {
+  CreateMeetingRequest,
+  HomeInfo,
+  MeetingState,
+  MeetingType,
+  UpdateMeetingAttendeeRequest,
+} from '../../model/meeting/Meeting';
 
 export const saveMeeting = (
   createRequest: CreateMeetingRequest,
@@ -159,3 +165,12 @@ export const updateMeetingAttendee = (
     'Attendee role has been updated successfully',
     onSuccess
   );
+
+// TODO connect with backend if present
+export const getHomeInfo = (setHomeInfo: Function, setResponse?: Function) => {
+  const homeInfo: HomeInfo = {
+    upcomingMeetings: [],
+    todayMeetings: [],
+  };
+  setHomeInfo(homeInfo);
+};

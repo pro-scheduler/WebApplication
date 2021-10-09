@@ -122,3 +122,8 @@ export type UpdateMeetingAttendeeRequest = {
   role: MeetingRole;
   markedTimeRanges: TimeRangeDTO[];
 };
+
+export type HomeInfo = {
+  upcomingMeetings: MeetingSummary[];
+  todayMeetings: MeetingSummary[];
+};
