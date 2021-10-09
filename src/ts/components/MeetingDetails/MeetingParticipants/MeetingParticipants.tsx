@@ -23,6 +23,7 @@ import {
   MeetingState,
   SharedMeetingDetails,
 } from '../../../model/meeting/Meeting';
+import { MdContentCopy } from 'react-icons/md';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
@@ -48,11 +49,18 @@ const MeetingParticipants = ({
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
   const [sharedMeetingDetails, setSharedMeetingDetails] = useState<SharedMeetingDetails>();
   const [showInvitationLink, setShowInvitationLink] = useState<boolean>(false);
+  const [link, setLink] = useState<string>('');
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
     // eslint-disable-next-line
   }, [invitationsChanged]);
+
+  useEffect(() => {
+    if (sharedMeetingDetails) {
+      setLink(window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint);
+    }
+  }, [sharedMeetingDetails]);
 
   const deleteParticipant = (attendeeId: number) => {
     removeAttendeeFromMeeting(meetingId, attendeeId, refreshParticipants);
@@ -129,6 +137,10 @@ const MeetingParticipants = ({
     )
   );
 
+  const copy = async () => {
+    await navigator.clipboard.writeText(link);
+  };
+
   return (
     <Card
       title={'Who'}
@@ -198,9 +210,8 @@ const MeetingParticipants = ({
       >
         <div>Copy the below link and send it to others</div>
         <div className="mt-4">
-          <a href={window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}>
-            {window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}
-          </a>
+          <a href={link}>{link}</a>
+          <MdContentCopy className={styles.copyIcon} onClick={copy} />
         </div>
       </Popup>
     </Card>
