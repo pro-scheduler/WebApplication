@@ -11,3 +11,6 @@ export const getVotePlaceUrl = (placeId: number) => getPlacesUrl() + `/${placeId
 export const getGeocoderUrl = () => `${process.env.REACT_APP_DECLARATION_SERVICE_URL}gecoder`;
 
 export const getPlacesVotesUrl = (meetingId: number) => getMeetingPlacesUrl(meetingId) + '/votes';
+
+export const getPlacesSettingsUrl = (meetingId: number) =>
+  getMeetingPlacesUrl(meetingId) + '/settings';
