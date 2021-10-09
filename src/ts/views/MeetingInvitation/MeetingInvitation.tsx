@@ -102,7 +102,9 @@ const MeetingInvitation = () => {
               disabled={userResponse.isFailed}
               className={styles.joinButton}
             />
-            {response.isFailed && <div className={styles.signInInfo}>Please, sign in first</div>}
+            {userResponse.isFailed && (
+              <div className={styles.signInInfo}>Please, sign in first</div>
+            )}
           </Col>
         </Row>
       ) : (
