@@ -18,6 +18,7 @@ import Declarations from './views/Declarations/Declarations';
 import UserProfile from './views/UserProfile/UserProfile';
 import Surveys from './views/Surveys/Surveys';
 import HomePage from './views/HomePage/HomePage';
+import MeetingInvitation from './views/MeetingInvitation/MeetingInvitation';
 
 const Routes = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
@@ -97,8 +98,11 @@ const Routes = () => {
             <HomePage user={user} />
           </div>
         </ProtectedRoute>
+        <Route path="/join/:generatedEndpoint">
+          <MeetingInvitation />
+        </Route>
         <Route path="/">
-          <LandingPage />
+          <LandingPage user={user} />
         </Route>
       </Switch>
     </Router>

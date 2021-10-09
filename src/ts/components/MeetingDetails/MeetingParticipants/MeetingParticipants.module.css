@@ -50,6 +50,10 @@
     padding: 10px;
 }
 
+.linkDescription {
+    color: var(--medium-grey);
+}
+
 @media only screen and (max-width: 600px) {
     .inviteButton {
         width: 210px;

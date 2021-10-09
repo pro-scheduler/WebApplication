@@ -190,7 +190,7 @@ export const generateSharedMeetingEndpoint = (
     setData,
     setResponse,
     true,
-    'Link to meeting generated',
+    undefined,
     onSuccess
   );
 };
@@ -203,8 +203,8 @@ export const getMeetingByGeneratedEndpoint = (
 
 export const joinMeetingByGeneratedEndpoint = (
   generatedEndpoint: string,
-  setData: Function,
   onSuccess?: Function,
+  setData?: Function,
   setResponse?: Function
 ) => {
   post(

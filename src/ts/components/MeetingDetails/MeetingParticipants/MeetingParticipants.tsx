@@ -84,9 +84,6 @@ const MeetingParticipants = ({
     // eslint-disable-next-line
   }, [saveResponse]);
 
-  useEffect(() => {
-    console.log(window.location.origin);
-  }, []);
   const invitationsToList = (invitationDetailsList: InvitationDetails[]) => {
     return invitationDetailsList.map((invitationDetails: InvitationDetails, index: number) => {
       return (
@@ -102,25 +99,23 @@ const MeetingParticipants = ({
     });
   };
 
-  const acceptedInvitations = participants.map(
-    (participant: MeetingAttendeeDetails, index: number) => {
-      return (
-        <div key={participant.attendeeId}>
-          <div className={styles.participantRow}>
-            <div className={styles.userNameIcon}>
-              <UserNameIcon email={participant.user.username} />
-            </div>
-            {isOrganizer && state === MeetingState.OPEN && (
-              <div className={styles.deleteContainer}>
-                <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
-              </div>
-            )}
+  const acceptedInvitations = participants.map((participant: MeetingAttendeeDetails) => {
+    return (
+      <div key={participant.attendeeId}>
+        <div className={styles.participantRow}>
+          <div className={styles.userNameIcon}>
+            <UserNameIcon email={participant.user.username} />
           </div>
-          <hr className={styles.hrLine} />
+          {isOrganizer && state === MeetingState.OPEN && (
+            <div className={styles.deleteContainer}>
+              <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
+            </div>
+          )}
         </div>
-      );
-    }
-  );
+        <hr className={styles.hrLine} />
+      </div>
+    );
+  });
 
   const pendingInvitations = invitationsToList(
     invitations.filter(
@@ -201,7 +196,8 @@ const MeetingParticipants = ({
         title={'Invitation link'}
         onClose={() => setShowInvitationLink(false)}
       >
-        <div>Only logged in users can use below link</div>
+        <div>Copy below link</div>
+        <div className={styles.linkDescription}>(Only logged in users can use this link)</div>
         <div className="mt-4">
           <a href={window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}>
             {window.location.origin + '/join/' + sharedMeetingDetails?.generatedEndpoint}
