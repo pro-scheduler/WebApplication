@@ -174,9 +174,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               meetingId={id}
               isOrganizer={isOrganizer}
               refreshParticipants={reloadMeeting}
-              participants={meeting.attendees.filter(
-                (attendee: MeetingAttendeeDetails) => attendee.user.id !== user.id
-              )}
+              participants={meeting.attendees}
               state={meeting.state}
             />
           </Col>
