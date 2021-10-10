@@ -6,7 +6,3 @@
 .surveyRow:hover {
     cursor: pointer;
 }
-
-.surveyIcon {
-    color: var(--purple);
-}

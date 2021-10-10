@@ -8,3 +8,13 @@ export const getCancelMeetingUrl = (meetingId: number) => getMeetingUrl(meetingI
 
 export const getMeetingAttendeeUrl = (meetingId: number, attendeeId: number) =>
   getMeetingUrl(meetingId) + `/attendees/${attendeeId}`;
+
+export const getShareMeetingUrl = () => `${process.env.REACT_APP_API_URL}share`;
+
+export const getGenerateSharedMeetingUrl = () => getShareMeetingUrl() + '/generate';
+
+export const getMeetingByGeneratedEndpointUrl = (generatedEndpoint: string) =>
+  getShareMeetingUrl() + `/${generatedEndpoint}`;
+
+export const getJoinMeetingByGeneratedEndpointUrl = (generatedEndpoint: string) =>
+  getMeetingByGeneratedEndpointUrl(generatedEndpoint) + '/join';

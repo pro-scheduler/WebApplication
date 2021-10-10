@@ -20,6 +20,8 @@ import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/Mee
 import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
+import { getMeetingPlaces } from '../../API/geo/geo';
+import { PlaceDetails } from '../../model/geo/Geo';
 import {
   createNewMeetingChatMessage,
   loadMeetingChatMessages,
@@ -40,6 +42,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
+  const [places, setPlaces] = useState<PlaceDetails[]>([]);
 
   const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
     const currentUser = meeting.attendees.find(
@@ -123,6 +126,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   useEffect(() => {
     reloadSurvey();
+    getMeetingPlaces(id, setPlaces);
     // eslint-disable-next-line
   }, [id]);
 
@@ -141,125 +145,125 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, [survey]);
 
   return meeting ? (
-    <div>
-      <Container fluid className="ml-xs-5">
-        <MeetingDescription
-          name={meeting.name}
-          meetingId={id}
-          description={meeting.description}
-          organizers={meeting.attendees.filter(
-            (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ORGANIZER
-          )}
-          showSettings={showSettings}
-          setShowSettings={setShowSettings}
-          isOrganizer={isOrganizer}
-          state={meeting.state}
-          attendees={meeting.attendees.filter(
-            (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ATTENDEE
-          )}
-          reloadMeeting={reloadMeeting}
+    <Container fluid>
+      <MeetingDescription
+        name={meeting.name}
+        meetingId={id}
+        description={meeting.description}
+        organizers={meeting.attendees.filter(
+          (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ORGANIZER
+        )}
+        showSettings={showSettings}
+        setShowSettings={setShowSettings}
+        isOrganizer={isOrganizer}
+        state={meeting.state}
+        attendees={meeting.attendees.filter(
+          (attendee: MeetingAttendeeDetails) => attendee.role === MeetingRole.ATTENDEE
+        )}
+        reloadMeeting={reloadMeeting}
+      />
+      {showSettings && (
+        <MeetingSettings
+          survey={survey}
+          meetingId={parseInt(id)}
+          meetingName={meeting.name}
+          markTimeRangeDeadline={meeting.markTimeRangeDeadline}
+          meetingFinalDate={meeting.finalDate}
+          showPlacesSettings={places.length > 0}
         />
-        {showSettings && (
-          <MeetingSettings
-            survey={survey}
-            meetingId={parseInt(id)}
-            meetingName={meeting.name}
-            markTimeRangeDeadline={meeting.markTimeRangeDeadline}
-            meetingFinalDate={meeting.finalDate}
-          />
-        )}
-        {!showSettings && (
-          <Row className="justify-content ml-5 pl-5">
-            <Col lg={6}>
-              <MeetingDetailsInfo
-                hasDeclarations={false}
-                hasSurvey={survey !== undefined}
-                hasTime={meeting.availableTimeRanges.length > 0}
-                meetingLink={meeting.link}
-                meetingPassword={meeting.password}
-                name={meeting.name}
-                description={meeting.description}
-                isOrganizer={isOrganizer}
-                meetingId={meeting.id}
-                state={meeting.state}
-                refreshMeeting={reloadMeeting}
-                refreshNameAndDescription={setMeetingNameAndDescription}
-              />
-            </Col>
-            <Col lg={6}>
-              <MeetingParticipants
-                meetingId={id}
-                isOrganizer={isOrganizer}
-                refreshParticipants={reloadMeeting}
-                participants={meeting.attendees.filter(
-                  (attendee: MeetingAttendeeDetails) => attendee.user.id !== user.id
-                )}
-                state={meeting.state}
-              />
-            </Col>
-          </Row>
-        )}
-        <MeetingChat
+      )}
+      {!showSettings && (
+        <Row className="justify-content">
+          <Col lg={6}>
+            <MeetingDetailsInfo
+              hasDeclarations={false}
+              hasSurvey={survey !== undefined}
+              hasTime={meeting.availableTimeRanges.length > 0}
+              meetingLink={meeting.link}
+              meetingPassword={meeting.password}
+              places={places.length > 0}
+              name={meeting.name}
+              description={meeting.description}
+              isOrganizer={isOrganizer}
+              meetingId={meeting.id}
+              state={meeting.state}
+              refreshMeeting={reloadMeeting}
+              refreshNameAndDescription={setMeetingNameAndDescription}
+            />
+          </Col>
+          <Col lg={6}>
+            <MeetingParticipants
+              meetingId={id}
+              isOrganizer={isOrganizer}
+              refreshParticipants={reloadMeeting}
+              participants={meeting.attendees}
+              state={meeting.state}
+            />
+          </Col>
+        </Row>
+      )}
+      <MeetingChat
           messages={meetingChatMessages}
           onSendNewMessage={sendNewMeetingChatMessage}
           userId={user.id}
+      />
+      {!showSettings && meeting.state === MeetingState.OPEN && (
+        <FinalDateForm
+          meetingId={id}
+          finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
+          finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
+          hasBeenSet={meeting.finalDate != null}
+          isOrganizer={isOrganizer}
         />
-        {!showSettings && meeting.state === MeetingState.OPEN && (
-          <FinalDateForm
-            meetingId={id}
-            finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
-            finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
-            hasBeenSet={meeting.finalDate != null}
-            isOrganizer={isOrganizer}
-          />
-        )}
-        {meeting.availableTimeRanges.length > 0 && !showSettings && (
-          <MeetingTime
-            meetingId={id}
-            attendeeId={userAttendeeId}
-            timeRanges={meeting.availableTimeRanges}
-            answers={allUsersAnswers}
-            userRanges={userTimeAnswers}
-            setUser={setUser}
-            timeDeadline={new Date(meeting.markTimeRangeDeadline)}
-            numberOfParticipants={meeting.attendees.length}
-            isOrganizer={isOrganizer}
-            state={meeting.state}
-            setNewDeadline={setMeetingTimeDeadline}
-          />
-        )}
-        {survey && !showSettings && (
-          <MeetingSurvey
-            survey={survey}
-            reloadSurveySummary={reloadSurveySummary}
-            surveySummary={surveySummary}
-            numberOfParticipants={meeting.attendees.length}
-            isOrganizer={isOrganizer}
-            reloadSurvey={reloadSurvey}
-            state={meeting.state}
-          />
-        )}
-        {!showSettings && (
-          <MeetingDeclarations
-            meetingId={id}
-            user={user}
-            isOrganizer={isOrganizer}
-            open={meeting.state === MeetingState.OPEN}
-          />
-        )}
-        {!showSettings && (
-          <MeetingPlaces
-            meetingId={id}
-            user={user}
-            isOrganizer={isOrganizer}
-            open={meeting.state === MeetingState.OPEN}
-          />
-        )}
-      </Container>
-    </div>
+      )}
+      {meeting.availableTimeRanges.length > 0 && !showSettings && (
+        <MeetingTime
+          meetingId={id}
+          attendeeId={userAttendeeId}
+          timeRanges={meeting.availableTimeRanges}
+          answers={allUsersAnswers}
+          userRanges={userTimeAnswers}
+          setUser={setUser}
+          timeDeadline={new Date(meeting.markTimeRangeDeadline)}
+          numberOfParticipants={meeting.attendees.length}
+          isOrganizer={isOrganizer}
+          state={meeting.state}
+          setNewDeadline={setMeetingTimeDeadline}
+        />
+      )}
+      {survey && !showSettings && (
+        <MeetingSurvey
+          survey={survey}
+          reloadSurveySummary={reloadSurveySummary}
+          surveySummary={surveySummary}
+          numberOfParticipants={meeting.attendees.length}
+          isOrganizer={isOrganizer}
+          reloadSurvey={reloadSurvey}
+          state={meeting.state}
+        />
+      )}
+      {!showSettings && (
+        <MeetingDeclarations
+          meetingId={id}
+          user={user}
+          isOrganizer={isOrganizer}
+          open={meeting.state === MeetingState.OPEN}
+        />
+      )}
+      {places.length > 0 && !showSettings && (
+        <MeetingPlaces
+          meetingId={id}
+          user={user}
+          isOrganizer={isOrganizer}
+          open={meeting.state === MeetingState.OPEN}
+          places={places}
+          setPlaces={setPlaces}
+        />
+      )}
+    </Container>
   ) : (
-    <Container fluid className="ml-xs-5">
-      <Row className="justify-content-center mt-4 mb-5 mr-5" style={{ marginLeft: '6%' }}>
+    <Container fluid>
+      <Row className="justify-content-center mt-4 mb-5">
         <Col className="text-center mt-5">
           <LoadingSpinner active={meetingResponse.isLoading} />
         </Col>

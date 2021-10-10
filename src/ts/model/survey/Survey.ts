@@ -85,5 +85,5 @@ export type BasicUserSurveyInfo = {
   state: 'OPEN' | 'CLOSED';
   questionsCount: number;
   surveyEndDate?: Date;
-  organizer: UserSummary;
+  organizers: UserSummary[];
 };

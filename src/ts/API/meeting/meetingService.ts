@@ -1,13 +1,20 @@
-import { post, get, put, del } from '../genericApiCalls';
+import { del, get, post, put } from '../genericApiCalls';
 import {
-  getMeetingsUrl,
-  getMeetingUrl,
+  getCancelMeetingUrl,
+  getGenerateSharedMeetingUrl,
+  getJoinMeetingByGeneratedEndpointUrl,
   getLeaveMeetingUrl,
   getMeetingAttendeeUrl,
-  getCancelMeetingUrl,
+  getMeetingByGeneratedEndpointUrl,
+  getMeetingsUrl,
+  getMeetingUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import { CreateMeetingRequest, UpdateMeetingAttendeeRequest } from '../../model/meeting/Meeting';
+import {
+  CreateMeetingRequest,
+  HomeInfo,
+  UpdateMeetingAttendeeRequest,
+} from '../../model/meeting/Meeting';
 
 export const saveMeeting = (
   createRequest: CreateMeetingRequest,
@@ -159,3 +166,54 @@ export const updateMeetingAttendee = (
     'Attendee role has been updated successfully',
     onSuccess
   );
+
+// TODO connect with backend if present
+export const getHomeInfo = (setHomeInfo: Function, setResponse?: Function) => {
+  const homeInfo: HomeInfo = {
+    upcomingMeetings: [],
+    todayMeetings: [],
+  };
+  setHomeInfo(homeInfo);
+};
+
+export const generateSharedMeetingEndpoint = (
+  meetingId: number,
+  setData: Function,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
+  post(
+    {
+      meetingId,
+    },
+    getGenerateSharedMeetingUrl(),
+    setData,
+    setResponse,
+    true,
+    undefined,
+    onSuccess
+  );
+};
+
+export const getMeetingByGeneratedEndpoint = (
+  generatedEndpoint: string,
+  setMeeting: Function,
+  setResponse?: Function
+) => get(getMeetingByGeneratedEndpointUrl(generatedEndpoint), setMeeting, setResponse);
+
+export const joinMeetingByGeneratedEndpoint = (
+  generatedEndpoint: string,
+  onSuccess?: Function,
+  setData?: Function,
+  setResponse?: Function
+) => {
+  post(
+    {},
+    getJoinMeetingByGeneratedEndpointUrl(generatedEndpoint),
+    setData,
+    setResponse,
+    true,
+    'You successfully joined the meeting',
+    onSuccess
+  );
+};

@@ -76,7 +76,7 @@ const MeetingSurvey = ({
   };
 
   return (
-    <Row className="justify-content my-5 ml-5 pl-5">
+    <Row className="justify-content my-5">
       <LineWithHeader
         header={'Survey'}
         iconAction={

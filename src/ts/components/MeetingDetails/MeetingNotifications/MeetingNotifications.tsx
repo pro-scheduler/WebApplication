@@ -31,17 +31,17 @@ const MeetingNotifications = ({
 
   return (
     <>
-      <Row className="justify-content mt-5 ml-5 pl-5">
+      <Row className="justify-content mt-5">
         <LineWithHeader header={'Notifications'} collapseAction={setOpened} />
       </Row>
-      <Row className="justify-content-center ml-5 pl-5">
+      <Row className="justify-content-center">
         <Col sm={12}>
           <Collapse isOpened={opened}>
             <CustomReminder meetingId={meetingId} meetingName={meetingName} />
           </Collapse>
         </Col>
       </Row>
-      <Row className="justify-content-center ml-5 pl-5">
+      <Row className="justify-content-center">
         {markTimeRangeDeadline && (
           <Col sm={12}>
             <Collapse isOpened={opened}>
@@ -66,7 +66,7 @@ const MeetingNotifications = ({
         )}
       </Row>
       {surveyId && (
-        <Row className="justify-content-center ml-5 pl-5">
+        <Row className="justify-content-center">
           <Col sm={12}>
             <Collapse isOpened={opened}>
               <SurveyReminder meetingId={meetingId} surveyId={surveyId} meetingName={meetingName} />

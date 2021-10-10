@@ -16,6 +16,8 @@ export type MapWithPlacesProps = {
   displayMainButton: boolean;
   mainButtonAction: Function;
   allowAdding: boolean;
+  addPlaceAction: Function;
+  removeButtonAction: Function;
 };
 
 interface Colors {
@@ -34,6 +36,8 @@ const MapWithPlaces = ({
   displayMainButton,
   mainButtonAction,
   allowAdding,
+  addPlaceAction,
+  removeButtonAction,
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
@@ -85,26 +89,26 @@ const MapWithPlaces = ({
   useEffect(() => {
     if (placesToDisplay.length > 0) {
       let latAvg =
-        placesToDisplay.map((p) => p.lat).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+        placesToDisplay.map((p) => p.latitude).reduce((a, b) => a + b, 0) / placesToDisplay.length;
       let longAvg =
-        placesToDisplay.map((p) => p.long).reduce((a, b) => a + b, 0) / placesToDisplay.length;
+        placesToDisplay.map((p) => p.longitude).reduce((a, b) => a + b, 0) / placesToDisplay.length;
       let width =
         Math.max.apply(
           null,
-          placesToDisplay.map((p) => p.lat)
+          placesToDisplay.map((p) => p.latitude)
         ) -
         Math.min.apply(
           null,
-          placesToDisplay.map((p) => p.lat)
+          placesToDisplay.map((p) => p.latitude)
         );
       let height =
         Math.max.apply(
           null,
-          placesToDisplay.map((p) => p.long)
+          placesToDisplay.map((p) => p.longitude)
         ) -
         Math.min.apply(
           null,
-          placesToDisplay.map((p) => p.long)
+          placesToDisplay.map((p) => p.longitude)
         );
       setCenter([latAvg, longAvg]);
       setZoom(mapWidthToZoom(width > height ? width : height));
@@ -161,14 +165,14 @@ const MapWithPlaces = ({
               <Marker
                 key={place.id}
                 width={60}
-                anchor={[place.lat, place.long]}
+                anchor={[place.latitude, place.longitude]}
                 color={colors[place.id]}
                 onClick={() => {
                   let newColorProperties = resetProperties(setColors, 'var(--purple)');
                   let newHiddenProperties = resetProperties(setHidden, true);
                   if (hidden[place.id]) {
                     setZoom(15);
-                    setCenter([place.lat, place.long]);
+                    setCenter([place.latitude, place.longitude]);
                   }
                   changeProperty(
                     place.id,
@@ -183,12 +187,13 @@ const MapWithPlaces = ({
           })}
           {placesToDisplay.map((place, i) => {
             return (
-              <Overlay key={place.id} anchor={[place.lat, place.long]} offset={[0, 0]}>
+              <Overlay key={place.id} anchor={[place.latitude, place.longitude]} offset={[0, 0]}>
                 <div hidden={hidden[place.id]}>
                   <MapToolTip
                     name={place.name}
                     description={place.description}
                     address={place.address}
+                    placeId={place.id}
                     mainButtonName={mainButtonTooltipNameMapper(place.id)}
                     next={() => {
                       let nextPlaceIndex = (i + 1) % placesToDisplay.length;
@@ -197,16 +202,13 @@ const MapWithPlaces = ({
                       let newColor = changeProperty(place.id, setColors, colors, 'var(--purple)');
                       changeProperty(nextPlace.id, setHidden, newHidden, false);
                       changeProperty(nextPlace.id, setColors, newColor, 'var(--red)');
-                      setCenter([nextPlace.lat, nextPlace.long]);
+                      setCenter([nextPlace.latitude, nextPlace.longitude]);
                       setZoom(15);
                     }}
                     mainButtonAction={() => {
                       mainButtonAction(place.id);
                     }}
-                    removeButtonAction={() => {
-                      if (setPlacesToDisplay)
-                        setPlacesToDisplay(placesToDisplay.filter((p) => p.id !== place.id));
-                    }}
+                    removeButtonAction={removeButtonAction}
                     closeAction={() => {
                       changeProperty(place.id, setHidden, hidden, true);
                       changeProperty(place.id, setColors, colors, 'var(--purple)');
@@ -224,7 +226,7 @@ const MapWithPlaces = ({
       <div className={styles.insertModelButton}>
         {allowAdding && (
           <ActionButton
-            text="Add marker"
+            text="Add new place"
             onclick={() => {
               setInsertingMode(true);
             }}
@@ -238,16 +240,13 @@ const MapWithPlaces = ({
         setShow={setShowPopup}
         display={showPopup}
         addNewPlace={(details: { name: string; address: string; descrption: string }) => {
-          if (setPlacesToDisplay) {
-            setPlacesToDisplay([
-              ...placesToDisplay,
-              {
-                ...details,
-                id: placesToDisplay.length,
-                lat: newCoordinates[0],
-                long: newCoordinates[1],
-              },
-            ]);
+          if (addPlaceAction) {
+            addPlaceAction({
+              ...details,
+              id: placesToDisplay.length,
+              latitude: newCoordinates[0],
+              longitude: newCoordinates[1],
+            });
           }
         }}
       />

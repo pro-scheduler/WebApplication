@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -65,7 +65,7 @@ const CreateMeeting = () => {
   });
 
   const [state, setState] = useState<creatingMeetingState>('modules');
-  const [onlineMeeting, setOnlneMeeting] = useState<boolean>(false);
+  const [onlineMeeting, setOnlineMeeting] = useState<boolean>(false);
   const [surveyModule, setSurveyModule] = useState<boolean>(false);
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
@@ -125,7 +125,7 @@ const CreateMeeting = () => {
           history.push('/meetings/' + meetingId.id)
         );
       }
-      if (!onlineMeeting) {
+      if (!onlineMeeting && selectedPlaces.length > 0) {
         savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse, () => {
           history.push('/meetings/' + meetingId.id);
         });
@@ -161,7 +161,7 @@ const CreateMeeting = () => {
   };
 
   return (
-    <Container className="ml-5 ml-sm-auto">
+    <Container>
       {state !== 'modules' && (
         <MeetingNavbar
           state={state}
@@ -206,33 +206,18 @@ const CreateMeeting = () => {
         setEmails={setEmails}
         setInvitationMessage={setInvitationMessage}
       />
-      <div hidden={state !== 'place'} className={styles.placegSwitchContainer}>
-        {onlineMeeting ? (
-          <>
-            <Row className="justify-content-center">
-              <Col xs="auto">
-                <WorldIcon />
-              </Col>
-            </Row>
-            <Row className="justify-content-center mt-4">
-              <h4>Online Meeting Details</h4>
-            </Row>
-          </>
-        ) : (
-          <>
-            <Row className="justify-content-center">
-              <Col xs="auto">
-                <MapIcon />
-              </Col>
-            </Row>
-            <Row className="justify-content-center mt-4">
-              <h4>Real Meeting Details</h4>
-            </Row>
-          </>
-        )}
+      <div hidden={state !== 'place'} className={styles.placeSwitchContainer}>
+        <Row className="justify-content-center mt-5">
+          <Col lg={12} className="text-center">
+            {onlineMeeting ? <WorldIcon /> : <MapIcon />}
+          </Col>
+        </Row>
+        <Row className="justify-content-center mt-4">
+          <h4>Meeting place details</h4>
+        </Row>
         <div>
           <SwitchButton
-            onChange={() => setOnlneMeeting(!onlineMeeting)}
+            onChange={() => setOnlineMeeting(!onlineMeeting)}
             checkedIcon={<BiWorld className={styles.switchIcon} />}
             unCheckedIcon={<FaMapMarkedAlt className={styles.switchIcon} />}
           />
@@ -251,8 +236,8 @@ const CreateMeeting = () => {
         setSelectedPlaces={setSelectedPlaces}
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
-      <Row className="justify-content-center mt-5">
-        <Col xs="auto">
+      <Row className="justify-content-center my-5">
+        <Col lg={12} className="text-center">
           {state !== 'modules' && (
             <div className={styles.navigationContainer}>
               <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
@@ -263,14 +248,14 @@ const CreateMeeting = () => {
       </Row>
       {state === 'summary' && (
         <>
-          <Row className="justify-content-center ml-sm-5">
+          <Row className="justify-content-center">
             <Col>
               <hr className={styles.hrLine} />
             </Col>
           </Row>
 
           <Row className="justify-content-center mt-5 mb-4">
-            <Col xs="auto">
+            <Col lg={12} className="text-center">
               <ActionButton
                 text="Create meeting"
                 onclick={saveThisMeeting}
@@ -281,8 +266,8 @@ const CreateMeeting = () => {
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-2">
-        <Col xs="auto">
+      <Row className="justify-content-center mt-4">
+        <Col className="text-center mt-5">
           <LoadingSpinner
             active={
               saveMeetingResponse.isLoading ||

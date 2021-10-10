@@ -3,17 +3,6 @@
     align-items: center;
 }
 
-.invitationListHeader {
-    font-size: var(--s-font-size);
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.invitationListIcon {
-    color: var(--purple);
-}
-
 .invitationsTable {
     overflow-y: auto;
     overflow-x: hidden;

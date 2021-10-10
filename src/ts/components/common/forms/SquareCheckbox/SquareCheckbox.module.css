@@ -20,6 +20,7 @@
   height: 15px;
   margin: auto;
   background-color: white;
+  border-radius: 3px;
 }
 
 .checkedSquare {

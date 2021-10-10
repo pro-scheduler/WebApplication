@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import styles from './CreateInvitations.module.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import FriendsIcon from '../common/Icons/FriendsIcon';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
@@ -64,7 +64,7 @@ const CreateInvitations = ({
       {showIcon && (
         <>
           <Row className="justify-content-center mt-5">
-            <Col xs="auto">
+            <Col lg={12} className="text-center">
               <FriendsIcon />
             </Col>
           </Row>

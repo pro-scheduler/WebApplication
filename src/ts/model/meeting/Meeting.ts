@@ -73,7 +73,7 @@ export type MeetingSummary = {
   name: string;
   description: string;
   type: MeetingType;
-  organizer: UserSummary;
+  organizers: UserSummary[];
   state: MeetingState;
   finalDate: TimeRangeDTO | undefined;
 };
@@ -121,4 +121,14 @@ export class MeetingAttendeeDetails {
 export type UpdateMeetingAttendeeRequest = {
   role: MeetingRole;
   markedTimeRanges: TimeRangeDTO[];
+};
+
+export type HomeInfo = {
+  upcomingMeetings: MeetingSummary[];
+  todayMeetings: MeetingSummary[];
+};
+
+export type SharedMeetingDetails = {
+  meetingId: number;
+  generatedEndpoint: string;
 };
