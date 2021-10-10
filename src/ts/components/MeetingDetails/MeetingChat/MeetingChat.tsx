@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BsFillCursorFill, BsX } from 'react-icons/bs';
 import { MeetingChatMessageDetails } from '../../../model/meetingChat/MeetingChatMessage';
 import TextArea from '../../common/forms/TextArea/TextArea';
+import ChatIcon from '../../common/Icons/ChatIcon';
 import LetterIcon from '../../common/Icons/LetterIcon';
 import styles from './MeetingChat.module.css';
 
@@ -14,6 +15,7 @@ export type MeetingChatProps = {
 };
 
 const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) => {
+  const [chatVisible, setChatVisible] = useState<boolean>(false);
   const [newMessage, setNewMessage] = useState<string>('');
 
   const messageContainerRef = React.useRef<HTMLDivElement>(null);
@@ -62,25 +64,35 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
     return message.sendBy.id === userId ? ownMessageEntry(message) : otherMessageEntry(message);
   };
 
+  const toggleChat = () => setChatVisible(!chatVisible);
+
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div>Meeting chat</div>
-        <BsX className={styles.closeIcon} />
+    <div>
+      <div
+        className={`${styles.button} ${chatVisible ? styles.visible : styles.invisible}`}
+        onClick={toggleChat}
+      >
+        <ChatIcon />
       </div>
-      <div className={styles.messagesContainer} ref={messageContainerRef}>
-        {messages?.map((message: MeetingChatMessageDetails, index: number) =>
-          messageEntry(message)
-        )}
-      </div>
-      <div className={styles.footer}>
-        <TextArea
-          placeholder="Type your message here"
-          valueHandler={setNewMessage}
-          value={newMessage}
-          className={styles.chatInput}
-        />
-        <BsFillCursorFill onClick={sendMessage} className={styles.sendIcon} />
+      <div className={`${styles.container} ${chatVisible ? styles.invisible : styles.visible}`}>
+        <div className={styles.header}>
+          <div>Meeting chat</div>
+          <BsX className={styles.closeIcon} onClick={toggleChat} />
+        </div>
+        <div className={styles.messagesContainer} ref={messageContainerRef}>
+          {messages?.map((message: MeetingChatMessageDetails, index: number) =>
+            messageEntry(message)
+          )}
+        </div>
+        <div className={styles.footer}>
+          <TextArea
+            placeholder="Type your message here"
+            valueHandler={setNewMessage}
+            value={newMessage}
+            className={styles.chatInput}
+          />
+          <BsFillCursorFill onClick={sendMessage} className={styles.sendIcon} />
+        </div>
       </div>
     </div>
   );

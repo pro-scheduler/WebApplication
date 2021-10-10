@@ -93,6 +93,10 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     );
   };
 
+  const addMessageToChat = (newMessage: MeetingChatMessageDetails) => {
+    setMeetingChatMessages((prevMeetingChatMessages) => prevMeetingChatMessages.concat(newMessage));
+  };
+
   useEffect(() => {
     if (meeting && user.id) {
       setUserAttendeeId(meeting.attendees.find((a: any) => a.user.id === user.id).attendeeId);
@@ -104,7 +108,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     reloadMeeting();
 
     const chatWebSocket = subscribeToChat(id, (newMessage: MeetingChatMessageDetails) =>
-      setMeetingChatMessages(meetingChatMessages.concat(newMessage))
+      addMessageToChat(newMessage)
     );
 
     return () => {
@@ -203,9 +207,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         </Row>
       )}
       <MeetingChat
-          messages={meetingChatMessages}
-          onSendNewMessage={sendNewMeetingChatMessage}
-          userId={user.id}
+        messages={meetingChatMessages}
+        onSendNewMessage={sendNewMeetingChatMessage}
+        userId={user.id}
       />
       {!showSettings && meeting.state === MeetingState.OPEN && (
         <FinalDateForm

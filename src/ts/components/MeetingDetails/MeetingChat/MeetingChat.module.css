@@ -1,5 +1,25 @@
-.container {
+.button {
+  display: block;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.15);
+}
+
+.invisible {
   visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   /* display: block; */
@@ -38,26 +58,22 @@
   height: 30px;
   color: gray;
   float: right;
-  transition-duration: 0.2s;
 }
 
 .closeIcon:hover {
   cursor: pointer;
   transform: scale(1.15);
-  transition-duration: 0.2s;
 }
 
 .sendIcon {
   width: 30px;
   height: 30px;
   float: right;
-  transition-duration: 0.2s;
 }
 
 .sendIcon:hover {
   cursor: pointer;
   transform: scale(1.15);
-  transition-duration: 0.2s;
 }
 
 .footer {
