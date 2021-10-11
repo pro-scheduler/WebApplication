@@ -231,32 +231,14 @@ export const getPlacesSettings = (
   meetingsId: number,
   setSettings: Function,
   setResponse?: Function
-) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setSettings({
-      onlyOrganizerCanAddPlaceToMeeting: false,
-    });
-  }, 200);
-  return;
-  // eslint-disable-next-line
-  get(getPlacesSettingsUrl(meetingsId), setSettings, setResponse, true);
-};
+) => get(getPlacesSettingsUrl(meetingsId), setSettings, setResponse, true);
 
 export const savePlacesSettings = (
   meetingsId: number,
   newSettings: PlacesSettings,
   onSuccess?: Function,
   setResponse?: Function
-) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    if (onSuccess) onSuccess();
-  }, 200);
-  return;
-  // eslint-disable-next-line
+) =>
   put(
     newSettings,
     getPlacesSettingsUrl(meetingsId),
@@ -266,4 +248,3 @@ export const savePlacesSettings = (
     'You have successfully changed settings.',
     onSuccess
   );
-};
