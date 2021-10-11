@@ -18,6 +18,9 @@ import { getUserSurveys } from '../../API/survey/surveyService';
 import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { loadUserDeclarations } from '../../API/declarations/declarationsService';
+import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
+
+const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const HomePage = ({ user }: { user: UserSummary }) => {
   const [homeInfo, setHomeInfo] = useState<UserHomePageDetails>();
@@ -32,6 +35,29 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     loadUserDeclarations(setDeclarations);
   }, []);
 
+  const events = homeInfo
+    ? homeInfo.meetings
+        .filter(
+          (meeting: MeetingDetails) =>
+            new Date(meeting.finalDate.timeStart).getDate() === new Date().getDate()
+        )
+        .map((meeting: MeetingDetails) => {
+          return {
+            from:
+              new Date(meeting.finalDate.timeStart).getHours() +
+              ':' +
+              new Date(meeting.finalDate.timeStart).getMinutes(),
+            to:
+              new Date(meeting.finalDate.timeEnd).getHours() +
+              ':' +
+              new Date(meeting.finalDate.timeEnd).getMinutes(),
+            label: meeting.name,
+            meetingId: meeting.id,
+            key: meeting.id,
+          };
+        })
+    : [];
+
   return (
     <Container fluid>
       <Row className="justify-content mt-5 ml-3">
@@ -40,7 +66,7 @@ const HomePage = ({ user }: { user: UserSummary }) => {
         </Col>
       </Row>
       <Row className="justify-content-center mt-4 mb-5">
-        <Col lg={12} className="text-center mt-5">
+        <Col lg={8} className="text-center mt-5">
           {homeInfo && homeInfo.upcomingMeetings.length > 0 ? (
             <Carousel
               interval={null}
@@ -57,6 +83,20 @@ const HomePage = ({ user }: { user: UserSummary }) => {
           ) : (
             <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
           )}
+        </Col>
+        <Col lg={3} className="text-center mt-5">
+          <UserTimeGrid
+            primaryLabel={
+              ('0' + new Date().getDate()).slice(-2) +
+              '.' +
+              ('0' + (new Date().getMonth() + 1)).slice(-2)
+            }
+            disabled={true}
+            secondaryLabel={weekDays[new Date().getDay()]}
+            boxSizes={36}
+            addRanges={() => {}}
+            lockedRanges={events}
+          />
         </Col>
       </Row>
       <Row className="justify-content-md-center mt-5 mb-5">

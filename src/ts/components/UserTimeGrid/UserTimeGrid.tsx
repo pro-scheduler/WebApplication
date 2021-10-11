@@ -10,7 +10,7 @@ export type UserTimeGridProps = {
   secondaryLabel: string;
   boxSizes: number;
   addRanges: Function;
-  lockedRanges: Array<{ from: string; to: string }>;
+  lockedRanges: Array<{ from: string; to: string; label?: string; meetingId?: number }>;
   disabled: Boolean;
   userRanges?: Ranges;
   setPreferencesChanged?: (value: boolean) => void;
@@ -114,7 +114,14 @@ const UserTimeGrid = ({
     for (let key of lockedRanges) {
       let tmp = mapHourToPosition(key);
       ranges.push(
-        <LockedCell top={tmp.top} height={tmp.height} key={tmp.top + ' ' + tmp.height} />
+        <LockedCell
+          top={tmp.top}
+          height={tmp.height}
+          key={tmp.top + ' ' + tmp.height}
+          label={key.label}
+          color={'var(--purple)'}
+          meetingId={key.meetingId}
+        />
       );
     }
     setCalculatedLockedRanges(ranges);

@@ -1,7 +1,7 @@
 .container {
     text-decoration: none;
     display: block;
-    width: 800px;
+    width: 700px;
     height: 285px;
     background-color: white;
     color: black;
@@ -67,5 +67,6 @@
 @media only screen and (max-width: 600px) {
     .container {
         width: 250px;
+        height: 350px;
     }
 }
