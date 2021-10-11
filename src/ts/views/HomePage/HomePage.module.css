@@ -4,6 +4,10 @@
     color: var(--medium-grey);
 }
 
+.noMeetingsInfo {
+    font-size: var(--s-font-size);
+}
+
 @media only screen and (max-width: 600px) {
     .welcomeHeader {
         font-size: var(--xs-font-size);
