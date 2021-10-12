@@ -48,7 +48,7 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
       )}
       <div>
         <div className={styles.participantsIcons}>
-          {meeting.attendees.slice(0, 2).map((attendee: MeetingAttendeeDetails) => (
+          {meeting.attendees.slice(0, 1).map((attendee: MeetingAttendeeDetails) => (
             <LetterIcon firstLetter={attendee.user.username.charAt(0)} key={attendee.attendeeId} />
           ))}
         </div>

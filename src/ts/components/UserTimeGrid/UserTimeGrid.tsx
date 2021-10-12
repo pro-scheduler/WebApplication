@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import UserRangeBox from './UserRangeBox';
 import LockedCell from './LockedCell';
+import cx from 'classnames';
 
 export type UserTimeGridProps = {
   primaryLabel: string;
@@ -14,6 +15,7 @@ export type UserTimeGridProps = {
   disabled: Boolean;
   userRanges?: Ranges;
   setPreferencesChanged?: (value: boolean) => void;
+  fixedHeight?: boolean;
 };
 
 interface Ranges {
@@ -29,6 +31,7 @@ const UserTimeGrid = ({
   disabled,
   userRanges = {},
   setPreferencesChanged = () => {},
+  fixedHeight = false,
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
@@ -119,8 +122,10 @@ const UserTimeGrid = ({
           height={tmp.height}
           key={tmp.top + ' ' + tmp.height}
           label={key.label}
-          color={'var(--purple)'}
+          secondLabel={key.label ? key.from + ' - ' + key.to : undefined}
+          color={key.label && 'var(--bright-green)'}
           meetingId={key.meetingId}
+          borderRadius={key.label !== undefined && key.label !== ''}
         />
       );
     }
@@ -256,7 +261,7 @@ const UserTimeGrid = ({
         <div className={styles.secondaryLabel}>{secondaryLabel}</div>
       </div>
       <div className={styles.top_hours_grid} />
-      <div className={styles.hours_grid}>
+      <div className={cx(styles.hours_grid, fixedHeight && styles.fixedHeight)}>
         {calculatedLockedRanges}
         {hourButtonsGrid()}
         {calculateRanges()}

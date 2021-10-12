@@ -5,11 +5,85 @@
 }
 
 .noMeetingsInfo {
+    grid-area: upcomingMeetings;
     font-size: var(--s-font-size);
+    margin: auto auto 50px;
+    width: 490px;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
-@media only screen and (max-width: 600px) {
+.letterIcon {
+    margin-right: 10px;
+}
+
+.declarations {
+    grid-area: declarations;
+    justify-self: center;
+    margin-top: 25px;
+}
+
+.invitations {
+    grid-area: invitations;
+    justify-self: center;
+    margin-top: 25px;
+}
+
+.surveys {
+    grid-area: surveys;
+    justify-self: center;
+    margin-top: 25px;
+}
+
+.todayMeetings {
+    grid-area: todayMeetings;
+    justify-self: center;
+    width: 300px;
+    margin: 25px auto auto;
+}
+
+.upcomingMeetings {
+    grid-area: upcomingMeetings;
+    margin-top: 25px;
+}
+
+.homePageContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+            "upcomingMeetings upcomingMeetings upcomingMeetings todayMeetings"
+            "declarations invitations surveys todayMeetings"
+            ". . . todayMeetings";
+    margin-top: 30px;
+}
+
+@media only screen and (max-width: 1300px) {
+    .homePageContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "upcomingMeetings upcomingMeetings upcomingMeetings"
+            "declarations invitations surveys"
+            ". todayMeetings .";
+    }
+}
+
+@media only screen and (max-width: 910px) {
     .welcomeHeader {
         font-size: var(--xs-font-size);
+    }
+
+    .homePageContainer {
+        display: block;
+    }
+
+    .noMeetingsInfo {
+        display: none;
+    }
+
+    .todayMeetings {
+        width: 250px;
     }
 }

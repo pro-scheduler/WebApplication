@@ -6,14 +6,18 @@ export type LockCellProps = {
   top: any;
   color?: string;
   label?: string;
+  secondLabel?: string;
   meetingId?: number;
+  borderRadius?: boolean;
 };
 const LockedCell = ({
   height,
   top,
   color = 'var(--light-grey)',
   label,
+  secondLabel,
   meetingId,
+  borderRadius = false,
 }: LockCellProps) => {
   const history = useHistory();
 
@@ -26,6 +30,7 @@ const LockedCell = ({
         backgroundColor: color,
         cursor: meetingId ? 'pointer' : 'none',
         zIndex: meetingId ? 5 : 0,
+        borderRadius: borderRadius ? `var(--border-radius)` : 0,
       }}
       onClick={meetingId ? () => history.push('/meetings/' + meetingId) : () => void 0}
     >
@@ -33,10 +38,22 @@ const LockedCell = ({
         style={{
           textAlign: 'center',
           color: 'white',
+          fontSize: '12px',
         }}
       >
         {label}
       </div>
+      {height >= 32 && (
+        <div
+          style={{
+            textAlign: 'center',
+            color: 'white',
+            fontSize: '10px',
+          }}
+        >
+          {secondLabel}
+        </div>
+      )}
     </div>
   );
 };

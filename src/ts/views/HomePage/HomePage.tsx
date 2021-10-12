@@ -19,6 +19,7 @@ import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { loadUserDeclarations } from '../../API/declarations/declarationsService';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
+import LetterIcon from '../../components/common/Icons/LetterIcon';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -62,67 +63,68 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     <Container fluid>
       <Row className="justify-content mt-5 ml-3">
         <Col lg={12} className={styles.welcomeHeader}>
-          Welcome back, {user.username}!
+          Welcome back, <LetterIcon firstLetter={user.username.charAt(0)} /> {' ' + user.username}!
         </Col>
       </Row>
       <Row className="justify-content-center mt-4 mb-5">
-        <Col lg={8} className="text-center mt-5">
-          {homeInfo && homeInfo.upcomingMeetings.length > 0 ? (
-            <Carousel
-              interval={null}
-              nextIcon={<RightArrowButton onclick={() => void 0} disabled={false} />}
-              prevIcon={<LeftArrowButton onclick={() => void 0} disabled={false} />}
-              controls={width > 1100}
-            >
-              {homeInfo.upcomingMeetings.map((meeting: MeetingDetails) => (
-                <Carousel.Item key={meeting.id}>
-                  <UpcomingMeeting meeting={meeting} />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
-          )}
-        </Col>
-        <Col lg={3} className="text-center mt-5">
-          <UserTimeGrid
-            primaryLabel={
-              ('0' + new Date().getDate()).slice(-2) +
-              '.' +
-              ('0' + (new Date().getMonth() + 1)).slice(-2)
-            }
-            disabled={true}
-            secondaryLabel={weekDays[new Date().getDay()]}
-            boxSizes={36}
-            addRanges={() => {}}
-            lockedRanges={events}
-          />
-        </Col>
-      </Row>
-      <Row className="justify-content-md-center mt-5 mb-5">
-        <Col xs lg={3} className="text-center mt-5">
-          <ModuleCard
-            icon={<BsPencil />}
-            number={declarations.length}
-            name={declarations.length === 1 ? 'Declaration' : 'Declarations'}
-            redirectTo={'/declarations'}
-          />
-        </Col>
-        <Col xs lg={3} className="text-center mt-5">
-          <ModuleCard
-            icon={<BsEnvelope />}
-            number={homeInfo ? homeInfo.invitationCount : 0}
-            name={homeInfo?.invitationCount === 1 ? 'Invitation' : 'Invitations'}
-            redirectTo={'/invitations'}
-          />
-        </Col>
-        <Col xs lg={3} className="text-center mt-5">
-          <ModuleCard
-            icon={<FaRegClipboard />}
-            number={surveys.length}
-            name={surveys.length === 1 ? 'Survey' : 'Surveys'}
-            redirectTo={'surveys'}
-          />
+        <Col lg={12} className={styles.homePageContainer}>
+          <div className={styles.upcomingMeetings}>
+            {homeInfo && homeInfo.upcomingMeetings.length > 0 ? (
+              <Carousel
+                interval={null}
+                nextIcon={<RightArrowButton onclick={() => void 0} disabled={false} />}
+                prevIcon={<LeftArrowButton onclick={() => void 0} disabled={false} />}
+                controls={width > 1100}
+              >
+                {homeInfo.upcomingMeetings.map((meeting: MeetingDetails) => (
+                  <Carousel.Item key={meeting.id}>
+                    <UpcomingMeeting meeting={meeting} />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            ) : (
+              <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+            )}
+          </div>
+          <div className={styles.declarations}>
+            <ModuleCard
+              icon={<BsPencil />}
+              number={declarations.length}
+              name={declarations.length === 1 ? 'Declaration' : 'Declarations'}
+              redirectTo={'/declarations'}
+            />
+          </div>
+          <div className={styles.invitations}>
+            <ModuleCard
+              icon={<BsEnvelope />}
+              number={homeInfo ? homeInfo.invitationCount : 0}
+              name={homeInfo?.invitationCount === 1 ? 'Invitation' : 'Invitations'}
+              redirectTo={'/invitations'}
+            />
+          </div>
+          <div className={styles.surveys}>
+            <ModuleCard
+              icon={<FaRegClipboard />}
+              number={surveys.length}
+              name={surveys.length === 1 ? 'Survey' : 'Surveys'}
+              redirectTo={'surveys'}
+            />
+          </div>
+          <div className={styles.todayMeetings}>
+            <UserTimeGrid
+              primaryLabel={
+                ('0' + new Date().getDate()).slice(-2) +
+                '.' +
+                ('0' + (new Date().getMonth() + 1)).slice(-2)
+              }
+              disabled={true}
+              secondaryLabel={weekDays[new Date().getDay()]}
+              boxSizes={36}
+              addRanges={() => {}}
+              lockedRanges={events}
+              fixedHeight={true}
+            />
+          </div>
         </Col>
       </Row>
     </Container>
