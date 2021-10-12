@@ -8,13 +8,10 @@ import {
   getMeetingByGeneratedEndpointUrl,
   getMeetingsUrl,
   getMeetingUrl,
+  getUserHomePageDetailsUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import {
-  CreateMeetingRequest,
-  HomeInfo,
-  UpdateMeetingAttendeeRequest,
-} from '../../model/meeting/Meeting';
+import { CreateMeetingRequest, UpdateMeetingAttendeeRequest } from '../../model/meeting/Meeting';
 
 export const saveMeeting = (
   createRequest: CreateMeetingRequest,
@@ -167,13 +164,8 @@ export const updateMeetingAttendee = (
     onSuccess
   );
 
-// TODO connect with backend if present
-export const getHomeInfo = (setHomeInfo: Function, setResponse?: Function) => {
-  const homeInfo: HomeInfo = {
-    upcomingMeetings: [],
-    todayMeetings: [],
-  };
-  setHomeInfo(homeInfo);
+export const getUserHomePageDetails = (setData: Function, setResponse?: Function) => {
+  get(getUserHomePageDetailsUrl(), setData, setResponse);
 };
 
 export const generateSharedMeetingEndpoint = (

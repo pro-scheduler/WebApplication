@@ -1,48 +1,58 @@
-import { MeetingSummary } from '../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingDetails } from '../../model/meeting/Meeting';
 import styles from './UpcomingMeeting.module.css';
 import ArrowButton from '../common/RoundButtons/ArrowButton';
 import LetterIcon from '../common/Icons/LetterIcon';
-import { UserSummary } from '../../model/user/ProUser';
 import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const UpcomingMeeting = ({ meeting }: { meeting: MeetingSummary }) => {
+const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
   const history = useHistory();
+  const [startTime, setStartTime] = useState<Date | undefined>();
+  const [endTime, setEndTime] = useState<Date | undefined>();
+
+  useEffect(() => {
+    if (meeting.finalDate) {
+      setStartTime(new Date(meeting.finalDate.timeStart));
+      setEndTime(new Date(meeting.finalDate.timeEnd));
+    }
+  }, [meeting]);
 
   return (
     <div className={styles.container}>
       <div className={styles.upcomingMeetingHeader}>Upcoming meeting</div>
       <div className={styles.meetingName}>{meeting.name}</div>
-      <div className={styles.meetingTime}>
-        {meeting.finalDate?.timeStart.toLocaleString('en-US', {
-          hour: 'numeric',
-          hour12: true,
-          minute: 'numeric',
-        })}{' '}
-        -{' '}
-        {meeting.finalDate?.timeEnd.toLocaleString('en-US', {
-          hour: 'numeric',
-          hour12: true,
-          minute: 'numeric',
-        })}
-      </div>
-      <div className={styles.meetingDate}>
-        {meeting.finalDate?.timeStart.toLocaleDateString() ===
-        meeting.finalDate?.timeEnd.toLocaleDateString()
-          ? meeting.finalDate?.timeStart.toLocaleDateString()
-          : meeting.finalDate?.timeStart.toLocaleDateString() +
-            ' - ' +
-            meeting.finalDate?.timeEnd.toLocaleDateString()}
-      </div>
+      {startTime && endTime && (
+        <div className={styles.meetingTime}>
+          {startTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+            minute: 'numeric',
+          })}{' '}
+          -{' '}
+          {endTime.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+            minute: 'numeric',
+          })}
+        </div>
+      )}
+      {startTime && endTime && (
+        <div className={styles.meetingDate}>
+          {startTime.toLocaleDateString() === endTime.toLocaleDateString()
+            ? startTime.toLocaleDateString()
+            : startTime.toLocaleDateString() + ' - ' + endTime.toLocaleDateString()}
+        </div>
+      )}
       {meeting.description && (
         <div className={styles.meetingDescription}>{meeting.description}</div>
       )}
-      <div className={styles.iconsContainer}>
-        <div>
-          {meeting.organizers.map((organizer: UserSummary) => (
-            <LetterIcon firstLetter={organizer.username.charAt(0)} key={organizer.id} />
+      <div>
+        <div className={styles.participantsIcons}>
+          {meeting.attendees.slice(0, 1).map((attendee: MeetingAttendeeDetails) => (
+            <LetterIcon firstLetter={attendee.user.username.charAt(0)} key={attendee.attendeeId} />
           ))}
         </div>
-        <div>
+        <div className={styles.arrowButton}>
           <ArrowButton onclick={() => history.push('/meetings/' + meeting.id)} />
         </div>
       </div>

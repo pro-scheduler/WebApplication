@@ -123,9 +123,10 @@ export type UpdateMeetingAttendeeRequest = {
   markedTimeRanges: TimeRangeDTO[];
 };
 
-export type HomeInfo = {
-  upcomingMeetings: MeetingSummary[];
-  todayMeetings: MeetingSummary[];
+export type UserHomePageDetails = {
+  upcomingMeetings: MeetingDetails[];
+  meetings: MeetingDetails[];
+  invitationCount: number;
 };
 
 export type SharedMeetingDetails = {

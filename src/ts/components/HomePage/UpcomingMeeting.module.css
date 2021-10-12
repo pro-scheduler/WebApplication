@@ -1,13 +1,15 @@
 .container {
     text-decoration: none;
     display: block;
-    width: 800px;
+    width: 700px;
+    height: 285px;
     background-color: white;
     color: black;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);
     padding: 20px;
     margin: auto auto 60px;
+    position: relative;
 }
 
 .upcomingMeetingHeader {
@@ -38,10 +40,16 @@
     margin-top: 15px;
 }
 
-.iconsContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
+.participantsIcons {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+}
+
+.arrowButton {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -59,5 +67,6 @@
 @media only screen and (max-width: 600px) {
     .container {
         width: 250px;
+        height: 350px;
     }
 }
