@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
@@ -88,9 +88,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   };
 
   const sendNewMeetingChatMessage = (message: string) => {
-    createNewMeetingChatMessage(id, { message: message }, (newMessage: MeetingChatMessageDetails) =>
-      console.log('successfully send message')
-    );
+    createNewMeetingChatMessage(id, { message: message });
   };
 
   const addMessageToChat = (newMessage: MeetingChatMessageDetails) => {

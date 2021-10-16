@@ -69,12 +69,12 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
   return (
     <div>
       <div
-        className={`${styles.button} ${chatVisible ? styles.visible : styles.invisible}`}
+        className={`${styles.button} ${chatVisible ? styles.invisible : styles.visible}`}
         onClick={toggleChat}
       >
         <ChatIcon />
       </div>
-      <div className={`${styles.container} ${chatVisible ? styles.invisible : styles.visible}`}>
+      <div className={`${styles.container} ${chatVisible ? styles.visible : styles.invisible}`}>
         <div className={styles.header}>
           <div>Meeting chat</div>
           <BsX className={styles.closeIcon} onClick={toggleChat} />
