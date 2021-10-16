@@ -21,7 +21,9 @@ export type CreateSurveyProps = {
 const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
-  const [finalDate, setFinalDate] = useState<Date>(new Date());
+  const [finalDate, setFinalDate] = useState<Date>(
+    new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
+  );
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
