@@ -12,6 +12,7 @@ export type AddPlacePopupProps = {
   addNewPlace: Function;
   setShow: Function;
   display: boolean;
+  onClose: Function;
 };
 
 const AddPlacePopup = ({
@@ -21,6 +22,7 @@ const AddPlacePopup = ({
   addNewPlace,
   setShow,
   display,
+  onClose,
 }: AddPlacePopupProps) => {
   const [description, setDescription] = useState<string>(defaultDescription);
   const [name, setName] = useState<string>(defaultName);
@@ -33,7 +35,14 @@ const AddPlacePopup = ({
     setDescription(defaultDescription);
   }, [defaultName, defaultAddress, defaultDescription]);
   return (
-    <Popup show={display} title="Fill place details" onClose={() => setShow(false)}>
+    <Popup
+      show={display}
+      title="Fill place details"
+      onClose={() => {
+        setShow(false);
+        onClose();
+      }}
+    >
       <div className={styles.addPlaceDetailsForm}>
         <p className={styles.titleLabel}>Place name*</p>
         <SingleValueInput

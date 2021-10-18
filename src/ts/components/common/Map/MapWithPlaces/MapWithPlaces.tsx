@@ -1,4 +1,4 @@
-import { PlaceDetails, PlaceDTO } from '../../../../model/geo/Geo';
+import { PlaceDetails, SearchResult } from '../../../../model/geo/Geo';
 import styles from './MapWithPlaces.module.css';
 import { Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
@@ -145,14 +145,20 @@ const MapWithPlaces = ({
               setNewCoordinates(cords.latLng);
               setShowPopup(true);
               setInsertingMode(false);
-              geocodeByLocation(cords.latLng[0], cords.latLng[1], (places: PlaceDTO[]) => {
-                if (places.length > 0) {
-                  setProposalDetails({
-                    address: places[0].address,
-                    name: places[0].name,
-                    description: places[0].description,
-                  });
-                }
+              geocodeByLocation(cords.latLng[0], cords.latLng[1], (place: SearchResult) => {
+                let address =
+                  (place.address.road ? place.address.road : '') +
+                  ' ' +
+                  (place.address.city ? place.address.city : '') +
+                  ' ' +
+                  (place.address.postcode ? place.address.postcode : '') +
+                  ' ' +
+                  (place.address.country ? place.address.country : '');
+                setProposalDetails({
+                  address: address,
+                  name: address,
+                  description: place.name,
+                });
               });
             }
             resetProperties(setColors, 'var(--purple)');
@@ -237,6 +243,7 @@ const MapWithPlaces = ({
         defaultAddress={proposalDetails.address}
         defaultDescription={proposalDetails.description}
         defaultName={proposalDetails.name}
+        onClose={() => setProposalDetails(defaultProposals)}
         setShow={setShowPopup}
         display={showPopup}
         addNewPlace={(details: { name: string; address: string; descrption: string }) => {

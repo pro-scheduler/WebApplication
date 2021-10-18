@@ -25,11 +25,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
         isOnlineMeeting || (state !== 'place' && (state !== 'summary' || newPlaces.length === 0))
       }
     >
-      {state !== 'summary' ? (
-        <Row className="justify-content-center mt-4">
-          <h5>Add new place by searching or clicking on the map</h5>
-        </Row>
-      ) : (
+      {state === 'summary' && (
         <>
           <Row className="justify-content-center mt-5">
             <Col lg={12} className="text-center">

@@ -18,11 +18,13 @@ export type PlaceDTO = {
   address: string;
 };
 
-export enum GeocodeType {
-  LOCATION = 'LOCATION',
-  TEXT = 'TEXT',
-}
-
 export type PlacesSettings = {
   onlyOrganizerCanAddPlaceToMeeting: boolean;
+};
+
+export type SearchResult = {
+  address: { city: string; road: string; postcode: string; country: string };
+  lat: string;
+  lon: string;
+  name: string;
 };

@@ -1,7 +1,8 @@
-import { GeocodeType, PlaceDTO, PlacesSettings } from '../../model/geo/Geo';
+import { PlaceDTO, PlacesSettings } from '../../model/geo/Geo';
 import { post, get, put, del } from '../genericApiCalls';
 import {
-  getGeocoderUrl,
+  getGeocoderCordsUrl,
+  getGeocoderTextUrl,
   getMeetingPlacesUrl,
   getNewMeetingPlaceUrl,
   getPlacesVotesUrl,
@@ -9,28 +10,6 @@ import {
   getVotePlaceUrl,
   getPlacesSettingsUrl,
 } from './urls';
-//TODO remove mocks and integrate with geo service
-const setLoading = (setResponse?: Function) => {
-  if (setResponse) {
-    setResponse({
-      isSuccess: false,
-      isFailed: false,
-      isLoading: true,
-    });
-  }
-};
-
-const setSuccess = (setResponse?: Function) => {
-  if (setResponse) {
-    setResponse({
-      isSuccess: true,
-      isFailed: false,
-      isLoading: false,
-    });
-  }
-};
-
-const mockedProposalPlaces: PlaceDTO[] = [];
 
 export const savePlaces = (
   places: PlaceDTO[],
@@ -180,52 +159,36 @@ export const updateVotes = (
 };
 
 export const geocodeByText = (
-  searchText: string,
+  searchString: string,
   setProposalPlaces: Function,
   setResponse?: Function
-) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setProposalPlaces(mockedProposalPlaces);
-  }, 200);
-  return;
-  // eslint-disable-next-line
+) =>
   post(
     {
-      searchText,
+      searchString,
     },
-    getGeocoderUrl() + '?type=' + GeocodeType.TEXT,
+    getGeocoderTextUrl(),
     setProposalPlaces,
     setResponse,
     true
   );
-};
 
 export const geocodeByLocation = (
-  latitude: number,
-  longitude: number,
+  lat: number,
+  lon: number,
   setProposalPlaces: Function,
   setResponse?: Function
-) => {
-  setLoading(setResponse);
-  setTimeout(() => {
-    setSuccess(setResponse);
-    setProposalPlaces(mockedProposalPlaces);
-  }, 200);
-  return;
-  // eslint-disable-next-line
+) =>
   post(
     {
-      latitude,
-      longitude,
+      lat,
+      lon,
     },
-    getGeocoderUrl() + '?type=' + GeocodeType.LOCATION,
+    getGeocoderCordsUrl(),
     setProposalPlaces,
     setResponse,
     true
   );
-};
 
 export const getPlacesSettings = (
   meetingsId: number,
