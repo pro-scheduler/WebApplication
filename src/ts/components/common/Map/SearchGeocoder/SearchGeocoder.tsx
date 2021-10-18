@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { geocodeByText } from '../../../../API/geo/geo';
-import { PlaceDTO } from '../../../../model/geo/Geo';
+import { PlaceDTO, SearchResult } from '../../../../model/geo/Geo';
 import SingleValueInput from '../../forms/Input/SingleValueInput';
 import ActionButton from '../../SubmitButton/ActionButton/ActionButton';
 import styles from './SearchGeocoder.module.css';
@@ -12,7 +12,7 @@ export type SearchGeocoderProps = {
 const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPlace }) => {
   const [searchText, setSearchText] = useState<string>('');
   const [newPlace, setNewPlace] = useState<PlaceDTO | undefined>(undefined);
-  const [propositions, setPropositions] = useState<PlaceDTO[]>([]);
+  const [propositions, setPropositions] = useState<SearchResult[]>([]);
 
   useEffect(() => {
     if (searchText === '') {
@@ -22,10 +22,24 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
     }
   }, [searchText]);
 
-  const addProposition = (proposition: PlaceDTO) => {
+  const addProposition = (proposition: SearchResult) => {
     setSearchText(proposition.name);
     setPropositions([]);
-    setNewPlace(proposition);
+    let address =
+      (proposition.address.road ? proposition.address.road : '') +
+      ' ' +
+      (proposition.address.city ? proposition.address.city : '') +
+      ' ' +
+      (proposition.address.postcode ? proposition.address.postcode : '') +
+      ' ' +
+      (proposition.address.country ? proposition.address.country : '');
+    setNewPlace({
+      latitude: parseFloat(proposition.lat),
+      longitude: parseFloat(proposition.lon),
+      name: address,
+      description: proposition.name,
+      address: address,
+    });
   };
 
   return (
@@ -44,6 +58,7 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
             setSelectedPlace(newPlace);
             setSearchText('');
           }}
+          disabled={searchText === ''}
         />
       </div>
       {propositions.map((proposition, i) => (

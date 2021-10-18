@@ -112,6 +112,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     return () => {
       chatWebSocket.close();
     };
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
