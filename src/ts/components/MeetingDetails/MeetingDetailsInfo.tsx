@@ -26,7 +26,6 @@ export type MeetingDetailsInfoProps = {
   hasDeclarations: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
-  places: boolean;
   name: string;
   description: string;
   isOrganizer: boolean;
@@ -36,6 +35,7 @@ export type MeetingDetailsInfoProps = {
   refreshNameAndDescription: Function;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
+  finalPlace?: string;
 };
 
 const MeetingDetailsInfo = ({
@@ -43,7 +43,6 @@ const MeetingDetailsInfo = ({
   hasSurvey,
   meetingLink,
   meetingPassword,
-  places,
   name,
   description,
   isOrganizer,
@@ -53,6 +52,7 @@ const MeetingDetailsInfo = ({
   refreshNameAndDescription,
   finalBeginDate,
   finalEndDate,
+  finalPlace,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -167,7 +167,7 @@ const MeetingDetailsInfo = ({
                 (finalBeginDate.toLocaleDateString() === finalEndDate.toLocaleDateString()
                   ? finalBeginDate.toLocaleDateString()
                   : finalBeginDate.toLocaleDateString() + ' - ' + finalEndDate.toLocaleDateString())
-              : 'Not set'}
+              : 'Time not set'}
           </p>
           <p className={styles.moduleContainer}>
             <BiWorld className={styles.moduleIcon} />{' '}
@@ -187,10 +187,10 @@ const MeetingDetailsInfo = ({
                   </>
                 )}
               </>
-            ) : places ? (
-              'Places available'
+            ) : finalPlace ? (
+              finalPlace
             ) : (
-              'No place available'
+              'Place not set'
             )}
           </p>
           <p className={styles.moduleContainer}>

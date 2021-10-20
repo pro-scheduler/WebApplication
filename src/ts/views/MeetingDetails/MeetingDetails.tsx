@@ -182,7 +182,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               hasSurvey={survey !== undefined}
               meetingLink={meeting.link}
               meetingPassword={meeting.password}
-              places={places.length > 0}
+              finalPlace={undefined} // TODO replace by final place
               name={meeting.name}
               description={meeting.description}
               isOrganizer={isOrganizer}
