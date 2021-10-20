@@ -218,7 +218,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           answers={allUsersAnswers}
           userRanges={userTimeAnswers}
           setUser={setUser}
-          timeDeadline={new Date(meeting.markTimeRangeDeadline)}
+          timeDeadline={meeting.markTimeRangeDeadline}
           numberOfParticipants={meeting.attendees.length}
           isOrganizer={isOrganizer}
           state={meeting.state}

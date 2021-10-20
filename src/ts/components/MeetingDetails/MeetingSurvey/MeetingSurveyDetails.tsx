@@ -60,7 +60,7 @@ const MeetingSurveyDetails = ({
               setDate={setEndDate}
               timeLabel="Select day"
               dateLabel="Select time"
-              defaultDate={surveyToEdit.surveyEndDate ? surveyToEdit.surveyEndDate : new Date()}
+              defaultDate={surveyToEdit.surveyEndDate ? surveyToEdit.surveyEndDate : null}
             />
             <p className={styles.descriptionHeader}>Description</p>
             <TextArea

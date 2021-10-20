@@ -15,17 +15,19 @@ export type EditDeadlineProps = {
 };
 
 const EditDeadline = ({ isOpened, timeDeadline, meetingId, setDeadline }: EditDeadlineProps) => {
-  const [newDeadline, setNewDeadline] = useState<Date>(new Date());
+  const [newDeadline, setNewDeadline] = useState<Date | null>(timeDeadline ? timeDeadline : null);
 
   const saveNewDeadline = () => {
-    updateMeetingTimeDeadline(
-      newDeadline,
-      meetingId,
-      () => {},
-      () => {
-        setDeadline(newDeadline);
-      }
-    );
+    if (newDeadline) {
+      updateMeetingTimeDeadline(
+        newDeadline,
+        meetingId,
+        () => {},
+        () => {
+          setDeadline(newDeadline);
+        }
+      );
+    }
   };
   useEffect(() => {
     if (timeDeadline) setNewDeadline(timeDeadline);
