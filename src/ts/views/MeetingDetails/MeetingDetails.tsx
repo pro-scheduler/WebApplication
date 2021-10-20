@@ -17,7 +17,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
 import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
-import FinalDateForm from '../../components/MeetingDetails/FinalDateForm/FinalDateForm';
 import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
 import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
 import { getMeetingPlaces } from '../../API/geo/geo';
@@ -181,7 +180,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
             <MeetingDetailsInfo
               hasDeclarations={false}
               hasSurvey={survey !== undefined}
-              hasTime={meeting.availableTimeRanges.length > 0}
               meetingLink={meeting.link}
               meetingPassword={meeting.password}
               places={places.length > 0}
@@ -192,6 +190,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               state={meeting.state}
               refreshMeeting={reloadMeeting}
               refreshNameAndDescription={setMeetingNameAndDescription}
+              finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
+              finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
             />
           </Col>
           <Col lg={6}>
@@ -210,15 +210,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         onSendNewMessage={sendNewMeetingChatMessage}
         userId={user.id}
       />
-      {!showSettings && meeting.state === MeetingState.OPEN && (
-        <FinalDateForm
-          meetingId={id}
-          finalEndDate={meeting.finalDate ? meeting.finalDate.timeEnd : new Date()}
-          finalBeginDate={meeting.finalDate ? meeting.finalDate.timeStart : new Date()}
-          hasBeenSet={meeting.finalDate != null}
-          isOrganizer={isOrganizer}
-        />
-      )}
       {meeting.availableTimeRanges.length > 0 && !showSettings && (
         <MeetingTime
           meetingId={id}

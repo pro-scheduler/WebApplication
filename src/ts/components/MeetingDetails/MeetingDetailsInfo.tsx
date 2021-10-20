@@ -15,14 +15,15 @@ import { useHistory } from 'react-router';
 import {
   cancelMeeting,
   leaveMeeting,
+  updateFinalDate,
   updateMeetingNameAndDescription,
 } from '../../API/meeting/meetingService';
 import { MeetingState } from '../../model/meeting/Meeting';
+import FinalDateForm from './FinalDateForm/FinalDateForm';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
   hasDeclarations: boolean;
-  hasTime: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
   places: boolean;
@@ -33,12 +34,13 @@ export type MeetingDetailsInfoProps = {
   state: MeetingState;
   refreshMeeting: Function;
   refreshNameAndDescription: Function;
+  finalBeginDate: Date | null;
+  finalEndDate: Date | null;
 };
 
 const MeetingDetailsInfo = ({
   hasDeclarations,
   hasSurvey,
-  hasTime,
   meetingLink,
   meetingPassword,
   places,
@@ -49,34 +51,61 @@ const MeetingDetailsInfo = ({
   state,
   refreshMeeting,
   refreshNameAndDescription,
+  finalBeginDate,
+  finalEndDate,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
   const [newName, setName] = useState<string>('');
   const [newDescription, setDescription] = useState<string>('');
+  const [newBeginDate, setNewBeginDate] = useState<Date | null>(null);
+  const [newEndDate, setNewEndDate] = useState<Date | null>(null);
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const history = useHistory();
 
-  const updateNameAndDescription = () => {
-    updateMeetingNameAndDescription(
-      newName,
-      newDescription,
-      meetingId,
-      () => {},
-      () => {
-        setName(newName);
-        setDescription(newDescription);
-        refreshNameAndDescription(newName, newDescription);
-      }
-    );
+  const updateDetails = () => {
+    if (name !== newName || description !== newDescription) {
+      updateMeetingNameAndDescription(
+        newName,
+        newDescription,
+        meetingId,
+        () => {},
+        () => {
+          setName(newName);
+          setDescription(newDescription);
+          refreshNameAndDescription(newName, newDescription);
+        }
+      );
+    }
+    if (
+      newBeginDate &&
+      newEndDate &&
+      (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate)
+    ) {
+      updateFinalDate(
+        {
+          timeStart: newBeginDate,
+          timeEnd: newEndDate,
+        },
+        meetingId,
+        () => {},
+        () => {},
+        refreshMeeting
+      );
+    }
   };
 
   useEffect(() => {
     setName(name);
     setDescription(description);
   }, [name, description]);
+
+  useEffect(() => {
+    setNewBeginDate(finalBeginDate);
+    setNewEndDate(finalEndDate);
+  }, [finalBeginDate, finalEndDate]);
 
   const cancelTheMeeting = () => {
     setCancelMeetingModal(false);
@@ -122,7 +151,23 @@ const MeetingDetailsInfo = ({
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
             <BiCalendarEvent className={styles.moduleIcon} />{' '}
-            {hasTime ? 'Time available' : 'No time available'}
+            {finalBeginDate && finalEndDate
+              ? finalBeginDate.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  hour12: true,
+                  minute: 'numeric',
+                }) +
+                ' - ' +
+                finalEndDate.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  hour12: true,
+                  minute: 'numeric',
+                }) +
+                ', ' +
+                (finalBeginDate.toLocaleDateString() === finalEndDate.toLocaleDateString()
+                  ? finalBeginDate.toLocaleDateString()
+                  : finalBeginDate.toLocaleDateString() + ' - ' + finalEndDate.toLocaleDateString())
+              : 'Not set'}
           </p>
           <p className={styles.moduleContainer}>
             <BiWorld className={styles.moduleIcon} />{' '}
@@ -179,12 +224,25 @@ const MeetingDetailsInfo = ({
             validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
             placeholder="Please type meeting description ..."
           />
+          <p className={styles.editLabel}>Final date</p>
+          <FinalDateForm
+            finalBeginDate={newBeginDate}
+            finalEndDate={newEndDate}
+            setFinalBeginDate={setNewBeginDate}
+            setFinalEndDate={setNewEndDate}
+          />
           <div className={styles.buttonContainer}>
             <ActionButton
               onclick={() => {
-                updateNameAndDescription();
+                updateDetails();
               }}
-              disabled={invalidNameDesc || (newName === name && description === newDescription)}
+              disabled={
+                invalidNameDesc ||
+                (newName === name &&
+                  description === newDescription &&
+                  finalBeginDate === newBeginDate &&
+                  finalEndDate === newEndDate)
+              }
               text="Edit"
             />
           </div>
