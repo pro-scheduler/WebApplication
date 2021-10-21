@@ -6,12 +6,17 @@ import {
   getLeaveMeetingUrl,
   getMeetingAttendeeUrl,
   getMeetingByGeneratedEndpointUrl,
+  getMeetingSettingsUrl,
   getMeetingsUrl,
   getMeetingUrl,
   getUserHomePageDetailsUrl,
 } from './urls';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import { CreateMeetingRequest, UpdateMeetingAttendeeRequest } from '../../model/meeting/Meeting';
+import {
+  CreateMeetingRequest,
+  MeetingSettings,
+  UpdateMeetingAttendeeRequest,
+} from '../../model/meeting/Meeting';
 
 export const saveMeeting = (
   createRequest: CreateMeetingRequest,
@@ -208,4 +213,34 @@ export const joinMeetingByGeneratedEndpoint = (
     'You successfully joined the meeting',
     onSuccess
   );
+};
+
+export const saveMeetingSettings = (
+  meetingsId: number,
+  newSettings: MeetingSettings,
+  onSuccess?: Function,
+  setResponse?: Function
+) => {
+  if (onSuccess) onSuccess();
+  return;
+  // eslint-disable-next-line
+  put(
+    newSettings,
+    getMeetingSettingsUrl(meetingsId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully changed general settings.',
+    onSuccess
+  );
+};
+export const getMeetingSettings = (
+  meetingsId: number,
+  setSettings: Function,
+  setResponse?: Function
+) => {
+  setSettings({ onlyOrganizerCanInviteNewPeople: false });
+  return;
+  // eslint-disable-next-line
+  get(getMeetingSettingsUrl(meetingsId), setSettings, setResponse, true);
 };

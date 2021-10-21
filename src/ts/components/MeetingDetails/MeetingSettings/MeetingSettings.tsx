@@ -2,6 +2,7 @@ import MeetingNotifications from '../MeetingNotifications/MeetingNotifications';
 import { UserSurvey } from '../../../model/survey/Survey';
 import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
 import PlaceSettings from './PlaceSettings/PlaceSettings';
+import GeneralSettings from './GeneraSettings/GeneralSettings';
 export type MeetingSettingsProps = {
   survey: UserSurvey | undefined;
   meetingId: number;
@@ -21,6 +22,7 @@ const MeetingSettings = ({
 }: MeetingSettingsProps) => {
   return (
     <>
+      <GeneralSettings meetingId={meetingId} />
       <MeetingNotifications
         meetingId={meetingId}
         meetingName={meetingName}

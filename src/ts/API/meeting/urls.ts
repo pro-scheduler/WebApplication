@@ -20,3 +20,5 @@ export const getMeetingByGeneratedEndpointUrl = (generatedEndpoint: string) =>
 
 export const getJoinMeetingByGeneratedEndpointUrl = (generatedEndpoint: string) =>
   getMeetingByGeneratedEndpointUrl(generatedEndpoint) + '/join';
+
+export const getMeetingSettingsUrl = (meetingId: number) => getMeetingUrl(meetingId) + '/settings';
