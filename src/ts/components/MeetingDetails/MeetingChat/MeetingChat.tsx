@@ -5,8 +5,8 @@ import { BsFillCursorFill, BsX } from 'react-icons/bs';
 import { MeetingChatMessageDetails } from '../../../model/meetingChat/MeetingChatMessage';
 import TextArea from '../../common/forms/TextArea/TextArea';
 import ChatIcon from '../../common/Icons/ChatIcon';
-import LetterIcon from '../../common/Icons/LetterIcon';
 import styles from './MeetingChat.module.css';
+import UserIcon from '../../common/Icons/UserIcon';
 
 export type MeetingChatProps = {
   userId: number;
@@ -35,10 +35,7 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
             {moment(message.creationDateTime).format('d MMM HH:mm')}
           </div>
         </div>
-        <LetterIcon
-          firstLetter={message.sendBy.email.charAt(0)}
-          className={styles.messageSenderIcon}
-        />
+        <UserIcon user={message.sendBy} className={styles.messageSenderIcon} />
       </div>
     );
   };
@@ -46,10 +43,7 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
   const otherMessageEntry = (message: MeetingChatMessageDetails) => {
     return (
       <div className={`${styles.singleMessageContainer} ${styles.messageLeft}`}>
-        <LetterIcon
-          firstLetter={message.sendBy.email.charAt(0)}
-          className={styles.messageSenderIcon}
-        />
+        <UserIcon user={message.sendBy} className={styles.messageSenderIcon} />
         <div className={`${styles.messageContentContainer} ${styles.messageOther}`}>
           <div className={styles.messageText}>{message.message}</div>
           <div className={styles.messageDateTime}>

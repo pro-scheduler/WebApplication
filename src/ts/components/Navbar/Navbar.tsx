@@ -18,7 +18,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
 import logo from '../../../images/logo.svg';
 import { UserSummary } from '../../model/user/ProUser';
-import LetterIcon from '../common/Icons/LetterIcon';
+import UserIcon from '../common/Icons/UserIcon';
 
 const Navbar = ({ user }: { user: UserSummary }) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
@@ -105,14 +105,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
         <SidebarFooter>
           <Menu iconShape="circle">
             {user && user.username && (
-              <MenuItem
-                icon={
-                  <LetterIcon
-                    firstLetter={user.username.charAt(0)}
-                    backgroundColor="var(--light-red)"
-                  />
-                }
-              >
+              <MenuItem icon={<UserIcon user={user} backgroundColor="var(--light-red)" />}>
                 {user.username}
                 <Link to="/profile" />
               </MenuItem>

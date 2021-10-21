@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import { FiSettings } from 'react-icons/fi';
 import { RiSurveyLine } from 'react-icons/ri';
 import styles from './MeetingDescription.module.css';
-import UserIcon from './MeetingParticipants/UserIcon';
+import UserInfoIcon from './MeetingParticipants/UserInfoIcon';
 import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import PlusButton from '../common/SubmitButton/ActionButton/PlusButton';
 import { useEffect, useState } from 'react';
@@ -56,8 +56,8 @@ const MeetingDescription = ({
   const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
     return (
       <div className={styles.organizer} key={'organizer' + organizer.attendeeId}>
-        <UserIcon
-          name={organizer.user.username}
+        <UserInfoIcon
+          user={organizer.user}
           meetingId={meetingId}
           attendeeId={organizer.attendeeId}
           canDelete={false}
@@ -69,8 +69,8 @@ const MeetingDescription = ({
   const attendeesIcons = searchResults.map((attendee: MeetingAttendeeDetails) => {
     return (
       <div className={styles.attendeeContainer} key={'attendee' + attendee.attendeeId}>
-        <UserIcon
-          name={attendee.user.username}
+        <UserInfoIcon
+          user={attendee.user}
           meetingId={meetingId}
           attendeeId={attendee.attendeeId}
           canDelete={false}

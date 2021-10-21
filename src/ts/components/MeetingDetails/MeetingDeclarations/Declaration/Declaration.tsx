@@ -3,7 +3,6 @@ import { RiPencilFill } from 'react-icons/ri';
 import styles from './Declaration.module.css';
 import DeleteButton from '../../../common/SubmitButton/ActionButton/DeleteButton';
 import PlusButton from '../../../common/SubmitButton/ActionButton/PlusButton';
-import LetterIcon from '../../../common/Icons/LetterIcon';
 import ReturnButton from '../../../common/SubmitButton/ActionButton/ReturnButton';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -21,6 +20,7 @@ import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton
 import TextArea from '../../../common/forms/TextArea/TextArea';
 import LoadingSpinner from '../../../common/Spinner/LoadingSpinner';
 import { ApiCall } from '../../../../API/genericApiCalls';
+import UserIcon from '../../../common/Icons/UserIcon';
 
 export type DeclarationProps = {
   defaultDeclaration: DeclarationDetails;
@@ -118,7 +118,7 @@ const Declaration = ({
       <div className="mt-3"> {declaration.description}</div>
       <div className={styles.footer}>
         <div title={user.email}>
-          <LetterIcon firstLetter={declaration.createdBy.email.charAt(0)} />
+          <UserIcon user={declaration.createdBy} />
         </div>
         <div className={styles.assignedContainer}>
           {declaration.assignees.map((assigned, i) => (
@@ -128,7 +128,7 @@ const Declaration = ({
               style={{ right: i * 20 }}
               title={assigned.email}
             >
-              <LetterIcon firstLetter={assigned.email.charAt(0)} />
+              <UserIcon user={assigned} />
             </div>
           ))}
           <div
@@ -138,7 +138,7 @@ const Declaration = ({
             {!isAssigned && !disabled && (
               <>
                 <div className={styles.currentUserLetter}>
-                  <LetterIcon firstLetter={user.email.charAt(0)} />
+                  <UserIcon user={user} />
                 </div>
                 <div className={styles.assignMe}>
                   <PlusButton

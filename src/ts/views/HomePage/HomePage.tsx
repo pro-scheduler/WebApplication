@@ -19,7 +19,7 @@ import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { loadUserDeclarations } from '../../API/declarations/declarationsService';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
-import LetterIcon from '../../components/common/Icons/LetterIcon';
+import UserIcon from '../../components/common/Icons/UserIcon';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -63,7 +63,7 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     <Container fluid>
       <Row className="justify-content mt-5 ml-3">
         <Col lg={12} className={styles.welcomeHeader}>
-          Welcome back, <LetterIcon firstLetter={user.username.charAt(0)} /> {' ' + user.username}!
+          Welcome back, <UserIcon user={user} /> {' ' + user.username}!
         </Col>
       </Row>
       <Row className="justify-content-center mt-4 mb-5">
