@@ -25,9 +25,7 @@ export type ChooseTimeProps = {
 const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
-  const [deadline, setDeadline] = useState<Date>(
-    new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
-  );
+  const [deadline, setDeadline] = useState<Date | null>(null);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {

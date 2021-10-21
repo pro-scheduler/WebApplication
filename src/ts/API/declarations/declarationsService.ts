@@ -78,7 +78,7 @@ export const assignToDeclaration = (
     () => {},
     setResponse,
     true,
-    'User has been assigned to the declaration successfully',
+    'You have successfully assigned to the declaration',
     onSuccess
   );
 
@@ -93,6 +93,6 @@ export const unassignFromDeclaration = (
     () => {},
     setResponse,
     true,
-    'User has been unassigned from the declaration successfully',
+    'You have successfully unassigned from the declaration',
     onSuccess
   );

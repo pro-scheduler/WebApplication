@@ -21,9 +21,7 @@ export type CreateSurveyProps = {
 const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
-  const [finalDate, setFinalDate] = useState<Date>(
-    new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
-  );
+  const [finalDate, setFinalDate] = useState<Date | null>(null);
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -54,7 +52,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   }, []);
 
   useEffect(() => {
-    setSurvey({ ...survey, surveyEndDate: finalDate });
+    setSurvey({ ...survey, surveyEndDate: finalDate ? finalDate : undefined });
     // eslint-disable-next-line
   }, [finalDate]);
 

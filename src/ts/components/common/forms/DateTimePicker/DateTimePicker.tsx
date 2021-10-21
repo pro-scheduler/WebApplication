@@ -12,7 +12,7 @@ export type DateTimePickerProps = {
   setDate: Function;
   timeLabel: String;
   dateLabel: String;
-  defaultDate: Date;
+  defaultDate: Date | null;
   disabled?: boolean;
 };
 const theme = createTheme({
@@ -30,7 +30,7 @@ const DateTimePicker = ({
   dateLabel,
   disabled = false,
 }: DateTimePickerProps) => {
-  const [currentDate, setCurrentDate] = useState<Date>(defaultDate);
+  const [currentDate, setCurrentDate] = useState<Date | null>(defaultDate);
   const handleDateChange = (date: Date | null) => {
     if (date) {
       setDate(date);
@@ -38,8 +38,10 @@ const DateTimePicker = ({
   };
 
   useEffect(() => {
-    const newDate = new Date(defaultDate);
-    setCurrentDate(newDate);
+    if (defaultDate) {
+      const newDate = new Date(defaultDate);
+      setCurrentDate(newDate);
+    }
   }, [defaultDate]);
 
   return (

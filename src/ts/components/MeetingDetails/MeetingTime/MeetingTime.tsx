@@ -68,7 +68,9 @@ const MeetingTime = ({
   };
 
   useEffect(() => {
-    if (timeDeadline) setDeadlineExceeded(new Date().getTime() - timeDeadline.getTime() > 0);
+    if (timeDeadline)
+      setDeadlineExceeded(new Date().getTime() - new Date(timeDeadline).getTime() > 0);
+    else setDeadlineExceeded(false);
   }, [timeDeadline]);
 
   const saveTime = () => {
