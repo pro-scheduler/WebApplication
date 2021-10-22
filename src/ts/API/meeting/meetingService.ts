@@ -216,17 +216,17 @@ export const joinMeetingByGeneratedEndpoint = (
 };
 
 export const saveMeetingSettings = (
-  meetingsId: number,
+  meetingId: number,
   newSettings: MeetingSettings,
   onSuccess?: Function,
   setResponse?: Function
 ) => {
   if (onSuccess) onSuccess();
-  return;
+  return; // TODO connect with backend
   // eslint-disable-next-line
   put(
     newSettings,
-    getMeetingSettingsUrl(meetingsId),
+    getMeetingSettingsUrl(meetingId),
     () => {},
     setResponse,
     true,
@@ -235,12 +235,12 @@ export const saveMeetingSettings = (
   );
 };
 export const getMeetingSettings = (
-  meetingsId: number,
+  meetingId: number,
   setSettings: Function,
   setResponse?: Function
 ) => {
   setSettings({ onlyOrganizerCanInviteNewPeople: false });
-  return;
+  return; // TODO connect with backend
   // eslint-disable-next-line
-  get(getMeetingSettingsUrl(meetingsId), setSettings, setResponse, true);
+  get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
 };
