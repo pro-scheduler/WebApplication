@@ -4,9 +4,14 @@ import Container from 'react-bootstrap/Container';
 import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
 import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
 import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
-import { loadMeeting } from '../../API/meeting/meetingService';
+import { getMeetingSettings, loadMeeting } from '../../API/meeting/meetingService';
 import { UserSummary } from '../../model/user/ProUser';
-import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
+import {
+  MeetingAttendeeDetails,
+  MeetingRole,
+  MeetingSettings as MeetingGeneralSettings,
+  MeetingState,
+} from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
@@ -42,7 +47,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
-
+  const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
+    onlyOrganizerCanInviteNewPeople: true,
+  });
   const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
     const currentUser = meeting.attendees.find(
       (a: MeetingAttendeeDetails) => a.attendeeId === attendeeDetails.attendeeId
@@ -76,6 +83,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const reloadMeeting = () => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
     loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
+    getMeetingSettings(id, setMeetingSettings);
   };
 
   const reloadSurvey = () => {
@@ -201,6 +209,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               refreshParticipants={reloadMeeting}
               participants={meeting.attendees}
               state={meeting.state}
+              everybodyCanInvite={!meetingSettings.onlyOrganizerCanInviteNewPeople}
             />
           </Col>
         </Row>

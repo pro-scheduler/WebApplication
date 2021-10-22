@@ -28,6 +28,7 @@ import { MdContentCopy } from 'react-icons/md';
 export type MeetingParticipantsProps = {
   meetingId: number;
   isOrganizer: boolean;
+  everybodyCanInvite: boolean;
   refreshParticipants: Function;
   participants: MeetingAttendeeDetails[];
   state: MeetingState;
@@ -39,6 +40,7 @@ const MeetingParticipants = ({
   refreshParticipants,
   participants,
   state,
+  everybodyCanInvite,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitationMessage, setInvitationMessage] = useState<string>('');
@@ -144,9 +146,13 @@ const MeetingParticipants = ({
   return (
     <Card
       title={'Who'}
-      onAdd={isOrganizer && state === MeetingState.OPEN ? () => setAddModalShow(true) : undefined}
+      onAdd={
+        (isOrganizer || everybodyCanInvite) && state === MeetingState.OPEN
+          ? () => setAddModalShow(true)
+          : undefined
+      }
       footer={
-        isOrganizer ? (
+        isOrganizer || everybodyCanInvite ? (
           <div className={styles.actionButtonContainer}>
             <ActionButton
               onclick={generateInvitationLink}

@@ -133,3 +133,7 @@ export type SharedMeetingDetails = {
   meetingId: number;
   generatedEndpoint: string;
 };
+
+export type MeetingSettings = {
+  onlyOrganizerCanInviteNewPeople: boolean;
+};
