@@ -18,6 +18,14 @@ export type UserSummary = {
   id: number;
   email: string;
   username: string;
+  profilePictureUrl: string;
+};
+
+export type UserDetails = {
+  id: number;
+  email: string;
+  username: string;
+  profilePictureUrl: string;
 };
 
 export type UserUpdateRequest = {

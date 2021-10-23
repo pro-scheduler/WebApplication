@@ -4,16 +4,18 @@ import styles from './UserIcon.module.css';
 import YesNoPopup from '../../common/Popup/YesNoPopup';
 import LetterIcon from '../../common/Icons/LetterIcon';
 import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
+import { UserDetails, UserSummary } from '../../../model/user/ProUser';
+import UserIcon from '../../common/Icons/UserIcon';
 export type UserIconProps = {
-  name: String;
+  user: UserSummary | UserDetails;
   meetingId: number;
   attendeeId: number;
   canDelete: boolean;
   refreshParticipants?: (value: number) => void;
 };
 
-const UserIcon = ({
-  name,
+const UserInfoIcon = ({
+  user,
   meetingId,
   attendeeId,
   canDelete,
@@ -27,8 +29,8 @@ const UserIcon = ({
   };
   return (
     <>
-      <LetterIcon firstLetter={name.charAt(0)} />
-      <div className={styles.userIconParticipantName}>{name}</div>
+      <UserIcon user={user} />
+      <div className={styles.userIconParticipantName}>{user.username}</div>
       {canDelete && (
         <TiDelete className={styles.deleteUserButton} onClick={() => setModalShow(true)} />
       )}
@@ -42,4 +44,4 @@ const UserIcon = ({
   );
 };
 
-export default UserIcon;
+export default UserInfoIcon;

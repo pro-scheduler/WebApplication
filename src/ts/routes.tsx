@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { fetchCurrentUser } from './API/user/userService';
 import { defaultUser } from './auth/userContext';
-import { UserSummary } from './model/user/ProUser';
+import { UserDetails, UserSummary } from './model/user/ProUser';
 import Declarations from './views/Declarations/Declarations';
 import UserProfile from './views/UserProfile/UserProfile';
 import Surveys from './views/Surveys/Surveys';
@@ -23,7 +23,7 @@ import useWindowDimensions from './components/common/window/WindowDimension';
 import HamburgerMenuIcon from './components/common/Icons/HamburgerMenuIcon';
 
 const Routes = () => {
-  const [user, setUser] = useState<UserSummary>(defaultUser);
+  const [user, setUser] = useState<UserDetails>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
   const [showNavbar, setShowNavbar] = useState<boolean>(false);
   // eslint-disable-next-line

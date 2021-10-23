@@ -1,4 +1,4 @@
-import { UserSummary } from '../../../model/user/ProUser';
+import { UserDetails } from '../../../model/user/ProUser';
 import Card from '../../common/Card/Card';
 import styles from './UserDetails.module.css';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,7 @@ import SingleValueInput from '../../common/forms/Input/SingleValueInput';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { editUser } from '../../../API/user/userService';
 
-const UserDetails = ({ user, refreshUser }: { user: UserSummary; refreshUser: Function }) => {
+const UserDetailsView = ({ user, refreshUser }: { user: UserDetails; refreshUser: Function }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [username, setUsername] = useState<string>(user.username);
 
@@ -51,4 +51,4 @@ const UserDetails = ({ user, refreshUser }: { user: UserSummary; refreshUser: Fu
     </Card>
   );
 };
-export default UserDetails;
+export default UserDetailsView;
