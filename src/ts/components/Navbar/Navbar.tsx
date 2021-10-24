@@ -19,6 +19,7 @@ import './Navbar.css';
 import logo from '../../../images/logo.svg';
 import { UserSummary } from '../../model/user/ProUser';
 import UserIcon from '../common/Icons/UserIcon';
+import { getSignOutUrl } from '../../API/user/urls';
 
 const Navbar = ({ user }: { user: UserSummary }) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
@@ -112,7 +113,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
             )}
             <MenuItem icon={<FiLogOut />}>
               Sign out
-              <Link to="/" />
+              <a href={getSignOutUrl()} />
             </MenuItem>
           </Menu>
         </SidebarFooter>
