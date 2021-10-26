@@ -13,6 +13,7 @@ import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory } from 'react-router';
 import {
+  addMeetingToGoogleCalendar,
   cancelMeeting,
   leaveMeeting,
   updateFinalDate,
@@ -20,6 +21,7 @@ import {
 } from '../../API/meeting/meetingService';
 import { MeetingState } from '../../model/meeting/Meeting';
 import FinalDateForm from './FinalDateForm/FinalDateForm';
+import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -36,6 +38,7 @@ export type MeetingDetailsInfoProps = {
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
   finalPlace?: string;
+  googleProvider: boolean;
 };
 
 const MeetingDetailsInfo = ({
@@ -53,6 +56,7 @@ const MeetingDetailsInfo = ({
   finalBeginDate,
   finalEndDate,
   finalPlace,
+  googleProvider,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -117,6 +121,10 @@ const MeetingDetailsInfo = ({
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
+  const addToGoogleCalendar = () => {
+    addMeetingToGoogleCalendar(meetingId);
+  };
+
   return (
     <Card
       title={'Details'}
@@ -129,19 +137,33 @@ const MeetingDetailsInfo = ({
       }
       footer={
         state === MeetingState.OPEN ? (
-          <div className={styles.actionButtonContainer}>
+          <div
+            className={googleProvider ? styles.flexButtonsContainer : styles.blockButtonsContainer}
+          >
+            {googleProvider && (
+              <GoogleButton
+                text={'Add to calendar'}
+                onClick={addToGoogleCalendar}
+                containerClassName={styles.googleCalendarButtonContainer}
+                className={styles.googleCalendarButton}
+              />
+            )}
             {isOrganizer ? (
-              <ActionButton
-                onclick={() => setCancelMeetingModal(true)}
-                text={'Cancel the meeting'}
-                className={styles.actionButton}
-              />
+              <div>
+                <ActionButton
+                  onclick={() => setCancelMeetingModal(true)}
+                  text={'Cancel the meeting'}
+                  className={styles.actionButton}
+                />
+              </div>
             ) : (
-              <ActionButton
-                onclick={() => setLeaveMeetingModal(true)}
-                text={'Leave the meeting'}
-                className={styles.actionButton}
-              />
+              <div>
+                <ActionButton
+                  onclick={() => setLeaveMeetingModal(true)}
+                  text={'Leave the meeting'}
+                  className={styles.actionButton}
+                />
+              </div>
             )}
           </div>
         ) : undefined

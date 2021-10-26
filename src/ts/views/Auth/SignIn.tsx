@@ -8,8 +8,12 @@ const SignIn = () => {
   return (
     <Container className="my-0">
       <AuthView title="Sign In">
-        <GoogleButton redirectTo={googleUrl} text="Sign in with Google" className="my-2" />
-        <FacebookButton redirectTo={facebookUrl} text="Sign in with Facebook" className="mt-4" />
+        <GoogleButton redirectTo={googleUrl} text="Sign in with Google" containerClassName="my-2" />
+        <FacebookButton
+          redirectTo={facebookUrl}
+          text="Sign in with Facebook"
+          containerClassName="mt-4"
+        />
       </AuthView>
     </Container>
   );
