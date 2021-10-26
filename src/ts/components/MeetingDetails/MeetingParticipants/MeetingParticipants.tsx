@@ -52,6 +52,7 @@ const MeetingParticipants = ({
   const [sharedMeetingDetails, setSharedMeetingDetails] = useState<SharedMeetingDetails>();
   const [showInvitationLink, setShowInvitationLink] = useState<boolean>(false);
   const [link, setLink] = useState<string>('');
+  const [linkCopied, setLinkCopied] = useState(false);
 
   useEffect(() => {
     fetchMeetingInvitations(meetingId, setInvitations);
@@ -139,7 +140,13 @@ const MeetingParticipants = ({
     )
   );
 
+  const closeInvitationLinkPopup = () => {
+    setShowInvitationLink(false);
+    setLinkCopied(false);
+  };
+
   const copy = async () => {
+    setLinkCopied(!linkCopied);
     await navigator.clipboard.writeText(link);
   };
 
@@ -212,12 +219,13 @@ const MeetingParticipants = ({
       <Popup
         show={showInvitationLink && sharedMeetingDetails !== undefined}
         title={'Invitation link'}
-        onClose={() => setShowInvitationLink(false)}
+        onClose={closeInvitationLinkPopup}
       >
         <div>Copy the below link and send it to others</div>
-        <div className="mt-4">
+        <div className="mt-4 mb-2" style={{ position: 'relative' }}>
           <a href={link}>{link}</a>
           <MdContentCopy className={styles.copyIcon} onClick={copy} />
+          {linkCopied && <div className={styles.copiedToClipboardMessage}>Copied to clipboard</div>}
         </div>
       </Popup>
     </Card>
