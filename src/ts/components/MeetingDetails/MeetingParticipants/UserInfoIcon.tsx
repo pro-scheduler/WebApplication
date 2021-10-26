@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import styles from './UserIcon.module.css';
 import YesNoPopup from '../../common/Popup/YesNoPopup';
-import LetterIcon from '../../common/Icons/LetterIcon';
 import { removeAttendeeFromMeeting } from '../../../API/meeting/meetingService';
 import { UserDetails, UserSummary } from '../../../model/user/ProUser';
 import UserIcon from '../../common/Icons/UserIcon';

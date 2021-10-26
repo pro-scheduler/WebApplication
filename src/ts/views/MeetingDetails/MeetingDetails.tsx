@@ -200,6 +200,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               refreshNameAndDescription={setMeetingNameAndDescription}
               finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
               finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
+              googleProvider={true} // TODO check if user was logged in with Google
             />
           </Col>
           <Col lg={6}>
