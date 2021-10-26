@@ -6,5 +6,5 @@
 .popupNoButton {
     width: 80px;
     margin: 10px;
-    background-color: var(--light-red);
+    background-color: var(--light-red) !important;
 }

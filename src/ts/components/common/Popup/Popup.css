@@ -1,6 +1,7 @@
 .popupTitle {
   font-size: var(--xs-font-size);
   color: var(--medium-grey);
+  font-weight: var(--bold-font-weight);
 }
 
 .popup .modal-content {
