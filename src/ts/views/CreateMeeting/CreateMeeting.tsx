@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -70,7 +70,7 @@ const CreateMeeting = () => {
   const [timeModule, setTimeModule] = useState<boolean>(false);
   const [placeModule, setPlaceModule] = useState<boolean>(false);
   const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
-
+  const container = useRef<HTMLDivElement>(null);
   const getCreatedMeetingType = () => {
     return onlineLink === '' ? MeetingType.REAL : MeetingType.ONLINE;
   };
@@ -107,6 +107,16 @@ const CreateMeeting = () => {
     modules.push('summary');
     setModules(modules);
   };
+
+  useEffect(() => {
+    if (state === 'summary') {
+      if (container) {
+        if (container.current) {
+          container.current.scrollIntoView();
+        }
+      }
+    }
+  }, [state]);
 
   useEffect(() => {
     if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
@@ -256,12 +266,14 @@ const CreateMeeting = () => {
 
           <Row className="justify-content-center mt-5 mb-4">
             <Col lg={12} className="text-center">
-              <ActionButton
-                text="Create meeting"
-                onclick={saveThisMeeting}
-                disabled={invalidNameDesc || !required()(name)}
-                className={styles.saveMeetingButton}
-              />
+              <div ref={container}>
+                <ActionButton
+                  text="Create meeting"
+                  onclick={saveThisMeeting}
+                  disabled={invalidNameDesc || !required()(name)}
+                  className={styles.saveMeetingButton}
+                />
+              </div>
             </Col>
           </Row>
         </>

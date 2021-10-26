@@ -57,3 +57,7 @@ input[type='range'].range-slider::-ms-fill-lower {
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   background-color: var(--purple) !important;
 }
+
+html {
+  scroll-behavior: smooth;
+}
