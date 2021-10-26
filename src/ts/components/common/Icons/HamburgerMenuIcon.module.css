@@ -3,7 +3,8 @@
   position: fixed;
   bottom: 20px;
   z-index: 1100;
-  top: 128px;
+  top: 19px;
+  z-index: 1;
 }
 
 .positionRight {
