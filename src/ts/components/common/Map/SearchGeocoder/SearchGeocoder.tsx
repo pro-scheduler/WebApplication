@@ -1,8 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { geocodeByText } from '../../../../API/geo/geo';
-import { PlaceDTO, SearchResult } from '../../../../model/geo/Geo';
+import { SearchResult } from '../../../../model/geo/Geo';
 import SingleValueInput from '../../forms/Input/SingleValueInput';
-import ActionButton from '../../SubmitButton/ActionButton/ActionButton';
 import styles from './SearchGeocoder.module.css';
 
 export type SearchGeocoderProps = {
@@ -11,19 +10,36 @@ export type SearchGeocoderProps = {
 
 const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPlace }) => {
   const [searchText, setSearchText] = useState<string>('');
-  const [newPlace, setNewPlace] = useState<PlaceDTO | undefined>(undefined);
   const [propositions, setPropositions] = useState<SearchResult[]>([]);
+  const [isTyping, setIsTyping] = useState<boolean>(true);
+  const timoutTime = 500;
+
+  useEffect(() => {
+    setIsTyping(true);
+    if (searchText !== '') {
+      let tiemout = setTimeout(() => {
+        setIsTyping(false);
+      }, timoutTime);
+
+      return () => {
+        clearTimeout(tiemout);
+      };
+    }
+  }, [searchText]);
 
   useEffect(() => {
     if (searchText === '') {
       setPropositions([]);
     } else {
-      geocodeByText(searchText, setPropositions);
+      if (!isTyping) {
+        geocodeByText(searchText, setPropositions);
+        setIsTyping(true);
+      }
     }
-  }, [searchText]);
+  }, [searchText, isTyping]);
 
   const addProposition = (proposition: SearchResult) => {
-    setSearchText(proposition.name);
+    setSearchText('');
     setPropositions([]);
     let address =
       (proposition.address.road ? proposition.address.road : '') +
@@ -33,7 +49,7 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
       (proposition.address.postcode ? proposition.address.postcode : '') +
       ' ' +
       (proposition.address.country ? proposition.address.country : '');
-    setNewPlace({
+    setSelectedPlace({
       latitude: parseFloat(proposition.lat),
       longitude: parseFloat(proposition.lon),
       name: address,
@@ -50,15 +66,6 @@ const SearchGeocoder: FunctionComponent<SearchGeocoderProps> = ({ setSelectedPla
           placeholder={'search...'}
           value={searchText}
           className={styles.customInput}
-        />
-        <ActionButton
-          text="Add"
-          className={styles.addButton}
-          onclick={() => {
-            setSelectedPlace(newPlace);
-            setSearchText('');
-          }}
-          disabled={searchText === ''}
         />
       </div>
       {propositions.map((proposition, i) => (

@@ -33,6 +33,7 @@ const AddPlacePopup = ({
     setName(defaultName);
     setAddress(defaultAddress);
     setDescription(defaultDescription);
+    setInvalid(defaultName.length < 5);
   }, [defaultName, defaultAddress, defaultDescription]);
   return (
     <Popup

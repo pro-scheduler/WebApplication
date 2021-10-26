@@ -88,7 +88,6 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
             <MapWithPlaces
               disabled={!isOrganizer && placesSettings.onlyOrganizerCanAddPlaceToMeeting}
               placesToDisplay={places}
-              setPlacesToDisplay={setPlaces}
               mainButtonTooltipNameMapper={tooltipMapping}
               displayMainButton={true}
               displayRemoveButton={isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting}

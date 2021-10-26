@@ -112,8 +112,7 @@ const Navbar = ({ user }: { user: UserSummary }) => {
               </MenuItem>
             )}
             <MenuItem icon={<FiLogOut />}>
-              Sign out
-              <a href={getSignOutUrl()} />
+              <a href={getSignOutUrl()}>Sign out</a>
             </MenuItem>
           </Menu>
         </SidebarFooter>

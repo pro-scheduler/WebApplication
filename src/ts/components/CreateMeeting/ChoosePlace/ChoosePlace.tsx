@@ -59,7 +59,6 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
             <MapWithPlaces
               disabled={false}
               placesToDisplay={newPlaces}
-              setPlacesToDisplay={setNewPlaces}
               mainButtonTooltipNameMapper={() => ''}
               displayMainButton={false}
               displayRemoveButton={true}

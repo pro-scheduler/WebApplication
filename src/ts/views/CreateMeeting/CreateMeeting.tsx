@@ -207,7 +207,7 @@ const CreateMeeting = () => {
         setInvitationMessage={setInvitationMessage}
       />
       <div hidden={state !== 'place'} className={styles.placeSwitchContainer}>
-        <Row className="justify-content-center mt-5">
+        <Row className="justify-content-center">
           <Col lg={12} className="text-center">
             {onlineMeeting ? <WorldIcon /> : <MapIcon />}
           </Col>
