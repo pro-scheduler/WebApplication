@@ -59,8 +59,28 @@
     opacity: 0.8;
 }
 
+.copiedToClipboardMessage {
+    position: absolute;
+    right: 40px;
+    bottom: 30px;
+    color: var(--medium-grey);
+    font-size: 12px;
+}
+
+@media only screen and (max-width: 980px) {
+    .copiedToClipboardMessage {
+        right: 25px;
+        bottom: 0;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .inviteButton {
         width: 210px;
+    }
+
+    .copiedToClipboardMessage {
+        right: 5px;
+        bottom: -15px;
     }
 }

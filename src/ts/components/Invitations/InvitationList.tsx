@@ -7,6 +7,7 @@ import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import YesButton from '../common/SubmitButton/ActionButton/YesButton';
 import SearchBox from '../common/forms/Input/SearchBox';
 import { useEffect, useState } from 'react';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type InvitationListProps = {
   invitations: InvitationDetails[];
@@ -33,7 +34,9 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
     return (
       <tr key={index}>
         <td>{invitation.meeting.name}</td>
-        <td>{invitation.invitedBy.email}</td>
+        <td>
+          <UserNameIcon user={invitation.invitedBy} email={invitation.invitedBy.username} />
+        </td>
         <td>
           <div className={styles.acceptRejectContainer}>
             <YesButton

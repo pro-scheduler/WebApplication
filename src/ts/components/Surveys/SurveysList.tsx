@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import Timer from '../common/Timer/Timer';
 import { UserSummary } from '../../model/user/ProUser';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type SurveysListProps = {
   surveys: BasicUserSurveyInfo[];
@@ -37,11 +38,14 @@ const SurveysList = ({ surveys }: SurveysListProps) => {
         className={styles.surveyRow}
       >
         <td>{survey.meetingName}</td>
-        <td>{survey.description}</td>
         <td>
-          {survey.organizers.map((organizer: UserSummary) => (
-            <p key={organizer.id}>{organizer.email}</p>
-          ))}
+          <div style={{ position: 'relative' }}>
+            {survey.organizers.slice(0, 5).map((organizer: UserSummary, index: number) => (
+              <div key={organizer.id} style={{ left: index * 25, position: 'absolute' }}>
+                <UserNameIcon user={organizer} email={organizer.username} showEmail={false} />
+              </div>
+            ))}
+          </div>
         </td>
         <td>
           <Timer
@@ -64,7 +68,6 @@ const SurveysList = ({ surveys }: SurveysListProps) => {
             <thead>
               <tr>
                 <th>Meeting name</th>
-                <th>Survey description</th>
                 <th>Organizers</th>
                 <th>Time left</th>
                 <th>Number of questions</th>
