@@ -2,8 +2,8 @@ import { MeetingAttendeeDetails, MeetingDetails } from '../../model/meeting/Meet
 import styles from './UpcomingMeeting.module.css';
 import ArrowButton from '../common/RoundButtons/ArrowButton';
 import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import UserIcon from '../common/Icons/UserIcon';
+import React, { useEffect, useState } from 'react';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
   const history = useHistory();
@@ -48,9 +48,19 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
       )}
       <div>
         <div className={styles.participantsIcons}>
-          {meeting.attendees.slice(0, 1).map((attendee: MeetingAttendeeDetails) => (
-            <UserIcon user={attendee.user} key={attendee.attendeeId} />
-          ))}
+          <div style={{ position: 'relative' }}>
+            {meeting.attendees
+              .slice(0, 5)
+              .map((attendee: MeetingAttendeeDetails, index: number) => (
+                <div key={index} style={{ left: index * 25, position: 'absolute' }}>
+                  <UserNameIcon
+                    user={attendee.user}
+                    email={attendee.user.email}
+                    showEmail={false}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
         <div className={styles.arrowButton}>
           <ArrowButton onclick={() => history.push('/meetings/' + meeting.id)} />

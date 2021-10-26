@@ -73,8 +73,4 @@
   .meetingDescriptionName {
     font-size: var(--xl-font-size);
   }
-
-  .attendeeContainer {
-    display: block;
-  }
 }

@@ -5,6 +5,7 @@ import SearchBox from '../common/forms/Input/SearchBox';
 import { Table } from 'react-bootstrap';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { useHistory } from 'react-router';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type DeclarationsListProps = {
   declarations: DeclarationDetails[];
@@ -37,7 +38,9 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
       >
         <td>{declaration.title}</td>
         <td>{declaration.description}</td>
-        <td>{declaration.createdBy.email}</td>
+        <td>
+          <UserNameIcon user={declaration.createdBy} email={declaration.createdBy.username} />
+        </td>
       </tr>
     );
   });
