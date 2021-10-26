@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { fetchCurrentUser } from './API/user/userService';
 import { defaultUser } from './auth/userContext';
-import { UserDetails, UserSummary } from './model/user/ProUser';
+import { UserDetails } from './model/user/ProUser';
 import Declarations from './views/Declarations/Declarations';
 import UserProfile from './views/UserProfile/UserProfile';
 import Surveys from './views/Surveys/Surveys';
