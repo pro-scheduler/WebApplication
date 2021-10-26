@@ -33,7 +33,6 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
     return (
       <tr key={index}>
         <td>{invitation.meeting.name}</td>
-        <td>{invitation.meeting.description}</td>
         <td>{invitation.invitedBy.email}</td>
         <td>
           <div className={styles.acceptRejectContainer}>
@@ -58,7 +57,6 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
             <thead>
               <tr>
                 <th>Meeting name</th>
-                <th>Description</th>
                 <th>Invited by</th>
                 <th />
               </tr>
