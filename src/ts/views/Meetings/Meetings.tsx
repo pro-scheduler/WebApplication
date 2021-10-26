@@ -8,8 +8,6 @@ import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import CalendarIcon from '../../components/common/Icons/CalendarIcon';
-import styles from './Meetings.module.css';
 import { fetchAllMeetings } from '../../API/meeting/meetingService';
 
 const Meetings = ({ user }: { user: UserSummary }) => {
@@ -53,11 +51,6 @@ const Meetings = ({ user }: { user: UserSummary }) => {
 
   return (
     <Container fluid>
-      <Row className="justify-content-center mt-4 mb-5">
-        <Col lg={12} className="text-center mt-5">
-          <CalendarIcon className={styles.meetingListIcon} />
-        </Col>
-      </Row>
       {meetingsResponse.isSuccess ? (
         <Row className="justify-content-center mt-4">
           <Col lg={12}>
