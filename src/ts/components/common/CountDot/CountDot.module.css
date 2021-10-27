@@ -1,0 +1,12 @@
+.iconCount {
+  background-color: var(--medium-red);
+  border-radius: 100%;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  position: absolute;
+  top: 9px;
+  left: 39px;
+  line-height: 17px;
+  font-size: 10px;
+}

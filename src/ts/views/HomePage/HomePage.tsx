@@ -21,8 +21,15 @@ import { loadUserDeclarations } from '../../API/declarations/declarationsService
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-const HomePage = ({ user }: { user: UserSummary }) => {
+const HomePage = ({
+  user,
+  setInvitationsCount,
+  setSurveyCount,
+}: {
+  user: UserSummary;
+  setInvitationsCount: Function;
+  setSurveyCount: Function;
+}) => {
   const [homeInfo, setHomeInfo] = useState<UserHomePageDetails>();
   const [surveys, setSurveys] = useState<BasicUserSurveyInfo[]>([]);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
@@ -34,6 +41,12 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     getUserSurveys(setSurveys);
     loadUserDeclarations(setDeclarations);
   }, []);
+  useEffect(() => {
+    setInvitationsCount(homeInfo ? homeInfo.invitationCount : 0);
+  }, [homeInfo, setInvitationsCount]);
+  useEffect(() => {
+    setSurveyCount(surveys.length);
+  }, [surveys, setSurveyCount]);
 
   const events = homeInfo
     ? homeInfo.meetings
@@ -145,23 +158,21 @@ const HomePage = ({ user }: { user: UserSummary }) => {
             />
           </div>
           <div className={styles.todayMeetings}>
-            <div>
-              <UserTimeGrid
-                primaryLabel={
-                  ('0' + new Date().getDate()).slice(-2) +
-                  '.' +
-                  ('0' + (new Date().getMonth() + 1)).slice(-2)
-                }
-                disabled={true}
-                secondaryLabel={weekDays[new Date().getDay()]}
-                boxSizes={36}
-                addRanges={() => {}}
-                lockedRanges={events}
-                fixedHeight={true}
-                fixedHeightValue={630}
-                showCurrentTime={true}
-              />
-            </div>
+            <UserTimeGrid
+              primaryLabel={
+                ('0' + new Date().getDate()).slice(-2) +
+                '.' +
+                ('0' + (new Date().getMonth() + 1)).slice(-2)
+              }
+              disabled={true}
+              secondaryLabel={weekDays[new Date().getDay()]}
+              boxSizes={36}
+              addRanges={() => {}}
+              lockedRanges={events}
+              fixedHeight={true}
+              fixedHeightValue={630}
+              showCurrentTime={true}
+            />
           </div>
         </Col>
       </Row>

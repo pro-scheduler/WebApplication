@@ -27,6 +27,8 @@ const Routes = () => {
   // eslint-disable-next-line
   const { width, height } = useWindowDimensions();
   const marginLeft: number = 80;
+  const [invitationsCount, setInvitationsCount] = useState<number>(0);
+  const [surveyCount, setSurveyCount] = useState<number>(0);
 
   const refreshUser = () => {
     fetchCurrentUser(setUser, setResponse);
@@ -36,7 +38,14 @@ const Routes = () => {
     refreshUser();
   }, []);
 
-  const generateNavbar = () => <Navbar user={user} width={width} />;
+  const generateNavbar = () => (
+    <Navbar
+      user={user}
+      width={width}
+      invitationCount={invitationsCount}
+      surveyCount={surveyCount}
+    />
+  );
 
   return (
     <Router>
@@ -100,7 +109,11 @@ const Routes = () => {
         <ProtectedRoute path="/home" isNotLoggedIn={response.isFailed}>
           {generateNavbar()}
           <div style={{ marginLeft: width > 500 ? marginLeft : 0 }}>
-            <HomePage user={user} />
+            <HomePage
+              user={user}
+              setInvitationsCount={setInvitationsCount}
+              setSurveyCount={setSurveyCount}
+            />
           </div>
         </ProtectedRoute>
         <Route path="/join/:generatedEndpoint">

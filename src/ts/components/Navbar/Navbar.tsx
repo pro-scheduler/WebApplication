@@ -22,12 +22,22 @@ import { UserSummary } from '../../model/user/ProUser';
 import UserIcon from '../common/Icons/UserIcon';
 import { getSignOutUrl } from '../../API/user/urls';
 import HamburgerMenuIcon from '../common/Icons/HamburgerMenuIcon';
+import CountDot from '../common/CountDot/CountDot';
 
-const Navbar = ({ user, width }: { user: UserSummary; width: number }) => {
+const Navbar = ({
+  user,
+  width,
+  invitationCount,
+  surveyCount,
+}: {
+  user: UserSummary;
+  width: number;
+  invitationCount: number;
+  surveyCount: number;
+}) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
   const [activeIcon, setActiveIcon] = useState('');
   const [showNavbar, setShowNavbar] = useState<boolean>(false);
-
   return (
     <div>
       {width <= 500 && (
@@ -96,6 +106,7 @@ const Navbar = ({ user, width }: { user: UserSummary; width: number }) => {
                 active={activeIcon === 'Surveys'}
                 onClick={() => setActiveIcon('Surveys')}
               >
+                <CountDot count={surveyCount} display={surveyCount > 0} />
                 Surveys
                 <Link to="/surveys" />
               </MenuItem>
@@ -114,6 +125,7 @@ const Navbar = ({ user, width }: { user: UserSummary; width: number }) => {
                 active={activeIcon === 'Invitations'}
                 onClick={() => setActiveIcon('Invitations')}
               >
+                <CountDot count={invitationCount} display={invitationCount > 0} />
                 Invitations
                 <Link to="/invitations" />
               </MenuItem>
