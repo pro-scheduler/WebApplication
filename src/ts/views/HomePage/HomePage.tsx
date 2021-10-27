@@ -123,23 +123,19 @@ const HomePage = ({ user }: { user: UserSummary }) => {
               </div>
             </div>
           </div>
-          <div className={styles.declarations}>
+          <div className={styles.moduleCards}>
             <ModuleCard
               icon={<BsPencil />}
               number={declarations.length}
               name={declarations.length === 1 ? 'Declaration' : 'Declarations'}
               redirectTo={'/declarations'}
             />
-          </div>
-          <div className={styles.invitations}>
             <ModuleCard
               icon={<BsEnvelope />}
               number={homeInfo ? homeInfo.invitationCount : 0}
               name={homeInfo?.invitationCount === 1 ? 'Invitation' : 'Invitations'}
               redirectTo={'/invitations'}
             />
-          </div>
-          <div className={styles.surveys}>
             <ModuleCard
               icon={<FaRegClipboard />}
               number={surveys.length}
@@ -160,6 +156,7 @@ const HomePage = ({ user }: { user: UserSummary }) => {
               addRanges={() => {}}
               lockedRanges={events}
               fixedHeight={true}
+              fixedHeightValue={630}
             />
           </div>
         </Col>

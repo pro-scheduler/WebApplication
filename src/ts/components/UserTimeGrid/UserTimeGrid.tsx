@@ -16,6 +16,7 @@ export type UserTimeGridProps = {
   userRanges?: Ranges;
   setPreferencesChanged?: (value: boolean) => void;
   fixedHeight?: boolean;
+  fixedHeightValue?: number;
 };
 
 interface Ranges {
@@ -32,6 +33,7 @@ const UserTimeGrid = ({
   userRanges = {},
   setPreferencesChanged = () => {},
   fixedHeight = false,
+  fixedHeightValue,
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
@@ -261,7 +263,10 @@ const UserTimeGrid = ({
         <div className={styles.secondaryLabel}>{secondaryLabel}</div>
       </div>
       <div className={styles.top_hours_grid} />
-      <div className={cx(styles.hours_grid, fixedHeight && styles.fixedHeight)}>
+      <div
+        className={cx(styles.hours_grid, fixedHeight && styles.fixedHeight)}
+        style={fixedHeight && fixedHeightValue ? { height: fixedHeightValue } : {}}
+      >
         {calculatedLockedRanges}
         {hourButtonsGrid()}
         {calculateRanges()}

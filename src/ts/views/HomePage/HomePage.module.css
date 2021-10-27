@@ -23,48 +23,53 @@
 .declarations {
   grid-area: declarations;
   justify-self: center;
-  margin-top: 25px;
 }
 
 .invitations {
   grid-area: invitations;
   justify-self: center;
-  margin-top: 25px;
 }
 
 .surveys {
   grid-area: surveys;
   justify-self: center;
-  margin-top: 25px;
 }
 
 .todayMeetings {
   grid-area: todayMeetings;
   justify-self: center;
   width: 300px;
-  margin: 25px auto auto;
+  margin: 10px 0 0 0;
 }
 
 .upcomingMeetings {
   grid-area: upcomingMeetings;
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
 .homePageContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'upcomingMeetings upcomingMeetings upcomingMeetings todayMeetings'
-    'declarations invitations surveys todayMeetings'
-    '. . . todayMeetings';
+    'upcomingMeetings upcomingMeetings upcomingMeetings upcomingMeetings todayMeetings'
+    'moduleCards moduleCards moduleCards moduleCards todayMeetings'
+    '. . . . todayMeetings';
 }
 
+.moduleCards {
+    grid-area: moduleCards;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 20px;
+    flex-wrap: wrap;
+}
 @media only screen and (max-width: 1300px) {
   .homePageContainer {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       'upcomingMeetings upcomingMeetings upcomingMeetings'
-      'declarations invitations surveys'
+      'moduleCards moduleCards moduleCards'
       '. todayMeetings .';
   }
 }
@@ -74,6 +79,9 @@
     font-size: var(--xs-font-size);
   }
 
+  .todayMeetings {
+      margin-left: 30px;
+  }
   .homePageContainer {
     display: block;
   }
