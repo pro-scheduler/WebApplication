@@ -6,10 +6,11 @@ import styles from './MeetingDescription.module.css';
 import UserInfoIcon from './MeetingParticipants/UserInfoIcon';
 import { MeetingAttendeeDetails, MeetingRole, MeetingState } from '../../model/meeting/Meeting';
 import PlusButton from '../common/SubmitButton/ActionButton/PlusButton';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from '../common/Popup/Popup';
 import { updateMeetingAttendee } from '../../API/meeting/meetingService';
 import SearchBox from '../common/forms/Input/SearchBox';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type MeetingDescriptionProps = {
   name: string;
@@ -53,18 +54,11 @@ const MeetingDescription = ({
     );
   }, [searchTerm, attendees]);
 
-  const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails) => {
-    return (
-      <div className={styles.organizer} key={'organizer' + organizer.attendeeId}>
-        <UserInfoIcon
-          user={organizer.user}
-          meetingId={meetingId}
-          attendeeId={organizer.attendeeId}
-          canDelete={false}
-        />
-      </div>
-    );
-  });
+  const organizersIcons = organizers.map((organizer: MeetingAttendeeDetails, index: number) => (
+    <div key={index} style={{ left: index * 25, position: 'absolute' }}>
+      <UserNameIcon user={organizer.user} email={organizer.user.username} showEmail={false} />
+    </div>
+  ));
 
   const attendeesIcons = searchResults.map((attendee: MeetingAttendeeDetails) => {
     return (
@@ -130,12 +124,17 @@ const MeetingDescription = ({
           <div className={styles.meetingDescriptionOrganizer}>
             {organizers.length > 1 ? 'Organizers' : 'Organizer'}
           </div>
-          {organizersIcons}
-          {isOrganizer && (
-            <div className={styles.buttonContainer}>
-              <PlusButton onAdd={() => setModalShow(true)} />
-            </div>
-          )}
+          <div style={{ position: 'relative', bottom: '15px' }}>
+            {organizersIcons}
+            {isOrganizer && (
+              <div
+                className={styles.buttonContainer}
+                style={{ left: organizers.length * 25, position: 'absolute' }}
+              >
+                <PlusButton onAdd={() => setModalShow(true)} />
+              </div>
+            )}
+          </div>
         </div>
       </Col>
       <Col md={8} lg={6} xl={4} className="text-left mt-5">

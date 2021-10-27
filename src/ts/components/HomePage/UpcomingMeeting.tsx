@@ -2,7 +2,7 @@ import { MeetingAttendeeDetails, MeetingDetails } from '../../model/meeting/Meet
 import styles from './UpcomingMeeting.module.css';
 import ArrowButton from '../common/RoundButtons/ArrowButton';
 import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserIcon from '../common/Icons/UserIcon';
 
 const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {

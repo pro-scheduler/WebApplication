@@ -11,13 +11,14 @@ export type UserInvitationIconProps = {
   email: string;
   user?: UserSummary | UserDetails;
   state?: State;
+  showEmail?: boolean;
 };
 
-const UserNameIcon = ({ email, user, state }: UserInvitationIconProps) => {
+const UserNameIcon = ({ email, user, state, showEmail = true }: UserInvitationIconProps) => {
   return (
-    <div className={styles.userNameIconContainer}>
+    <div className={styles.userNameIconContainer} title={email}>
       {user ? <UserIcon user={user} /> : <LetterIcon firstLetter={email.charAt(0)} />}
-      <div className={styles.userIconParticipantName}>{email}</div>
+      {showEmail && <div className={styles.userIconParticipantName}>{email}</div>}
       {state === State.PENDING && <VscLoading className={styles.pendingStatus} />}
       {state === State.REJECTED && <VscClose className={styles.rejectedStatus} />}
     </div>

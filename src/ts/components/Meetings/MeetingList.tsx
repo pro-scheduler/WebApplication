@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import { leaveMeeting } from '../../API/meeting/meetingService';
 import { UserSummary } from '../../model/user/ProUser';
+import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type MeetingListProps = {
   header: string;
@@ -48,16 +49,20 @@ const MeetingList = ({
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.name}</td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.description}</td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
-          {meeting.organizers.map((organizer: UserSummary) => (
-            <p key={organizer.id}>{organizer.email}</p>
-          ))}
+          <div style={{ position: 'relative' }}>
+            {meeting.organizers.slice(0, 5).map((organizer: UserSummary, index: number) => (
+              <div key={organizer.id} style={{ left: index * 25, position: 'absolute' }}>
+                <UserNameIcon user={organizer} email={organizer.username} showEmail={false} />
+              </div>
+            ))}
+          </div>
         </td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
           {meeting.finalDate
             ? new Date(meeting.finalDate.timeStart).toLocaleString() +
               ' - ' +
               new Date(meeting.finalDate.timeEnd).toLocaleString()
-            : 'not set'}
+            : '-'}
         </td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.state}</td>
         {refreshMeetings && (
