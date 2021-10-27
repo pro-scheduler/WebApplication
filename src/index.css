@@ -61,3 +61,16 @@ input[type='range'].range-slider::-ms-fill-lower {
 html {
   scroll-behavior: smooth;
 }
+
+.carousel-control-next:hover {
+  cursor: default !important;
+}
+.carousel-control-prev:hover {
+  cursor: default !important;
+}
+.carousel-indicators {
+  bottom: -30px;
+}
+.carousel-indicators > li {
+  background-color: #212529 !important;
+}
