@@ -17,6 +17,9 @@
   justify-content: center;
 }
 
+.votesContainer {
+  overflow-y: auto;
+}
 @media only screen and (max-width: 450px) {
   .barchart {
     display: none;

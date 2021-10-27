@@ -1,5 +1,5 @@
 import styles from './MeetingPlaces.module.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Collapse } from 'react-collapse';
 import LineWithHeader from '../LineWithHeader';
@@ -37,6 +37,7 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
   const [placesSettings, setPlacesSettings] = useState<PlacesSettings>({
     onlyOrganizerCanAddPlaceToMeeting: false,
   });
+  const barChartDivRef = useRef<HTMLDivElement>(null);
   const tooltipMapping = useCallback(
     (placeId: number) =>
       places.some((place) => place.id === placeId && place.votes.some((u) => (u.id = user.id)))
@@ -135,27 +136,36 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
               </div>
             }
           >
-            {places.map((place, i) => (
-              <div key={i}>
-                <div className={styles.checkboxInline}>
-                  <SquareCheckbox
-                    checked={newVotes.includes(place.id)}
-                    setChecked={(check) => {
-                      if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
-                      else setNewVotes([...newVotes, place.id]);
-                    }}
-                  />
+            <div
+              className={styles.votesContainer}
+              style={{
+                height: barChartDivRef.current ? barChartDivRef.current.clientHeight - 79 : 'auto',
+              }}
+            >
+              {places.map((place, i) => (
+                <div key={i}>
+                  <div className={styles.checkboxInline}>
+                    <SquareCheckbox
+                      checked={newVotes.includes(place.id)}
+                      setChecked={(check) => {
+                        if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
+                        else setNewVotes([...newVotes, place.id]);
+                      }}
+                    />
+                  </div>
+                  {place.name}
                 </div>
-                {place.name}
-              </div>
-            ))}
+              ))}
+            </div>
           </Card>
         </Collapse>
       </Col>
       <Col lg={6} className={styles.barchart}>
         <Collapse isOpened={opened}>
           <Card title="Voting results" miniCard={false}>
-            <PlacesBarChart placesToDisplay={places} />
+            <div ref={barChartDivRef}>
+              <PlacesBarChart placesToDisplay={places} />
+            </div>
           </Card>
         </Collapse>
       </Col>
