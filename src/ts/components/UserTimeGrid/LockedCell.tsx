@@ -9,6 +9,7 @@ export type LockCellProps = {
   secondLabel?: string;
   meetingId?: number;
   borderRadius?: boolean;
+  currentTime?: boolean;
 };
 const LockedCell = ({
   height,
@@ -18,6 +19,7 @@ const LockedCell = ({
   secondLabel,
   meetingId,
   borderRadius = false,
+  currentTime = false,
 }: LockCellProps) => {
   const history = useHistory();
 
@@ -29,7 +31,7 @@ const LockedCell = ({
         height: height,
         backgroundColor: color,
         cursor: meetingId ? 'pointer' : 'none',
-        zIndex: meetingId ? 5 : 0,
+        zIndex: currentTime ? 6 : meetingId ? 5 : 0,
         borderRadius: borderRadius ? `var(--border-radius)` : 0,
       }}
       onClick={meetingId ? () => history.push('/meetings/' + meetingId) : () => void 0}

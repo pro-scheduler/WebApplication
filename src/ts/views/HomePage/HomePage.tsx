@@ -35,9 +35,6 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     loadUserDeclarations(setDeclarations);
   }, []);
 
-  useEffect(() => {
-    console.log(currentSlide);
-  }, [currentSlide]);
   const events = homeInfo
     ? homeInfo.meetings
         .filter(
@@ -86,42 +83,46 @@ const HomePage = ({ user }: { user: UserSummary }) => {
                 ))}
               </Carousel>
             ) : (
-              <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+              <div className={styles.noMeetingsInfoContainer}>
+                <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+              </div>
             )}
-            <div className={styles.arrowSet}>
-              <div
-                hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
-                className={styles.arrowLeft}
-              >
-                <LeftArrowButton
-                  style={{ backgroundColor: 'white' }}
-                  onclick={() =>
-                    setCurrentSlide(
-                      currentSlide - 1 < 0
-                        ? homeInfo
-                          ? homeInfo.upcomingMeetings.length - 1
-                          : 0
-                        : currentSlide - 1
-                    )
-                  }
-                  disabled={false}
-                />
+            {homeInfo && (
+              <div className={styles.arrowSet}>
+                <div
+                  hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
+                  className={styles.arrowLeft}
+                >
+                  <LeftArrowButton
+                    style={{ backgroundColor: 'white' }}
+                    onclick={() =>
+                      setCurrentSlide(
+                        currentSlide - 1 < 0
+                          ? homeInfo
+                            ? homeInfo.upcomingMeetings.length - 1
+                            : 0
+                          : currentSlide - 1
+                      )
+                    }
+                    disabled={false}
+                  />
+                </div>
+                <div
+                  hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
+                  className={styles.arrowRight}
+                >
+                  <RightArrowButton
+                    style={{ backgroundColor: 'white' }}
+                    onclick={() =>
+                      setCurrentSlide(
+                        (currentSlide + 1) % (homeInfo ? homeInfo.upcomingMeetings.length : 1)
+                      )
+                    }
+                    disabled={false}
+                  />
+                </div>
               </div>
-              <div
-                hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
-                className={styles.arrowRight}
-              >
-                <RightArrowButton
-                  style={{ backgroundColor: 'white' }}
-                  onclick={() =>
-                    setCurrentSlide(
-                      (currentSlide + 1) % (homeInfo ? homeInfo.upcomingMeetings.length : 1)
-                    )
-                  }
-                  disabled={false}
-                />
-              </div>
-            </div>
+            )}
           </div>
           <div className={styles.moduleCards}>
             <ModuleCard
@@ -144,20 +145,23 @@ const HomePage = ({ user }: { user: UserSummary }) => {
             />
           </div>
           <div className={styles.todayMeetings}>
-            <UserTimeGrid
-              primaryLabel={
-                ('0' + new Date().getDate()).slice(-2) +
-                '.' +
-                ('0' + (new Date().getMonth() + 1)).slice(-2)
-              }
-              disabled={true}
-              secondaryLabel={weekDays[new Date().getDay()]}
-              boxSizes={36}
-              addRanges={() => {}}
-              lockedRanges={events}
-              fixedHeight={true}
-              fixedHeightValue={630}
-            />
+            <div>
+              <UserTimeGrid
+                primaryLabel={
+                  ('0' + new Date().getDate()).slice(-2) +
+                  '.' +
+                  ('0' + (new Date().getMonth() + 1)).slice(-2)
+                }
+                disabled={true}
+                secondaryLabel={weekDays[new Date().getDay()]}
+                boxSizes={36}
+                addRanges={() => {}}
+                lockedRanges={events}
+                fixedHeight={true}
+                fixedHeightValue={630}
+                showCurrentTime={true}
+              />
+            </div>
           </div>
         </Col>
       </Row>

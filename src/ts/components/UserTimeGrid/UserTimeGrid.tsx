@@ -17,6 +17,7 @@ export type UserTimeGridProps = {
   setPreferencesChanged?: (value: boolean) => void;
   fixedHeight?: boolean;
   fixedHeightValue?: number;
+  showCurrentTime?: boolean;
 };
 
 interface Ranges {
@@ -34,6 +35,7 @@ const UserTimeGrid = ({
   setPreferencesChanged = () => {},
   fixedHeight = false,
   fixedHeightValue,
+  showCurrentTime,
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
@@ -131,8 +133,25 @@ const UserTimeGrid = ({
         />
       );
     }
+    if (showCurrentTime) {
+      let currentTimeHHMM = new Date().getHours() + ':' + (new Date().getMinutes() + 20);
+      let currentTime = mapHourToPosition({ from: currentTimeHHMM, to: currentTimeHHMM });
+      ranges.push(
+        <LockedCell
+          currentTime={true}
+          top={currentTime.top}
+          height={2}
+          key={'current-time'}
+          label={''}
+          secondLabel={''}
+          color={'var(--medium-red)'}
+          meetingId={0}
+          borderRadius={true}
+        />
+      );
+    }
     setCalculatedLockedRanges(ranges);
-  }, [lockedRanges]);
+  }, [lockedRanges, showCurrentTime]);
 
   useEffect(() => {
     setMappedLocked(

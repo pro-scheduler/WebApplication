@@ -1,15 +1,20 @@
 .welcomeHeader {
   font-size: var(--m-font-size);
   margin-bottom: 10px;
+  padding-left: 20px;
   color: var(--medium-grey);
 }
 
+.noMeetingsInfoContainer {
+  padding-right: 30px;
+}
 .noMeetingsInfo {
   grid-area: upcomingMeetings;
   font-size: var(--s-font-size);
   margin: auto auto 50px;
-  width: 490px;
-  text-align: center;
+  margin-left: 20px;
+  width: 100%;
+  text-align: left;
   background-color: white;
   padding: 20px;
   border-radius: var(--border-radius);
@@ -39,12 +44,13 @@
   grid-area: todayMeetings;
   justify-self: center;
   width: 300px;
-  margin: 10px 0 0 0;
+  margin: 10px 20px 0 0;
 }
 
 .upcomingMeetings {
   grid-area: upcomingMeetings;
   margin-top: 10px;
+  margin-left: 20px;
 }
 
 .homePageContainer {
@@ -57,12 +63,13 @@
 }
 
 .moduleCards {
-    grid-area: moduleCards;
-    display: flex;
-    justify-content: space-between;
-    padding-left: 30px;
-    padding-right: 20px;
-    flex-wrap: wrap;
+  grid-area: moduleCards;
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 30px;
+  padding-right: 20px;
+  flex-wrap: wrap;
+  margin-left: 20px;
 }
 @media only screen and (max-width: 1300px) {
   .homePageContainer {
@@ -79,9 +86,6 @@
     font-size: var(--xs-font-size);
   }
 
-  .todayMeetings {
-      margin-left: 30px;
-  }
   .homePageContainer {
     display: block;
   }
@@ -91,6 +95,7 @@
   }
 
   .todayMeetings {
+    margin-left: 50px;
     width: 250px;
   }
 }
