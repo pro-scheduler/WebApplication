@@ -253,5 +253,6 @@ export const addMeetingToGoogleCalendar = (
   setResponse?: Function
 ) => {
   return;
+  // eslint-disable-next-line
   post({}, '', setData, setResponse, true, undefined, onSuccess);
 };

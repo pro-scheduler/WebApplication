@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ProSidebar,
@@ -16,108 +16,143 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
+import styles from './Navbar.module.css';
 import logo from '../../../images/logo.svg';
 import { UserSummary } from '../../model/user/ProUser';
 import UserIcon from '../common/Icons/UserIcon';
 import { getSignOutUrl } from '../../API/user/urls';
+import HamburgerMenuIcon from '../common/Icons/HamburgerMenuIcon';
+import CountDot from '../common/CountDot/CountDot';
 
-const Navbar = ({ user }: { user: UserSummary }) => {
+const Navbar = ({
+  user,
+  width,
+  invitationCount,
+  surveyCount,
+}: {
+  user: UserSummary;
+  width: number;
+  invitationCount: number;
+  surveyCount: number;
+}) => {
   const [menuCollapse, setMenuCollapse] = useState(true);
   const [activeIcon, setActiveIcon] = useState('');
-
+  const [showNavbar, setShowNavbar] = useState<boolean>(false);
   return (
-    <div id="navbar">
-      <ProSidebar collapsed={menuCollapse}>
-        <SidebarHeader>
-          <Menu iconShape="circle">
-            <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
-              ProScheduler
-              <Link to="/home" />
-            </MenuItem>
-          </Menu>
-        </SidebarHeader>
-
-        <SidebarContent>
-          <Menu iconShape="circle">
-            <hr className="newMeetingLine mt-3" />
-            <MenuItem
-              icon={<AiOutlinePlus className="plusIcon" />}
-              active={activeIcon === 'Schedule'}
-              onClick={() => setActiveIcon('Schedule')}
-            >
-              New meeting
-              <Link to="/create" />
-            </MenuItem>
-            <hr className="newMeetingLine" />
-
-            <MenuItem
-              icon={<FiMonitor />}
-              active={activeIcon === 'Home'}
-              onClick={() => setActiveIcon('Home')}
-            >
-              Home
-              <Link to="/home" />
-            </MenuItem>
-
-            <MenuItem
-              icon={<FiFolder />}
-              active={activeIcon === 'Meetings'}
-              onClick={() => setActiveIcon('Meetings')}
-            >
-              Meetings
-              <Link to="/meetings" />
-            </MenuItem>
-
-            <MenuItem
-              icon={<FaRegClipboard />}
-              active={activeIcon === 'Surveys'}
-              onClick={() => setActiveIcon('Surveys')}
-            >
-              Surveys
-              <Link to="/surveys" />
-            </MenuItem>
-
-            <MenuItem
-              icon={<BsPencil />}
-              active={activeIcon === 'Declarations'}
-              onClick={() => setActiveIcon('Declarations')}
-            >
-              Declarations
-              <Link to="/declarations" />
-            </MenuItem>
-
-            <MenuItem
-              icon={<BsEnvelope />}
-              active={activeIcon === 'Invitations'}
-              onClick={() => setActiveIcon('Invitations')}
-            >
-              Invitations
-              <Link to="/invitations" />
-            </MenuItem>
-
-            <MenuItem
-              icon={<FaList />}
-              className="closeMenu"
-              onClick={() => setMenuCollapse(!menuCollapse)}
-            />
-          </Menu>
-        </SidebarContent>
-
-        <SidebarFooter>
-          <Menu iconShape="circle">
-            {user && user.username && (
-              <MenuItem icon={<UserIcon user={user} backgroundColor="var(--light-red)" />}>
-                {user.username}
-                <Link to="/profile" />
+    <div>
+      {width <= 500 && (
+        <HamburgerMenuIcon
+          onClick={() => {
+            setShowNavbar(!showNavbar);
+            setMenuCollapse(true);
+          }}
+          positionRight={!showNavbar}
+          extended={!menuCollapse}
+        />
+      )}
+      <div
+        id="navbar"
+        className={
+          width > 500
+            ? styles.navbarVisible
+            : showNavbar
+            ? styles.navbarVisible
+            : styles.navbarHidden
+        }
+      >
+        <ProSidebar collapsed={menuCollapse}>
+          <SidebarHeader>
+            <Menu iconShape="circle">
+              <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
+                ProScheduler
+                <Link to="/home" />
               </MenuItem>
-            )}
-            <MenuItem icon={<FiLogOut />}>
-              Sign out
-              <a href={getSignOutUrl()} />
-            </MenuItem>
-          </Menu>
-        </SidebarFooter>
-      </ProSidebar>
+            </Menu>
+          </SidebarHeader>
+
+          <SidebarContent>
+            <Menu iconShape="circle">
+              <hr className="newMeetingLine mt-3" />
+              <MenuItem
+                icon={<AiOutlinePlus className="plusIcon" />}
+                active={activeIcon === 'Schedule'}
+                onClick={() => setActiveIcon('Schedule')}
+              >
+                New meeting
+                <Link to="/create" />
+              </MenuItem>
+              <hr className="newMeetingLine" />
+
+              <MenuItem
+                icon={<FiMonitor />}
+                active={activeIcon === 'Home'}
+                onClick={() => setActiveIcon('Home')}
+              >
+                Home
+                <Link to="/home" />
+              </MenuItem>
+
+              <MenuItem
+                icon={<FiFolder />}
+                active={activeIcon === 'Meetings'}
+                onClick={() => setActiveIcon('Meetings')}
+              >
+                Meetings
+                <Link to="/meetings" />
+              </MenuItem>
+
+              <MenuItem
+                icon={<FaRegClipboard />}
+                active={activeIcon === 'Surveys'}
+                onClick={() => setActiveIcon('Surveys')}
+              >
+                <CountDot count={surveyCount} display={surveyCount > 0} />
+                Surveys
+                <Link to="/surveys" />
+              </MenuItem>
+
+              <MenuItem
+                icon={<BsPencil />}
+                active={activeIcon === 'Declarations'}
+                onClick={() => setActiveIcon('Declarations')}
+              >
+                Declarations
+                <Link to="/declarations" />
+              </MenuItem>
+
+              <MenuItem
+                icon={<BsEnvelope />}
+                active={activeIcon === 'Invitations'}
+                onClick={() => setActiveIcon('Invitations')}
+              >
+                <CountDot count={invitationCount} display={invitationCount > 0} />
+                Invitations
+                <Link to="/invitations" />
+              </MenuItem>
+
+              <MenuItem
+                icon={<FaList />}
+                className="closeMenu"
+                onClick={() => setMenuCollapse(!menuCollapse)}
+              />
+            </Menu>
+          </SidebarContent>
+
+          <SidebarFooter>
+            <Menu iconShape="circle">
+              {user && user.username && (
+                <MenuItem icon={<UserIcon user={user} backgroundColor="var(--light-red)" />}>
+                  {user.username}
+                  <Link to="/profile" />
+                </MenuItem>
+              )}
+              <MenuItem icon={<FiLogOut />}>
+                <a href={getSignOutUrl()}>Sign out</a>
+              </MenuItem>
+            </Menu>
+          </SidebarFooter>
+        </ProSidebar>
+      </div>
     </div>
   );
 };

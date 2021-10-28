@@ -1,24 +1,41 @@
 .button {
-    display: block;
-    position: fixed;
-    bottom: 20px;
-    z-index: 1100;
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  z-index: 1100;
+  top: 19px;
+  z-index: 1;
 }
 
 .positionRight {
-    right: 20px;
+  margin-left: -33px;
+  transition: margin 0.5s;
 }
 
 .positionLeft {
-    left: 20px;
+  margin-left: 46px;
+  transition: margin 0.5s;
+}
+
+.positionExtendedLeft {
+  margin-left: 235px;
+  transition: margin 0.3s;
 }
 
 .button:hover {
-    cursor: pointer;
-    transform: scale(1.15);
+  cursor: pointer;
 }
 
 .hamburgerIcon {
-    color: white;
-    background-color: var(--purple);
+  color: white;
+  background-color: var(--purple);
+  padding-left: 25px;
+  box-shadow: none;
+}
+
+.hamburger {
+  width: 20px;
+}
+.hamburger:hover {
+  animation: var(--animation-shake) 1s;
 }

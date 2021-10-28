@@ -3,7 +3,7 @@ import styles from './UpcomingMeeting.module.css';
 import ArrowButton from '../common/RoundButtons/ArrowButton';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import UserNameIcon from '../common/Icons/UserNameIcon';
+import UserIcon from '../common/Icons/UserIcon';
 
 const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
   const history = useHistory();
@@ -18,52 +18,44 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
   }, [meeting]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.upcomingMeetingHeader}>Upcoming meeting</div>
-      <div className={styles.meetingName}>{meeting.name}</div>
-      {startTime && endTime && (
-        <div className={styles.meetingTime}>
-          {startTime.toLocaleString('en-US', {
-            hour: 'numeric',
-            hour12: true,
-            minute: 'numeric',
-          })}{' '}
-          -{' '}
-          {endTime.toLocaleString('en-US', {
-            hour: 'numeric',
-            hour12: true,
-            minute: 'numeric',
-          })}
-        </div>
-      )}
-      {startTime && endTime && (
-        <div className={styles.meetingDate}>
-          {startTime.toLocaleDateString() === endTime.toLocaleDateString()
-            ? startTime.toLocaleDateString()
-            : startTime.toLocaleDateString() + ' - ' + endTime.toLocaleDateString()}
-        </div>
-      )}
-      {meeting.description && (
-        <div className={styles.meetingDescription}>{meeting.description}</div>
-      )}
-      <div>
-        <div className={styles.participantsIcons}>
-          <div style={{ position: 'relative' }}>
-            {meeting.attendees
-              .slice(0, 5)
-              .map((attendee: MeetingAttendeeDetails, index: number) => (
-                <div key={index} style={{ left: index * 25, position: 'absolute' }}>
-                  <UserNameIcon
-                    user={attendee.user}
-                    email={attendee.user.email}
-                    showEmail={false}
-                  />
-                </div>
-              ))}
+    <div className={styles.containerOfContainer}>
+      <div className={styles.container}>
+        <div className={styles.upcomingMeetingHeader}>Upcoming meeting</div>
+        <div className={styles.meetingName}>{meeting.name}</div>
+        {startTime && endTime && (
+          <div className={styles.meetingTime}>
+            {startTime.toLocaleString('en-US', {
+              hour: 'numeric',
+              hour12: true,
+              minute: 'numeric',
+            })}{' '}
+            -{' '}
+            {endTime.toLocaleString('en-US', {
+              hour: 'numeric',
+              hour12: true,
+              minute: 'numeric',
+            })}
           </div>
-        </div>
-        <div className={styles.arrowButton}>
-          <ArrowButton onclick={() => history.push('/meetings/' + meeting.id)} />
+        )}
+        {startTime && endTime && (
+          <div className={styles.meetingDate}>
+            {startTime.toLocaleDateString() === endTime.toLocaleDateString()
+              ? startTime.toLocaleDateString()
+              : startTime.toLocaleDateString() + ' - ' + endTime.toLocaleDateString()}
+          </div>
+        )}
+        {meeting.description && (
+          <div className={styles.meetingDescription}>{meeting.description}</div>
+        )}
+        <div>
+          <div className={styles.participantsIcons}>
+            {meeting.attendees.slice(0, 1).map((attendee: MeetingAttendeeDetails) => (
+              <UserIcon user={attendee.user} key={attendee.attendeeId} />
+            ))}
+          </div>
+          <div className={styles.arrowButton}>
+            <ArrowButton onclick={() => history.push('/meetings/' + meeting.id)} />
+          </div>
         </div>
       </div>
     </div>

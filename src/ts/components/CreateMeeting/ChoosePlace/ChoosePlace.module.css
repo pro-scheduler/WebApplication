@@ -2,7 +2,7 @@
   align-self: center;
   position: absolute;
   z-index: 1;
-  top: 420px;
+  top: 380px;
 }
 .createHeader {
   font-size: var(--s-font-size);

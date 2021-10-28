@@ -7,12 +7,13 @@ export type RightArrowButtonProps = {
   onclick: MouseEventHandler;
   disabled: boolean;
   className?: string;
+  style?: any;
 };
 
-const RightArrowButton = ({ onclick, disabled, className }: RightArrowButtonProps) => {
+const RightArrowButton = ({ onclick, disabled, className, style = {} }: RightArrowButtonProps) => {
   const buttonStyles = cx(styles.arrowButton, className);
   return (
-    <button className={buttonStyles} onClick={onclick} disabled={disabled}>
+    <button className={buttonStyles} onClick={onclick} disabled={disabled} style={style}>
       <AiOutlineRight style={{ fontSize: '320%', margin: '0 auto' }} />
     </button>
   );

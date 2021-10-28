@@ -19,22 +19,34 @@ import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { loadUserDeclarations } from '../../API/declarations/declarationsService';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
-import UserIcon from '../../components/common/Icons/UserIcon';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-const HomePage = ({ user }: { user: UserSummary }) => {
+const HomePage = ({
+  user,
+  setInvitationsCount,
+  setSurveyCount,
+}: {
+  user: UserSummary;
+  setInvitationsCount: Function;
+  setSurveyCount: Function;
+}) => {
   const [homeInfo, setHomeInfo] = useState<UserHomePageDetails>();
   const [surveys, setSurveys] = useState<BasicUserSurveyInfo[]>([]);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   // eslint-disable-next-line
   const { width, height } = useWindowDimensions();
-
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   useEffect(() => {
     getUserHomePageDetails(setHomeInfo);
     getUserSurveys(setSurveys);
     loadUserDeclarations(setDeclarations);
   }, []);
+  useEffect(() => {
+    setInvitationsCount(homeInfo ? homeInfo.invitationCount : 0);
+  }, [homeInfo, setInvitationsCount]);
+  useEffect(() => {
+    setSurveyCount(surveys.length);
+  }, [surveys, setSurveyCount]);
 
   const events = homeInfo
     ? homeInfo.meetings
@@ -63,18 +75,19 @@ const HomePage = ({ user }: { user: UserSummary }) => {
     <Container fluid>
       <Row className="justify-content mt-5 ml-3">
         <Col lg={12} className={styles.welcomeHeader}>
-          Welcome back, <UserIcon user={user} /> {' ' + user.username}!
+          Welcome back, {' ' + user.username}!
         </Col>
       </Row>
-      <Row className="justify-content-center mt-4 mb-5">
+      <Row className="justify-content-center mt-0 mb-5">
         <Col lg={12} className={styles.homePageContainer}>
           <div className={styles.upcomingMeetings}>
             {homeInfo && homeInfo.upcomingMeetings.length > 0 ? (
               <Carousel
+                activeIndex={currentSlide}
                 interval={null}
-                nextIcon={<RightArrowButton onclick={() => void 0} disabled={false} />}
-                prevIcon={<LeftArrowButton onclick={() => void 0} disabled={false} />}
                 controls={width > 1100}
+                keyboard={true}
+                touch={true}
               >
                 {homeInfo.upcomingMeetings.map((meeting: MeetingDetails) => (
                   <Carousel.Item key={meeting.id}>
@@ -83,26 +96,60 @@ const HomePage = ({ user }: { user: UserSummary }) => {
                 ))}
               </Carousel>
             ) : (
-              <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+              <div className={styles.noMeetingsInfoContainer}>
+                <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+              </div>
+            )}
+            {homeInfo && (
+              <div className={styles.arrowSet}>
+                <div
+                  hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
+                  className={styles.arrowLeft}
+                >
+                  <LeftArrowButton
+                    style={{ backgroundColor: 'white' }}
+                    onclick={() =>
+                      setCurrentSlide(
+                        currentSlide - 1 < 0
+                          ? homeInfo
+                            ? homeInfo.upcomingMeetings.length - 1
+                            : 0
+                          : currentSlide - 1
+                      )
+                    }
+                    disabled={false}
+                  />
+                </div>
+                <div
+                  hidden={homeInfo ? homeInfo.upcomingMeetings.length < 2 : false}
+                  className={styles.arrowRight}
+                >
+                  <RightArrowButton
+                    style={{ backgroundColor: 'white' }}
+                    onclick={() =>
+                      setCurrentSlide(
+                        (currentSlide + 1) % (homeInfo ? homeInfo.upcomingMeetings.length : 1)
+                      )
+                    }
+                    disabled={false}
+                  />
+                </div>
+              </div>
             )}
           </div>
-          <div className={styles.declarations}>
+          <div className={styles.moduleCards}>
             <ModuleCard
               icon={<BsPencil />}
               number={declarations.length}
               name={declarations.length === 1 ? 'Declaration' : 'Declarations'}
               redirectTo={'/declarations'}
             />
-          </div>
-          <div className={styles.invitations}>
             <ModuleCard
               icon={<BsEnvelope />}
               number={homeInfo ? homeInfo.invitationCount : 0}
               name={homeInfo?.invitationCount === 1 ? 'Invitation' : 'Invitations'}
               redirectTo={'/invitations'}
             />
-          </div>
-          <div className={styles.surveys}>
             <ModuleCard
               icon={<FaRegClipboard />}
               number={surveys.length}
@@ -123,6 +170,8 @@ const HomePage = ({ user }: { user: UserSummary }) => {
               addRanges={() => {}}
               lockedRanges={events}
               fixedHeight={true}
+              fixedHeightValue={630}
+              showCurrentTime={true}
             />
           </div>
         </Col>

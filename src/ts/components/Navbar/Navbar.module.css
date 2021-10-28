@@ -1,0 +1,9 @@
+.navbarHidden {
+  margin: 0 0 0 -85px;
+  transition: margin 0.5s;
+}
+
+.navbarVisible {
+  margin-left: 0;
+  transition: margin 0.5s;
+}

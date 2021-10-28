@@ -3,14 +3,12 @@ import styles from './MapWithPlaces.module.css';
 import { Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
 import MapToolTip from './MapToolTip/MapToolTip';
-import ActionButton from '../../SubmitButton/ActionButton/ActionButton';
 import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
 import { geocodeByLocation } from '../../../../API/geo/geo';
 
 export type MapWithPlacesProps = {
   placesToDisplay: PlaceDetails[];
   disabled: boolean;
-  setPlacesToDisplay?: Function;
   mainButtonTooltipNameMapper: Function;
   displayRemoveButton: boolean;
   displayMainButton: boolean;
@@ -30,7 +28,6 @@ interface Hidden {
 const defaultProposals = { address: '', description: '', name: '' };
 const MapWithPlaces = ({
   placesToDisplay,
-  setPlacesToDisplay,
   mainButtonTooltipNameMapper,
   displayRemoveButton,
   displayMainButton,
@@ -141,7 +138,7 @@ const MapWithPlaces = ({
           }}
           defaultZoom={11}
           onClick={(cords) => {
-            if (insertingMode) {
+            if (allowAdding) {
               setNewCoordinates(cords.latLng);
               setShowPopup(true);
               setInsertingMode(false);
@@ -228,16 +225,6 @@ const MapWithPlaces = ({
             );
           })}
         </Map>
-      </div>
-      <div className={styles.insertModelButton}>
-        {allowAdding && (
-          <ActionButton
-            text="Add new place"
-            onclick={() => {
-              setInsertingMode(true);
-            }}
-          />
-        )}
       </div>
       <AddPlacePopup
         defaultAddress={proposalDetails.address}

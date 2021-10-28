@@ -16,6 +16,8 @@ export type UserTimeGridProps = {
   userRanges?: Ranges;
   setPreferencesChanged?: (value: boolean) => void;
   fixedHeight?: boolean;
+  fixedHeightValue?: number;
+  showCurrentTime?: boolean;
 };
 
 interface Ranges {
@@ -32,6 +34,8 @@ const UserTimeGrid = ({
   userRanges = {},
   setPreferencesChanged = () => {},
   fixedHeight = false,
+  fixedHeightValue,
+  showCurrentTime,
 }: UserTimeGridProps) => {
   const [rangesParams, setRangesParams] = useState<Ranges>(userRanges);
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
@@ -129,8 +133,25 @@ const UserTimeGrid = ({
         />
       );
     }
+    if (showCurrentTime) {
+      let currentTimeHHMM = new Date().getHours() + ':' + (new Date().getMinutes() + 20);
+      let currentTime = mapHourToPosition({ from: currentTimeHHMM, to: currentTimeHHMM });
+      ranges.push(
+        <LockedCell
+          currentTime={true}
+          top={currentTime.top}
+          height={2}
+          key={'current-time'}
+          label={''}
+          secondLabel={''}
+          color={'var(--medium-red)'}
+          meetingId={0}
+          borderRadius={true}
+        />
+      );
+    }
     setCalculatedLockedRanges(ranges);
-  }, [lockedRanges]);
+  }, [lockedRanges, showCurrentTime]);
 
   useEffect(() => {
     setMappedLocked(
@@ -261,7 +282,10 @@ const UserTimeGrid = ({
         <div className={styles.secondaryLabel}>{secondaryLabel}</div>
       </div>
       <div className={styles.top_hours_grid} />
-      <div className={cx(styles.hours_grid, fixedHeight && styles.fixedHeight)}>
+      <div
+        className={cx(styles.hours_grid, fixedHeight && styles.fixedHeight)}
+        style={fixedHeight && fixedHeightValue ? { height: fixedHeightValue } : {}}
+      >
         {calculatedLockedRanges}
         {hourButtonsGrid()}
         {calculateRanges()}
