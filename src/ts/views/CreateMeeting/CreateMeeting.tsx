@@ -21,19 +21,14 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
-import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
-import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
 import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
-import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace';
-import { FaMapMarkedAlt } from 'react-icons/fa';
-import { BiWorld } from 'react-icons/bi';
-import MapIcon from '../../components/common/Icons/MapIcon';
-import WorldIcon from '../../components/common/Icons/WorldIcon';
 import { PlaceDTO } from '../../model/geo/Geo';
 import { savePlaces } from '../../API/geo/geo';
+import ChooseRealOnlinePlace from '../../components/CreateMeeting/ChooseRealOnlinePlace';
 export type creatingMeetingState =
   | 'modules'
+  | 'real-online'
   | 'name'
   | 'time'
   | 'invitations'
@@ -54,7 +49,7 @@ const CreateMeeting = () => {
   const history = useHistory();
   const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
-  const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [saveInvitationsResponse, setSaveInvitationsResponse] = useState<ApiCall>(new ApiCall());
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   const [savePlacesResponse, setSavePlacesResponse] = useState<ApiCall>(new ApiCall());
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceDTO[]>([]);
@@ -94,7 +89,11 @@ const CreateMeeting = () => {
   };
 
   const showModules = () => {
-    setState('name');
+    if (placeModule) {
+      setState('real-online');
+    } else {
+      setState('name');
+    }
     if (timeModule) {
       modules.push('time');
     }
@@ -119,6 +118,25 @@ const CreateMeeting = () => {
   }, [state]);
 
   useEffect(() => {
+    if (
+      meetingId.id !== undefined &&
+      (emails.length === 0 ||
+        saveInvitationsResponse.isSuccess ||
+        saveInvitationsResponse.isFailed) &&
+      (survey.questions.length === 0 ||
+        saveSurveyResponse.isSuccess ||
+        saveSurveyResponse.isFailed) &&
+      (onlineMeeting ||
+        selectedPlaces.length === 0 ||
+        savePlacesResponse.isSuccess ||
+        savePlacesResponse.isFailed)
+    ) {
+      history.push('/meetings/' + meetingId.id);
+    }
+    // eslint-disable-next-line
+  }, [meetingId, saveInvitationsResponse, saveSurveyResponse, savePlacesResponse]);
+
+  useEffect(() => {
     if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
       const createInvitationsRequest = {
         meetingId: meetingId.id,
@@ -126,22 +144,15 @@ const CreateMeeting = () => {
         message: invitationMessage,
       };
       if (createInvitationsRequest.emails.length > 0) {
-        createInvitations(createInvitationsRequest, setSetInvitationsResponse, () =>
-          history.push('/meetings/' + meetingId.id)
-        );
+        createInvitations(createInvitationsRequest, setSaveInvitationsResponse);
       }
       if (survey.questions.length > 0) {
-        createSurvey(meetingId.id, survey, setSaveSurveyResponse, () =>
-          history.push('/meetings/' + meetingId.id)
-        );
+        createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       if (!onlineMeeting && selectedPlaces.length > 0) {
-        savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse, () => {
-          history.push('/meetings/' + meetingId.id);
-        });
+        savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
-      history.push('/meetings/' + meetingId.id);
     }
     // eslint-disable-next-line
   }, [meetingId.id]);
@@ -172,7 +183,7 @@ const CreateMeeting = () => {
 
   return (
     <Container>
-      {state !== 'modules' && (
+      {state !== 'modules' && state !== 'real-online' && (
         <MeetingNavbar
           state={state}
           setState={setState}
@@ -184,7 +195,9 @@ const CreateMeeting = () => {
           participantsFilled={emails.length > 0}
           surveyFilled={survey.questions.length > 0}
           timeFilled={timeRanges.length > 0}
-          placeFilled={onlineLink !== ''}
+          placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
+          onLeftClick={setPrevState}
+          onRightClick={setNextState}
         />
       )}
       {state === 'modules' && (
@@ -196,6 +209,13 @@ const CreateMeeting = () => {
           setSurveyModule={setSurveyModule}
           setTimeModule={setTimeModule}
           setPlaceModule={setPlaceModule}
+        />
+      )}
+      {state === 'real-online' && (
+        <ChooseRealOnlinePlace
+          onChoose={() => setState('name')}
+          onlineMeeting={onlineMeeting}
+          setOnlineMeeting={setOnlineMeeting}
         />
       )}
       <NameAndDescription
@@ -216,23 +236,6 @@ const CreateMeeting = () => {
         setEmails={setEmails}
         setInvitationMessage={setInvitationMessage}
       />
-      <div hidden={state !== 'place'} className={styles.placeSwitchContainer}>
-        <Row className="justify-content-center">
-          <Col lg={12} className="text-center">
-            {onlineMeeting ? <WorldIcon /> : <MapIcon />}
-          </Col>
-        </Row>
-        <Row className="justify-content-center mt-4">
-          <h4>Meeting place details</h4>
-        </Row>
-        <div>
-          <SwitchButton
-            onChange={() => setOnlineMeeting(!onlineMeeting)}
-            checkedIcon={<BiWorld className={styles.switchIcon} />}
-            unCheckedIcon={<FaMapMarkedAlt className={styles.switchIcon} />}
-          />
-        </div>
-      </div>
       <OnlineDetails
         state={state}
         onlineLink={onlineLink}
@@ -246,16 +249,6 @@ const CreateMeeting = () => {
         setSelectedPlaces={setSelectedPlaces}
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
-      <Row className="justify-content-center my-5">
-        <Col lg={12} className="text-center">
-          {state !== 'modules' && (
-            <div className={styles.navigationContainer}>
-              <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
-              <RightArrowButton onclick={setNextState} disabled={state === 'summary'} />
-            </div>
-          )}
-        </Col>
-      </Row>
       {state === 'summary' && (
         <>
           <Row className="justify-content-center">

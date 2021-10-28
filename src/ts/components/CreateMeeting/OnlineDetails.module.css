@@ -9,3 +9,7 @@
 .hidden {
     display: none;
 }
+
+.createHeader {
+    font-size: var(--s-font-size);
+}
