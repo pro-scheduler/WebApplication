@@ -25,18 +25,14 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
         isOnlineMeeting || (state !== 'place' && (state !== 'summary' || newPlaces.length === 0))
       }
     >
-      {state === 'summary' && (
-        <>
-          <Row className="justify-content-center mt-5">
-            <Col lg={12} className="text-center">
-              <MapIcon />
-            </Col>
-          </Row>
-          <Row className="justify-content-center mt-4">
-            <div className={styles.createHeader}>Meeting place details</div>
-          </Row>
-        </>
-      )}
+      <Row className="justify-content-center mt-5">
+        <Col lg={12} className="text-center">
+          <MapIcon />
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4">
+        <div className={styles.createHeader}>Meeting place details</div>
+      </Row>
       <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
         <div className={styles.searchContainer}>
           <SearchGeocoder

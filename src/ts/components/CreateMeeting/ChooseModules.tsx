@@ -6,8 +6,8 @@ import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import React, { MouseEventHandler } from 'react';
 import MeetingModule from './MeetingModule';
 import CalendarIcon from '../common/Icons/CalendarIcon';
-import WorldIcon from '../common/Icons/WorldIcon';
 import SurveyIcon from '../common/Icons/SurveyIcon';
+import LocationIcon from '../common/Icons/LocationIcon';
 
 export type ChooseModulesProps = {
   showModules: MouseEventHandler;
@@ -53,7 +53,7 @@ const ChooseModules = ({
         <Col md={6} lg={4} className="text-center mx-auto mt-4">
           <MeetingModule
             header={'Place'}
-            icon={<WorldIcon />}
+            icon={<LocationIcon />}
             description={
               'The place module allows you to select between online or real meeting. You can customize all needed data about meeting place and perform place voting.'
             }

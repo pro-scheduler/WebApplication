@@ -30,18 +30,14 @@ const OnlineDetails = ({
           : ''
       }
     >
-      {state === `summary` && (
-        <>
-          <Row className="justify-content-center mt-5">
-            <Col lg={12} className="text-center">
-              <WorldIcon />
-            </Col>
-          </Row>
-          <Row className="justify-content-center mt-4">
-            <h4>Meeting place details</h4>
-          </Row>
-        </>
-      )}
+      <Row className="justify-content-center mt-5">
+        <Col lg={12} className="text-center">
+          <WorldIcon />
+        </Col>
+      </Row>
+      <Row className="justify-content-center mt-4">
+        <div className={styles.createHeader}>Online meeting details</div>
+      </Row>
       <Row className="justify-content-center mt-4">
         <Col>
           <Card title="Meeting link">

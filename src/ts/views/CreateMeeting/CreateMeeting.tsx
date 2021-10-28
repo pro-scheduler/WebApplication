@@ -22,16 +22,13 @@ import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
 import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
-import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace';
-import { FaMapMarkedAlt } from 'react-icons/fa';
-import { BiWorld } from 'react-icons/bi';
-import MapIcon from '../../components/common/Icons/MapIcon';
-import WorldIcon from '../../components/common/Icons/WorldIcon';
 import { PlaceDTO } from '../../model/geo/Geo';
 import { savePlaces } from '../../API/geo/geo';
+import ChooseRealOnlinePlace from '../../components/CreateMeeting/ChooseRealOnlinePlace';
 export type creatingMeetingState =
   | 'modules'
+  | 'real-online'
   | 'name'
   | 'time'
   | 'invitations'
@@ -92,7 +89,11 @@ const CreateMeeting = () => {
   };
 
   const showModules = () => {
-    setState('name');
+    if (placeModule) {
+      setState('real-online');
+    } else {
+      setState('name');
+    }
     if (timeModule) {
       modules.push('time');
     }
@@ -170,7 +171,7 @@ const CreateMeeting = () => {
 
   return (
     <Container>
-      {state !== 'modules' && (
+      {state !== 'modules' && state !== 'real-online' && (
         <MeetingNavbar
           state={state}
           setState={setState}
@@ -198,6 +199,13 @@ const CreateMeeting = () => {
           setPlaceModule={setPlaceModule}
         />
       )}
+      {state === 'real-online' && (
+        <ChooseRealOnlinePlace
+          onChoose={() => setState('name')}
+          onlineMeeting={onlineMeeting}
+          setOnlineMeeting={setOnlineMeeting}
+        />
+      )}
       <NameAndDescription
         state={state}
         setName={setName}
@@ -216,23 +224,6 @@ const CreateMeeting = () => {
         setEmails={setEmails}
         setInvitationMessage={setInvitationMessage}
       />
-      <div hidden={state !== 'place'} className={styles.placeSwitchContainer}>
-        <Row className="justify-content-center">
-          <Col lg={12} className="text-center">
-            {onlineMeeting ? <WorldIcon /> : <MapIcon />}
-          </Col>
-        </Row>
-        <Row className="justify-content-center mt-4">
-          <h4>Meeting place details</h4>
-        </Row>
-        <div>
-          <SwitchButton
-            onChange={() => setOnlineMeeting(!onlineMeeting)}
-            checkedIcon={<BiWorld className={styles.switchIcon} />}
-            unCheckedIcon={<FaMapMarkedAlt className={styles.switchIcon} />}
-          />
-        </div>
-      </div>
       <OnlineDetails
         state={state}
         onlineLink={onlineLink}
