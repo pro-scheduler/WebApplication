@@ -46,7 +46,7 @@ const Navbar = ({
             setShowNavbar(!showNavbar);
             setMenuCollapse(true);
           }}
-          positionRight={showNavbar}
+          positionRight={!showNavbar}
           extended={!menuCollapse}
         />
       )}
@@ -56,8 +56,8 @@ const Navbar = ({
           width > 500
             ? styles.navbarVisible
             : showNavbar
-            ? styles.navbarHidden
-            : styles.navbarVisible
+            ? styles.navbarVisible
+            : styles.navbarHidden
         }
       >
         <ProSidebar collapsed={menuCollapse}>

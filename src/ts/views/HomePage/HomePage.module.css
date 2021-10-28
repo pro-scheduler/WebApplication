@@ -11,8 +11,7 @@
 .noMeetingsInfo {
   grid-area: upcomingMeetings;
   font-size: var(--s-font-size);
-  margin: auto auto 50px;
-  margin-left: 20px;
+  margin: auto auto 50px 20px;
   width: 100%;
   text-align: left;
   background-color: white;
@@ -97,6 +96,21 @@
   .todayMeetings {
     margin-left: 50px;
     width: 250px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .todayMeetings {
+    margin: auto;
+    width: 280px;
+  }
+
+  .moduleCards {
+    margin: auto;
+  }
+
+  .upcomingMeetings {
+    margin: 10px auto auto;
   }
 }
 .arrowRight {
