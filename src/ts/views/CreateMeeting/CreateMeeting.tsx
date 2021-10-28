@@ -184,7 +184,7 @@ const CreateMeeting = () => {
           participantsFilled={emails.length > 0}
           surveyFilled={survey.questions.length > 0}
           timeFilled={timeRanges.length > 0}
-          placeFilled={onlineLink !== ''}
+          placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
         />
       )}
       {state === 'modules' && (
