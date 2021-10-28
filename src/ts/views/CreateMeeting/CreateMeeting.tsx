@@ -49,7 +49,7 @@ const CreateMeeting = () => {
   const history = useHistory();
   const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
-  const [saveInvitationsResponse, setSetInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [saveInvitationsResponse, setSaveInvitationsResponse] = useState<ApiCall>(new ApiCall());
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   const [savePlacesResponse, setSavePlacesResponse] = useState<ApiCall>(new ApiCall());
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceDTO[]>([]);
@@ -118,6 +118,25 @@ const CreateMeeting = () => {
   }, [state]);
 
   useEffect(() => {
+    if (
+      meetingId.id !== undefined &&
+      (emails.length === 0 ||
+        saveInvitationsResponse.isSuccess ||
+        saveInvitationsResponse.isFailed) &&
+      (survey.questions.length === 0 ||
+        saveSurveyResponse.isSuccess ||
+        saveSurveyResponse.isFailed) &&
+      (onlineMeeting ||
+        selectedPlaces.length === 0 ||
+        savePlacesResponse.isSuccess ||
+        savePlacesResponse.isFailed)
+    ) {
+      history.push('/meetings/' + meetingId.id);
+    }
+    // eslint-disable-next-line
+  }, [meetingId, saveInvitationsResponse, saveSurveyResponse, savePlacesResponse]);
+
+  useEffect(() => {
     if (meetingId.id !== undefined && saveMeetingResponse.isSuccess) {
       const createInvitationsRequest = {
         meetingId: meetingId.id,
@@ -125,22 +144,15 @@ const CreateMeeting = () => {
         message: invitationMessage,
       };
       if (createInvitationsRequest.emails.length > 0) {
-        createInvitations(createInvitationsRequest, setSetInvitationsResponse, () =>
-          history.push('/meetings/' + meetingId.id)
-        );
+        createInvitations(createInvitationsRequest, setSaveInvitationsResponse);
       }
       if (survey.questions.length > 0) {
-        createSurvey(meetingId.id, survey, setSaveSurveyResponse, () =>
-          history.push('/meetings/' + meetingId.id)
-        );
+        createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       if (!onlineMeeting && selectedPlaces.length > 0) {
-        savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse, () => {
-          history.push('/meetings/' + meetingId.id);
-        });
+        savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
-      history.push('/meetings/' + meetingId.id);
     }
     // eslint-disable-next-line
   }, [meetingId.id]);
