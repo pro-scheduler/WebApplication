@@ -21,8 +21,6 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
-import RightArrowButton from '../../components/common/NextButton/RightArrowButton';
-import LeftArrowButton from '../../components/common/NextButton/LeftArrowButton';
 import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
 import SwitchButton from '../../components/common/SwitchButton/SwitchButton';
 import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace';
@@ -185,6 +183,8 @@ const CreateMeeting = () => {
           surveyFilled={survey.questions.length > 0}
           timeFilled={timeRanges.length > 0}
           placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
+          onLeftClick={setPrevState}
+          onRightClick={setNextState}
         />
       )}
       {state === 'modules' && (
@@ -246,16 +246,6 @@ const CreateMeeting = () => {
         setSelectedPlaces={setSelectedPlaces}
       />
       <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
-      <Row className="justify-content-center my-5">
-        <Col lg={12} className="text-center">
-          {state !== 'modules' && (
-            <div className={styles.navigationContainer}>
-              <LeftArrowButton onclick={setPrevState} disabled={state === 'name'} />
-              <RightArrowButton onclick={setNextState} disabled={state === 'summary'} />
-            </div>
-          )}
-        </Col>
-      </Row>
       {state === 'summary' && (
         <>
           <Row className="justify-content-center">

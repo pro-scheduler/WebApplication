@@ -2,9 +2,11 @@ import Col from 'react-bootstrap/Col';
 import styles from './MeetingNavbar.module.css';
 import cx from 'classnames';
 import Row from 'react-bootstrap/Row';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import { TiTick } from 'react-icons/ti';
+import LeftArrowButton from '../common/NextButton/LeftArrowButton';
+import RightArrowButton from '../common/NextButton/RightArrowButton';
 
 export type MeetingNavbarProps = {
   state: creatingMeetingState;
@@ -18,6 +20,8 @@ export type MeetingNavbarProps = {
   surveyFilled: boolean;
   timeFilled: boolean;
   placeFilled: boolean;
+  onRightClick: MouseEventHandler;
+  onLeftClick: MouseEventHandler;
 };
 
 const MeetingNavbar = ({
@@ -32,93 +36,110 @@ const MeetingNavbar = ({
   surveyFilled,
   timeFilled,
   placeFilled,
+  onRightClick,
+  onLeftClick,
 }: MeetingNavbarProps) => {
   return (
     <Row className="justify-content-center mt-5">
-      <Col xs="auto" style={{ display: 'flex' }}>
-        <div className={styles.wrapper}>
-          <ul className={styles.items}>
-            <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
-              <button className={styles.itemButton} onClick={() => setState('name')}>
-                <div
+      <Col xs="auto">
+        <div className={styles.navbarContainer}>
+          {state !== 'name' && (
+            <LeftArrowButton onclick={onLeftClick} className={styles.leftArrow} disabled={false} />
+          )}
+          <div className={styles.wrapper}>
+            <ul className={styles.items}>
+              <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
+                <button className={styles.itemButton} onClick={() => setState('name')}>
+                  <div
+                    className={cx(
+                      styles.itemContainer,
+                      state === 'name' && styles.chosenItemContainer
+                    )}
+                  >
+                    General
+                    {nameFilled && <TiTick className={styles.filledIcon} />}
+                  </div>
+                </button>
+              </li>
+              <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
+                <button className={styles.itemButton} onClick={() => setState('invitations')}>
+                  <div
+                    className={cx(
+                      styles.itemContainer,
+                      state === 'invitations' && styles.chosenItemContainer
+                    )}
+                  >
+                    Participants
+                    {participantsFilled && <TiTick className={styles.filledIcon} />}
+                  </div>
+                </button>
+              </li>
+              {timeModule && (
+                <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
+                  <button className={styles.itemButton} onClick={() => setState('time')}>
+                    <div
+                      className={cx(
+                        styles.itemContainer,
+                        state === 'time' && styles.chosenItemContainer
+                      )}
+                    >
+                      Time
+                      {timeFilled && <TiTick className={styles.filledIcon} />}
+                    </div>
+                  </button>
+                </li>
+              )}
+              {placeModule && (
+                <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
+                  <button className={styles.itemButton} onClick={() => setState('place')}>
+                    <div
+                      className={cx(
+                        styles.itemContainer,
+                        state === 'place' && styles.chosenItemContainer
+                      )}
+                    >
+                      Place
+                      {placeFilled && <TiTick className={styles.filledIcon} />}
+                    </div>
+                  </button>
+                </li>
+              )}
+              {surveyModule && (
+                <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
+                  <button className={styles.itemButton} onClick={() => setState('survey')}>
+                    <div
+                      className={cx(
+                        styles.itemContainer,
+                        state === 'survey' && styles.chosenItemContainer
+                      )}
+                    >
+                      Survey
+                      {surveyFilled && <TiTick className={styles.filledIcon} />}
+                    </div>
+                  </button>
+                </li>
+              )}
+              <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
+                <button
                   className={cx(
-                    styles.itemContainer,
-                    state === 'name' && styles.chosenItemContainer
+                    styles.itemButton,
+                    state === 'summary' && styles.chosenItemContainer
                   )}
+                  onClick={() => setState('summary')}
+                  disabled={disabledSummary}
                 >
-                  General
-                  {nameFilled && <TiTick className={styles.filledIcon} />}
-                </div>
-              </button>
-            </li>
-            <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
-              <button className={styles.itemButton} onClick={() => setState('invitations')}>
-                <div
-                  className={cx(
-                    styles.itemContainer,
-                    state === 'invitations' && styles.chosenItemContainer
-                  )}
-                >
-                  Participants
-                  {participantsFilled && <TiTick className={styles.filledIcon} />}
-                </div>
-              </button>
-            </li>
-            {timeModule && (
-              <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
-                <button className={styles.itemButton} onClick={() => setState('time')}>
-                  <div
-                    className={cx(
-                      styles.itemContainer,
-                      state === 'time' && styles.chosenItemContainer
-                    )}
-                  >
-                    Time
-                    {timeFilled && <TiTick className={styles.filledIcon} />}
-                  </div>
+                  Summary
                 </button>
               </li>
-            )}
-            {placeModule && (
-              <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
-                <button className={styles.itemButton} onClick={() => setState('place')}>
-                  <div
-                    className={cx(
-                      styles.itemContainer,
-                      state === 'place' && styles.chosenItemContainer
-                    )}
-                  >
-                    Place
-                    {placeFilled && <TiTick className={styles.filledIcon} />}
-                  </div>
-                </button>
-              </li>
-            )}
-            {surveyModule && (
-              <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
-                <button className={styles.itemButton} onClick={() => setState('survey')}>
-                  <div
-                    className={cx(
-                      styles.itemContainer,
-                      state === 'survey' && styles.chosenItemContainer
-                    )}
-                  >
-                    Survey
-                    {surveyFilled && <TiTick className={styles.filledIcon} />}
-                  </div>
-                </button>
-              </li>
-            )}
-            <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
-              <button
-                className={cx(styles.itemButton, state === 'summary' && styles.chosenItemContainer)}
-                onClick={() => setState('summary')}
-                disabled={disabledSummary}
-              >
-                Summary
-              </button>
-            </li>
-          </ul>
+            </ul>
+          </div>
+          {state !== 'summary' && (
+            <RightArrowButton
+              onclick={onRightClick}
+              className={styles.rightArrow}
+              disabled={false}
+            />
+          )}
         </div>
       </Col>
     </Row>
