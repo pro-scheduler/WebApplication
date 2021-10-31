@@ -244,15 +244,3 @@ export const getMeetingSettings = (
   // eslint-disable-next-line
   get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
 };
-
-// TODO connect with backend
-export const addMeetingToGoogleCalendar = (
-  meetingId: number,
-  onSuccess?: Function,
-  setData?: Function,
-  setResponse?: Function
-) => {
-  return;
-  // eslint-disable-next-line
-  post({}, '', setData, setResponse, true, undefined, onSuccess);
-};

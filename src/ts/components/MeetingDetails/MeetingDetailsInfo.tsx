@@ -11,9 +11,8 @@ import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import {
-  addMeetingToGoogleCalendar,
   cancelMeeting,
   leaveMeeting,
   updateFinalDate,
@@ -22,6 +21,10 @@ import {
 import { MeetingState } from '../../model/meeting/Meeting';
 import FinalDateForm from './FinalDateForm/FinalDateForm';
 import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
+import { googleCalendarUrl } from '../../auth/AuthCredentials';
+import Popup from '../common/Popup/Popup';
+import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
+import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
@@ -67,6 +70,8 @@ const MeetingDetailsInfo = ({
   const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
+  const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
+  const location = useLocation();
   const history = useHistory();
 
   const updateDetails = () => {
@@ -102,6 +107,17 @@ const MeetingDetailsInfo = ({
   };
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('google-calendar-picker') === 'show') {
+      setGoogleCalendarPickerModalShow(true);
+      queryParams.delete('google-calendar-picker');
+      history.replace({
+        search: queryParams.toString(),
+      });
+    }
+  }, [location]);
+
+  useEffect(() => {
     setName(name);
     setDescription(description);
   }, [name, description]);
@@ -121,10 +137,6 @@ const MeetingDetailsInfo = ({
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
-  const addToGoogleCalendar = () => {
-    addMeetingToGoogleCalendar(meetingId);
-  };
-
   return (
     <Card
       title={'Details'}
@@ -140,14 +152,13 @@ const MeetingDetailsInfo = ({
           <div
             className={googleProvider ? styles.flexButtonsContainer : styles.blockButtonsContainer}
           >
-            {googleProvider && (
-              <GoogleButton
-                text={'Add to calendar'}
-                onClick={addToGoogleCalendar}
-                containerClassName={styles.googleCalendarButtonContainer}
-                className={styles.googleCalendarButton}
-              />
-            )}
+            <GoogleButton
+              redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
+              text={'Add to calendar'}
+              onClick={() => googleCalendarTokenExists() && setGoogleCalendarPickerModalShow(true)}
+              containerClassName={styles.googleCalendarButtonContainer}
+              className={styles.googleCalendarButton}
+            />
             {isOrganizer ? (
               <div>
                 <ActionButton
@@ -169,6 +180,16 @@ const MeetingDetailsInfo = ({
         ) : undefined
       }
     >
+      <Popup
+        show={googleCalendarPickerModalShow}
+        title={'Choose Google Calendar'}
+        onClose={() => setGoogleCalendarPickerModalShow(false)}
+      >
+        <GoogleCalendarPicker
+          meetingId={meetingId}
+          onCalendarChosen={() => setGoogleCalendarPickerModalShow(false)}
+        />
+      </Popup>
       {!editNameAndDescription ? (
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
