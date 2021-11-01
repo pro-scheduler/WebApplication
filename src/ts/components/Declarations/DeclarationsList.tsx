@@ -36,6 +36,7 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
         key={index}
         className={styles.declarationRow}
       >
+        <td>{declaration.meetingName}</td>
         <td>{declaration.title}</td>
         <td>{declaration.description}</td>
         <td>
@@ -53,6 +54,7 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
           <Table responsive="sm" className="mt-4">
             <thead>
               <tr>
+                <th>Meeting name</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Created by</th>

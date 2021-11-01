@@ -22,3 +22,5 @@ export const getSurveyTimeReminderUrl = (surveyId: number) =>
   getNotificationsUrl() + `/survey/time/${surveyId}`;
 
 export const getCustomNotificationUrl = () => getNotificationsUrl() + '/custom';
+
+export const getUserSettingsUrl = () => getNotificationsUrl() + '/settings';
