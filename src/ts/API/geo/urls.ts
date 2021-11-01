@@ -1,3 +1,5 @@
+import { getMeetingUrl } from '../meeting/urls';
+
 export const getPlacesUrl = () => `${process.env.REACT_APP_GEO_SERVICE_URL}places`;
 
 export const getGeocoderBaseUrl = () => `${process.env.REACT_APP_GEO_SERVICE_URL}geocoder`;
@@ -18,3 +20,5 @@ export const getPlacesVotesUrl = (meetingId: number) => getMeetingPlacesUrl(meet
 
 export const getPlacesSettingsUrl = (meetingId: number) =>
   getMeetingPlacesUrl(meetingId) + '/settings';
+
+export const getFinalPlaceUrl = (meetingId: number) => getMeetingUrl(meetingId);

@@ -73,6 +73,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     setMeeting({ ...meeting, name, description });
   };
 
+  const setFinalPlace = (place: PlaceDetails) => {
+    setMeeting({ ...meeting, finalPlace: place });
+  };
   const setMeetingTimeDeadline = (deadline: Date) => {
     setMeeting({ ...meeting, markTimeRangeDeadline: deadline });
   };
@@ -190,7 +193,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               hasSurvey={survey !== undefined}
               meetingLink={meeting.link}
               meetingPassword={meeting.password}
-              finalPlace={undefined} // TODO replace by final place
+              finalPlace={meeting.finalPlace?.name}
               name={meeting.name}
               description={meeting.description}
               isOrganizer={isOrganizer}
@@ -262,6 +265,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           open={meeting.state === MeetingState.OPEN}
           places={places}
           setPlaces={setPlaces}
+          finalPlaceId={meeting.finalPlace ? meeting.finalPlace.id : -1}
+          setFinalPlace={setFinalPlace}
         />
       )}
     </Container>

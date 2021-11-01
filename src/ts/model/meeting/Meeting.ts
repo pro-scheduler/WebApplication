@@ -52,7 +52,8 @@ export class UpdateRealMeetingRequest {
     public description: string | undefined,
     public availableTimeRanges: TimeRangeDTO[] | undefined,
     public finalDate: TimeRangeDTO | undefined,
-    public markTimeRangeDeadline: Date | undefined
+    public markTimeRangeDeadline: Date | undefined,
+    public finalMeetingPlaceId: number | undefined
   ) {}
 }
 
@@ -115,7 +116,8 @@ export class RealMeetingDetails implements MeetingDetails {
     public type: MeetingType = MeetingType.REAL,
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
-    public finalDate: TimeRangeDTO
+    public finalDate: TimeRangeDTO,
+    public finalPlace: number
   ) {}
 }
 

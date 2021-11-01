@@ -16,6 +16,11 @@ export type MapWithPlacesProps = {
   allowAdding: boolean;
   addPlaceAction: Function;
   removeButtonAction: Function;
+  showLegend?: boolean;
+  displayFinalPlaceButton?: boolean;
+  disabledFinalPlaceButtonMapper?: Function;
+  finalPlaceAction?: Function;
+  finalPlaceId?: number;
 };
 
 interface Colors {
@@ -35,6 +40,11 @@ const MapWithPlaces = ({
   allowAdding,
   addPlaceAction,
   removeButtonAction,
+  displayFinalPlaceButton = false,
+  disabledFinalPlaceButtonMapper = () => true,
+  finalPlaceAction = () => {},
+  finalPlaceId,
+  showLegend = false,
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
@@ -44,25 +54,46 @@ const MapWithPlaces = ({
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [insertingMode, setInsertingMode] = useState<boolean>(false);
 
+  const finalPlaceMarkerColor = 'var(--bright-green)';
   const [proposalDetails, setProposalDetails] = useState<{
     address: string;
     description: string;
     name: string;
   }>(defaultProposals);
-  const resetProperties = (setter: Function, value: any) => {
+
+  const resetProperties = (
+    setter: Function,
+    value: any,
+    exceptionId?: number,
+    exceptionValue?: string
+  ) => {
     let newProperties: any = {};
     placesToDisplay.forEach((place) => {
       newProperties[place.id] = value;
+      if (exceptionId && place.id === exceptionId) newProperties[place.id] = exceptionValue;
     });
     setter(newProperties);
     return newProperties;
   };
-  const changeProperty = (id: number, setter: Function, old: any, value: any) => {
+
+  const changeProperty = (
+    id: number,
+    setter: Function,
+    old: any,
+    value: any,
+    exceptionId?: number,
+    exceptionValue?: string
+  ) => {
     let newProperty = { ...old };
-    newProperty[id] = value;
+    if (exceptionId === id) {
+      newProperty[id] = exceptionValue;
+    } else {
+      newProperty[id] = value;
+    }
     setter(newProperty);
     return newProperty;
   };
+
   const mapWidthToZoom = (width: number) => {
     if (width <= 0.0014) return 18;
     if (width <= 0.003) return 17;
@@ -82,6 +113,7 @@ const MapWithPlaces = ({
     if (width <= 45) return 3;
     return 2;
   };
+
   //calculate center and zoom to obatin all places
   useEffect(() => {
     if (placesToDisplay.length > 0) {
@@ -114,10 +146,10 @@ const MapWithPlaces = ({
   }, [placesToDisplay]);
 
   useEffect(() => {
-    resetProperties(setColors, 'var(--purple)');
+    resetProperties(setColors, 'var(--purple)', finalPlaceId, finalPlaceMarkerColor);
     resetProperties(setHidden, true);
     // eslint-disable-next-line
-  }, [placesToDisplay]);
+  }, [placesToDisplay, finalPlaceId]);
 
   return (
     <>
@@ -158,7 +190,7 @@ const MapWithPlaces = ({
                 });
               });
             }
-            resetProperties(setColors, 'var(--purple)');
+            resetProperties(setColors, 'var(--purple)', finalPlaceId, finalPlaceMarkerColor);
             resetProperties(setHidden, true);
           }}
         >
@@ -167,11 +199,16 @@ const MapWithPlaces = ({
             return (
               <Marker
                 key={place.id}
-                width={60}
+                width={place.id === finalPlaceId ? 70 : 60}
                 anchor={[place.latitude, place.longitude]}
                 color={colors[place.id]}
                 onClick={() => {
-                  let newColorProperties = resetProperties(setColors, 'var(--purple)');
+                  let newColorProperties = resetProperties(
+                    setColors,
+                    'var(--purple)',
+                    finalPlaceId,
+                    finalPlaceMarkerColor
+                  );
                   let newHiddenProperties = resetProperties(setHidden, true);
                   if (hidden[place.id]) {
                     setZoom(15);
@@ -181,7 +218,11 @@ const MapWithPlaces = ({
                     place.id,
                     setColors,
                     newColorProperties,
-                    colors[place.id] === 'var(--red)' ? 'var(--purple)' : 'var(--red)'
+                    colors[place.id] === 'var(--red)'
+                      ? place.id === finalPlaceId
+                        ? 'var(--purple)'
+                        : finalPlaceMarkerColor
+                      : 'var(--red)'
                   );
                   changeProperty(place.id, setHidden, newHiddenProperties, !hidden[place.id]);
                 }}
@@ -202,7 +243,14 @@ const MapWithPlaces = ({
                       let nextPlaceIndex = (i + 1) % placesToDisplay.length;
                       let nextPlace = placesToDisplay[nextPlaceIndex];
                       let newHidden = changeProperty(place.id, setHidden, hidden, true);
-                      let newColor = changeProperty(place.id, setColors, colors, 'var(--purple)');
+                      let newColor = changeProperty(
+                        place.id,
+                        setColors,
+                        colors,
+                        'var(--purple)',
+                        finalPlaceId,
+                        finalPlaceMarkerColor
+                      );
                       changeProperty(nextPlace.id, setHidden, newHidden, false);
                       changeProperty(nextPlace.id, setColors, newColor, 'var(--red)');
                       setCenter([nextPlace.latitude, nextPlace.longitude]);
@@ -214,16 +262,38 @@ const MapWithPlaces = ({
                     removeButtonAction={removeButtonAction}
                     closeAction={() => {
                       changeProperty(place.id, setHidden, hidden, true);
-                      changeProperty(place.id, setColors, colors, 'var(--purple)');
+                      changeProperty(
+                        place.id,
+                        setColors,
+                        colors,
+                        'var(--purple)',
+                        finalPlaceId,
+                        finalPlaceMarkerColor
+                      );
                     }}
                     displayNext={placesToDisplay.length > 1}
                     displayRemoveButton={displayRemoveButton}
                     displayMainButton={displayMainButton}
+                    displayFinalPlaceButton={displayFinalPlaceButton}
+                    disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
+                    finalPlaceAction={finalPlaceAction}
                   />
                 </div>
               </Overlay>
             );
           })}
+          {showLegend && (
+            <div className={styles.mapLegend}>
+              <div
+                className={styles.legendElement}
+                style={{ backgroundColor: finalPlaceMarkerColor }}
+              />
+              Final place
+              <br />
+              <div className={styles.legendElement} style={{ backgroundColor: 'var(--purple)' }} />
+              Place propositions
+            </div>
+          )}
         </Map>
       </div>
       <AddPlacePopup

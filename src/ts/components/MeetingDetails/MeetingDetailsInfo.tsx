@@ -115,6 +115,7 @@ const MeetingDetailsInfo = ({
         search: queryParams.toString(),
       });
     }
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
@@ -233,7 +234,7 @@ const MeetingDetailsInfo = ({
             ) : finalPlace ? (
               finalPlace
             ) : (
-              'Place not set'
+              'Final place has not been specified yet'
             )}
           </p>
           <p className={styles.moduleContainer}>

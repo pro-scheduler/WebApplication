@@ -8,6 +8,7 @@ import {
   addNewPlace,
   deletePlace,
   getPlacesSettings,
+  saveFinalPlace,
   updatePlaces,
   updateVotes,
   voteBackForPlace,
@@ -28,9 +29,19 @@ export type MeetingPlacesProps = {
   open: boolean;
   places: PlaceDetails[];
   setPlaces: Function;
+  finalPlaceId: number;
+  setFinalPlace: Function;
 };
 
-const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: MeetingPlacesProps) => {
+const MeetingPlaces = ({
+  meetingId,
+  user,
+  isOrganizer,
+  places,
+  setPlaces,
+  finalPlaceId,
+  setFinalPlace,
+}: MeetingPlacesProps) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [myVotes, setMyVotes] = useState<number[]>([]);
   const [newVotes, setNewVotes] = useState<number[]>([]);
@@ -44,6 +55,10 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
         ? 'Back your vote'
         : 'Vote for that place',
     [places, user]
+  );
+  const disabledFinalPlaceButtonMapper = useCallback(
+    (placeId: number) => placeId === finalPlaceId,
+    [finalPlaceId]
   );
 
   useEffect(() => {
@@ -114,6 +129,15 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
                   meetingId
                 );
               }}
+              displayFinalPlaceButton={isOrganizer}
+              disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
+              finalPlaceAction={(placeId: number) => {
+                saveFinalPlace(meetingId, placeId, () => {
+                  setFinalPlace(places.find((p) => p.id === placeId));
+                });
+              }}
+              finalPlaceId={finalPlaceId}
+              showLegend={true}
             />
           </div>
         </Collapse>
@@ -178,6 +202,14 @@ const MeetingPlaces = ({ meetingId, user, isOrganizer, places, setPlaces }: Meet
                 updatePlaces(newPlaces, meetingId, setPlaces);
               }}
               emptyText={'Meeting has no places'}
+              displayFinalPlaceButton={true}
+              disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
+              finalPlaceAction={(placeId: number) => {
+                saveFinalPlace(meetingId, placeId, () => {
+                  setFinalPlace(places.find((p) => p.id === placeId));
+                });
+              }}
+              finalPlace={finalPlaceId}
             />
           </Collapse>
         </Col>
