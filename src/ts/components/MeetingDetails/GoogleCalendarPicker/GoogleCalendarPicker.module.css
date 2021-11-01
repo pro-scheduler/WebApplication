@@ -1,0 +1,56 @@
+.userInfoContainer {
+    display: flex;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: solid #d2d2d2 1px;
+    flex-flow: row wrap;
+}
+
+.userInfoContainer > h6, .userInfoContainer > a {
+    line-height: 34px;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.userInfoContainer > div {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.itemListContainer {
+    display: block;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.itemContainer {
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-right: 5px;
+    padding-bottom: 10px;
+    border-bottom: solid #d2d2d2 1px;
+    transform: scale(0.99);
+}
+
+.itemContainer:first-child {
+    border-top: solid #d2d2d2 1px;
+}
+
+.itemContainer:hover {
+    background: #eaeaea;
+    transform: scale(1);
+    cursor: pointer;
+}
+
+tr {
+    width: 100%;
+}
+
+.itemTitle {
+    text-align: left;
+}
+
+.itemDescription {
+    text-align: left;
+    margin-bottom: 0;
+}

@@ -9,6 +9,10 @@ export class ApiCall {
   ) {}
 }
 
+export const googleCalendarHeaders = {
+  'Google-Calendar-Token': Cookies.get('gc_access_token') ?? '',
+};
+
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
@@ -68,12 +72,13 @@ export const post = (
   setResponse?: Function,
   showFailed?: boolean,
   successMessage?: string,
-  onSuccess?: Function
+  onSuccess?: Function,
+  additionalHeaders?: any
 ) => {
   setLoading(setResponse);
   fetch(apiLink, {
     method: 'POST',
-    headers,
+    headers: Object.assign({}, headers, additionalHeaders),
     body: JSON.stringify(data),
   })
     .then((response: Response) => {
@@ -167,12 +172,13 @@ export const get = (
   setResponse?: Function,
   showFailed?: boolean,
   successMessage?: string,
-  onSuccess?: Function
+  onSuccess?: Function,
+  additionalHeaders?: any
 ) => {
   setLoading(setResponse);
   fetch(apiLink, {
     method: 'GET',
-    headers,
+    headers: Object.assign({}, headers, additionalHeaders),
   })
     .then((response: Response) => {
       return handleResponse(response, setResponse, successMessage, onSuccess);
