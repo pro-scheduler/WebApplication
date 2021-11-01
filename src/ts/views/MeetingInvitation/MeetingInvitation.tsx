@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { MeetingSummary } from '../../model/meeting/Meeting';
+import { SharedMeetingSummary } from '../../model/meeting/Meeting';
 import {
   getMeetingByGeneratedEndpoint,
   joinMeetingByGeneratedEndpoint,
@@ -24,7 +24,7 @@ const MeetingInvitation = () => {
   const [user, setUser] = useState<UserSummary>(defaultUser);
   const [userResponse, setUserResponse] = useState<any>({ isFailed: false });
 
-  const [meeting, setMeeting] = useState<MeetingSummary>();
+  const [meeting, setMeeting] = useState<SharedMeetingSummary>();
   const [meetingStartDate, setMeetingStartDate] = useState<Date | undefined>();
   const [meetingEndDate, setMeetingEndDate] = useState<Date | undefined>();
   const [response, setResponse] = useState<ApiCall>(new ApiCall());
@@ -58,9 +58,7 @@ const MeetingInvitation = () => {
         <Row className="justify-content-center my-5 pt-5">
           <Col lg={12} className="mt-5">
             <div className={styles.invitationHeaderContainer}>
-              <div className={styles.meetingDetails}>
-                {meeting.organizers.map((organizer: UserSummary) => organizer.email).join(', ')}
-              </div>
+              <div className={styles.meetingDetails}>{meeting.invitedBy.email}</div>
               <div>invited you to the</div>
               <div className={styles.meetingDetails}>{meeting.name}</div>
               <div>meeting</div>

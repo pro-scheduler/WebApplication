@@ -78,6 +78,17 @@ export type MeetingSummary = {
   finalDate: TimeRangeDTO | undefined;
 };
 
+export type SharedMeetingSummary = {
+  id: number;
+  name: string;
+  description: string;
+  type: MeetingType;
+  organizers: UserSummary[];
+  state: MeetingState;
+  finalDate: TimeRangeDTO | undefined;
+  invitedBy: UserSummary;
+};
+
 export class OnlineMeetingDetails implements MeetingDetails {
   constructor(
     public id: number,
