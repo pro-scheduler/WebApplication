@@ -200,6 +200,13 @@ const MeetingPlaces = ({
                 updatePlaces(newPlaces, meetingId, setPlaces);
               }}
               emptyText={'Meeting has no places'}
+              displayFinalPlaceButton={true}
+              disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
+              finalPlaceAction={(placeId: number) => {
+                saveFinalPlace(meetingId, placeId, () => {
+                  setFinalPlace(places.find((p) => p.id === placeId));
+                });
+              }}
             />
           </Collapse>
         </Col>

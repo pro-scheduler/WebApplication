@@ -9,9 +9,19 @@ export type PlacesTableProps = {
   places: PlaceDetails[];
   setSelectedPlaces: Function;
   emptyText: string;
+  displayFinalPlaceButton?: boolean;
+  disabledFinalPlaceButtonMapper?: Function;
+  finalPlaceAction?: Function;
 };
 
-const PlacesTable = ({ places, setSelectedPlaces, emptyText }: PlacesTableProps) => {
+const PlacesTable = ({
+  places,
+  setSelectedPlaces,
+  emptyText,
+  displayFinalPlaceButton = false,
+  disabledFinalPlaceButtonMapper = () => true,
+  finalPlaceAction = () => {},
+}: PlacesTableProps) => {
   const [checkedPlaces, setCheckedPlaces] = useState<number[]>([]);
 
   const placesRows = places.map((place: PlaceDTO, index: number) => {
@@ -33,6 +43,12 @@ const PlacesTable = ({ places, setSelectedPlaces, emptyText }: PlacesTableProps)
     );
   });
 
+  const getCheckedPlaceId = () => {
+    if (checkedPlaces.length !== 1) return -1;
+    let place = places.find((_, i) => i === checkedPlaces[0]);
+    return place ? place.id : -1;
+  };
+
   return (
     <Card
       title="Possible places"
@@ -47,6 +63,20 @@ const PlacesTable = ({ places, setSelectedPlaces, emptyText }: PlacesTableProps)
             text={'Remove places'}
             disabled={checkedPlaces.length === 0}
           />
+          {displayFinalPlaceButton && (
+            <div style={{ marginLeft: 10 }}>
+              <ActionButton
+                onclick={() => {
+                  finalPlaceAction(getCheckedPlaceId());
+                  console.log(getCheckedPlaceId());
+                }}
+                text={'Mark place as final'}
+                disabled={
+                  checkedPlaces.length !== 1 || disabledFinalPlaceButtonMapper(getCheckedPlaceId())
+                }
+              />
+            </div>
+          )}
         </div>
       }
     >
