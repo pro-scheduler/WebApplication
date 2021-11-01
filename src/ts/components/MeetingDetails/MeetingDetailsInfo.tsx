@@ -115,6 +115,7 @@ const MeetingDetailsInfo = ({
         search: queryParams.toString(),
       });
     }
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
