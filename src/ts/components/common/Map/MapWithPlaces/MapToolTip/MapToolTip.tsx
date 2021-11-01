@@ -7,10 +7,13 @@ export type MapToolTipProps = {
   description: string;
   address: string;
   displayRemoveButton: boolean;
+  displayFinalPlaceButton: boolean;
+  disabledFinalPlaceButtonMapper: Function;
   mainButtonName: string;
   next: Function;
   mainButtonAction: Function;
   removeButtonAction: Function;
+  finalPlaceAction: Function;
   closeAction: Function;
   displayNext: boolean;
   displayMainButton: boolean;
@@ -26,10 +29,13 @@ const MapToolTip = ({
   next,
   mainButtonAction,
   removeButtonAction,
+  finalPlaceAction,
   closeAction,
   displayNext,
   displayRemoveButton,
   displayMainButton,
+  displayFinalPlaceButton,
+  disabledFinalPlaceButtonMapper,
 }: MapToolTipProps) => {
   const [height, setHeight] = useState<number>(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -55,27 +61,35 @@ const MapToolTip = ({
         sharpLeftBottomBorder={true}
         footer={
           <div className={styles.buttonContainer}>
-            <div>
-              {displayMainButton && (
-                <ActionButton
-                  onclick={() => {
-                    mainButtonAction();
-                  }}
-                  text={mainButtonName}
-                  className={styles.button}
-                />
-              )}
-              {displayRemoveButton && (
-                <ActionButton
-                  onclick={() => {
-                    removeButtonAction(placeId);
-                  }}
-                  text={'Remove'}
-                  className={styles.button}
-                  color={'var(--red)'}
-                />
-              )}
-            </div>
+            {displayMainButton && (
+              <ActionButton
+                onclick={() => {
+                  mainButtonAction();
+                }}
+                text={mainButtonName}
+                className={styles.button}
+              />
+            )}
+            {displayFinalPlaceButton && (
+              <ActionButton
+                onclick={() => {
+                  finalPlaceAction(placeId);
+                }}
+                disabled={disabledFinalPlaceButtonMapper(placeId)}
+                text={'Mark as final place'}
+                className={styles.button}
+              />
+            )}
+            {displayRemoveButton && (
+              <ActionButton
+                onclick={() => {
+                  removeButtonAction(placeId);
+                }}
+                text={'Remove'}
+                className={styles.button}
+                color={'var(--red)'}
+              />
+            )}
             {displayNext && (
               <ActionButton
                 onclick={() => {

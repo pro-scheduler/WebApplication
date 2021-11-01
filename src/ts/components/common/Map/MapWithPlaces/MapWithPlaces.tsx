@@ -16,6 +16,9 @@ export type MapWithPlacesProps = {
   allowAdding: boolean;
   addPlaceAction: Function;
   removeButtonAction: Function;
+  displayFinalPlaceButton?: boolean;
+  disabledFinalPlaceButtonMapper?: Function;
+  finalPlaceAction?: Function;
 };
 
 interface Colors {
@@ -35,6 +38,9 @@ const MapWithPlaces = ({
   allowAdding,
   addPlaceAction,
   removeButtonAction,
+  displayFinalPlaceButton = false,
+  disabledFinalPlaceButtonMapper = () => true,
+  finalPlaceAction = () => {},
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
@@ -49,6 +55,7 @@ const MapWithPlaces = ({
     description: string;
     name: string;
   }>(defaultProposals);
+
   const resetProperties = (setter: Function, value: any) => {
     let newProperties: any = {};
     placesToDisplay.forEach((place) => {
@@ -57,12 +64,14 @@ const MapWithPlaces = ({
     setter(newProperties);
     return newProperties;
   };
+
   const changeProperty = (id: number, setter: Function, old: any, value: any) => {
     let newProperty = { ...old };
     newProperty[id] = value;
     setter(newProperty);
     return newProperty;
   };
+
   const mapWidthToZoom = (width: number) => {
     if (width <= 0.0014) return 18;
     if (width <= 0.003) return 17;
@@ -82,6 +91,7 @@ const MapWithPlaces = ({
     if (width <= 45) return 3;
     return 2;
   };
+
   //calculate center and zoom to obatin all places
   useEffect(() => {
     if (placesToDisplay.length > 0) {
@@ -219,6 +229,9 @@ const MapWithPlaces = ({
                     displayNext={placesToDisplay.length > 1}
                     displayRemoveButton={displayRemoveButton}
                     displayMainButton={displayMainButton}
+                    displayFinalPlaceButton={displayFinalPlaceButton}
+                    disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
+                    finalPlaceAction={finalPlaceAction}
                   />
                 </div>
               </Overlay>

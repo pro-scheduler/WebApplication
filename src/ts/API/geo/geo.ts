@@ -9,6 +9,7 @@ import {
   getPlaceUrl,
   getVotePlaceUrl,
   getPlacesSettingsUrl,
+  getFinalPlaceUrl,
 } from './urls';
 
 export const savePlaces = (
@@ -209,5 +210,23 @@ export const savePlacesSettings = (
     setResponse,
     true,
     'You have successfully changed settings.',
+    onSuccess
+  );
+
+export const saveFinalPlace = (
+  meetingsId: number,
+  finalPlaceId: number,
+  onSuccess?: Function,
+  setResponse?: Function
+) =>
+  put(
+    {
+      finalMeetingPlaceId: finalPlaceId,
+    },
+    getFinalPlaceUrl(meetingsId),
+    () => {},
+    setResponse,
+    true,
+    'You have successfully changed final place.',
     onSuccess
   );
