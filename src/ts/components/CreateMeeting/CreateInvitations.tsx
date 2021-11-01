@@ -13,6 +13,7 @@ import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import { validateEmail } from '../../tools/validator';
 import UserNameIcon from '../common/Icons/UserNameIcon';
 import { toastWarning } from '../../tools/messagesInvocator';
+import cx from 'classnames';
 
 export type CreateInvitationsProps = {
   state: creatingMeetingState;
@@ -74,10 +75,14 @@ const CreateInvitations = ({
           </Row>
         </>
       )}
-      <Row className="justify-content-center mt-4">
+      <Row
+        className={oneColumn ? 'justify-content-center mt-0 pt-0' : 'justify-content-center mt-4'}
+      >
         <Col sm={12} lg={oneColumn ? 12 : 6}>
           <Card title="Add participants">
-            <div className={styles.participantContainer}>
+            <div
+              className={cx(styles.participantContainer, oneColumn && styles.oneColumnParticipants)}
+            >
               <div className={styles.participantInput}>
                 <SingleValueInput
                   valueHandler={setEmail}
@@ -117,7 +122,7 @@ const CreateInvitations = ({
         <Col sm={12} lg={oneColumn ? 12 : 6}>
           <Card title="Invitation message">
             <TextArea
-              className={styles.invitationMessage}
+              className={cx(styles.invitationMessage, oneColumn && styles.oneColumnMessage)}
               valueHandler={setInvitationMessage}
               placeholder="Please type invitation message ..."
             />

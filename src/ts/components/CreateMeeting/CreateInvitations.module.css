@@ -48,6 +48,14 @@
   margin-bottom: 5px;
 }
 
+.oneColumnParticipants {
+  height: 200px;
+}
+
+.oneColumnMessage {
+  height: 100px;
+}
+
 @media only screen and (max-width: 500px) {
   .participantInput {
     display: block;
