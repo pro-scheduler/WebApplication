@@ -136,6 +136,8 @@ const MeetingPlaces = ({
                   setFinalPlace(places.find((p) => p.id === placeId));
                 });
               }}
+              finalPlaceId={finalPlaceId}
+              showLegend={true}
             />
           </div>
         </Collapse>
@@ -207,6 +209,7 @@ const MeetingPlaces = ({
                   setFinalPlace(places.find((p) => p.id === placeId));
                 });
               }}
+              finalPlace={finalPlaceId}
             />
           </Collapse>
         </Col>

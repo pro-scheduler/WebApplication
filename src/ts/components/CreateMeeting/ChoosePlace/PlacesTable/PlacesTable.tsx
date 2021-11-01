@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { PlaceDetails, PlaceDTO } from '../../../../model/geo/Geo';
+import { PlaceDetails } from '../../../../model/geo/Geo';
 import Card from '../../../common/Card/Card';
 import SquareCheckbox from '../../../common/forms/SquareCheckbox/SquareCheckbox';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
@@ -9,6 +9,7 @@ export type PlacesTableProps = {
   places: PlaceDetails[];
   setSelectedPlaces: Function;
   emptyText: string;
+  finalPlace?: number;
   displayFinalPlaceButton?: boolean;
   disabledFinalPlaceButtonMapper?: Function;
   finalPlaceAction?: Function;
@@ -21,12 +22,13 @@ const PlacesTable = ({
   displayFinalPlaceButton = false,
   disabledFinalPlaceButtonMapper = () => true,
   finalPlaceAction = () => {},
+  finalPlace = -1,
 }: PlacesTableProps) => {
   const [checkedPlaces, setCheckedPlaces] = useState<number[]>([]);
 
-  const placesRows = places.map((place: PlaceDTO, index: number) => {
+  const placesRows = places.map((place: PlaceDetails, index: number) => {
     return (
-      <tr key={index}>
+      <tr key={index} style={place.id === finalPlace ? { fontWeight: 600 } : {}}>
         <td>
           <SquareCheckbox
             checked={checkedPlaces.includes(index)}
@@ -68,7 +70,6 @@ const PlacesTable = ({
               <ActionButton
                 onclick={() => {
                   finalPlaceAction(getCheckedPlaceId());
-                  console.log(getCheckedPlaceId());
                 }}
                 text={'Mark place as final'}
                 disabled={
