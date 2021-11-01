@@ -54,7 +54,7 @@ const GeneralSettings = ({ meetingId }: GeneralSettingsProps) => {
                     onlyOrganizerCanInviteNewPeople: value,
                   });
                 }}
-                label={'Only organizer can invaite new people'}
+                label={'Only organizer can invite new people'}
               />
               <ActionButton
                 onclick={saveSettings}

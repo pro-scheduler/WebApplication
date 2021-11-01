@@ -5,6 +5,7 @@ import {
   MeetingTimeReminderRequest,
   SurveyReminderRequest,
   SurveyTimeReminderRequest,
+  UserSettings,
 } from '../../model/notification/Notification';
 import {
   getCreateSurveyReminderUrl,
@@ -15,6 +16,7 @@ import {
   getMeetingReminderUrl,
   getSurveyTimeReminderUrl,
   getTimeReminderUrl,
+  getUserSettingsUrl,
 } from './urls';
 
 export const createSurveyReminder = (
@@ -156,6 +158,27 @@ export const sendCustomNotification = (
     setResponse,
     true,
     'Notification has been sent successfully',
+    onSuccess
+  );
+};
+
+export const getUserSettings = (setUserSettings: Function, setResponse?: Function) => {
+  get(getUserSettingsUrl(), setUserSettings, setResponse);
+};
+
+export const updateUserSettings = (
+  userSettings: UserSettings,
+  onSuccess?: Function,
+  setResponse?: Function,
+  setData?: Function
+) => {
+  post(
+    userSettings,
+    getUserSettingsUrl(),
+    setData,
+    setResponse,
+    true,
+    'Notification settings has been modified successfully',
     onSuccess
   );
 };
