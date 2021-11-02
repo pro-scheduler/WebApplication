@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { maxSings, minSings, required } from '../../../../../tools/validator';
+import { maxSings, minSings } from '../../../../../tools/validator';
 import SingleValueInput from '../../../forms/Input/SingleValueInput';
 import TextArea from '../../../forms/TextArea/TextArea';
 import Popup from '../../../Popup/Popup';
@@ -51,8 +51,7 @@ const AddPlacePopup = ({
           valueHandler={setName}
           setInvalid={setInvalid}
           validation={[
-            { validation: required, message: 'This field is required' },
-            { validation: minSings(5), message: 'Min 5 signs' },
+            { validation: minSings(1), message: 'This field is required' },
             { validation: maxSings(255), message: 'Max 255 signs' },
           ]}
           placeholder="Please type palce name ..."
