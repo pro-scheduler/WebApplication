@@ -4,11 +4,6 @@
     z-index: 2;
 }
 
-#navbar .closeMenu {
-    position: absolute;
-    bottom: 20%;
-}
-
 #navbar .pro-sidebar {
     width: 100%;
     min-width: 100%;
@@ -25,7 +20,13 @@
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout {
-    overflow-y: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#navbar .pro-sidebar-inner .pro-sidebar-layout::-webkit-scrollbar {
+    display: none;
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
