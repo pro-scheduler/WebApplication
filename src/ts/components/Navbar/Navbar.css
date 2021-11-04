@@ -20,13 +20,7 @@
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout {
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-#navbar .pro-sidebar-inner .pro-sidebar-layout::-webkit-scrollbar {
-    display: none;
+    overflow-y: hidden;
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout #logotext {
