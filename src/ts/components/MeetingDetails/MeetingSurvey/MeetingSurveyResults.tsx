@@ -4,25 +4,26 @@ import styles from './MeetingSurveyResults.module.css';
 import UserNameIcon from '../../common/Icons/UserNameIcon';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import Popup from '../../common/Popup/Popup';
+import { UserSummary } from '../../../model/user/ProUser';
 
 export type MeetingSurveyResultsProps = {
   numberOfParticipants: number;
   numberOfFilledSurveys: number;
-  emails: string[];
+  users: UserSummary[];
   isOrganizer: boolean;
 };
 
 const MeetingSurveyResults = ({
   numberOfParticipants,
   numberOfFilledSurveys,
-  emails,
+  users,
   isOrganizer,
 }: MeetingSurveyResultsProps) => {
   const [showEmails, setShowEmails] = useState<boolean>(false);
 
-  const userNameIcons = emails.map((email: string, index: number) => (
+  const userNameIcons = users.map((user: UserSummary, index: number) => (
     <div className="my-3" key={index}>
-      <UserNameIcon email={email} key={index} />
+      <UserNameIcon user={user} email={user.username} />
     </div>
   ));
   return (
