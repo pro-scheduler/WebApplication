@@ -15,7 +15,7 @@ import {
 import { UserSummary } from '../../../../model/user/ProUser';
 import Popup from '../../../common/Popup/Popup';
 import SingleValueInput from '../../../common/forms/Input/SingleValueInput';
-import { minSings, maxSings, required } from '../../../../tools/validator';
+import { maxSings, required } from '../../../../tools/validator';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
 import TextArea from '../../../common/forms/TextArea/TextArea';
 import LoadingSpinner from '../../../common/Spinner/LoadingSpinner';
@@ -161,7 +161,6 @@ const Declaration = ({
             setInvalid={setInvalidTitleOrDesc}
             validation={[
               { validation: required, message: 'This field is required' },
-              { validation: minSings(5), message: 'Min 5 signs' },
               { validation: maxSings(255), message: 'Max 255 signs' },
             ]}
             placeholder="Please type declaration title ..."

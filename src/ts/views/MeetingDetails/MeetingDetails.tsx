@@ -33,6 +33,8 @@ import {
 } from '../../API/meetingChat/meetingChatService';
 import { MeetingChatMessageDetails } from '../../model/meetingChat/MeetingChatMessage';
 import MeetingChat from '../../components/MeetingDetails/MeetingChat/MeetingChat';
+import { loadMeetingDeclarations } from '../../API/declarations/declarationsService';
+import { DeclarationDetails } from '../../model/declaration/Declaration';
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
@@ -46,6 +48,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
+  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     onlyOrganizerCanInviteNewPeople: true,
@@ -157,6 +160,12 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     // eslint-disable-next-line
   }, [survey]);
 
+  useEffect(() => {
+    if (id) {
+      loadMeetingDeclarations(id, setDeclarations, () => {});
+    }
+  }, [id]);
+
   return meeting ? (
     <Container fluid>
       <MeetingDescription
@@ -189,7 +198,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         <Row className="justify-content">
           <Col lg={6}>
             <MeetingDetailsInfo
-              hasDeclarations={false}
+              declarationsNumber={declarations.length}
               hasSurvey={survey !== undefined}
               meetingLink={meeting.link}
               meetingPassword={meeting.password}
@@ -203,7 +212,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
               refreshNameAndDescription={setMeetingNameAndDescription}
               finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
               finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
-              googleProvider={true} // TODO check if user was logged in with Google
+              showGoogleCalendar={meeting.finalDate !== null}
             />
           </Col>
           <Col lg={6}>
@@ -255,6 +264,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           user={user}
           isOrganizer={isOrganizer}
           open={meeting.state === MeetingState.OPEN}
+          declarations={declarations}
+          setDeclarations={setDeclarations}
         />
       )}
       {places.length > 0 && !showSettings && (
