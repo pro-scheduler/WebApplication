@@ -12,12 +12,10 @@
 
 .input_classic[type=text]:focus {
     outline: none !important;
-    border: 2px solid var(--very-light-grey);
 }
 
 .input_classic[type=number]:focus {
     outline: none !important;
-    border: 2px solid var(--very-light-grey);
 }
 
 .input_classic_invalid {
@@ -34,12 +32,12 @@
 
 .input_classic_invalid[type=text]:focus {
     outline: none !important;
-    border: 2px solid var(--medium-red);
+    border: 1px solid var(--medium-red);
 }
 
 .input_classic_invalid[type=number]:focus {
     outline: none !important;
-    border: 2px solid var(--medium-red);
+    border: 1px solid var(--medium-red);
 }
 
 .label_classic {

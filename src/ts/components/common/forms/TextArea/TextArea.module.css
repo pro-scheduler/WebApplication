@@ -2,7 +2,7 @@
     background-color: white;
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
-    border: 1px solid  #D8D8D8;
+    border: 1px solid var(--very-light-grey);
     text-align: left;
     color: var(--medium-grey);
     margin: auto;
@@ -15,7 +15,6 @@
 
 .text_area_classic:focus{
     outline: none !important;
-    border: 2px solid #D8D8D8;
 }
 
 .label_classic {
@@ -40,11 +39,12 @@
 
 .text_area_classic_invalid:focus {
     outline: none !important;
-    border: 2px solid var(--medium-red);
+    border: 1px solid var(--medium-red);
 }
 
 .invalid_text {
     color: var(--medium-red);
+    border: 1px solid var(--medium-red);
 }
 
 @media only screen and (max-width: 600px) {
