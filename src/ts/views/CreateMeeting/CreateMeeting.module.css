@@ -11,6 +11,15 @@
     justify-content: center;
 }
 
+.scrollButton {
+    display: block;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
     .saveMeetingButton {
         width: 210px;

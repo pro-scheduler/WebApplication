@@ -1,0 +1,12 @@
+.scrollUpIcon {
+    border: none;
+    display: inline-block;
+    border-radius: var(--circle-border-radius);
+    color: var(--purple);
+    font-size: 50px;
+    box-shadow: var(--shadow);
+}
+
+.scrollUpIcon:focus {
+    outline: none;
+}

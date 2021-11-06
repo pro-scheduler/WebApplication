@@ -26,6 +26,7 @@ import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace'
 import { PlaceDTO } from '../../model/geo/Geo';
 import { savePlaces } from '../../API/geo/geo';
 import ChooseRealOnlinePlace from '../../components/CreateMeeting/ChooseRealOnlinePlace';
+import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
 export type creatingMeetingState =
   | 'modules'
   | 'real-online'
@@ -66,6 +67,7 @@ const CreateMeeting = () => {
   const [placeModule, setPlaceModule] = useState<boolean>(false);
   const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
   const container = useRef<HTMLDivElement>(null);
+  const navbar = useRef<HTMLDivElement>(null);
   const getCreatedMeetingType = () => {
     return onlineLink === '' ? MeetingType.REAL : MeetingType.ONLINE;
   };
@@ -108,12 +110,8 @@ const CreateMeeting = () => {
   };
 
   useEffect(() => {
-    if (state === 'summary') {
-      if (container) {
-        if (container.current) {
-          container.current.scrollIntoView();
-        }
-      }
+    if (state === 'summary' && container && container.current) {
+      container.current.scrollIntoView();
     }
   }, [state]);
 
@@ -181,24 +179,32 @@ const CreateMeeting = () => {
     }
   };
 
+  const scrollToNavbar = () => {
+    if (navbar && navbar.current) {
+      navbar.current.scrollIntoView();
+    }
+  };
+
   return (
     <Container>
       {state !== 'modules' && state !== 'real-online' && (
-        <MeetingNavbar
-          state={state}
-          setState={setState}
-          disabledSummary={invalidNameDesc || !required()(name)}
-          surveyModule={surveyModule}
-          timeModule={timeModule}
-          placeModule={placeModule}
-          nameFilled={name.length >= 5}
-          participantsFilled={emails.length > 0}
-          surveyFilled={survey.questions.length > 0}
-          timeFilled={timeRanges.length > 0}
-          placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
-          onLeftClick={setPrevState}
-          onRightClick={setNextState}
-        />
+        <div ref={navbar}>
+          <MeetingNavbar
+            state={state}
+            setState={setState}
+            disabledSummary={invalidNameDesc || !required()(name)}
+            surveyModule={surveyModule}
+            timeModule={timeModule}
+            placeModule={placeModule}
+            nameFilled={name.length >= 5}
+            participantsFilled={emails.length > 0}
+            surveyFilled={survey.questions.length > 0}
+            timeFilled={timeRanges.length > 0}
+            placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
+            onLeftClick={setPrevState}
+            onRightClick={setNextState}
+          />
+        </div>
       )}
       {state === 'modules' && (
         <ChooseModules
@@ -281,6 +287,11 @@ const CreateMeeting = () => {
               savePlacesResponse.isLoading
             }
           />
+          {state !== 'modules' && state !== 'real-online' && (
+            <div className={styles.scrollButton} onClick={scrollToNavbar}>
+              <ScrollUpIcon />
+            </div>
+          )}
         </Col>
       </Row>
     </Container>
