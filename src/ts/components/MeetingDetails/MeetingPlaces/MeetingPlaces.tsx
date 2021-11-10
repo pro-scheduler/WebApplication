@@ -51,8 +51,8 @@ const MeetingPlaces = ({
   const barChartDivRef = useRef<HTMLDivElement>(null);
   const tooltipMapping = useCallback(
     (placeId: number) =>
-      places.some((place) => place.id === placeId && place.votes.some((u) => (u.id = user.id)))
-        ? 'Back your vote'
+      places.some((place) => place.id === placeId && place.votes.some((u) => u.id === user.id))
+        ? 'Back my vote'
         : 'Vote for that place',
     [places, user]
   );
