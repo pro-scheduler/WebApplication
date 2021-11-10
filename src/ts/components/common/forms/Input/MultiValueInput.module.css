@@ -10,5 +10,4 @@
 
 .multiValueInput:focus {
     outline: none !important;
-    border: 2px solid var(--very-light-grey);
 }
