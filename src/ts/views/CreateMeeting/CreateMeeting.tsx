@@ -27,6 +27,12 @@ import { PlaceDTO } from '../../model/geo/Geo';
 import { savePlaces } from '../../API/geo/geo';
 import ChooseRealOnlinePlace from '../../components/CreateMeeting/ChooseRealOnlinePlace';
 import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
+import {
+  CreateInvitationsResponse,
+  FailedInvitationDetails,
+  InvitationDetails,
+} from '../../model/invitation/Invitation';
+import { toastError, toastSuccess } from '../../tools/messagesInvocator';
 export type creatingMeetingState =
   | 'modules'
   | 'real-online'
@@ -51,6 +57,7 @@ const CreateMeeting = () => {
   const [meetingId, setMeetingId] = useState<{ id: number | undefined }>({ id: undefined });
   const [saveMeetingResponse, setSaveMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [saveInvitationsResponse, setSaveInvitationsResponse] = useState<ApiCall>(new ApiCall());
+  const [invitationsResponse, setInvitationsResponse] = useState<CreateInvitationsResponse>();
   const [saveSurveyResponse, setSaveSurveyResponse] = useState<ApiCall>(new ApiCall());
   const [savePlacesResponse, setSavePlacesResponse] = useState<ApiCall>(new ApiCall());
   const [selectedPlaces, setSelectedPlaces] = useState<PlaceDTO[]>([]);
@@ -142,7 +149,11 @@ const CreateMeeting = () => {
         message: invitationMessage,
       };
       if (createInvitationsRequest.emails.length > 0) {
-        createInvitations(createInvitationsRequest, setSaveInvitationsResponse);
+        createInvitations(
+          createInvitationsRequest,
+          setSaveInvitationsResponse,
+          setInvitationsResponse
+        );
       }
       if (survey.questions.length > 0) {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
@@ -154,6 +165,22 @@ const CreateMeeting = () => {
     }
     // eslint-disable-next-line
   }, [meetingId.id]);
+
+  useEffect(() => {
+    if (invitationsResponse) {
+      if (invitationsResponse.createdInvitations.length > 0) {
+        const createdInvitationsEmails: string = invitationsResponse.createdInvitations
+          .map((invitationDetails: InvitationDetails) => invitationDetails.user.email)
+          .reduce((result: string, value: string) => result + ' ' + value);
+        toastSuccess(
+          'Invitations for ' + createdInvitationsEmails + ' have been send successfully'
+        );
+      }
+      invitationsResponse.failedInvitationDetails.forEach(
+        (failedInvitation: FailedInvitationDetails) => toastError(failedInvitation.cause)
+      );
+    }
+  }, [invitationsResponse]);
 
   const setPrevState = () => {
     const index: number = modules.indexOf(state);

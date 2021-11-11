@@ -22,7 +22,7 @@ const MeetingSettings = ({
 }: MeetingSettingsProps) => {
   return (
     <>
-      <GeneralSettings meetingId={meetingId} />
+      <GeneralSettings meetingId={meetingId} meetingName={meetingName} />
       <MeetingNotifications
         meetingId={meetingId}
         meetingName={meetingName}
