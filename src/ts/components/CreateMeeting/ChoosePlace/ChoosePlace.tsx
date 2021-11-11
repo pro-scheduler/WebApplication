@@ -42,7 +42,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
           </Col>
         </Row>
         <Row className="justify-content-center mt-4">
-          <div className={styles.createHeader}>Meeting place details</div>
+          <div className={styles.createHeader}>Select possible meeting places</div>
         </Row>
         <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
           <div className={styles.searchContainer}>
