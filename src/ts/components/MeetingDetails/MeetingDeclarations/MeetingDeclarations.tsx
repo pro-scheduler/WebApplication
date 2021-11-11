@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Collapse } from 'react-collapse';
 import {
   loadMeetingDeclarations,
   saveDeclaration,
@@ -56,35 +55,32 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer, open }: MeetingDecl
 
   return (
     <Row className="justify-content my-5">
-      <LineWithHeader header={'Declarations'} collapseAction={setOpened} />
       <Col>
-        <Collapse isOpened={opened}>
-          <div className={styles.declarationsContainer}>
-            {declarations.map((dec, i) => (
-              <Declaration
-                user={user}
-                defaultDeclaration={dec}
-                isMeetingOrganizer={isOrganizer}
-                removeDeclaration={(id: number) => {
-                  setDeclarations(declarations.filter((d) => d.id !== id));
-                }}
-                key={i}
-                disabled={!open}
-              />
-            ))}
+        <div className={styles.declarationsContainer}>
+          {declarations.map((dec, i) => (
+            <Declaration
+              user={user}
+              defaultDeclaration={dec}
+              isMeetingOrganizer={isOrganizer}
+              removeDeclaration={(id: number) => {
+                setDeclarations(declarations.filter((d) => d.id !== id));
+              }}
+              key={i}
+              disabled={!open}
+            />
+          ))}
+        </div>
+        {open && (
+          <div className={styles.buttonContainer}>
+            <ActionButton
+              onclick={() => {
+                setShowAddDeclarationModal(true);
+              }}
+              text="Add new declaration"
+              className={styles.addNewButton}
+            />
           </div>
-          {open && (
-            <div className={styles.buttonContainer}>
-              <ActionButton
-                onclick={() => {
-                  setShowAddDeclarationModal(true);
-                }}
-                text="Add new declaration"
-                className={styles.addNewButton}
-              />
-            </div>
-          )}
-        </Collapse>
+        )}
         <Popup
           show={showAddDeclarationModal}
           title="Add new declaration"

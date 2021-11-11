@@ -76,96 +76,75 @@ const MeetingSurvey = ({
   };
 
   return (
-    <Row className="justify-content my-5">
-      <LineWithHeader
-        header={'Survey'}
-        iconAction={
-          isOrganizer && state === MeetingState.OPEN
-            ? () => setEditSurveyMode(!editSurveyMode)
-            : undefined
-        }
-        collapseAction={setOpened}
-      />
+    <Row className="justify-content">
       <Col lg={editSurveyMode ? 12 : 6}>
-        <Collapse isOpened={opened}>
-          <MeetingSurveyDetails
-            endDate={survey.surveyEndDate}
-            description={survey.description}
-            editSurvey={editSurveyMode}
-            surveyToEdit={surveyToEdit}
-            setSurveyToEdit={setSurveyToEdit}
-            state={state}
-          />
-        </Collapse>
+        <MeetingSurveyDetails
+          endDate={survey.surveyEndDate}
+          description={survey.description}
+          editSurvey={editSurveyMode}
+          surveyToEdit={surveyToEdit}
+          setSurveyToEdit={setSurveyToEdit}
+          state={state}
+        />
       </Col>
       {!editSurveyMode ? (
         <>
           <Col lg={6}>
-            <Collapse isOpened={opened}>
-              <MeetingSurveyResults
-                numberOfParticipants={numberOfParticipants}
-                numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
-                emails={surveySummary?.users ?? []}
-                isOrganizer={isOrganizer}
-              />
-            </Collapse>
+            <MeetingSurveyResults
+              numberOfParticipants={numberOfParticipants}
+              numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
+              emails={surveySummary?.users ?? []}
+              isOrganizer={isOrganizer}
+            />
           </Col>
 
           <Col lg={12} className="text-center mx-auto">
-            <Collapse isOpened={opened}>
-              <div className={styles.switchTime}>
-                <SwitchButton
-                  onChange={() => setDisplayAnswers(!displayAnswers)}
-                  checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                  unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-                />
-              </div>
-            </Collapse>
+            <div className={styles.switchTime}>
+              <SwitchButton
+                onChange={() => setDisplayAnswers(!displayAnswers)}
+                checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+              />
+            </div>
           </Col>
           <Col className="mt-3">
-            <Collapse isOpened={opened}>
-              {displayAnswers ? (
-                <MeetingSurveyQuestions
-                  survey={survey}
-                  reloadSurveySummary={reloadSurveySummary}
-                  questionsToAdd={questionsToAdd}
-                  setQuestionsToAdd={setQuestionsToAdd}
-                  state={state}
-                />
-              ) : (
-                surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
-              )}
-            </Collapse>
+            {displayAnswers ? (
+              <MeetingSurveyQuestions
+                survey={survey}
+                reloadSurveySummary={reloadSurveySummary}
+                questionsToAdd={questionsToAdd}
+                setQuestionsToAdd={setQuestionsToAdd}
+                state={state}
+              />
+            ) : (
+              surveySummary && <MeetingSurveyAnswers surveySummary={surveySummary} />
+            )}
           </Col>
         </>
       ) : (
         <>
           <Col className="mt-3">
-            <Collapse isOpened={opened}>
-              <MeetingSurveyQuestions
-                survey={survey}
-                reloadSurveySummary={reloadSurveySummary}
-                surveyToEdit={surveyToEdit}
-                setSurveyToEdit={setSurveyToEdit}
-                questionsToAdd={questionsToAdd}
-                setQuestionsToAdd={setQuestionsToAdd}
-                state={state}
-              />
-            </Collapse>
+            <MeetingSurveyQuestions
+              survey={survey}
+              reloadSurveySummary={reloadSurveySummary}
+              surveyToEdit={surveyToEdit}
+              setSurveyToEdit={setSurveyToEdit}
+              questionsToAdd={questionsToAdd}
+              setQuestionsToAdd={setQuestionsToAdd}
+              state={state}
+            />
           </Col>
           <Col lg={12} className="text-center">
-            <Collapse isOpened={opened}>
-              <ActionButton
-                onclick={updateSurvey}
-                text={'Edit the survey'}
-                disabled={
-                  survey.description === surveyToEdit.description &&
-                  survey.surveyEndDate === surveyToEdit.surveyEndDate &&
-                  questions === surveyToEdit.questions &&
-                  questionsToAdd.length === 0
-                }
-              />
-            </Collapse>
+            <ActionButton
+              onclick={updateSurvey}
+              text={'Edit the survey'}
+              disabled={
+                survey.description === surveyToEdit.description &&
+                survey.surveyEndDate === surveyToEdit.surveyEndDate &&
+                questions === surveyToEdit.questions &&
+                questionsToAdd.length === 0
+              }
+            />
           </Col>
         </>
       )}
