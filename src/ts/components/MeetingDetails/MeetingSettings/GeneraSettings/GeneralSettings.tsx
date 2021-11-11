@@ -8,12 +8,14 @@ import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton
 import Card from '../../../common/Card/Card';
 import { MeetingSettings } from '../../../../model/meeting/Meeting';
 import { getMeetingSettings, saveMeetingSettings } from '../../../../API/meeting/meetingService';
+import RemoveMeeting from '../RemoveMeeting/RemoveMeeting';
 
 export type GeneralSettingsProps = {
   meetingId: number;
+  meetingName: string;
 };
 
-const GeneralSettings = ({ meetingId }: GeneralSettingsProps) => {
+const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
   const [settings, setSettings] = useState<MeetingSettings>({
     onlyOrganizerCanInviteNewPeople: true,
   });
@@ -62,6 +64,7 @@ const GeneralSettings = ({ meetingId }: GeneralSettingsProps) => {
                 disabled={JSON.stringify(settings) === JSON.stringify(newSettings)}
               />
             </Card>
+            <RemoveMeeting meetingName={meetingName} meetingId={meetingId} />
           </Collapse>
         </Col>
       </Row>

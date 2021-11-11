@@ -244,3 +244,18 @@ export const getMeetingSettings = (
   // eslint-disable-next-line
   get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
 };
+
+export const deleteMeeting = (
+  meetingId: number,
+  onSuccess?: Function,
+  setResponse?: Function,
+  setData?: Function
+) =>
+  del(
+    getMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'The meeting has been removed successfully',
+    onSuccess
+  );

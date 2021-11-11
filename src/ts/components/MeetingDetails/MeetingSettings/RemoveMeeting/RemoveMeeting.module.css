@@ -1,0 +1,30 @@
+.nameInput {
+    width: 400px;
+}
+
+.inputButtonContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.removeMeetingButton {
+    width: 200px;
+    background-color: var(--light-red);
+    margin-left: 20px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .inputButtonContainer {
+        display: block;
+    }
+
+    .nameInput {
+        width: 200px;
+    }
+
+    .removeMeetingButton {
+        margin: 10px auto auto;
+    }
+}
