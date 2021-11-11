@@ -28,7 +28,7 @@ import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
 
 export type MeetingDetailsInfoProps = {
   hasSurvey: boolean;
-  hasDeclarations: boolean;
+  declarationsNumber: number;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
   name: string;
@@ -41,11 +41,11 @@ export type MeetingDetailsInfoProps = {
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
   finalPlace?: string;
-  googleProvider: boolean;
+  showGoogleCalendar: boolean;
 };
 
 const MeetingDetailsInfo = ({
-  hasDeclarations,
+  declarationsNumber,
   hasSurvey,
   meetingLink,
   meetingPassword,
@@ -59,7 +59,7 @@ const MeetingDetailsInfo = ({
   finalBeginDate,
   finalEndDate,
   finalPlace,
-  googleProvider,
+  showGoogleCalendar,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
@@ -115,6 +115,7 @@ const MeetingDetailsInfo = ({
         search: queryParams.toString(),
       });
     }
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
@@ -150,15 +151,21 @@ const MeetingDetailsInfo = ({
       footer={
         state === MeetingState.OPEN ? (
           <div
-            className={googleProvider ? styles.flexButtonsContainer : styles.blockButtonsContainer}
+            className={
+              showGoogleCalendar ? styles.flexButtonsContainer : styles.blockButtonsContainer
+            }
           >
-            <GoogleButton
-              redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
-              text={'Add to calendar'}
-              onClick={() => googleCalendarTokenExists() && setGoogleCalendarPickerModalShow(true)}
-              containerClassName={styles.googleCalendarButtonContainer}
-              className={styles.googleCalendarButton}
-            />
+            {showGoogleCalendar && (
+              <GoogleButton
+                redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
+                text={'Add to calendar'}
+                onClick={() =>
+                  googleCalendarTokenExists() && setGoogleCalendarPickerModalShow(true)
+                }
+                containerClassName={styles.googleCalendarButtonContainer}
+                className={styles.googleCalendarButton}
+              />
+            )}
             {isOrganizer ? (
               <div>
                 <ActionButton
@@ -210,7 +217,7 @@ const MeetingDetailsInfo = ({
                 (finalBeginDate.toLocaleDateString() === finalEndDate.toLocaleDateString()
                   ? finalBeginDate.toLocaleDateString()
                   : finalBeginDate.toLocaleDateString() + ' - ' + finalEndDate.toLocaleDateString())
-              : 'Time not set'}
+              : 'Time has not been specified yet'}
           </p>
           <p className={styles.moduleContainer}>
             <BiWorld className={styles.moduleIcon} />{' '}
@@ -233,16 +240,20 @@ const MeetingDetailsInfo = ({
             ) : finalPlace ? (
               finalPlace
             ) : (
-              'Place not set'
+              'Final place has not been specified yet'
             )}
           </p>
           <p className={styles.moduleContainer}>
             <FaRegClipboard className={styles.moduleIcon} />{' '}
-            {hasSurvey ? 'Survey available' : 'No surveys available'}
+            {hasSurvey ? 'Survey available' : 'Survey not available'}
           </p>
           <p className={styles.moduleContainer}>
             <BsPencil className={styles.moduleIcon} />{' '}
-            {hasDeclarations ? 'Declarations available' : 'No declarations available'}
+            {declarationsNumber > 0
+              ? declarationsNumber +
+                (declarationsNumber === 1 ? ' declaration' : ' declarations') +
+                ' available'
+              : 'No declarations available'}
           </p>
         </div>
       ) : (

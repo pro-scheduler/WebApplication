@@ -129,17 +129,12 @@ const Navbar = ({
                 Invitations
                 <Link to="/invitations" />
               </MenuItem>
-
-              <MenuItem
-                icon={<FaList />}
-                className="closeMenu"
-                onClick={() => setMenuCollapse(!menuCollapse)}
-              />
             </Menu>
           </SidebarContent>
 
           <SidebarFooter>
             <Menu iconShape="circle">
+              <MenuItem icon={<FaList />} onClick={() => setMenuCollapse(!menuCollapse)} />
               {user && user.username && (
                 <MenuItem icon={<UserIcon user={user} backgroundColor="var(--light-red)" />}>
                   {user.username}

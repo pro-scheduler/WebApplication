@@ -10,7 +10,6 @@ import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
 import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
-import DateTimePicker from '../common/forms/DateTimePicker/DateTimePicker';
 
 export type CreateSurveyProps = {
   state: creatingMeetingState;
@@ -21,7 +20,6 @@ export type CreateSurveyProps = {
 const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
-  const [finalDate, setFinalDate] = useState<Date | null>(null);
 
   const createNewQuestion = () => {
     setQuestions([...questions, questionId]);
@@ -51,11 +49,6 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
     setQuestions([]);
   }, []);
 
-  useEffect(() => {
-    setSurvey({ ...survey, surveyEndDate: finalDate ? finalDate : undefined });
-    // eslint-disable-next-line
-  }, [finalDate]);
-
   return (
     <div
       className={
@@ -70,19 +63,6 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
 
       <Row className="justify-content-center mt-4">
         <div className={styles.createHeader}>Create survey</div>
-      </Row>
-
-      <Row className="justify-content-center mt-4">
-        <Col>
-          <Card title="Deadline for completing the survey">
-            <DateTimePicker
-              setDate={setFinalDate}
-              timeLabel="Select time"
-              dateLabel="Select date"
-              defaultDate={finalDate}
-            />
-          </Card>
-        </Col>
       </Row>
 
       <Row className="justify-content-center mt-4">

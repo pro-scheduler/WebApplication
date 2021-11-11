@@ -57,7 +57,7 @@ export type SurveySummary = {
       percentage: number;
     };
   }[];
-  users: string[];
+  users: UserSummary[];
 };
 
 export type Entry = {

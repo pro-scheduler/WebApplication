@@ -7,3 +7,20 @@
   justify-content: center;
   margin-top: 20px;
 }
+.mapLegend {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  padding: 10px;
+  font-size: 16px;
+}
+.legendElement {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+  top: 3px;
+}

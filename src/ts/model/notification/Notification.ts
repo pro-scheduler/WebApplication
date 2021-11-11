@@ -49,3 +49,10 @@ export type CustomMessage = {
   meetingName: string;
   message: string;
 };
+
+export type UserSettings = {
+  receiveMeetingRemindersViaEmail: boolean;
+  receiveOrganizerMessagesViaEmail: boolean;
+  receiveInvitationsViaEmail: boolean;
+  receiveSurveyRemindersViaEmail: boolean;
+};

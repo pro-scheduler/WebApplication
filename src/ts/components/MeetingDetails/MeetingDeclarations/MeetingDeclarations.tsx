@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {
@@ -6,7 +5,7 @@ import {
   saveDeclaration,
 } from '../../../API/declarations/declarationsService';
 import { DeclarationDetails } from '../../../model/declaration/Declaration';
-import { minSings, maxSings, required } from '../../../tools/validator';
+import { maxSings, required } from '../../../tools/validator';
 import Popup from '../../common/Popup/Popup';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import LineWithHeader from '../LineWithHeader';
@@ -21,21 +20,23 @@ export type MeetingDeclarationsProps = {
   user: UserSummary;
   isOrganizer: boolean;
   open: boolean;
+  declarations: DeclarationDetails[];
+  setDeclarations: Function;
 };
 
-const MeetingDeclarations = ({ meetingId, user, isOrganizer, open }: MeetingDeclarationsProps) => {
+const MeetingDeclarations = ({
+  meetingId,
+  user,
+  isOrganizer,
+  open,
+  declarations,
+  setDeclarations,
+}: MeetingDeclarationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
-  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);
   const [showAddDeclarationModal, setShowAddDeclarationModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (meetingId) {
-      loadMeetingDeclarations(meetingId, setDeclarations, () => {});
-    }
-  }, [meetingId]);
 
   const addDeclaration = () => {
     saveDeclaration(
@@ -94,7 +95,6 @@ const MeetingDeclarations = ({ meetingId, user, isOrganizer, open }: MeetingDecl
               setInvalid={setInvalidTitleOrDesc}
               validation={[
                 { validation: required, message: 'This field is required' },
-                { validation: minSings(5), message: 'Min 5 signs' },
                 { validation: maxSings(255), message: 'Max 255 signs' },
               ]}
               placeholder="Please type declaration title ..."

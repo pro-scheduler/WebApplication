@@ -72,6 +72,12 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     MeetingDetailsSection.About
   );
 
+  const setFinalPlace = (place: PlaceDetails) => {
+    setMeeting({ ...meeting, finalPlace: place });
+  };
+  const setMeetingTimeDeadline = (deadline: Date) => {
+    setMeeting({ ...meeting, markTimeRangeDeadline: deadline });
+  };
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
   };
@@ -130,6 +136,12 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     reloadSurveySummary();
     // eslint-disable-next-line
   }, [survey]);
+
+  useEffect(() => {
+    if (id) {
+      loadMeetingDeclarations(id, setDeclarations, () => {});
+    }
+  }, [id]);
 
   return meeting ? (
     <Container fluid>

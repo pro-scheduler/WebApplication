@@ -4,11 +4,6 @@
     z-index: 2;
 }
 
-#navbar .closeMenu {
-    position: absolute;
-    bottom: 20%;
-}
-
 #navbar .pro-sidebar {
     width: 100%;
     min-width: 100%;

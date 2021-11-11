@@ -93,7 +93,7 @@ const MeetingSurvey = ({
             <MeetingSurveyResults
               numberOfParticipants={numberOfParticipants}
               numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
-              emails={surveySummary?.users ?? []}
+              users={surveySummary?.users ?? []}
               isOrganizer={isOrganizer}
             />
           </Col>
