@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './MeetingParticipants.module.css';
 import UserNameIcon from '../../common/Icons/UserNameIcon';
-import { InvitationDetails, State } from '../../../model/invitation/Invitation';
+import {
+  CreateInvitationsResponse,
+  FailedInvitationDetails,
+  InvitationDetails,
+  State,
+} from '../../../model/invitation/Invitation';
 import { ValueLabelPair } from '../../../model/utils/ValueLabelPair';
 import {
   createInvitations,
@@ -24,6 +29,7 @@ import {
   SharedMeetingDetails,
 } from '../../../model/meeting/Meeting';
 import { MdContentCopy } from 'react-icons/md';
+import { toastError, toastSuccess } from '../../../tools/messagesInvocator';
 
 export type MeetingParticipantsProps = {
   meetingId: number;
@@ -46,6 +52,7 @@ const MeetingParticipants = ({
   const [invitationMessage, setInvitationMessage] = useState<string>('');
   const [invitations, setInvitations] = useState<InvitationDetails[]>([]);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
+  const [invitationsResponse, setInvitationsResponse] = useState<CreateInvitationsResponse>();
   const [invitationsChanged, setInvitationsChanged] = useState<boolean>(false);
   const [invitationState, setInvitationState] = useState<State>(State.ACCEPTED);
   const [addModalShow, setAddModalShow] = useState<boolean>(false);
@@ -65,6 +72,22 @@ const MeetingParticipants = ({
     }
   }, [sharedMeetingDetails]);
 
+  useEffect(() => {
+    if (invitationsResponse) {
+      if (invitationsResponse.createdInvitations.length > 0) {
+        const createdInvitationsEmails: string = invitationsResponse.createdInvitations
+          .map((invitationDetails: InvitationDetails) => invitationDetails.user.email)
+          .reduce((result: string, value: string) => result + ' ' + value);
+        toastSuccess(
+          'Invitations for ' + createdInvitationsEmails + ' have been send successfully'
+        );
+      }
+      invitationsResponse.failedInvitationDetails.forEach(
+        (failedInvitation: FailedInvitationDetails) => toastError(failedInvitation.cause)
+      );
+    }
+  }, [invitationsResponse]);
+
   const deleteParticipant = (attendeeId: number) => {
     removeAttendeeFromMeeting(meetingId, attendeeId, refreshParticipants);
   };
@@ -76,7 +99,8 @@ const MeetingParticipants = ({
         emails: emails.map((valueLabelPair: ValueLabelPair) => valueLabelPair.label.toString()),
         message: invitationMessage,
       },
-      setSaveResponse
+      setSaveResponse,
+      setInvitationsResponse
     );
     setAddModalShow(false);
   };
