@@ -1,10 +1,14 @@
 import Stomp from 'stompjs';
 import { CreateMeetingChatMessageRequest } from '../../model/meetingChat/MeetingChatMessage';
 import { get, post } from '../genericApiCalls';
-import { getCreateMeetingChatMessageUrl, getMeetingChatMessagesUrl } from './urls';
+import {
+  getCreateMeetingChatMessageUrl,
+  getMeetingChatMessagesUrl,
+  getChatSocketEndpoint,
+} from './urls';
 
 export const subscribeToChat = (meetingId: number, onNewMessageEvent: Function) => {
-  let chatSocket = new WebSocket('ws://localhost:8084/api/chat/chat');
+  let chatSocket = new WebSocket(getChatSocketEndpoint());
 
   let ws = Stomp.over(chatSocket);
   ws.connect(
