@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 
@@ -17,11 +16,11 @@ interface RangesWithDay {
 }
 
 export type ChooseTimeProps = {
-  state: creatingMeetingState;
+  visible: boolean;
   setSelectedRanges: Function;
   setDeadlineDate: Function;
 };
-const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
+const ChooseTime = ({ visible, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
   // eslint-disable-next-line
@@ -92,11 +91,7 @@ const ChooseTime = ({ state, setSelectedRanges, setDeadlineDate }: ChooseTimePro
     setSelectedDays([...selectedDays.filter((d) => d !== day)]);
   };
   return (
-    <div
-      className={
-        state !== 'time' && (state !== 'summary' || selectedDays.length === 0) ? styles.hidden : ''
-      }
-    >
+    <div className={visible ? '' : styles.hidden}>
       <Row className="justify-content-center mt-5">
         <Col lg={12} className="text-center">
           <CalendarIcon />

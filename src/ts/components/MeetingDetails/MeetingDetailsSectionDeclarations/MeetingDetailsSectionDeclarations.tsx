@@ -26,6 +26,8 @@ const MeetingDetailsSectionDeclarations = ({
           user={user}
           isOrganizer={isOrganizer}
           open={meeting.state === MeetingState.OPEN}
+          declarations={[]} // TODO: fix me
+          setDeclarations={() => {}} // TODO: fix me
         />
       </Col>
     </Row>

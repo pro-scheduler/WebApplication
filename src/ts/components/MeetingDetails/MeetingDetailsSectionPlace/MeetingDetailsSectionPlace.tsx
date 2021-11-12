@@ -34,6 +34,8 @@ const MeetingDetailsSectionPlace = ({
           open={meeting.state === MeetingState.OPEN}
           places={places}
           setPlaces={onPlacesChange}
+          finalPlaceId={0} // TODO: fix me
+          setFinalPlace={() => {}} // TODO: fix me
         />
       </Col>
     </Row>

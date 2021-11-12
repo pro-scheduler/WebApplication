@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -21,21 +21,48 @@ import { createSurvey } from '../../API/survey/surveyService';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { useHistory } from 'react-router';
 import ChooseModules from '../../components/CreateMeeting/ChooseModules';
-import { CreateMeetingRequest, MeetingType } from '../../model/meeting/Meeting';
+import { CreateMeetingRequest, MeetingModuleType, MeetingType } from '../../model/meeting/Meeting';
 import ChoosePlace from '../../components/CreateMeeting/ChoosePlace/ChoosePlace';
 import { PlaceDTO } from '../../model/geo/Geo';
 import { savePlaces } from '../../API/geo/geo';
 import ChooseRealOnlinePlace from '../../components/CreateMeeting/ChooseRealOnlinePlace';
 import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
-export type creatingMeetingState =
-  | 'modules'
-  | 'real-online'
-  | 'name'
-  | 'time'
-  | 'invitations'
-  | 'place'
-  | 'survey'
-  | 'summary';
+
+enum CreateMeetingState {
+  CHOOSE_MEETING_TYPE,
+  CHOOSE_MEETING_MODULES,
+  CONFIGURE_MEETING,
+}
+
+export enum MeetingConfigurationSection {
+  ABOUT = 0,
+  INVITATIONS = 1,
+  TIME = 2,
+  PLACE = 3,
+  SURVEY = 4,
+  SUMMARY = 5,
+}
+
+const REAL_MEETING_AVAILABLE_MODULES: MeetingModuleType[] = [
+  MeetingModuleType.TIME_VOTING,
+  MeetingModuleType.PLACE_VOTING,
+  MeetingModuleType.SURVEY,
+  MeetingModuleType.DECLARATIONS,
+];
+
+const ONLINE_MEETING_AVAILABLE_MODULES: MeetingModuleType[] = [
+  MeetingModuleType.TIME_VOTING,
+  MeetingModuleType.SURVEY,
+  MeetingModuleType.DECLARATIONS,
+];
+
+const DEFAULT_AVAILABLE_SECTIONS: MeetingConfigurationSection[] = [
+  MeetingConfigurationSection.ABOUT,
+  MeetingConfigurationSection.INVITATIONS,
+  MeetingConfigurationSection.TIME,
+  MeetingConfigurationSection.PLACE,
+  MeetingConfigurationSection.SUMMARY,
+];
 
 const CreateMeeting = () => {
   const [name, setName] = useState<string>('');
@@ -60,17 +87,48 @@ const CreateMeeting = () => {
     questions: [],
   });
 
-  const [state, setState] = useState<creatingMeetingState>('modules');
-  const [onlineMeeting, setOnlineMeeting] = useState<boolean>(false);
-  const [surveyModule, setSurveyModule] = useState<boolean>(false);
-  const [timeModule, setTimeModule] = useState<boolean>(false);
-  const [placeModule, setPlaceModule] = useState<boolean>(false);
-  const [modules, setModules] = useState<creatingMeetingState[]>(['name', 'invitations']);
+  const [chosenMeetingType, setChosenMeetingType] = useState<MeetingType>(MeetingType.REAL);
+  const [availableModules, setAvailableModules] = useState<MeetingModuleType[]>(
+    REAL_MEETING_AVAILABLE_MODULES
+  );
+  const [chosenModules, setChosenModules] = useState<MeetingModuleType[]>([]);
+  const [
+    availableMeetingConfigurationSections,
+    setAvailableMeetingConfigurationSections,
+  ] = useState<MeetingConfigurationSection[]>(DEFAULT_AVAILABLE_SECTIONS);
+  const [
+    currentMeetingConfigurationSection,
+    setCurrentMeetingConfigurationSection,
+  ] = useState<MeetingConfigurationSection>(availableMeetingConfigurationSections[0]);
+  const [currentCreateMeetingState, setCurrentMeetingState] = useState<CreateMeetingState>(
+    CreateMeetingState.CHOOSE_MEETING_TYPE
+  );
   const container = useRef<HTMLDivElement>(null);
   const navbar = useRef<HTMLDivElement>(null);
   const getCreatedMeetingType = () => {
     return onlineLink === '' ? MeetingType.REAL : MeetingType.ONLINE;
   };
+
+  const switchChosenMeetingType = (meetingType: MeetingType) => {
+    setChosenMeetingType(meetingType);
+    setAvailableModules(
+      meetingType === MeetingType.REAL
+        ? REAL_MEETING_AVAILABLE_MODULES
+        : ONLINE_MEETING_AVAILABLE_MODULES
+    );
+  };
+
+  const switchChosenModule = (module: MeetingModuleType) => {
+    if (chosenModules.includes(module)) {
+      setChosenModules(chosenModules.filter((m) => m !== module));
+    } else {
+      setChosenModules(chosenModules.concat(module));
+    }
+  };
+
+  const isSectionChosen = (section: MeetingConfigurationSection) =>
+    currentMeetingConfigurationSection === section ||
+    currentMeetingConfigurationSection === MeetingConfigurationSection.SUMMARY;
 
   const saveThisMeeting = () => {
     const createRequest: CreateMeetingRequest = {
@@ -81,6 +139,7 @@ const CreateMeeting = () => {
       markTimeRangeDeadline: deadlineDate,
       link: onlineLink,
       password: onlinePassword,
+      availableModules: chosenModules,
     };
     saveMeeting(
       createRequest,
@@ -90,30 +149,30 @@ const CreateMeeting = () => {
     );
   };
 
-  const showModules = () => {
-    if (placeModule) {
-      setState('real-online');
-    } else {
-      setState('name');
+  const toAvailableMeetingConfigurationSections = (chosenModules: MeetingModuleType[]) => {
+    const availableSections: MeetingConfigurationSection[] = ([] as MeetingConfigurationSection[]).concat(
+      DEFAULT_AVAILABLE_SECTIONS
+    );
+
+    if (chosenModules.includes(MeetingModuleType.SURVEY)) {
+      availableSections.push(MeetingConfigurationSection.SURVEY);
     }
-    if (timeModule) {
-      modules.push('time');
-    }
-    if (placeModule) {
-      modules.push('place');
-    }
-    if (surveyModule) {
-      modules.push('survey');
-    }
-    modules.push('summary');
-    setModules(modules);
+
+    const result = availableSections.sort((a, b) => a - b);
+    console.log(result);
+    return result;
   };
 
   useEffect(() => {
-    if (state === 'summary' && container && container.current) {
+    if (
+      currentCreateMeetingState === CreateMeetingState.CONFIGURE_MEETING &&
+      currentMeetingConfigurationSection === MeetingConfigurationSection.SUMMARY &&
+      container &&
+      container.current
+    ) {
       container.current.scrollIntoView();
     }
-  }, [state]);
+  }, [currentMeetingConfigurationSection]);
 
   useEffect(() => {
     if (
@@ -124,7 +183,7 @@ const CreateMeeting = () => {
       (survey.questions.length === 0 ||
         saveSurveyResponse.isSuccess ||
         saveSurveyResponse.isFailed) &&
-      (onlineMeeting ||
+      (chosenMeetingType ||
         selectedPlaces.length === 0 ||
         savePlacesResponse.isSuccess ||
         savePlacesResponse.isFailed)
@@ -147,7 +206,7 @@ const CreateMeeting = () => {
       if (survey.questions.length > 0) {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
-      if (!onlineMeeting && selectedPlaces.length > 0) {
+      if (!chosenMeetingType && selectedPlaces.length > 0) {
         savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });
@@ -155,28 +214,24 @@ const CreateMeeting = () => {
     // eslint-disable-next-line
   }, [meetingId.id]);
 
-  const setPrevState = () => {
-    const index: number = modules.indexOf(state);
-    if (index !== -1) {
-      const newState: creatingMeetingState | undefined = modules
-        .filter((module: creatingMeetingState, i: number) => i === index - 1)
-        .pop();
-      if (newState) {
-        setState(newState);
-      }
-    }
+  const setPreviousMeetingConfigurationSection = () => {
+    const index: number = availableMeetingConfigurationSections.indexOf(
+      currentMeetingConfigurationSection
+    );
+
+    const previousSectionIdx = Math.max(index - 1, 0);
+    setCurrentMeetingConfigurationSection(
+      availableMeetingConfigurationSections[previousSectionIdx]
+    );
   };
 
-  const setNextState = () => {
-    const index: number = modules.indexOf(state);
-    if (index !== -1) {
-      const newState: creatingMeetingState | undefined = modules
-        .filter((module: creatingMeetingState, i: number) => i === index + 1)
-        .pop();
-      if (newState && (newState !== 'summary' || (!invalidNameDesc && required()(name)))) {
-        setState(newState);
-      }
-    }
+  const setNextConfigurationSection = () => {
+    const index: number = availableMeetingConfigurationSections.indexOf(
+      currentMeetingConfigurationSection
+    );
+
+    const nextSectionIdx = Math.min(index + 1, availableMeetingConfigurationSections.length - 1);
+    setCurrentMeetingConfigurationSection(availableMeetingConfigurationSections[nextSectionIdx]);
   };
 
   const scrollToNavbar = () => {
@@ -187,94 +242,104 @@ const CreateMeeting = () => {
 
   return (
     <Container>
-      {state !== 'modules' && state !== 'real-online' && (
-        <div ref={navbar}>
-          <MeetingNavbar
-            state={state}
-            setState={setState}
-            disabledSummary={invalidNameDesc || !required()(name)}
-            surveyModule={surveyModule}
-            timeModule={timeModule}
-            placeModule={placeModule}
-            nameFilled={name.length >= 5}
-            participantsFilled={emails.length > 0}
-            surveyFilled={survey.questions.length > 0}
-            timeFilled={timeRanges.length > 0}
-            placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
-            onLeftClick={setPrevState}
-            onRightClick={setNextState}
-          />
-        </div>
-      )}
-      {state === 'modules' && (
-        <ChooseModules
-          showModules={showModules}
-          surveyModule={surveyModule}
-          timeModule={timeModule}
-          placeModule={placeModule}
-          setSurveyModule={setSurveyModule}
-          setTimeModule={setTimeModule}
-          setPlaceModule={setPlaceModule}
-        />
-      )}
-      {state === 'real-online' && (
+      {currentCreateMeetingState === CreateMeetingState.CHOOSE_MEETING_TYPE && (
         <ChooseRealOnlinePlace
-          onChoose={() => setState('name')}
-          onlineMeeting={onlineMeeting}
-          setOnlineMeeting={setOnlineMeeting}
+          onNavigateToNextSection={() =>
+            setCurrentMeetingState(CreateMeetingState.CHOOSE_MEETING_MODULES)
+          }
+          chosenMeetingType={chosenMeetingType}
+          setChosenMeetingType={switchChosenMeetingType}
         />
       )}
-      <NameAndDescription
-        state={state}
-        setName={setName}
-        setDescription={setDescription}
-        setInvalidNameDesc={setInvalidNameDesc}
-      />
-      <ChooseTime
-        state={state}
-        setSelectedRanges={setTimeRanges}
-        setDeadlineDate={setDeadlineDate}
-      />
-      <CreateInvitations
-        state={state}
-        showIcon={true}
-        emails={emails}
-        setEmails={setEmails}
-        setInvitationMessage={setInvitationMessage}
-      />
-      <OnlineDetails
-        state={state}
-        onlineLink={onlineLink}
-        setOnlineLink={setOnlineLink}
-        setOnlinePassword={setOnlinePassword}
-        isOnlineMeeting={onlineMeeting}
-      />
-      <ChoosePlace
-        isOnlineMeeting={onlineMeeting}
-        state={state}
-        setSelectedPlaces={setSelectedPlaces}
-      />
-      <CreateSurvey survey={survey} setSurvey={setSurvey} state={state} />
-      {state === 'summary' && (
+      {currentCreateMeetingState === CreateMeetingState.CHOOSE_MEETING_MODULES && (
+        <ChooseModules
+          onNavigateToNextSection={() => {
+            setAvailableMeetingConfigurationSections(
+              toAvailableMeetingConfigurationSections(chosenModules)
+            );
+            setCurrentMeetingState(CreateMeetingState.CONFIGURE_MEETING);
+          }}
+          availableModules={availableModules}
+          chosenModules={chosenModules}
+          onModuleChosen={switchChosenModule}
+        />
+      )}
+      {currentCreateMeetingState === CreateMeetingState.CONFIGURE_MEETING && (
         <>
-          <Row className="justify-content-center">
-            <Col>
-              <hr className={styles.hrLine} />
-            </Col>
-          </Row>
+          <div ref={navbar}>
+            <MeetingNavbar
+              nameFilled={name.length >= 5}
+              participantsFilled={emails.length > 0}
+              surveyFilled={survey.questions.length > 0}
+              timeFilled={timeRanges.length > 0}
+              placeFilled={onlineLink !== '' || selectedPlaces.length > 0}
+              onLeftClick={setPreviousMeetingConfigurationSection}
+              onRightClick={setNextConfigurationSection}
+              availableSections={availableMeetingConfigurationSections}
+              currentSection={currentMeetingConfigurationSection}
+              onSectionChosen={setCurrentMeetingConfigurationSection}
+            />
+          </div>
+          <NameAndDescription
+            visible={isSectionChosen(MeetingConfigurationSection.ABOUT)}
+            setName={setName}
+            setDescription={setDescription}
+            setInvalidNameDesc={setInvalidNameDesc}
+          />
+          <ChooseTime
+            visible={isSectionChosen(MeetingConfigurationSection.TIME)}
+            setSelectedRanges={setTimeRanges}
+            setDeadlineDate={setDeadlineDate}
+          />
+          <CreateInvitations
+            visible={isSectionChosen(MeetingConfigurationSection.INVITATIONS)}
+            showIcon={true}
+            emails={emails}
+            setEmails={setEmails}
+            setInvitationMessage={setInvitationMessage}
+          />
+          <OnlineDetails
+            visible={
+              isSectionChosen(MeetingConfigurationSection.PLACE) &&
+              chosenMeetingType === MeetingType.ONLINE
+            }
+            setOnlineLink={setOnlineLink}
+            setOnlinePassword={setOnlinePassword}
+          />
+          <ChoosePlace
+            visible={
+              isSectionChosen(MeetingConfigurationSection.PLACE) &&
+              chosenMeetingType !== MeetingType.ONLINE
+            }
+            setSelectedPlaces={setSelectedPlaces}
+          />
+          <CreateSurvey
+            visible={isSectionChosen(MeetingConfigurationSection.SURVEY)}
+            survey={survey}
+            setSurvey={setSurvey}
+          />
+          {isSectionChosen(MeetingConfigurationSection.SUMMARY) && (
+            <>
+              <Row className="justify-content-center">
+                <Col>
+                  <hr className={styles.hrLine} />
+                </Col>
+              </Row>
 
-          <Row className="justify-content-center mt-5 mb-4">
-            <Col lg={12} className="text-center">
-              <div ref={container}>
-                <ActionButton
-                  text="Create meeting"
-                  onclick={saveThisMeeting}
-                  disabled={invalidNameDesc || !required()(name)}
-                  className={styles.saveMeetingButton}
-                />
-              </div>
-            </Col>
-          </Row>
+              <Row className="justify-content-center mt-5 mb-4">
+                <Col lg={12} className="text-center">
+                  <div ref={container}>
+                    <ActionButton
+                      text="Create meeting"
+                      onclick={saveThisMeeting}
+                      disabled={invalidNameDesc || !required()(name)}
+                      className={styles.saveMeetingButton}
+                    />
+                  </div>
+                </Col>
+              </Row>
+            </>
+          )}
         </>
       )}
       <Row className="justify-content-center mt-4">
@@ -287,7 +352,7 @@ const CreateMeeting = () => {
               savePlacesResponse.isLoading
             }
           />
-          {state !== 'modules' && state !== 'real-online' && (
+          {currentCreateMeetingState === CreateMeetingState.CONFIGURE_MEETING && (
             <div className={styles.scrollButton} onClick={scrollToNavbar}>
               <ScrollUpIcon />
             </div>

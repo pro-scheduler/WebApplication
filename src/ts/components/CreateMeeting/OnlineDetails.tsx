@@ -2,34 +2,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import styles from './OnlineDetails.module.css';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../../components/common/Card/Card';
 import WorldIcon from '../common/Icons/WorldIcon';
 import React from 'react';
 
 export type OnlineDetailsProps = {
-  state: creatingMeetingState;
-  onlineLink: string;
+  visible: boolean;
   setOnlineLink: (name: string) => void;
   setOnlinePassword: (description: string) => void;
-  isOnlineMeeting: boolean;
 };
 
-const OnlineDetails = ({
-  state,
-  onlineLink,
-  setOnlineLink,
-  setOnlinePassword,
-  isOnlineMeeting,
-}: OnlineDetailsProps) => {
+const OnlineDetails = ({ visible, setOnlineLink, setOnlinePassword }: OnlineDetailsProps) => {
   return (
-    <div
-      className={
-        (state !== 'place' && (state !== 'summary' || onlineLink === '')) || !isOnlineMeeting
-          ? styles.hidden
-          : ''
-      }
-    >
+    <div className={visible ? '' : styles.hidden}>
       <Row className="justify-content-center mt-5">
         <Col lg={12} className="text-center">
           <WorldIcon />

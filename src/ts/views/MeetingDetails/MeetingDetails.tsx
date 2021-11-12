@@ -137,12 +137,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     // eslint-disable-next-line
   }, [survey]);
 
-  useEffect(() => {
-    if (id) {
-      loadMeetingDeclarations(id, setDeclarations, () => {});
-    }
-  }, [id]);
-
   return meeting ? (
     <Container fluid>
       <MeetingDetailsHeader

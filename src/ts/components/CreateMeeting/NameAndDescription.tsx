@@ -5,25 +5,24 @@ import styles from './NameAndDesctiption.module.css';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { minSings, maxSings, required } from '../../tools/validator';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../../components/common/Card/Card';
 import React from 'react';
 
 export type NameAndDescriptionProps = {
-  state: creatingMeetingState;
+  visible: boolean;
   setName: (name: string) => void;
   setDescription: (description: string) => void;
   setInvalidNameDesc: (invalid: boolean) => void;
 };
 
 const NameAndDescription = ({
-  state,
+  visible,
   setName,
   setDescription,
   setInvalidNameDesc,
 }: NameAndDescriptionProps) => {
   return (
-    <div className={state !== 'name' && state !== 'summary' ? styles.hidden : ''}>
+    <div className={visible ? '' : styles.hidden}>
       <Row className="justify-content-center mt-5">
         <Col lg={12} className="text-center">
           <PencilIcon />

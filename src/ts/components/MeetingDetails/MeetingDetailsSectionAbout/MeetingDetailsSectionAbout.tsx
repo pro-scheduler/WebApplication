@@ -48,7 +48,6 @@ const MeetingDetailsSectionAbout = ({
       <Row className="justify-content">
         <Col lg={6}>
           <MeetingDetailsInfo
-            hasDeclarations={false}
             hasSurvey={/*survey !== undefined*/ true} //TODO: fix it
             meetingLink={(meeting as OnlineMeetingDetails)?.link}
             meetingPassword={(meeting as OnlineMeetingDetails)?.password}
@@ -62,7 +61,8 @@ const MeetingDetailsSectionAbout = ({
             refreshNameAndDescription={setMeetingNameAndDescription}
             finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
             finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
-            googleProvider={true} // TODO check if user was logged in with Google
+            declarationsNumber={0}
+            showGoogleCalendar={meeting.finalDate !== null}
           />
         </Col>
         <Col lg={6}>

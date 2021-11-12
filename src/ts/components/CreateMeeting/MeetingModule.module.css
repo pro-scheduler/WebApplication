@@ -2,6 +2,8 @@
     display: block;
     width: 250px;
     height: 320px;
+    min-width: 250px;
+    min-height: 320px;
     background-color: white;
     box-shadow: var(--shadow);
     border-radius: var(--border-radius);

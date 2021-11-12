@@ -7,17 +7,18 @@ import MeetingModule from './MeetingModule';
 import WorldIcon from '../common/Icons/WorldIcon';
 import MapIcon from '../common/Icons/MapIcon';
 import LocationIcon from '../common/Icons/LocationIcon';
+import { MeetingType } from '../../model/meeting/Meeting';
 
 export type ChooseRealOnlinePlaceProps = {
-  onChoose: MouseEventHandler;
-  onlineMeeting: boolean;
-  setOnlineMeeting: (value: boolean) => void;
+  onNavigateToNextSection: MouseEventHandler;
+  chosenMeetingType: MeetingType;
+  setChosenMeetingType: (value: MeetingType) => void;
 };
 
 const ChooseRealOnlinePlace = ({
-  onChoose,
-  onlineMeeting,
-  setOnlineMeeting,
+  onNavigateToNextSection,
+  chosenMeetingType,
+  setChosenMeetingType,
 }: ChooseRealOnlinePlaceProps) => {
   return (
     <>
@@ -37,8 +38,8 @@ const ChooseRealOnlinePlace = ({
             description={
               'The real place meeting allows you to choose many places on the map and perform place voting.'
             }
-            onClick={() => setOnlineMeeting(false)}
-            chosen={!onlineMeeting}
+            onClick={() => setChosenMeetingType(MeetingType.REAL)}
+            chosen={chosenMeetingType === MeetingType.REAL}
           />
         </Col>
         <Col md={6} lg={4} className="text-center mr-auto mt-4">
@@ -48,14 +49,18 @@ const ChooseRealOnlinePlace = ({
             description={
               'The online meeting allows you to set a link to the meeting and optionally a password.'
             }
-            onClick={() => setOnlineMeeting(true)}
-            chosen={onlineMeeting}
+            onClick={() => setChosenMeetingType(MeetingType.ONLINE)}
+            chosen={chosenMeetingType === MeetingType.ONLINE}
           />
         </Col>
       </Row>
       <Row className="justify-content-center mt-5 pt-4">
         <Col xs="auto">
-          <ActionButton text="Next" onclick={onChoose} className={styles.chooseModulesButton} />
+          <ActionButton
+            text="Next"
+            onclick={onNavigateToNextSection}
+            className={styles.chooseModulesButton}
+          />
         </Col>
       </Row>
     </>

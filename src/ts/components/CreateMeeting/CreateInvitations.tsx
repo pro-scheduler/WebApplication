@@ -4,7 +4,6 @@ import styles from './CreateInvitations.module.css';
 import React, { useState } from 'react';
 import { ValueLabelPair } from '../../model/utils/ValueLabelPair';
 import FriendsIcon from '../common/Icons/FriendsIcon';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
 import TextArea from '../common/forms/TextArea/TextArea';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
@@ -16,7 +15,7 @@ import { toastWarning } from '../../tools/messagesInvocator';
 import cx from 'classnames';
 
 export type CreateInvitationsProps = {
-  state: creatingMeetingState;
+  visible: boolean;
   showIcon: boolean;
   emails: ValueLabelPair[];
   setEmails: (newEmails: ValueLabelPair[]) => void;
@@ -25,7 +24,7 @@ export type CreateInvitationsProps = {
 };
 
 const CreateInvitations = ({
-  state,
+  visible,
   showIcon,
   emails,
   setEmails,
@@ -57,11 +56,7 @@ const CreateInvitations = ({
   };
 
   return (
-    <div
-      className={
-        state !== 'invitations' && (state !== 'summary' || emails.length === 0) ? styles.hidden : ''
-      }
-    >
+    <div className={visible ? '' : styles.hidden}>
       {showIcon && (
         <>
           <Row className="justify-content-center mt-5">

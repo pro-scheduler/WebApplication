@@ -16,6 +16,13 @@ export enum MeetingState {
   CANCELLED = 'CANCELLED',
 }
 
+export enum MeetingModuleType {
+  TIME_VOTING = 'TIME_VOTING',
+  PLACE_VOTING = 'PLACE_VOTING',
+  SURVEY = 'SURVEY',
+  DECLARATIONS = 'DECLARATION',
+}
+
 export type CreateMeetingRequest = {
   name: string;
   description: string;
@@ -24,6 +31,7 @@ export type CreateMeetingRequest = {
   markTimeRangeDeadline: Date | undefined;
   link: string | undefined;
   password: string | undefined;
+  availableModules: MeetingModuleType[];
 };
 
 export type UpdateMeetingRequest = {
