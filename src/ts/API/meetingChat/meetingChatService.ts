@@ -4,7 +4,7 @@ import { get, post } from '../genericApiCalls';
 import {
   getCreateMeetingChatMessageUrl,
   getMeetingChatMessagesUrl,
-  getChatSocketEndpoint
+  getChatSocketEndpoint,
 } from './urls';
 
 export const subscribeToChat = (meetingId: number, onNewMessageEvent: Function) => {
