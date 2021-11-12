@@ -59,8 +59,8 @@ const ONLINE_MEETING_AVAILABLE_MODULES: MeetingModuleType[] = [
 const DEFAULT_AVAILABLE_SECTIONS: MeetingConfigurationSection[] = [
   MeetingConfigurationSection.ABOUT,
   MeetingConfigurationSection.INVITATIONS,
-  MeetingConfigurationSection.TIME,
-  MeetingConfigurationSection.PLACE,
+  // MeetingConfigurationSection.TIME, TODO: uncomment when final time support added
+  // MeetingConfigurationSection.PLACE, TODO: uncomment when final place support added
   MeetingConfigurationSection.SUMMARY,
 ];
 
@@ -128,7 +128,8 @@ const CreateMeeting = () => {
 
   const isSectionChosen = (section: MeetingConfigurationSection) =>
     currentMeetingConfigurationSection === section ||
-    currentMeetingConfigurationSection === MeetingConfigurationSection.SUMMARY;
+    (currentMeetingConfigurationSection === MeetingConfigurationSection.SUMMARY &&
+      availableMeetingConfigurationSections.includes(section));
 
   const saveThisMeeting = () => {
     const createRequest: CreateMeetingRequest = {
@@ -158,9 +159,15 @@ const CreateMeeting = () => {
       availableSections.push(MeetingConfigurationSection.SURVEY);
     }
 
-    const result = availableSections.sort((a, b) => a - b);
-    console.log(result);
-    return result;
+    if (chosenModules.includes(MeetingModuleType.TIME_VOTING)) {
+      availableSections.push(MeetingConfigurationSection.TIME);
+    }
+
+    if (chosenModules.includes(MeetingModuleType.PLACE_VOTING)) {
+      availableSections.push(MeetingConfigurationSection.PLACE);
+    }
+
+    return availableSections.sort((a, b) => a - b);
   };
 
   useEffect(() => {
