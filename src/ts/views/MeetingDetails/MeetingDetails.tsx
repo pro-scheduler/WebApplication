@@ -169,6 +169,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           onPlacesChange={(updatedPlaces) => setPlaces(updatedPlaces)}
           finalPlaceId={meeting.finalPlace ? meeting.finalPlace.id : -1}
           setFinalPlace={setFinalPlace}
+          canSeeVotingResults={isOrganizer || meetingSettings.participantsCanSeeResults}
         />
       )}
       {survey && chosenSection === MeetingDetailsSection.Survey && (
