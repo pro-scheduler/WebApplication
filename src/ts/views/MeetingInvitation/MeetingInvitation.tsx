@@ -17,6 +17,7 @@ import ActionButton from '../../components/common/SubmitButton/ActionButton/Acti
 import { useHistory } from 'react-router-dom';
 import { defaultUser } from '../../auth/userContext';
 import { fetchCurrentUser } from '../../API/user/userService';
+import RedirectButton from '../../components/common/SubmitButton/RedirectButton/RedirectButton';
 
 const MeetingInvitation = () => {
   const { generatedEndpoint }: any = useParams();
@@ -94,18 +95,26 @@ const MeetingInvitation = () => {
             </Col>
           )}
           <Col lg={12} className="text-center mt-5">
-            <ActionButton
-              onclick={joinMeeting}
-              text={'Join'}
-              disabled={
-                userResponse.isFailed ||
-                meeting.organizers.find((organizer: UserSummary) => organizer.id === user.id)
-              }
-              className={styles.joinButton}
-            />
-            {userResponse.isFailed && (
-              <div className={styles.signInInfo}>Please, sign in first</div>
+            {!userResponse.isFailed ? (
+              <ActionButton
+                onclick={joinMeeting}
+                text={'Join'}
+                disabled={
+                  meeting.organizers.find((organizer: UserSummary) => organizer.id === user.id) !==
+                  undefined
+                }
+                className={styles.joinButton}
+              />
+            ) : (
+              <RedirectButton
+                text="Sign In"
+                redirectTO={`/signin?invite-link=${generatedEndpoint}`}
+                className={styles.signInButton}
+              />
             )}
+            {/*{userResponse.isFailed && (*/}
+            {/*  <div className={styles.signInInfo}>Please, sign in first</div>*/}
+            {/*)}*/}
           </Col>
         </Row>
       ) : (
