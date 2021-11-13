@@ -30,7 +30,7 @@ import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
 import {
   CreateInvitationsResponse,
   FailedInvitationDetails,
-  InvitationDetails
+  InvitationDetails,
 } from '../../model/invitation/Invitation';
 import { toastError, toastSuccess } from '../../tools/messagesInvocator';
 
