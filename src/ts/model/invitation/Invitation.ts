@@ -36,3 +36,8 @@ export type CreateInvitationsRequest = {
   emails: string[];
   message: string;
 };
+
+export type CreateInvitationsResponse = {
+  createdInvitations: InvitationDetails[];
+  failedInvitationDetails: FailedInvitationDetails[];
+};

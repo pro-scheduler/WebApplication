@@ -11,18 +11,9 @@ import { CreateInvitationsRequest } from '../../model/invitation/Invitation';
 export const createInvitations = (
   createRequest: CreateInvitationsRequest,
   setResponse?: Function,
-  onSuccess?: Function,
-  setData?: Function
-) =>
-  post(
-    createRequest,
-    getInvitationsUrl(),
-    setData,
-    setResponse,
-    true,
-    'Invitations has been send successfully',
-    onSuccess
-  );
+  setData?: Function,
+  onSuccess?: Function
+) => post(createRequest, getInvitationsUrl(), setData, setResponse, true, undefined, onSuccess);
 
 export const fetchMeetingInvitations = (meetingId: number, setResponse: Function) =>
   get(getMeetingInvitationsUrl(meetingId), setResponse);
