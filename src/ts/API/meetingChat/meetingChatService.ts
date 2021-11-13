@@ -1,11 +1,19 @@
 import Stomp from 'stompjs';
-import { CreateMeetingChatMessageRequest } from '../../model/meetingChat/MeetingChatMessage';
+import {
+  CreateMeetingChatMessageRequest,
+  MeetingChatMessageDetails,
+} from '../../model/meetingChat/MeetingChatMessage';
 import { get, post } from '../genericApiCalls';
 import {
   getCreateMeetingChatMessageUrl,
   getMeetingChatMessagesUrl,
   getChatSocketEndpoint,
 } from './urls';
+
+export enum MeetingChatDirection {
+  BEFORE = 'BEFORE',
+  AFTER = 'AFTER',
+}
 
 export const subscribeToChat = (meetingId: number, onNewMessageEvent: Function) => {
   let chatSocket = new WebSocket(getChatSocketEndpoint());
@@ -23,13 +31,38 @@ export const subscribeToChat = (meetingId: number, onNewMessageEvent: Function) 
   return chatSocket;
 };
 
+export const loadNewMeetingChatMessages = (
+  meetingId: number,
+  lastMessageTime: any,
+  setMeetingChatMessages: (messages: MeetingChatMessageDetails[]) => void,
+  setResponse?: Function
+) =>
+  loadMeetingChatMessages(
+    meetingId,
+    lastMessageTime,
+    10000,
+    MeetingChatDirection.AFTER,
+    setMeetingChatMessages,
+    setResponse
+  );
+
 export const loadMeetingChatMessages = (
   meetingId: number,
-  page: number,
-  size: number,
-  setMeetingChatMessages: Function,
+  messageTime: any,
+  messageCount: number,
+  direction: MeetingChatDirection,
+  setMeetingChatMessages: (messages: MeetingChatMessageDetails[]) => void,
   setResponse?: Function
-) => get(getMeetingChatMessagesUrl(meetingId, page, size), setMeetingChatMessages, setResponse);
+) => {
+  console.log(`messageTime T: ${typeof messageTime}`);
+  console.log(`messageTime V: ${messageTime}`);
+  console.log(`url: ${getMeetingChatMessagesUrl(meetingId, messageTime, messageCount, direction)}`);
+  get(
+    getMeetingChatMessagesUrl(meetingId, messageTime, messageCount, direction),
+    setMeetingChatMessages,
+    setResponse
+  );
+};
 
 export const createNewMeetingChatMessage = (
   meetingId: number,

@@ -19,7 +19,8 @@ import { PlaceDetails } from '../../model/geo/Geo';
 import {
   createNewMeetingChatMessage,
   loadMeetingChatMessages,
-  subscribeToChat,
+  loadNewMeetingChatMessages,
+  MeetingChatDirection,
 } from '../../API/meetingChat/meetingChatService';
 import { MeetingChatMessageDetails } from '../../model/meetingChat/MeetingChatMessage';
 import MeetingChat from '../../components/MeetingDetails/MeetingChat/MeetingChat';
@@ -51,7 +52,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
-  const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
@@ -64,6 +64,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     MeetingDetailsSection.About
   );
 
+  const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
+  const [oldestChatMessage, setOldestChatMessage] = useState<MeetingChatMessageDetails>();
+
   const setFinalPlace = (place: PlaceDetails) => {
     setMeeting({ ...meeting, finalPlace: place });
   };
@@ -73,7 +76,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   const reloadMeeting = () => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
-    loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
     getMeetingSettings(id, setMeetingSettings);
   };
 
@@ -96,12 +98,47 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   useEffect(() => {
     reloadMeeting();
 
-    const chatWebSocket = subscribeToChat(id, (newMessage: MeetingChatMessageDetails) =>
-      addMessageToChat(newMessage)
+    let mounted = true;
+    let chatLoaded = false;
+    let lastMessage: MeetingChatMessageDetails | undefined = undefined;
+
+    loadMeetingChatMessages(
+      id,
+      new Date().toISOString(),
+      50,
+      MeetingChatDirection.BEFORE,
+      (messages: MeetingChatMessageDetails[]) => {
+        setMeetingChatMessages(messages);
+        lastMessage = messages[messages.length - 1];
+        setOldestChatMessage(messages[0]);
+        chatLoaded = true;
+      }
     );
 
+    const intervalId = setInterval(() => {
+      console.log(`M: ${mounted}, L: ${chatLoaded}`);
+      if (mounted && chatLoaded) {
+        console.log(`dateTime: ${lastMessage?.creationDateTime}`);
+        loadNewMeetingChatMessages(
+          id,
+          lastMessage?.creationDateTime ?? new Date().toISOString(),
+          (messages: MeetingChatMessageDetails[]) => {
+            console.log(`new messages: ${JSON.stringify(messages)}`);
+            if (messages.length > 0) {
+              setMeetingChatMessages((prevState: MeetingChatMessageDetails[]) =>
+                prevState.concat(messages)
+              );
+              console.log(`new last: ${messages[messages.length - 1]}`);
+              lastMessage = messages[messages.length - 1];
+            }
+          }
+        );
+      }
+    }, 1000);
+
     return () => {
-      chatWebSocket.close();
+      mounted = false;
+      clearInterval(intervalId);
     };
     // eslint-disable-next-line
   }, []);

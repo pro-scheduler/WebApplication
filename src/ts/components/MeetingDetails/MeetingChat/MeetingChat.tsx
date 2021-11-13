@@ -26,9 +26,9 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
     // messageContainerRef.current?.scroll(messageContainerRef.current.)
   };
 
-  const ownMessageEntry = (message: MeetingChatMessageDetails) => {
+  const ownMessageEntry = (message: MeetingChatMessageDetails, index: number) => {
     return (
-      <div className={`${styles.singleMessageContainer} ${styles.messageRight}`}>
+      <div className={`${styles.singleMessageContainer} ${styles.messageRight}`} key={index}>
         <div className={`${styles.messageContentContainer} ${styles.messageOwn}`}>
           <div className={styles.messageText}>{message.message}</div>
           <div className={styles.messageDateTime}>
@@ -40,9 +40,9 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
     );
   };
 
-  const otherMessageEntry = (message: MeetingChatMessageDetails) => {
+  const otherMessageEntry = (message: MeetingChatMessageDetails, index: number) => {
     return (
-      <div className={`${styles.singleMessageContainer} ${styles.messageLeft}`}>
+      <div className={`${styles.singleMessageContainer} ${styles.messageLeft}`} key={index}>
         <UserIcon user={message.sendBy} className={styles.messageSenderIcon} />
         <div className={`${styles.messageContentContainer} ${styles.messageOther}`}>
           <div className={styles.messageText}>{message.message}</div>
@@ -54,8 +54,10 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
     );
   };
 
-  const messageEntry = (message: MeetingChatMessageDetails) => {
-    return message.sendBy.id === userId ? ownMessageEntry(message) : otherMessageEntry(message);
+  const messageEntry = (message: MeetingChatMessageDetails, index: number) => {
+    return message.sendBy.id === userId
+      ? ownMessageEntry(message, index)
+      : otherMessageEntry(message, index);
   };
 
   const toggleChat = () => setChatVisible(!chatVisible);
@@ -75,7 +77,7 @@ const MeetingChat = ({ userId, messages, onSendNewMessage }: MeetingChatProps) =
         </div>
         <div className={styles.messagesContainer} ref={messageContainerRef}>
           {messages?.map((message: MeetingChatMessageDetails, index: number) =>
-            messageEntry(message)
+            messageEntry(message, index)
           )}
         </div>
         <div className={styles.footer}>
