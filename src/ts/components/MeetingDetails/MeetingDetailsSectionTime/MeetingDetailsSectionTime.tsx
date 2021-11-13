@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './MeetingDetailsSectionTime.module.css';
-import { MeetingAttendeeDetails, MeetingDetails } from '../../../model/meeting/Meeting';
+import { MeetingAttendeeDetails } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingTime from '../MeetingTime/MeetingTime';
 import { UserSummary } from '../../../model/user/ProUser';
@@ -65,7 +65,7 @@ const MeetingDetailsSectionTime = ({
   }, [meeting]);
 
   return (
-    <Row className="justify-content">
+    <Row className="justify-content mb-5">
       <Col lg={12}>
         <MeetingTime
           meetingId={meeting.id}

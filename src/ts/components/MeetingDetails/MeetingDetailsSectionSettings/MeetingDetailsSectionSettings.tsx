@@ -20,7 +20,7 @@ const MeetingDetailsSectionSettings = ({
   useEffect(() => {}, []);
 
   return (
-    <Row className="justify-content mt-5 ml-3">
+    <Row className="justify-content mt-5 ml-3 mb-5">
       <Col lg={12}>
         <MeetingSettings
           survey={survey}

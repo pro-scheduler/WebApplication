@@ -1,8 +1,6 @@
 import styles from './MeetingPlaces.module.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Collapse } from 'react-collapse';
-import LineWithHeader from '../LineWithHeader';
 import { PlaceDetails, PlacesSettings } from '../../../model/geo/Geo';
 import {
   addNewPlace,
@@ -42,7 +40,6 @@ const MeetingPlaces = ({
   finalPlaceId,
   setFinalPlace,
 }: MeetingPlacesProps) => {
-  const [opened, setOpened] = useState<boolean>(true);
   const [myVotes, setMyVotes] = useState<number[]>([]);
   const [newVotes, setNewVotes] = useState<number[]>([]);
   const [placesSettings, setPlacesSettings] = useState<PlacesSettings>({

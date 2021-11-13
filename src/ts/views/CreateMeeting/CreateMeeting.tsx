@@ -157,6 +157,7 @@ const CreateMeeting = () => {
     );
   };
 
+  // eslint-disable-next-line
   const toAvailableMeetingConfigurationSections = (chosenModules: MeetingModuleType[]) => {
     const availableSections: MeetingConfigurationSection[] = ([] as MeetingConfigurationSection[]).concat(
       DEFAULT_AVAILABLE_SECTIONS
@@ -186,6 +187,7 @@ const CreateMeeting = () => {
     ) {
       container.current.scrollIntoView();
     }
+    // eslint-disable-next-line
   }, [currentMeetingConfigurationSection]);
 
   useEffect(() => {

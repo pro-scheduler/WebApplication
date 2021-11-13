@@ -1,7 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
-import LineWithHeader from '../LineWithHeader';
 import UserTimePicker from '../../UserTimeGrid/UserTimePicker';
 import { useEffect, useState } from 'react';
 import useWindowDimensions from '../../common/window/WindowDimension';
@@ -13,7 +12,6 @@ import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
-import { Collapse } from 'react-collapse';
 import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
 import EditDeadline from './EditDeadline/EditDeadline';
 
@@ -55,7 +53,6 @@ const MeetingTime = ({
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
   const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
-  const [opened, setOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);

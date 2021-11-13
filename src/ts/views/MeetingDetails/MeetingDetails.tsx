@@ -1,29 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
-import MeetingDescription from '../../components/MeetingDetails/MeetingDescription';
-import MeetingParticipants from '../../components/MeetingDetails/MeetingParticipants/MeetingParticipants';
-import MeetingTime from '../../components/MeetingDetails/MeetingTime/MeetingTime';
 import { getMeetingSettings, loadMeeting } from '../../API/meeting/meetingService';
 import { UserSummary } from '../../model/user/ProUser';
 import {
   MeetingAttendeeDetails,
   MeetingRole,
   MeetingSettings as MeetingGeneralSettings,
-  MeetingState,
 } from '../../model/meeting/Meeting';
 import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import MeetingSurvey from '../../components/MeetingDetails/MeetingSurvey/MeetingSurvey';
-import { TimeRangeDTO } from '../../model/TimeRangeDTO';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import MeetingDetailsInfo from '../../components/MeetingDetails/MeetingDetailsInfo';
-import MeetingSettings from '../../components/MeetingDetails/MeetingSettings/MeetingSettings';
-import MeetingDeclarations from '../../components/MeetingDetails/MeetingDeclarations/MeetingDeclarations';
-import MeetingPlaces from '../../components/MeetingDetails/MeetingPlaces/MeetingPlaces';
 import { getMeetingPlaces } from '../../API/geo/geo';
 import { PlaceDetails } from '../../model/geo/Geo';
 import {
@@ -76,9 +66,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   const setFinalPlace = (place: PlaceDetails) => {
     setMeeting({ ...meeting, finalPlace: place });
-  };
-  const setMeetingTimeDeadline = (deadline: Date) => {
-    setMeeting({ ...meeting, markTimeRangeDeadline: deadline });
   };
   const setMeetingDetails = (meeting: any) => {
     setMeeting(meeting);
@@ -176,6 +163,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           user={user}
           places={places}
           onPlacesChange={(updatedPlaces) => setPlaces(updatedPlaces)}
+          finalPlaceId={meeting.finalPlace ? meeting.finalPlace.id : -1}
+          setFinalPlace={setFinalPlace}
         />
       )}
       {survey && chosenSection === MeetingDetailsSection.Survey && (

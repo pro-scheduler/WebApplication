@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import styles from './MeetingDetailsSectionAbout.module.css';
+import { useState } from 'react';
 import {
-  MeetingAttendeeDetails,
   MeetingDetails,
-  MeetingRole,
+  MeetingModuleType,
   MeetingSettings as MeetingGeneralSettings,
   OnlineMeetingDetails,
+  RealMeetingDetails,
 } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
-import MeetingDescription from '../MeetingDescription';
 import MeetingDetailsInfo from '../MeetingDetailsInfo';
 import MeetingParticipants from '../MeetingParticipants/MeetingParticipants';
 import MeetingAboutInfo from './MeetingAboutInfo/MeetingAboutInfo';
@@ -45,13 +43,13 @@ const MeetingDetailsSectionAbout = ({
           />
         </Col>
       </Row>
-      <Row className="justify-content">
+      <Row className="justify-content mb-5">
         <Col lg={6}>
           <MeetingDetailsInfo
-            hasSurvey={/*survey !== undefined*/ true} //TODO: fix it
+            hasSurvey={meeting.availableModules.includes(MeetingModuleType.SURVEY)}
             meetingLink={(meeting as OnlineMeetingDetails)?.link}
             meetingPassword={(meeting as OnlineMeetingDetails)?.password}
-            finalPlace={undefined} // TODO replace by final place
+            finalPlace={(meeting as RealMeetingDetails)?.finalPlace?.name}
             name={meetingName}
             description={meetingDescription}
             isOrganizer={isOrganizer}

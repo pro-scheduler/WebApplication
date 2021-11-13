@@ -24,7 +24,7 @@ const MeetingDetailsSectionDeclarations = ({
   useEffect(() => {}, []);
 
   return (
-    <Row className="justify-content">
+    <Row className="justify-content mb-5">
       <Col lg={12}>
         <MeetingDeclarations
           meetingId={meeting.id}

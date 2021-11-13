@@ -1,5 +1,4 @@
 import Col from 'react-bootstrap/Col';
-import LineWithHeader from '../LineWithHeader';
 import Row from 'react-bootstrap/Row';
 import styles from './MeetingSurvey.module.css';
 import SwitchButton from '../../common/SwitchButton/SwitchButton';
@@ -11,7 +10,6 @@ import MeetingSurveyAnswers from './MeetingSurveyAnswers';
 import { SurveySummary, SurveyWithQuestionsDTO, UserSurvey } from '../../../model/survey/Survey';
 import MeetingSurveyDetails from './MeetingSurveyDetails';
 import MeetingSurveyResults from './MeetingSurveyResults';
-import { Collapse } from 'react-collapse';
 import { editSurvey, getSurveyToEdit } from '../../../API/survey/surveyService';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { Question } from '../../../model/survey/Question';
@@ -36,7 +34,6 @@ const MeetingSurvey = ({
   state,
 }: MeetingSurveyProps) => {
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
-  const [opened, setOpened] = useState<boolean>(true);
   const [surveyToEdit, setSurveyToEdit] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: 0,
@@ -44,6 +41,7 @@ const MeetingSurvey = ({
     surveyEndDate: undefined,
   });
   const [questions, setQuestions] = useState<Question[]>();
+  // TODO add button to edit survey
   const [editSurveyMode, setEditSurveyMode] = useState<boolean>(false);
   const [questionsToAdd, setQuestionsToAdd] = useState<Question[]>([]);
 

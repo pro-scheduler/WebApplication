@@ -13,6 +13,8 @@ export type MeetingDetailsSectionPlaceProps = {
   user: UserSummary;
   places: PlaceDetails[];
   onPlacesChange: MeetingPlacesChangeFunction;
+  finalPlaceId: number;
+  setFinalPlace: Function;
 };
 
 const MeetingDetailsSectionPlace = ({
@@ -21,11 +23,13 @@ const MeetingDetailsSectionPlace = ({
   user,
   places,
   onPlacesChange,
+  finalPlaceId,
+  setFinalPlace,
 }: MeetingDetailsSectionPlaceProps) => {
   useEffect(() => {}, []);
 
   return (
-    <Row className="justify-content">
+    <Row className="justify-content mb-5">
       <Col lg={12}>
         <MeetingPlaces
           meetingId={meeting.id}
@@ -34,8 +38,8 @@ const MeetingDetailsSectionPlace = ({
           open={meeting.state === MeetingState.OPEN}
           places={places}
           setPlaces={onPlacesChange}
-          finalPlaceId={0} // TODO: fix me
-          setFinalPlace={() => {}} // TODO: fix me
+          finalPlaceId={finalPlaceId}
+          setFinalPlace={setFinalPlace}
         />
       </Col>
     </Row>

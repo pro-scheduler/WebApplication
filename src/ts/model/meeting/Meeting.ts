@@ -1,5 +1,6 @@
 import { TimeRangeDTO } from '../TimeRangeDTO';
 import { UserSummary } from '../user/ProUser';
+import { PlaceDetails } from '../geo/Geo';
 
 export enum MeetingType {
   ONLINE = 'ONLINE',
@@ -127,7 +128,7 @@ export class RealMeetingDetails implements MeetingDetails {
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
     public finalDate: TimeRangeDTO,
-    public finalPlace: number,
+    public finalPlace: PlaceDetails | undefined,
     public availableModules: MeetingModuleType[]
   ) {}
 }

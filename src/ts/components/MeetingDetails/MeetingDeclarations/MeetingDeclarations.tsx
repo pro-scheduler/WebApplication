@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import {
-  loadMeetingDeclarations,
-  saveDeclaration,
-} from '../../../API/declarations/declarationsService';
+import { saveDeclaration } from '../../../API/declarations/declarationsService';
 import { DeclarationDetails } from '../../../model/declaration/Declaration';
 import { maxSings, required } from '../../../tools/validator';
 import Popup from '../../common/Popup/Popup';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
-import LineWithHeader from '../LineWithHeader';
 import Declaration from './Declaration/Declaration';
 import styles from './MeetingDeclarations.module.css';
 import TextArea from '../../common/forms/TextArea/TextArea';
@@ -32,7 +28,6 @@ const MeetingDeclarations = ({
   declarations,
   setDeclarations,
 }: MeetingDeclarationsProps) => {
-  const [opened, setOpened] = useState<boolean>(true);
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [invalidTitleOrDesc, setInvalidTitleOrDesc] = useState(true);

@@ -25,7 +25,7 @@ const MeetingDetailsSectionSurvey = ({
   useEffect(() => {}, []);
 
   return (
-    <Row className="justify-content">
+    <Row className="justify-content mb-5">
       <Col lg={12}>
         <MeetingSurvey
           survey={survey}
