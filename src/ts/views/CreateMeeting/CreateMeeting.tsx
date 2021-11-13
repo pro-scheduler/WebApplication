@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -157,7 +159,6 @@ const CreateMeeting = () => {
     );
   };
 
-  // eslint-disable
   const toAvailableMeetingConfigurationSections = (chosenModules: MeetingModuleType[]) => {
     const availableSections: MeetingConfigurationSection[] = ([] as MeetingConfigurationSection[]).concat(
       DEFAULT_AVAILABLE_SECTIONS
