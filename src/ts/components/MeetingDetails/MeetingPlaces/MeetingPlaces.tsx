@@ -29,6 +29,7 @@ export type MeetingPlacesProps = {
   setPlaces: Function;
   finalPlaceId: number;
   setFinalPlace: Function;
+  canSeeVotingResults: boolean;
 };
 
 const MeetingPlaces = ({
@@ -39,6 +40,7 @@ const MeetingPlaces = ({
   setPlaces,
   finalPlaceId,
   setFinalPlace,
+  canSeeVotingResults,
 }: MeetingPlacesProps) => {
   const [myVotes, setMyVotes] = useState<number[]>([]);
   const [newVotes, setNewVotes] = useState<number[]>([]);
@@ -176,13 +178,15 @@ const MeetingPlaces = ({
           </div>
         </Card>
       </Col>
-      <Col lg={6} className={styles.barchart}>
-        <Card title="Voting results" miniCard={false}>
-          <div ref={barChartDivRef}>
-            <PlacesBarChart placesToDisplay={places} />
-          </div>
-        </Card>
-      </Col>
+      {canSeeVotingResults && (
+        <Col lg={6} className={styles.barchart}>
+          <Card title="Voting results" miniCard={false}>
+            <div ref={barChartDivRef}>
+              <PlacesBarChart placesToDisplay={places} />
+            </div>
+          </Card>
+        </Col>
+      )}
       {(isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && (
         <Col>
           <PlacesTable

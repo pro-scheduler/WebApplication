@@ -33,7 +33,7 @@ const MeetingSurvey = ({
   reloadSurvey,
   state,
 }: MeetingSurveyProps) => {
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
+  const [displayQuestions, setDisplayQuestions] = useState<Boolean>(true);
   const [surveyToEdit, setSurveyToEdit] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: 0,
@@ -87,26 +87,31 @@ const MeetingSurvey = ({
       </Col>
       {!editSurveyMode ? (
         <>
-          <Col lg={6}>
-            <MeetingSurveyResults
-              numberOfParticipants={numberOfParticipants}
-              numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
-              users={surveySummary?.users ?? []}
-              isOrganizer={isOrganizer}
-            />
-          </Col>
+          {surveySummary && (
+            <Col lg={6}>
+              <MeetingSurveyResults
+                numberOfParticipants={numberOfParticipants}
+                numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
+                users={surveySummary?.users ?? []}
+                isOrganizer={isOrganizer}
+              />
+            </Col>
+          )}
 
           <Col lg={12} className="text-center mx-auto">
-            <div className={styles.switchTime}>
-              <SwitchButton
-                onChange={() => setDisplayAnswers(!displayAnswers)}
-                checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-              />
-            </div>
+            {surveySummary && (
+              <div className={styles.switchTime}>
+                <SwitchButton
+                  onChange={() => setDisplayQuestions(!displayQuestions)}
+                  checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                  unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+                />
+              </div>
+            )}
           </Col>
+
           <Col className="mt-3">
-            {displayAnswers ? (
+            {displayQuestions ? (
               <MeetingSurveyQuestions
                 survey={survey}
                 reloadSurveySummary={reloadSurveySummary}

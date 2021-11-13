@@ -27,6 +27,7 @@ export type MeetingTimeProps = {
   isOrganizer: boolean;
   state: MeetingState;
   setNewDeadline: Function;
+  canSeeVotingResults?: boolean;
 };
 
 interface RangesWithDay {
@@ -45,6 +46,7 @@ const MeetingTime = ({
   isOrganizer,
   state,
   setNewDeadline,
+  canSeeVotingResults = false,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -168,13 +170,16 @@ const MeetingTime = ({
   return (
     <Row className="justify-content">
       <Col>
-        <EditDeadline
-          isOpened={true} //TODO: move to settings
-          timeDeadline={timeDeadline}
-          meetingId={meetingId}
-          setDeadline={setNewDeadline}
-        />
+        {isOrganizer && (
+          <EditDeadline
+            isOpened={true} //TODO: move to settings
+            timeDeadline={timeDeadline}
+            meetingId={meetingId}
+            setDeadline={setNewDeadline}
+          />
+        )}
         <Col lg={12} className="text-center mx-auto">
+          {/* TODO remove switch if !canSeeVotingResults and fixed loading user answers*/}
           <div className={styles.switchTime}>
             <SwitchButton
               onChange={() => setDisplayAnswers(!displayAnswers)}
@@ -194,7 +199,16 @@ const MeetingTime = ({
           )}
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-          {!displayAnswers ? (
+          {displayAnswers ? (
+            <AnswersTimePicker
+              availableRanges={availableRanges}
+              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
+              setRanges={setRanges}
+              answers={canSeeVotingResults ? userAnswers : {}}
+              disabled={true}
+              numberOfParticipants={numberOfParticipants}
+            />
+          ) : (
             <UserTimePicker
               disabled={deadlineExceeded}
               availableRanges={availableRanges}
@@ -203,22 +217,17 @@ const MeetingTime = ({
               setRanges={setRanges}
               setPreferencesChanged={setPreferencesChanged}
             />
-          ) : (
-            <AnswersTimePicker
-              availableRanges={availableRanges}
-              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
-              setRanges={setRanges}
-              answers={userAnswers}
-              disabled={true}
-              numberOfParticipants={numberOfParticipants}
-            />
           )}
         </div>
       </Col>
       {!displayAnswers && !deadlineExceeded && state === MeetingState.OPEN && (
         <Col lg={12} className="text-center mx-auto">
           <ActionButton
-            text={userRanges.length === 0 ? 'Save my time preferences' : 'Edit my time preferences'}
+            text={
+              userRanges && userRanges.length === 0
+                ? 'Save my time preferences'
+                : 'Edit my time preferences'
+            }
             onclick={saveTime}
             className={styles.saveButton}
             disabled={!preferencesChanged}

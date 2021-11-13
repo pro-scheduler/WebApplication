@@ -34,7 +34,6 @@ const MeetingSurveyQuestions = ({
     { question: Question; answer: Answer | null }[]
   >(survey.questionsAndAnswers);
   const [dataUpdated, setDataUpdated] = useState(true);
-  const [buttonText, setButtonText] = useState<'INCOMPLETE' | 'COMPLETE'>(survey.userState);
   const [saveResponse, setSaveResponse] = useState<ApiCall>(new ApiCall());
   const [newQuestions, setNewQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
@@ -42,7 +41,6 @@ const MeetingSurveyQuestions = ({
   useEffect(() => {
     if (saveResponse.isSuccess) {
       setDataUpdated(false);
-      setButtonText('COMPLETE');
       reloadSurveySummary();
     }
     // eslint-disable-next-line
@@ -129,7 +127,7 @@ const MeetingSurveyQuestions = ({
         <div className="text-center mt-5">
           <ActionButton
             onclick={saveSurvey}
-            text={buttonText === 'INCOMPLETE' ? 'Save my answers' : 'Change my answers'}
+            text={'Save my answers'}
             disabled={!filledAnswers()}
             className={styles.saveAnswersButton}
           />

@@ -15,6 +15,7 @@ export type MeetingDetailsSectionPlaceProps = {
   onPlacesChange: MeetingPlacesChangeFunction;
   finalPlaceId: number;
   setFinalPlace: Function;
+  canSeeVotingResults?: boolean;
 };
 
 const MeetingDetailsSectionPlace = ({
@@ -25,6 +26,7 @@ const MeetingDetailsSectionPlace = ({
   onPlacesChange,
   finalPlaceId,
   setFinalPlace,
+  canSeeVotingResults = false,
 }: MeetingDetailsSectionPlaceProps) => {
   useEffect(() => {}, []);
 
@@ -40,6 +42,7 @@ const MeetingDetailsSectionPlace = ({
           setPlaces={onPlacesChange}
           finalPlaceId={finalPlaceId}
           setFinalPlace={setFinalPlace}
+          canSeeVotingResults={canSeeVotingResults}
         />
       </Col>
     </Row>
