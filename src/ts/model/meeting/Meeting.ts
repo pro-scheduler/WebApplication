@@ -75,6 +75,7 @@ export type MeetingDetails = {
   state: MeetingState;
   markTimeRangeDeadline: string | undefined;
   finalDate: TimeRangeDTO;
+  availableModules: MeetingModuleType[];
 };
 
 export type MeetingSummary = {
@@ -110,7 +111,8 @@ export class OnlineMeetingDetails implements MeetingDetails {
     public type: MeetingType = MeetingType.ONLINE,
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
-    public finalDate: TimeRangeDTO
+    public finalDate: TimeRangeDTO,
+    public availableModules: MeetingModuleType[]
   ) {}
 }
 
@@ -125,7 +127,8 @@ export class RealMeetingDetails implements MeetingDetails {
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
     public finalDate: TimeRangeDTO,
-    public finalPlace: number
+    public finalPlace: number,
+    public availableModules: MeetingModuleType[]
   ) {}
 }
 

@@ -1,15 +1,10 @@
 import { FunctionComponent, useEffect } from 'react';
 import styles from './MeetingDetailsHeader.module.css';
-import { MeetingDetails } from '../../../model/meeting/Meeting';
+import { MeetingDetails, MeetingModuleType } from '../../../model/meeting/Meeting';
 import {
   MeetingDetailsSection,
   MeetingDetailsSectionChoiceFunction,
 } from '../../../views/MeetingDetails/MeetingDetails';
-import CalendarIcon from '../../common/Icons/CalendarIcon';
-import WorldIcon from '../../common/Icons/WorldIcon';
-import SurveyIcon from '../../common/Icons/SurveyIcon';
-import PencilIcon from '../../common/Icons/PencilIcon';
-import SettingsIcon from '../../common/Icons/SettingsIcon';
 import { BiCalendarEvent, BiInfoCircle, BiWorld } from 'react-icons/bi';
 import { FaRegClipboard } from 'react-icons/fa';
 import { RiPencilFill } from 'react-icons/ri';
@@ -20,6 +15,7 @@ export type MeetingDetailsHeaderProps = {
   meeting: MeetingDetails;
   chosenSection: MeetingDetailsSection;
   onMeetingSectionChosen: MeetingDetailsSectionChoiceFunction;
+  isOrganizer: boolean;
 };
 
 type SectionIconProps = {
@@ -31,6 +27,7 @@ const MeetingDetailsHeader = ({
   meeting,
   chosenSection,
   onMeetingSectionChosen,
+  isOrganizer,
 }: MeetingDetailsHeaderProps) => {
   const SectionIcon: FunctionComponent<SectionIconProps> = ({ section, label, children }) => {
     return (
@@ -48,6 +45,9 @@ const MeetingDetailsHeader = ({
     );
   };
 
+  const isModuleAvailable = (module: MeetingModuleType) =>
+    meeting.availableModules.includes(module);
+
   useEffect(() => {}, []);
 
   return (
@@ -58,21 +58,31 @@ const MeetingDetailsHeader = ({
           <SectionIcon section={MeetingDetailsSection.About} label={'About'}>
             <BiInfoCircle />
           </SectionIcon>
-          <SectionIcon section={MeetingDetailsSection.Time} label={'Time'}>
-            <BiCalendarEvent />
-          </SectionIcon>
-          <SectionIcon section={MeetingDetailsSection.Place} label={'Place'}>
-            <BiWorld />
-          </SectionIcon>
-          <SectionIcon section={MeetingDetailsSection.Survey} label={'Survey'}>
-            <FaRegClipboard />
-          </SectionIcon>
-          <SectionIcon section={MeetingDetailsSection.Declarations} label={'Declarations'}>
-            <RiPencilFill />
-          </SectionIcon>
-          <SectionIcon section={MeetingDetailsSection.Settings} label={'Settings'}>
-            <FiSettings />
-          </SectionIcon>
+          {isModuleAvailable(MeetingModuleType.TIME_VOTING) && (
+            <SectionIcon section={MeetingDetailsSection.Time} label={'Time'}>
+              <BiCalendarEvent />
+            </SectionIcon>
+          )}
+          {isModuleAvailable(MeetingModuleType.PLACE_VOTING) && (
+            <SectionIcon section={MeetingDetailsSection.Place} label={'Place'}>
+              <BiWorld />
+            </SectionIcon>
+          )}
+          {isModuleAvailable(MeetingModuleType.SURVEY) && (
+            <SectionIcon section={MeetingDetailsSection.Survey} label={'Survey'}>
+              <FaRegClipboard />
+            </SectionIcon>
+          )}
+          {isModuleAvailable(MeetingModuleType.DECLARATIONS) && (
+            <SectionIcon section={MeetingDetailsSection.Declarations} label={'Declarations'}>
+              <RiPencilFill />
+            </SectionIcon>
+          )}
+          {isOrganizer && (
+            <SectionIcon section={MeetingDetailsSection.Settings} label={'Settings'}>
+              <FiSettings />
+            </SectionIcon>
+          )}
         </div>
       </Col>
     </Row>

@@ -213,7 +213,7 @@ const CreateMeeting = () => {
       if (survey.questions.length > 0) {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
-      if (!chosenMeetingType && selectedPlaces.length > 0) {
+      if (chosenMeetingType === MeetingType.REAL && selectedPlaces.length > 0) {
         savePlaces(selectedPlaces, meetingId.id, setSavePlacesResponse);
       }
       setSaveMeetingResponse({ ...saveMeetingResponse, isSuccess: false });

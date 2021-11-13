@@ -40,6 +40,8 @@ import MeetingDetailsSectionPlace from '../../components/MeetingDetails/MeetingD
 import MeetingDetailsSectionSurvey from '../../components/MeetingDetails/MeetingDetailsSectionSurvey/MeetingDetailsSectionSurvey';
 import MeetingDetailsSectionDeclarations from '../../components/MeetingDetails/MeetingDetailsSectionDeclarations/MeetingDetailsSectionDeclarations';
 import MeetingDetailsSectionSettings from '../../components/MeetingDetails/MeetingDetailsSectionSettings/MeetingDetailsSectionSettings';
+import { DeclarationDetails } from '../../model/declaration/Declaration';
+import { loadMeetingDeclarations } from '../../API/declarations/declarationsService';
 
 export enum MeetingDetailsSection {
   About,
@@ -60,11 +62,11 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
-  const [showSettings, setShowSettings] = useState<Boolean>(false);
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
+  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     onlyOrganizerCanInviteNewPeople: true,
   });
@@ -137,12 +139,19 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     // eslint-disable-next-line
   }, [survey]);
 
+  useEffect(() => {
+    if (id) {
+      loadMeetingDeclarations(id, setDeclarations, () => {});
+    }
+  }, [id]);
+
   return meeting ? (
     <Container fluid>
       <MeetingDetailsHeader
         meeting={meeting}
         chosenSection={chosenSection}
         onMeetingSectionChosen={(chosenSection) => setChosenSection(chosenSection)}
+        isOrganizer={isOrganizer}
       />
       {chosenSection === MeetingDetailsSection.About && (
         <MeetingDetailsSectionAbout
@@ -184,6 +193,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meeting={meeting}
           user={user}
           isOrganizer={isOrganizer}
+          declarations={declarations}
+          setDeclarations={setDeclarations}
         />
       )}
       {chosenSection === MeetingDetailsSection.Settings && (

@@ -77,7 +77,7 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
           )
         : attendees
     );
-  }, [searchTerm, attendees]);
+  }, [searchTerm]);
 
   return (
     <Card title={'About'}>
