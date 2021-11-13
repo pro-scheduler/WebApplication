@@ -123,7 +123,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, [meeting, user.id]);
 
   useEffect(() => {
-    reloadSurveySummary();
+    if (isOrganizer || meetingSettings.participantsCanSeeResults) {
+      reloadSurveySummary();
+    }
     // eslint-disable-next-line
   }, [survey]);
 
