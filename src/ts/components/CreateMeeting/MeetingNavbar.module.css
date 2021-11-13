@@ -23,6 +23,10 @@
     margin-left: 8px;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 .item {
     position: relative;
     margin-top: 10px;

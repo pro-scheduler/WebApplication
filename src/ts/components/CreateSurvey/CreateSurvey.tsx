@@ -8,16 +8,15 @@ import React, { useEffect, useState } from 'react';
 import TextArea from '../common/forms/TextArea/TextArea';
 import { SurveyWithQuestionsDTO } from '../../model/survey/Survey';
 import { Question } from '../../model/survey/Question';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
 import Card from '../common/Card/Card';
 
 export type CreateSurveyProps = {
-  state: creatingMeetingState;
+  visible: boolean;
   survey: SurveyWithQuestionsDTO;
   setSurvey: (newSurvey: SurveyWithQuestionsDTO) => void;
 };
 
-const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
+const CreateSurvey = ({ visible, survey, setSurvey }: CreateSurveyProps) => {
   const [questions, setQuestions] = useState<number[]>([]);
   const [questionId, setQuestionId] = useState(0);
 
@@ -50,11 +49,7 @@ const CreateSurvey = ({ state, survey, setSurvey }: CreateSurveyProps) => {
   }, []);
 
   return (
-    <div
-      className={
-        state !== 'survey' && (state !== 'summary' || questions.length === 0) ? styles.hidden : ''
-      }
-    >
+    <div className={visible ? '' : styles.hidden}>
       <Row className="justify-content-center mt-5">
         <Col lg={12} className="text-center">
           <SurveyIcon />

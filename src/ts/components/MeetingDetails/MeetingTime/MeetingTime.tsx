@@ -1,7 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
-import LineWithHeader from '../LineWithHeader';
 import UserTimePicker from '../../UserTimeGrid/UserTimePicker';
 import { useEffect, useState } from 'react';
 import useWindowDimensions from '../../common/window/WindowDimension';
@@ -13,7 +12,6 @@ import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import Timer from '../../common/Timer/Timer';
-import { Collapse } from 'react-collapse';
 import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
 import EditDeadline from './EditDeadline/EditDeadline';
 
@@ -55,7 +53,6 @@ const MeetingTime = ({
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
   const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
-  const [opened, setOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
   const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
@@ -169,80 +166,63 @@ const MeetingTime = ({
   }, [userRanges, setUserDefaultAnswers]);
 
   return (
-    <Row className="justify-content my-5">
-      <LineWithHeader
-        header={'When'}
-        iconAction={
-          isOrganizer && state === MeetingState.OPEN
-            ? () => {
-                setOpenedDeadlineEditing(!openedDeadlineEditing);
-              }
-            : undefined
-        }
-        collapseAction={setOpened}
-      />
+    <Row className="justify-content">
       <Col>
         <EditDeadline
-          isOpened={openedDeadlineEditing}
+          isOpened={true} //TODO: move to settings
           timeDeadline={timeDeadline}
           meetingId={meetingId}
           setDeadline={setNewDeadline}
         />
-        <Collapse isOpened={opened}>
-          <Col lg={12} className="text-center mx-auto">
-            <div className={styles.switchTime}>
-              <SwitchButton
-                onChange={() => setDisplayAnswers(!displayAnswers)}
-                checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+        <Col lg={12} className="text-center mx-auto">
+          <div className={styles.switchTime}>
+            <SwitchButton
+              onChange={() => setDisplayAnswers(!displayAnswers)}
+              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+            />
+          </div>
+          {!displayAnswers && state === MeetingState.OPEN && (
+            <div className="my-5">
+              <Timer
+                date={timeDeadline}
+                completedMessage={'Voting is ended'}
+                nonCompletedMessage={'Voting ends in:'}
+                noEndDateMessage={'Voting has no time limit'}
               />
             </div>
-            {!displayAnswers && state === MeetingState.OPEN && (
-              <div className="my-5">
-                <Timer
-                  date={timeDeadline}
-                  completedMessage={'Voting is ended'}
-                  nonCompletedMessage={'Voting ends in:'}
-                  noEndDateMessage={'Voting has no time limit'}
-                />
-              </div>
-            )}
-          </Col>
-          <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-            {!displayAnswers ? (
-              <UserTimePicker
-                disabled={deadlineExceeded}
-                availableRanges={availableRanges}
-                selectedRanges={userDefaultAnswers}
-                count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
-                setRanges={setRanges}
-                setPreferencesChanged={setPreferencesChanged}
-              />
-            ) : (
-              <AnswersTimePicker
-                availableRanges={availableRanges}
-                count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
-                setRanges={setRanges}
-                answers={userAnswers}
-                disabled={true}
-                numberOfParticipants={numberOfParticipants}
-              />
-            )}
-          </div>
-        </Collapse>
+          )}
+        </Col>
+        <div style={{ marginRight: width < 576 ? 45 : 0 }}>
+          {!displayAnswers ? (
+            <UserTimePicker
+              disabled={deadlineExceeded}
+              availableRanges={availableRanges}
+              selectedRanges={userDefaultAnswers}
+              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
+              setRanges={setRanges}
+              setPreferencesChanged={setPreferencesChanged}
+            />
+          ) : (
+            <AnswersTimePicker
+              availableRanges={availableRanges}
+              count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
+              setRanges={setRanges}
+              answers={userAnswers}
+              disabled={true}
+              numberOfParticipants={numberOfParticipants}
+            />
+          )}
+        </div>
       </Col>
       {!displayAnswers && !deadlineExceeded && state === MeetingState.OPEN && (
         <Col lg={12} className="text-center mx-auto">
-          <Collapse isOpened={opened}>
-            <ActionButton
-              text={
-                userRanges.length === 0 ? 'Save my time preferences' : 'Edit my time preferences'
-              }
-              onclick={saveTime}
-              className={styles.saveButton}
-              disabled={!preferencesChanged}
-            />
-          </Collapse>
+          <ActionButton
+            text={userRanges.length === 0 ? 'Save my time preferences' : 'Edit my time preferences'}
+            onclick={saveTime}
+            className={styles.saveButton}
+            disabled={!preferencesChanged}
+          />
         </Col>
       )}
     </Row>

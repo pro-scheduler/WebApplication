@@ -1,0 +1,13 @@
+.organizersContainer {
+    margin-top: 30px;
+}
+
+.organizersLabel {
+    font-weight: bold;
+}
+
+.organizersIconsContainer {
+    height: 34px;
+    margin-top: 10px;
+    position: relative;
+}

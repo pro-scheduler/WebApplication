@@ -14,6 +14,32 @@
     cursor: pointer;
 }
 
+.modulesContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-x: scroll;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+.modulesContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.modulesContainer > div {
+    display: flex;
+    flex-display: row;
+
+}
+
+.modulesContainer > div > div {
+    margin: 10px 10px 10px 20px;
+}
+
+.modulesContainer > div > div:first-child {
+    margin-left: 0;
+}
+
 @media only screen and (max-width: 600px) {
     .chooseModulesButton {
         width: 210px;

@@ -1,5 +1,6 @@
 import { TimeRangeDTO } from '../TimeRangeDTO';
 import { UserSummary } from '../user/ProUser';
+import { PlaceDetails } from '../geo/Geo';
 
 export enum MeetingType {
   ONLINE = 'ONLINE',
@@ -16,6 +17,13 @@ export enum MeetingState {
   CANCELLED = 'CANCELLED',
 }
 
+export enum MeetingModuleType {
+  TIME_VOTING = 'TIME_VOTING',
+  PLACE_VOTING = 'PLACE_VOTING',
+  SURVEY = 'SURVEY',
+  DECLARATIONS = 'DECLARATION',
+}
+
 export type CreateMeetingRequest = {
   name: string;
   description: string;
@@ -24,6 +32,7 @@ export type CreateMeetingRequest = {
   markTimeRangeDeadline: Date | undefined;
   link: string | undefined;
   password: string | undefined;
+  availableModules: MeetingModuleType[];
 };
 
 export type UpdateMeetingRequest = {
@@ -67,6 +76,7 @@ export type MeetingDetails = {
   state: MeetingState;
   markTimeRangeDeadline: string | undefined;
   finalDate: TimeRangeDTO;
+  availableModules: MeetingModuleType[];
 };
 
 export type MeetingSummary = {
@@ -102,7 +112,8 @@ export class OnlineMeetingDetails implements MeetingDetails {
     public type: MeetingType = MeetingType.ONLINE,
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
-    public finalDate: TimeRangeDTO
+    public finalDate: TimeRangeDTO,
+    public availableModules: MeetingModuleType[]
   ) {}
 }
 
@@ -117,7 +128,8 @@ export class RealMeetingDetails implements MeetingDetails {
     public state: MeetingState,
     public markTimeRangeDeadline: string | undefined,
     public finalDate: TimeRangeDTO,
-    public finalPlace: number
+    public finalPlace: PlaceDetails | undefined,
+    public availableModules: MeetingModuleType[]
   ) {}
 }
 

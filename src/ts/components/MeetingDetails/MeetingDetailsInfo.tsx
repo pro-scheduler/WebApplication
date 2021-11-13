@@ -15,7 +15,6 @@ import { useHistory, useLocation } from 'react-router';
 import {
   cancelMeeting,
   leaveMeeting,
-  updateFinalDate,
   updateMeetingNameAndDescription,
 } from '../../API/meeting/meetingService';
 import { MeetingState } from '../../model/meeting/Meeting';
@@ -75,33 +74,30 @@ const MeetingDetailsInfo = ({
   const history = useHistory();
 
   const updateDetails = () => {
-    if (name !== newName || description !== newDescription) {
+    if (
+      name !== newName ||
+      description !== newDescription ||
+      (newBeginDate &&
+        newEndDate &&
+        (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate))
+    ) {
       updateMeetingNameAndDescription(
         newName,
         newDescription,
+        newBeginDate && newEndDate
+          ? {
+              timeStart: newBeginDate,
+              timeEnd: newEndDate,
+            }
+          : null,
         meetingId,
         () => {},
         () => {
           setName(newName);
           setDescription(newDescription);
           refreshNameAndDescription(newName, newDescription);
+          refreshMeeting();
         }
-      );
-    }
-    if (
-      newBeginDate &&
-      newEndDate &&
-      (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate)
-    ) {
-      updateFinalDate(
-        {
-          timeStart: newBeginDate,
-          timeEnd: newEndDate,
-        },
-        meetingId,
-        () => {},
-        () => {},
-        refreshMeeting
       );
     }
   };

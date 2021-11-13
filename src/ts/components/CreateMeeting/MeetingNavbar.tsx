@@ -3,18 +3,12 @@ import styles from './MeetingNavbar.module.css';
 import cx from 'classnames';
 import Row from 'react-bootstrap/Row';
 import React, { MouseEventHandler } from 'react';
-import { creatingMeetingState } from '../../views/CreateMeeting/CreateMeeting';
+import { MeetingConfigurationSection } from '../../views/CreateMeeting/CreateMeeting';
 import { TiTick } from 'react-icons/ti';
 import LeftArrowButton from '../common/NextButton/LeftArrowButton';
 import RightArrowButton from '../common/NextButton/RightArrowButton';
 
 export type MeetingNavbarProps = {
-  state: creatingMeetingState;
-  setState: (state: creatingMeetingState) => void;
-  disabledSummary: boolean;
-  surveyModule?: boolean;
-  timeModule?: boolean;
-  placeModule?: boolean;
   nameFilled: boolean;
   participantsFilled: boolean;
   surveyFilled: boolean;
@@ -22,15 +16,12 @@ export type MeetingNavbarProps = {
   placeFilled: boolean;
   onRightClick: MouseEventHandler;
   onLeftClick: MouseEventHandler;
+  availableSections: MeetingConfigurationSection[];
+  currentSection: MeetingConfigurationSection;
+  onSectionChosen: (section: MeetingConfigurationSection) => void;
 };
 
 const MeetingNavbar = ({
-  state,
-  setState,
-  disabledSummary,
-  surveyModule = true,
-  timeModule = true,
-  placeModule = true,
   nameFilled,
   participantsFilled,
   surveyFilled,
@@ -38,108 +29,101 @@ const MeetingNavbar = ({
   placeFilled,
   onRightClick,
   onLeftClick,
+  availableSections,
+  currentSection,
+  onSectionChosen,
 }: MeetingNavbarProps) => {
+  const isSectionAvailable = (section: MeetingConfigurationSection) =>
+    availableSections.includes(section);
+  const isSectionChosen = (section: MeetingConfigurationSection) => section === currentSection;
+
+  type SectionViewProps = {
+    section: MeetingConfigurationSection;
+    sectionName: string;
+    filledRequirement?: boolean;
+  };
+
+  const SectionView = ({ section, sectionName, filledRequirement = false }: SectionViewProps) => (
+    <li className={cx(styles.item, isSectionChosen(section) && styles.chosenItem)}>
+      <button className={styles.itemButton} onClick={() => onSectionChosen(section)}>
+        <div
+          className={cx(
+            styles.itemContainer,
+            isSectionChosen(section) && styles.chosenItemContainer
+          )}
+        >
+          {sectionName}
+          {filledRequirement && <TiTick className={styles.filledIcon} />}
+        </div>
+      </button>
+    </li>
+  );
+
   return (
     <Row className="justify-content-center mt-5">
       <Col xs="auto">
         <div className={styles.navbarContainer}>
-          {state !== 'name' && (
-            <LeftArrowButton onclick={onLeftClick} className={styles.leftArrow} disabled={false} />
-          )}
+          <LeftArrowButton
+            onclick={onLeftClick}
+            className={cx(
+              styles.leftArrow,
+              isSectionChosen(MeetingConfigurationSection.ABOUT) && styles.invisible
+            )}
+            disabled={false}
+          />
           <div className={styles.wrapper}>
             <ul className={styles.items}>
-              <li className={cx(styles.item, state === 'name' && styles.chosenItem)}>
-                <button className={styles.itemButton} onClick={() => setState('name')}>
-                  <div
-                    className={cx(
-                      styles.itemContainer,
-                      state === 'name' && styles.chosenItemContainer
-                    )}
-                  >
-                    General
-                    {nameFilled && <TiTick className={styles.filledIcon} />}
-                  </div>
-                </button>
-              </li>
-              <li className={cx(styles.item, state === 'invitations' && styles.chosenItem)}>
-                <button className={styles.itemButton} onClick={() => setState('invitations')}>
-                  <div
-                    className={cx(
-                      styles.itemContainer,
-                      state === 'invitations' && styles.chosenItemContainer
-                    )}
-                  >
-                    Participants
-                    {participantsFilled && <TiTick className={styles.filledIcon} />}
-                  </div>
-                </button>
-              </li>
-              {timeModule && (
-                <li className={cx(styles.item, state === 'time' && styles.chosenItem)}>
-                  <button className={styles.itemButton} onClick={() => setState('time')}>
-                    <div
-                      className={cx(
-                        styles.itemContainer,
-                        state === 'time' && styles.chosenItemContainer
-                      )}
-                    >
-                      Time
-                      {timeFilled && <TiTick className={styles.filledIcon} />}
-                    </div>
-                  </button>
-                </li>
+              {isSectionAvailable(MeetingConfigurationSection.ABOUT) && (
+                <SectionView
+                  section={MeetingConfigurationSection.ABOUT}
+                  sectionName={'General'}
+                  filledRequirement={nameFilled}
+                />
               )}
-              {placeModule && (
-                <li className={cx(styles.item, state === 'place' && styles.chosenItem)}>
-                  <button className={styles.itemButton} onClick={() => setState('place')}>
-                    <div
-                      className={cx(
-                        styles.itemContainer,
-                        state === 'place' && styles.chosenItemContainer
-                      )}
-                    >
-                      Place
-                      {placeFilled && <TiTick className={styles.filledIcon} />}
-                    </div>
-                  </button>
-                </li>
+              {isSectionAvailable(MeetingConfigurationSection.INVITATIONS) && (
+                <SectionView
+                  section={MeetingConfigurationSection.INVITATIONS}
+                  sectionName={'Participants'}
+                  filledRequirement={participantsFilled}
+                />
               )}
-              {surveyModule && (
-                <li className={cx(styles.item, state === 'survey' && styles.chosenItem)}>
-                  <button className={styles.itemButton} onClick={() => setState('survey')}>
-                    <div
-                      className={cx(
-                        styles.itemContainer,
-                        state === 'survey' && styles.chosenItemContainer
-                      )}
-                    >
-                      Survey
-                      {surveyFilled && <TiTick className={styles.filledIcon} />}
-                    </div>
-                  </button>
-                </li>
+              {isSectionAvailable(MeetingConfigurationSection.TIME) && (
+                <SectionView
+                  section={MeetingConfigurationSection.TIME}
+                  sectionName={'Time'}
+                  filledRequirement={timeFilled}
+                />
               )}
-              <li className={cx(styles.item, state === 'summary' && styles.chosenItem)}>
-                <button
-                  className={cx(
-                    styles.itemButton,
-                    state === 'summary' && styles.chosenItemContainer
-                  )}
-                  onClick={() => setState('summary')}
-                  disabled={disabledSummary}
-                >
-                  Summary
-                </button>
-              </li>
+              {isSectionAvailable(MeetingConfigurationSection.PLACE) && (
+                <SectionView
+                  section={MeetingConfigurationSection.PLACE}
+                  sectionName={'Place'}
+                  filledRequirement={placeFilled}
+                />
+              )}
+              {isSectionAvailable(MeetingConfigurationSection.SURVEY) && (
+                <SectionView
+                  section={MeetingConfigurationSection.SURVEY}
+                  sectionName={'Survey'}
+                  filledRequirement={surveyFilled}
+                />
+              )}
+              {isSectionAvailable(MeetingConfigurationSection.SUMMARY) && (
+                <SectionView
+                  section={MeetingConfigurationSection.SUMMARY}
+                  sectionName={'Summary'}
+                />
+              )}
             </ul>
           </div>
-          {state !== 'summary' && (
-            <RightArrowButton
-              onclick={onRightClick}
-              className={styles.rightArrow}
-              disabled={false}
-            />
-          )}
+          <RightArrowButton
+            onclick={onRightClick}
+            className={cx(
+              styles.rightArrow,
+              isSectionChosen(MeetingConfigurationSection.SUMMARY) && styles.invisible
+            )}
+            disabled={false}
+          />
         </div>
       </Col>
     </Row>

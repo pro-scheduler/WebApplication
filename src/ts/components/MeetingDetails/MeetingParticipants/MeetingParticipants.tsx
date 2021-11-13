@@ -227,7 +227,7 @@ const MeetingParticipants = ({
         onClose={() => setAddModalShow(false)}
       >
         <CreateInvitations
-          state={'invitations'}
+          visible={true}
           showIcon={false}
           emails={emails}
           setEmails={setEmails}

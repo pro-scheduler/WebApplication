@@ -8,12 +8,11 @@ import SearchGeocoder from '../../common/Map/SearchGeocoder/SearchGeocoder';
 import styles from './ChoosePlace.module.css';
 import PlacesTable from './PlacesTable/PlacesTable';
 export type ChoosePlaceProps = {
-  isOnlineMeeting: boolean;
-  state: string;
+  visible: boolean;
   setSelectedPlaces: Function;
 };
 
-const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceProps) => {
+const ChoosePlace = ({ visible, setSelectedPlaces }: ChoosePlaceProps) => {
   const [newPlaces, setNewPlaces] = useState<PlaceDetails[]>([]);
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [searchPropositionPlace, setSearchPropositionPlace] = useState<PlaceDetails>({
@@ -31,11 +30,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
 
   return (
     <>
-      <div
-        hidden={
-          isOnlineMeeting || (state !== 'place' && (state !== 'summary' || newPlaces.length === 0))
-        }
-      >
+      <div hidden={!visible}>
         <Row className="justify-content-center mt-5">
           <Col lg={12} className="text-center">
             <MapIcon />
@@ -44,7 +39,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
         <Row className="justify-content-center mt-4">
           <div className={styles.createHeader}>Select possible meeting places</div>
         </Row>
-        <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
+        <Row className="justify-content-center mt-4">
           <div className={styles.searchContainer}>
             <SearchGeocoder
               setSelectedPlace={(newPlace: PlaceDTO) => {
@@ -83,7 +78,7 @@ const ChoosePlace = ({ isOnlineMeeting, state, setSelectedPlaces }: ChoosePlaceP
             </div>
           </Col>
         </Row>
-        <Row className="justify-content-center mt-4" hidden={state === 'summary'}>
+        <Row className="justify-content-center mt-4">
           <Col>
             <PlacesTable
               places={newPlaces}

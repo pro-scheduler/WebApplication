@@ -1,25 +1,19 @@
 .searchContainer {
   align-self: center;
+  position: relative;
+}
+
+.searchContainer > div {
+  left: 50%;
+  transform: translateX(-50%);
   position: absolute;
   z-index: 1;
-  top: 380px;
 }
+
 .createHeader {
   font-size: var(--s-font-size);
 }
 .mapContainer {
   z-index: -1;
   margin-top: 40px;
-}
-
-@media only screen and (max-width: 980px) {
-  .searchContainer {
-    top: 435px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .searchContainer {
-    top: 460px;
-  }
 }
