@@ -12,6 +12,7 @@ export type MeetingDetailsSectionTimeProps = {
   isOrganizer: boolean;
   user: UserSummary;
   onMeetingChange: MeetingChangeFunction;
+  canSeeVotingResults: boolean;
 };
 
 const MeetingDetailsSectionTime = ({
@@ -19,6 +20,7 @@ const MeetingDetailsSectionTime = ({
   isOrganizer,
   user,
   onMeetingChange,
+  canSeeVotingResults,
 }: MeetingDetailsSectionTimeProps) => {
   const [userAttendeeId, setUserAttendeeId] = useState<number>(0);
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
@@ -55,11 +57,13 @@ const MeetingDetailsSectionTime = ({
   useEffect(() => {
     if (meeting && meeting.availableTimeRanges && user.id) {
       setAllUsersAnswers(
-        meeting.attendees.flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
+        meeting.attendees
+          .flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
+          .filter((value: TimeRangeDTO | null) => value !== null)
       );
-      setUserTimeAnswers(
-        meeting.attendees.find((a: any) => a.user.id === user.id)?.markedTimeRanges
-      );
+      const userAnswers = meeting.attendees.find((a: any) => a.user.id === user.id)
+        ?.markedTimeRanges;
+      setUserTimeAnswers(userAnswers ? userAnswers : []);
     }
     // eslint-disable-next-line
   }, [meeting]);
@@ -79,6 +83,7 @@ const MeetingDetailsSectionTime = ({
           isOrganizer={isOrganizer}
           state={meeting.state}
           setNewDeadline={setMarkTimeRangeDeadline}
+          canSeeVotingResults={canSeeVotingResults}
         />
       </Col>
     </Row>

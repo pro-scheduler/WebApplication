@@ -70,7 +70,7 @@ const MeetingDetailsSectionAbout = ({
             refreshParticipants={onMeetingChange}
             participants={meeting.attendees}
             state={meeting.state}
-            everybodyCanInvite={!meetingSettings.onlyOrganizerCanInviteNewPeople}
+            everybodyCanInvite={meetingSettings.participantsCanInvitePeople}
           />
         </Col>
       </Row>

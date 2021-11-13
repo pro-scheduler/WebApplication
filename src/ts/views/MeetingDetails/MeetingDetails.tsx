@@ -58,7 +58,8 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
-    onlyOrganizerCanInviteNewPeople: true,
+    participantsCanInvitePeople: false,
+    participantsCanSeeResults: false,
   });
   const [chosenSection, setChosenSection] = useState<MeetingDetailsSection>(
     MeetingDetailsSection.About
@@ -154,6 +155,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           isOrganizer={isOrganizer}
           user={user}
           onMeetingChange={(updatedMeeting) => setMeeting(updatedMeeting)}
+          canSeeVotingResults={isOrganizer || meetingSettings.participantsCanSeeResults}
         />
       )}
       {chosenSection === MeetingDetailsSection.Place && (

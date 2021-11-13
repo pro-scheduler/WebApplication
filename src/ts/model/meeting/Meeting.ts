@@ -160,5 +160,6 @@ export type SharedMeetingDetails = {
 };
 
 export type MeetingSettings = {
-  onlyOrganizerCanInviteNewPeople: boolean;
+  participantsCanInvitePeople: boolean;
+  participantsCanSeeResults: boolean;
 };

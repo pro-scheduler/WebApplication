@@ -222,30 +222,21 @@ export const saveMeetingSettings = (
   newSettings: MeetingSettings,
   onSuccess?: Function,
   setResponse?: Function
-) => {
-  if (onSuccess) onSuccess();
-  return; // TODO connect with backend
-  // eslint-disable-next-line
-  put(
+) =>
+  post(
     newSettings,
     getMeetingSettingsUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully changed general settings.',
+    'You have successfully modified general meeting settings',
     onSuccess
   );
-};
 export const getMeetingSettings = (
   meetingId: number,
   setSettings: Function,
   setResponse?: Function
-) => {
-  setSettings({ onlyOrganizerCanInviteNewPeople: false });
-  return; // TODO connect with backend
-  // eslint-disable-next-line
-  get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
-};
+) => get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
 
 export const deleteMeeting = (
   meetingId: number,
