@@ -157,7 +157,7 @@ const CreateMeeting = () => {
     );
   };
 
-  // eslint-disable-next-line
+  // eslint-disable
   const toAvailableMeetingConfigurationSections = (chosenModules: MeetingModuleType[]) => {
     const availableSections: MeetingConfigurationSection[] = ([] as MeetingConfigurationSection[]).concat(
       DEFAULT_AVAILABLE_SECTIONS
