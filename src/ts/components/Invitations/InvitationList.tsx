@@ -6,7 +6,7 @@ import { acceptInvitation, rejectInvitation } from '../../API/invitation/invitat
 import DeleteButton from '../common/SubmitButton/ActionButton/DeleteButton';
 import YesButton from '../common/SubmitButton/ActionButton/YesButton';
 import SearchBox from '../common/forms/Input/SearchBox';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserNameIcon from '../common/Icons/UserNameIcon';
 
 export type InvitationListProps = {
@@ -68,10 +68,11 @@ const InvitationList = ({ invitations, refreshInvitations }: InvitationListProps
           </Table>
         </div>
       ) : (
-        <div>You don't have any invitations</div>
+        <div className="text-center mt-3">
+          <div>You don't have any invitations</div>
+        </div>
       )}
     </Card>
   );
 };
-
 export default InvitationList;

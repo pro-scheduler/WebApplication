@@ -38,6 +38,7 @@ export type MeetingParticipantsProps = {
   refreshParticipants: Function;
   participants: MeetingAttendeeDetails[];
   state: MeetingState;
+  currentUserId: number;
 };
 
 const MeetingParticipants = ({
@@ -47,6 +48,7 @@ const MeetingParticipants = ({
   participants,
   state,
   everybodyCanInvite,
+  currentUserId,
 }: MeetingParticipantsProps) => {
   const [emails, setEmails] = useState<ValueLabelPair[]>([]);
   const [invitationMessage, setInvitationMessage] = useState<string>('');
@@ -141,7 +143,7 @@ const MeetingParticipants = ({
           <div className={styles.userNameIcon}>
             <UserNameIcon user={participant.user} email={participant.user.username} />
           </div>
-          {isOrganizer && state === MeetingState.OPEN && (
+          {isOrganizer && state === MeetingState.OPEN && currentUserId !== participant.user.id && (
             <div className={styles.deleteContainer}>
               <DeleteButton onDelete={() => deleteParticipant(participant.attendeeId)} />
             </div>
@@ -183,7 +185,7 @@ const MeetingParticipants = ({
           : undefined
       }
       footer={
-        isOrganizer || everybodyCanInvite ? (
+        (isOrganizer || everybodyCanInvite) && state === MeetingState.OPEN ? (
           <div className={styles.actionButtonContainer}>
             <ActionButton
               onclick={generateInvitationLink}

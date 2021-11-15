@@ -45,7 +45,7 @@ const ChooseModules = ({
                 header={'Time Voting'}
                 icon={<CalendarIcon />}
                 description={
-                  'The time module allows you to select the possible time slots for the meeting which other participants can vote for'
+                  'The time module allows you to select the possible time slots for the meeting which other participants can vote for.'
                 }
                 onClick={() => onModuleChosen(MeetingModuleType.TIME_VOTING)}
                 chosen={isModuleChosen(MeetingModuleType.TIME_VOTING)}
@@ -55,7 +55,7 @@ const ChooseModules = ({
               <MeetingModule
                 header={'Place Voting'}
                 icon={<LocationIcon />}
-                description={'The place module allows you to create voting for final place'}
+                description={'The place module allows you to create voting for final place.'}
                 onClick={() => onModuleChosen(MeetingModuleType.PLACE_VOTING)}
                 chosen={isModuleChosen(MeetingModuleType.PLACE_VOTING)}
               />

@@ -61,8 +61,8 @@ const MeetingDetailsSectionTime = ({
           .flatMap((a: MeetingAttendeeDetails) => a.markedTimeRanges)
           .filter((value: TimeRangeDTO | null) => value !== null)
       );
-      const user = meeting.attendees.find((a: any) => a.user.id === user.id);
-      setUserTimeAnswers(user?.markedTimeRanges ? user?.markedTimeRanges : []);
+      const currentUser = meeting.attendees.find((a: any) => a.user.id === user.id);
+      setUserTimeAnswers(currentUser?.markedTimeRanges ? currentUser?.markedTimeRanges : []);
     }
     // eslint-disable-next-line
   }, [meeting]);
