@@ -236,7 +236,7 @@ export const getMeetingSettings = (
   meetingId: number,
   setSettings: Function,
   setResponse?: Function
-) => get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
+) => get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, false);
 
 export const deleteMeeting = (
   meetingId: number,

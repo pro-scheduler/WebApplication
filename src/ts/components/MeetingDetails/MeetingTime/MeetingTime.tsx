@@ -58,7 +58,7 @@ const MeetingTime = ({
   const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
+  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
