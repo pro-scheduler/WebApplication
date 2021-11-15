@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import styles from './MeetingDetailsSectionSettings.module.css';
 import { MeetingDetails } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingSettings from '../MeetingSettings/MeetingSettings';

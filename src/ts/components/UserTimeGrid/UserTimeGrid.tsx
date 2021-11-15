@@ -41,6 +41,14 @@ const UserTimeGrid = ({
   const [calculatedLockedRanges, setCalculatedLockedRanges] = useState<Array<JSX.Element>>([]);
   const [mappedLocked, setMappedLocked] = useState<Array<{ top: number; bottom: number }>>([]);
   const step = 3;
+
+  useEffect(() => {
+    if (Object.keys(rangesParams).length === 0 && Object.keys(userRanges).length !== 0) {
+      setRangesParams(userRanges);
+    }
+    // eslint-disable-next-line
+  }, [userRanges]);
+
   const changeParams = (id: number, top: number, height: number) => {
     let tmp = { ...rangesParams };
     tmp[id.toString()] = { top, height, id };

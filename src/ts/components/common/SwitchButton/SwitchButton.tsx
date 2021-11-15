@@ -1,6 +1,4 @@
-import React from 'react';
 import Switch from 'react-switch';
-
 import { useState } from 'react';
 import cx from 'classnames';
 import styles from './SwitchButton.module.css';
@@ -14,6 +12,7 @@ export type SwitchButtonProps = {
   unCheckedIcon?: JSX.Element;
   width?: number;
   height?: number;
+  labels?: [string, string];
 };
 
 const SwitchButton = ({
@@ -23,8 +22,7 @@ const SwitchButton = ({
   defaultValue = true,
   checkedIcon,
   unCheckedIcon,
-  width,
-  height,
+  labels = ['', ''],
 }: SwitchButtonProps) => {
   const [checked, setChecked] = useState(defaultValue);
 
@@ -36,7 +34,7 @@ const SwitchButton = ({
   const buttonStyles = cx(styles.button, className);
 
   return (
-    <>
+    <div className={styles.switchContainer}>
       <p>{title}</p>
       <Switch
         className={buttonStyles}
@@ -47,10 +45,9 @@ const SwitchButton = ({
         checkedIcon={checkedIcon}
         uncheckedIcon={unCheckedIcon}
         activeBoxShadow={'0 0 2px 3px #7067CF'}
-        width={width}
-        height={height}
       />
-    </>
+      <div className={styles.label}>{checked ? labels[0] : labels[1]}</div>
+    </div>
   );
 };
 

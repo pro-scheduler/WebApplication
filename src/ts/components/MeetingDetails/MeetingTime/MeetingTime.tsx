@@ -54,10 +54,11 @@ const MeetingTime = ({
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
+  // eslint-disable-next-line
   const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(true);
+  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
@@ -179,14 +180,16 @@ const MeetingTime = ({
           />
         )}
         <Col lg={12} className="text-center mx-auto">
-          {/* TODO remove switch if !canSeeVotingResults and fixed loading user answers*/}
-          <div className={styles.switchTime}>
-            <SwitchButton
-              onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-            />
-          </div>
+          {canSeeVotingResults && (
+            <div className={styles.switchTime}>
+              <SwitchButton
+                onChange={() => setDisplayAnswers(!displayAnswers)}
+                checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+                unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                labels={['show others votes', 'show your votes']}
+              />
+            </div>
+          )}
           {!displayAnswers && state === MeetingState.OPEN && (
             <div className="my-5">
               <Timer
