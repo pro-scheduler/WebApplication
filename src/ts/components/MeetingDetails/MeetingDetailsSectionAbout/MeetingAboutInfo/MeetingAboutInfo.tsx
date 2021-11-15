@@ -78,6 +78,7 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
           )
         : attendees
     );
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (

@@ -42,6 +42,7 @@ const MeetingSurvey = ({
   });
   const [questions, setQuestions] = useState<Question[]>();
   // TODO add button to edit survey
+  // eslint-disable-next-line
   const [editSurveyMode, setEditSurveyMode] = useState<boolean>(false);
   const [questionsToAdd, setQuestionsToAdd] = useState<Question[]>([]);
 
@@ -105,6 +106,7 @@ const MeetingSurvey = ({
                   onChange={() => setDisplayQuestions(!displayQuestions)}
                   checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
                   unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+                  labels={['show your questions', 'show others answers']}
                 />
               </div>
             )}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import styles from './MeetingDetailsSectionTime.module.css';
 import { MeetingAttendeeDetails } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingTime from '../MeetingTime/MeetingTime';

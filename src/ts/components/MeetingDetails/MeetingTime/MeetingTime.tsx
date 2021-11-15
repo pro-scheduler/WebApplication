@@ -54,6 +54,7 @@ const MeetingTime = ({
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
+  // eslint-disable-next-line
   const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
   // eslint-disable-next-line
   const { height, width } = useWindowDimensions();
@@ -183,8 +184,9 @@ const MeetingTime = ({
           <div className={styles.switchTime}>
             <SwitchButton
               onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-              unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
+              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+              labels={['show your votes', 'show how others voted']}
             />
           </div>
           {!displayAnswers && state === MeetingState.OPEN && (

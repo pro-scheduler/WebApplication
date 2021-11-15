@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import styles from './MeetingDetailsSectionSurvey.module.css';
 import { MeetingDetails } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingSurvey from '../MeetingSurvey/MeetingSurvey';
