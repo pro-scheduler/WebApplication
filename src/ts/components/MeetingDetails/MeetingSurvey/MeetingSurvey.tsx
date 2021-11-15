@@ -104,9 +104,9 @@ const MeetingSurvey = ({
               <div className={styles.switchTime}>
                 <SwitchButton
                   onChange={() => setDisplayQuestions(!displayQuestions)}
-                  checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                  unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-                  labels={['show your questions', 'show others answers']}
+                  checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+                  unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                  labels={['show others answers', 'show your answers']}
                 />
               </div>
             )}

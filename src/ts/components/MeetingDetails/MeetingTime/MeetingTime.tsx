@@ -180,15 +180,16 @@ const MeetingTime = ({
           />
         )}
         <Col lg={12} className="text-center mx-auto">
-          {/* TODO remove switch if !canSeeVotingResults and fixed loading user answers*/}
-          <div className={styles.switchTime}>
-            <SwitchButton
-              onChange={() => setDisplayAnswers(!displayAnswers)}
-              checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-              unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-              labels={['show your votes', 'show how others voted']}
-            />
-          </div>
+          {canSeeVotingResults && (
+            <div className={styles.switchTime}>
+              <SwitchButton
+                onChange={() => setDisplayAnswers(!displayAnswers)}
+                checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+                unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                labels={['show others votes', 'show your votes']}
+              />
+            </div>
+          )}
           {!displayAnswers && state === MeetingState.OPEN && (
             <div className="my-5">
               <Timer
