@@ -2,6 +2,7 @@ import {
   MeetingAttendeeDetails,
   MeetingDetails,
   MeetingRole,
+  MeetingState,
 } from '../../../../model/meeting/Meeting';
 import Card from '../../../common/Card/Card';
 import styles from './MeetingAboutInfo.module.css';
@@ -86,7 +87,7 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
         <span className={styles.organizersLabel}>Organizers:</span>
         <div className={styles.organizersIconsContainer}>
           {organizersIcons}
-          {isOrganizer && (
+          {isOrganizer && meeting.state === MeetingState.OPEN && (
             <div
               className={styles.buttonContainer}
               style={{ left: organizers.length * 25, position: 'absolute' }}

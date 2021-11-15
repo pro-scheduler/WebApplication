@@ -26,8 +26,8 @@ import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalend
 import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
 
 export type MeetingDetailsInfoProps = {
-  hasSurvey: boolean;
-  declarationsNumber: number;
+  surveyModule: boolean;
+  declarationsModule: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
   name: string;
@@ -44,8 +44,8 @@ export type MeetingDetailsInfoProps = {
 };
 
 const MeetingDetailsInfo = ({
-  declarationsNumber,
-  hasSurvey,
+  declarationsModule,
+  surveyModule,
   meetingLink,
   meetingPassword,
   name,
@@ -241,15 +241,11 @@ const MeetingDetailsInfo = ({
           </p>
           <p className={styles.moduleContainer}>
             <FaRegClipboard className={styles.moduleIcon} />{' '}
-            {hasSurvey ? 'Survey available' : 'Survey not available'}
+            {surveyModule ? 'Survey available' : 'Survey not available'}
           </p>
           <p className={styles.moduleContainer}>
             <BsPencil className={styles.moduleIcon} />{' '}
-            {declarationsNumber > 0
-              ? declarationsNumber +
-                (declarationsNumber === 1 ? ' declaration' : ' declarations') +
-                ' available'
-              : 'No declarations available'}
+            {declarationsModule ? 'Declarations available' : 'Declarations not available'}
           </p>
         </div>
       ) : (

@@ -32,7 +32,7 @@ import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
 import {
   CreateInvitationsResponse,
   FailedInvitationDetails,
-  InvitationDetails,
+  InvitationDetails
 } from '../../model/invitation/Invitation';
 import { toastError, toastSuccess } from '../../tools/messagesInvocator';
 
@@ -172,7 +172,7 @@ const CreateMeeting = () => {
       availableSections.push(MeetingConfigurationSection.TIME);
     }
 
-    if (chosenModules.includes(MeetingModuleType.PLACE_VOTING)) {
+    if (chosenModules.includes(MeetingModuleType.PLACE_VOTING) || chosenMeetingType === MeetingType.ONLINE) {
       availableSections.push(MeetingConfigurationSection.PLACE);
     }
 

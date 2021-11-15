@@ -149,6 +149,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           isOrganizer={isOrganizer}
           meetingSettings={meetingSettings}
           onMeetingChange={() => reloadMeeting()}
+          currentUserId={user.id}
         />
       )}
       {chosenSection === MeetingDetailsSection.Time && meeting?.availableTimeRanges.length > 0 && (
