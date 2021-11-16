@@ -216,8 +216,7 @@ const MeetingDetailsInfo = ({
                   <>
                     <RiLockPasswordFill
                       className={cx(styles.moduleIcon, styles.passwordIcon)}
-                      onMouseEnter={() => setShowPassword(true)}
-                      onMouseLeave={() => setShowPassword(false)}
+                      onClick={() => setShowPassword(!showPassword)}
                     />
                     {showPassword && meetingPassword}
                   </>
