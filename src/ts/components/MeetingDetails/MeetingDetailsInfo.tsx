@@ -146,11 +146,7 @@ const MeetingDetailsInfo = ({
       }
       footer={
         state === MeetingState.OPEN ? (
-          <div
-            className={
-              showGoogleCalendar ? styles.flexButtonsContainer : styles.blockButtonsContainer
-            }
-          >
+          <div className={styles.flexButtonsContainer}>
             {showGoogleCalendar && (
               <GoogleButton
                 redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
@@ -162,19 +158,18 @@ const MeetingDetailsInfo = ({
                 className={styles.googleCalendarButton}
               />
             )}
-            {isOrganizer ? (
+            <div>
+              <ActionButton
+                onclick={() => setLeaveMeetingModal(true)}
+                text={'Leave the meeting'}
+                className={styles.actionButton}
+              />
+            </div>
+            {isOrganizer && (
               <div>
                 <ActionButton
                   onclick={() => setCancelMeetingModal(true)}
                   text={'Cancel the meeting'}
-                  className={styles.actionButton}
-                />
-              </div>
-            ) : (
-              <div>
-                <ActionButton
-                  onclick={() => setLeaveMeetingModal(true)}
-                  text={'Leave the meeting'}
                   className={styles.actionButton}
                 />
               </div>

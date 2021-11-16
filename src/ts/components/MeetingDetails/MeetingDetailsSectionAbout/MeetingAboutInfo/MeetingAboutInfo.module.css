@@ -11,3 +11,18 @@
     margin-top: 10px;
     position: relative;
 }
+
+.attendeeContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.buttonContainer {
+    color: var(--medium-grey);
+}
+
+.attendeesIcons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

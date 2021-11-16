@@ -45,11 +45,8 @@
 .flexButtonsContainer {
     display: flex;
     justify-items: flex-end;
+    justify-content: flex-end;
     gap: 10px;
-}
-
-.blockButtonsContainer {
-    text-align: right;
 }
 
 .actionButton {
@@ -68,13 +65,13 @@
     padding-right: 12px;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1500px) {
     .flexButtonsContainer {
         display: block;
         text-align: right;
     }
 
-    .googleCalendarButtonContainer {
-        margin-bottom: 10px;
+    .actionButton {
+        margin-top: 10px;
     }
 }
