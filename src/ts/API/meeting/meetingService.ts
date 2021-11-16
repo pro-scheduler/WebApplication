@@ -116,7 +116,6 @@ export const cancelMeeting = (
 export const updateMeetingNameAndDescription = (
   name: string,
   description: string,
-  finalDate: TimeRangeDTO | null,
   meetingId: number,
   setResponse?: Function,
   onSuccess?: Function
@@ -125,13 +124,12 @@ export const updateMeetingNameAndDescription = (
     {
       name: name,
       description: description,
-      finalDate: finalDate,
     },
     getMeetingUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully updated meeting details',
+    'You have successfully updated meeting name and description',
     onSuccess
   );
 

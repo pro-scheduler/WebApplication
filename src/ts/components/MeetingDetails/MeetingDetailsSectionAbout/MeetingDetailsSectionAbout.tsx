@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   MeetingDetails,
   MeetingModuleType,
@@ -26,14 +25,6 @@ const MeetingDetailsSectionAbout = ({
   onMeetingChange,
   currentUserId,
 }: MeetingDetailsSectionAboutProps) => {
-  const [meetingName, setMeetingName] = useState<string>(meeting.name);
-  const [meetingDescription, setMeetingDescription] = useState<string>(meeting.description);
-  const setMeetingNameAndDescription = (name: string, description: string) => {
-    setMeetingName(name);
-    setMeetingDescription(description);
-    onMeetingChange();
-  };
-
   return (
     <>
       <Row className="justify-content">
@@ -52,13 +43,10 @@ const MeetingDetailsSectionAbout = ({
             meetingLink={(meeting as OnlineMeetingDetails)?.link}
             meetingPassword={(meeting as OnlineMeetingDetails)?.password}
             finalPlace={(meeting as RealMeetingDetails)?.finalPlace?.name}
-            name={meetingName}
-            description={meetingDescription}
             isOrganizer={isOrganizer}
             meetingId={meeting.id}
             state={meeting.state}
             refreshMeeting={onMeetingChange}
-            refreshNameAndDescription={setMeetingNameAndDescription}
             finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
             finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
             declarationsModule={meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)}

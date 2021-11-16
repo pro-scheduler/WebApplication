@@ -6,17 +6,10 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
 import { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { maxSings, minSings, required } from '../../tools/validator';
-import SingleValueInput from '../common/forms/Input/SingleValueInput';
-import TextArea from '../common/forms/TextArea/TextArea';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory, useLocation } from 'react-router';
-import {
-  cancelMeeting,
-  leaveMeeting,
-  updateMeetingNameAndDescription,
-} from '../../API/meeting/meetingService';
+import { cancelMeeting, leaveMeeting, updateFinalDate } from '../../API/meeting/meetingService';
 import { MeetingState } from '../../model/meeting/Meeting';
 import FinalDateForm from './FinalDateForm/FinalDateForm';
 import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
@@ -30,13 +23,10 @@ export type MeetingDetailsInfoProps = {
   declarationsModule: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
-  name: string;
-  description: string;
   isOrganizer: boolean;
   meetingId: number;
   state: MeetingState;
   refreshMeeting: Function;
-  refreshNameAndDescription: Function;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
   finalPlace?: string;
@@ -48,25 +38,19 @@ const MeetingDetailsInfo = ({
   surveyModule,
   meetingLink,
   meetingPassword,
-  name,
-  description,
   isOrganizer,
   meetingId,
   state,
   refreshMeeting,
-  refreshNameAndDescription,
   finalBeginDate,
   finalEndDate,
   finalPlace,
   showGoogleCalendar,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
-  const [newName, setName] = useState<string>('');
-  const [newDescription, setDescription] = useState<string>('');
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [newBeginDate, setNewBeginDate] = useState<Date | null>(null);
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
-  const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
@@ -75,29 +59,18 @@ const MeetingDetailsInfo = ({
 
   const updateDetails = () => {
     if (
-      name !== newName ||
-      description !== newDescription ||
-      (newBeginDate &&
-        newEndDate &&
-        (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate))
+      newBeginDate &&
+      newEndDate &&
+      (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate)
     ) {
-      updateMeetingNameAndDescription(
-        newName,
-        newDescription,
-        newBeginDate && newEndDate
-          ? {
-              timeStart: newBeginDate,
-              timeEnd: newEndDate,
-            }
-          : null,
+      updateFinalDate(
+        {
+          timeStart: newBeginDate,
+          timeEnd: newEndDate,
+        },
         meetingId,
         () => {},
-        () => {
-          setName(newName);
-          setDescription(newDescription);
-          refreshNameAndDescription(newName, newDescription);
-          refreshMeeting();
-        }
+        () => refreshMeeting()
       );
     }
   };
@@ -113,11 +86,6 @@ const MeetingDetailsInfo = ({
     }
     // eslint-disable-next-line
   }, [location]);
-
-  useEffect(() => {
-    setName(name);
-    setDescription(description);
-  }, [name, description]);
 
   useEffect(() => {
     setNewBeginDate(finalBeginDate);
@@ -140,7 +108,7 @@ const MeetingDetailsInfo = ({
       onEdit={
         isOrganizer && state === MeetingState.OPEN
           ? () => {
-              setEditNameAndDescription(!editNameAndDescription);
+              setEditMode(!editMode);
             }
           : undefined
       }
@@ -188,7 +156,7 @@ const MeetingDetailsInfo = ({
           onCalendarChosen={() => setGoogleCalendarPickerModalShow(false)}
         />
       </Popup>
-      {!editNameAndDescription ? (
+      {!editMode ? (
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
             <BiCalendarEvent className={styles.moduleIcon} />{' '}
@@ -245,26 +213,6 @@ const MeetingDetailsInfo = ({
         </div>
       ) : (
         <>
-          <p className={styles.editLabel}>Meeting name</p>
-          <SingleValueInput
-            value={newName}
-            valueHandler={setName}
-            setInvalid={setInvalidNameDesc}
-            validation={[
-              { validation: required, message: 'This field is required' },
-              { validation: minSings(5), message: 'Min 5 signs' },
-              { validation: maxSings(255), message: 'Max 255 signs' },
-            ]}
-            placeholder="Please type meeting name ..."
-          />
-          <p className={styles.editLabel}>Meeting description</p>
-          <TextArea
-            defaultValue={newDescription}
-            valueHandler={setDescription}
-            setInvalid={setInvalidNameDesc}
-            validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
-            placeholder="Please type meeting description ..."
-          />
           <p className={styles.editLabel}>Final date</p>
           <FinalDateForm
             finalBeginDate={newBeginDate}
@@ -277,14 +225,9 @@ const MeetingDetailsInfo = ({
               onclick={() => {
                 updateDetails();
               }}
-              disabled={
-                invalidNameDesc ||
-                (newName === name &&
-                  description === newDescription &&
-                  finalBeginDate === newBeginDate &&
-                  finalEndDate === newEndDate)
-              }
+              disabled={finalBeginDate === newBeginDate && finalEndDate === newEndDate}
               text="Edit"
+              className={styles.updateButton}
             />
           </div>
         </>
