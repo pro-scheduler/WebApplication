@@ -51,6 +51,7 @@ const MeetingDetailsSectionAbout = ({
             finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
             declarationsModule={meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)}
             showGoogleCalendar={meeting.finalDate !== null}
+            meetingType={meeting.type}
           />
         </Col>
         <Col lg={6}>

@@ -4,19 +4,25 @@ import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory, useLocation } from 'react-router';
-import { cancelMeeting, leaveMeeting, updateFinalDate } from '../../API/meeting/meetingService';
-import { MeetingState } from '../../model/meeting/Meeting';
+import {
+  cancelMeeting,
+  leaveMeeting,
+  updateOnlineMeetingDetails,
+  updateRealMeetingDetails,
+} from '../../API/meeting/meetingService';
+import { MeetingState, MeetingType } from '../../model/meeting/Meeting';
 import FinalDateForm from './FinalDateForm/FinalDateForm';
 import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
 import { googleCalendarUrl } from '../../auth/AuthCredentials';
 import Popup from '../common/Popup/Popup';
 import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
 import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
+import SingleValueInput from '../common/forms/Input/SingleValueInput';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
@@ -31,6 +37,7 @@ export type MeetingDetailsInfoProps = {
   finalEndDate: Date | null;
   finalPlace?: string;
   showGoogleCalendar: boolean;
+  meetingType: MeetingType;
 };
 
 const MeetingDetailsInfo = ({
@@ -46,8 +53,11 @@ const MeetingDetailsInfo = ({
   finalEndDate,
   finalPlace,
   showGoogleCalendar,
+  meetingType,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [newLink, setNewLink] = useState<string | undefined>();
+  const [newPassword, setNewPassword] = useState<string | undefined>();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [newBeginDate, setNewBeginDate] = useState<Date | null>(null);
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
@@ -58,16 +68,28 @@ const MeetingDetailsInfo = ({
   const history = useHistory();
 
   const updateDetails = () => {
-    if (
-      newBeginDate &&
-      newEndDate &&
-      (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate)
-    ) {
-      updateFinalDate(
-        {
-          timeStart: newBeginDate,
-          timeEnd: newEndDate,
-        },
+    if (meetingType === MeetingType.ONLINE) {
+      updateOnlineMeetingDetails(
+        newBeginDate && newEndDate
+          ? {
+              timeStart: newBeginDate,
+              timeEnd: newEndDate,
+            }
+          : undefined,
+        newLink,
+        newPassword,
+        meetingId,
+        () => {},
+        () => refreshMeeting()
+      );
+    } else {
+      updateRealMeetingDetails(
+        newBeginDate && newEndDate
+          ? {
+              timeStart: newBeginDate,
+              timeEnd: newEndDate,
+            }
+          : undefined,
         meetingId,
         () => {},
         () => refreshMeeting()
@@ -101,6 +123,11 @@ const MeetingDetailsInfo = ({
     setLeaveMeetingModal(false);
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
+
+  useEffect(() => {
+    setNewLink(meetingLink);
+    setNewPassword(meetingPassword);
+  }, [meetingLink, meetingPassword]);
 
   return (
     <Card
@@ -180,7 +207,7 @@ const MeetingDetailsInfo = ({
           </p>
           <p className={styles.moduleContainer}>
             <BiWorld className={styles.moduleIcon} />{' '}
-            {meetingLink ? (
+            {meetingType === MeetingType.ONLINE && meetingLink ? (
               <>
                 <a href={meetingLink} className={styles.onlineMeetingLink}>
                   {meetingLink}
@@ -213,6 +240,22 @@ const MeetingDetailsInfo = ({
         </div>
       ) : (
         <>
+          {meetingType === MeetingType.ONLINE && (
+            <>
+              <p className={styles.editLabel}>Meeting link</p>
+              <SingleValueInput
+                placeholder="Please type meeting link ..."
+                value={newLink}
+                valueHandler={setNewLink}
+              />
+              <p className={styles.editLabel}>Meeting password</p>
+              <SingleValueInput
+                placeholder="Please type meeting password ..."
+                value={newPassword}
+                valueHandler={setNewPassword}
+              />
+            </>
+          )}
           <p className={styles.editLabel}>Final date</p>
           <FinalDateForm
             finalBeginDate={newBeginDate}
@@ -225,7 +268,12 @@ const MeetingDetailsInfo = ({
               onclick={() => {
                 updateDetails();
               }}
-              disabled={finalBeginDate === newBeginDate && finalEndDate === newEndDate}
+              disabled={
+                finalBeginDate === newBeginDate &&
+                finalEndDate === newEndDate &&
+                meetingLink === newLink &&
+                meetingPassword === newPassword
+              }
               text="Edit"
               className={styles.updateButton}
             />
