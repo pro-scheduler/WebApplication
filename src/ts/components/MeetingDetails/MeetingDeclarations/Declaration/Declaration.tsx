@@ -51,6 +51,10 @@ const Declaration = ({
     setIsAssigned(declaration.assignees.some((u) => u.email === user.email));
   }, [declaration, isMeetingOrganizer, user.email]);
 
+  useEffect(() => {
+    setDeclaration(defaultDeclaration);
+  }, [defaultDeclaration]);
+
   const onDelete = () => {
     deleteDeclaration(declaration.id, setResponse, () => {
       removeDeclaration(declaration.id);
