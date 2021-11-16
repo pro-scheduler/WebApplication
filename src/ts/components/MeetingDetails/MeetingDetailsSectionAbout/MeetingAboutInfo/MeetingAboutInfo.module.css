@@ -11,3 +11,37 @@
     margin-top: 10px;
     position: relative;
 }
+
+.attendeeContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.buttonContainer {
+    color: var(--medium-grey);
+}
+
+.attendeesIcons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.editLabel {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.updateButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .updateButton {
+        width: 210px;
+    }
+}

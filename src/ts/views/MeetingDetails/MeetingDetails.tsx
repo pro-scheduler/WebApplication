@@ -127,7 +127,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
       reloadSurveySummary();
     }
     // eslint-disable-next-line
-  }, [survey]);
+  }, [survey, isOrganizer, meetingSettings.participantsCanSeeResults]);
 
   useEffect(() => {
     if (id) {

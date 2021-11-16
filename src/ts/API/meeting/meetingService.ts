@@ -78,8 +78,10 @@ export const leaveMeeting = (
     onSuccess
   );
 
-export const updateFinalDate = (
-  finalDate: TimeRangeDTO,
+export const updateOnlineMeetingDetails = (
+  finalDate: TimeRangeDTO | undefined,
+  link: string | undefined,
+  password: string | undefined,
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
@@ -87,13 +89,34 @@ export const updateFinalDate = (
 ) =>
   put(
     {
-      finalDate,
+      finalDate: finalDate,
+      link: link,
+      password: password,
     },
     getMeetingUrl(meetingId),
     setData,
     setResponse,
     true,
-    'Final date saved',
+    'Meeting details have been updated successfully',
+    onSuccess
+  );
+
+export const updateRealMeetingDetails = (
+  finalDate: TimeRangeDTO | undefined,
+  meetingId: number,
+  setData?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      finalDate: finalDate,
+    },
+    getMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Meeting details have been updated successfully',
     onSuccess
   );
 
@@ -116,7 +139,6 @@ export const cancelMeeting = (
 export const updateMeetingNameAndDescription = (
   name: string,
   description: string,
-  finalDate: TimeRangeDTO | null,
   meetingId: number,
   setResponse?: Function,
   onSuccess?: Function
@@ -125,13 +147,12 @@ export const updateMeetingNameAndDescription = (
     {
       name: name,
       description: description,
-      finalDate: finalDate,
     },
     getMeetingUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully updated meeting details',
+    'You have successfully updated meeting name and description',
     onSuccess
   );
 

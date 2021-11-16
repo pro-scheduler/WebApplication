@@ -4,43 +4,40 @@ import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { maxSings, minSings, required } from '../../tools/validator';
-import SingleValueInput from '../common/forms/Input/SingleValueInput';
-import TextArea from '../common/forms/TextArea/TextArea';
 import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
 import YesNoPopup from '../common/Popup/YesNoPopup';
 import { useHistory, useLocation } from 'react-router';
 import {
   cancelMeeting,
   leaveMeeting,
-  updateMeetingNameAndDescription,
+  updateOnlineMeetingDetails,
+  updateRealMeetingDetails,
 } from '../../API/meeting/meetingService';
-import { MeetingState } from '../../model/meeting/Meeting';
+import { MeetingState, MeetingType } from '../../model/meeting/Meeting';
 import FinalDateForm from './FinalDateForm/FinalDateForm';
 import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
 import { googleCalendarUrl } from '../../auth/AuthCredentials';
 import Popup from '../common/Popup/Popup';
 import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
 import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
+import SingleValueInput from '../common/forms/Input/SingleValueInput';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
   declarationsModule: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
-  name: string;
-  description: string;
   isOrganizer: boolean;
   meetingId: number;
   state: MeetingState;
   refreshMeeting: Function;
-  refreshNameAndDescription: Function;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
   finalPlace?: string;
   showGoogleCalendar: boolean;
+  meetingType: MeetingType;
 };
 
 const MeetingDetailsInfo = ({
@@ -48,25 +45,22 @@ const MeetingDetailsInfo = ({
   surveyModule,
   meetingLink,
   meetingPassword,
-  name,
-  description,
   isOrganizer,
   meetingId,
   state,
   refreshMeeting,
-  refreshNameAndDescription,
   finalBeginDate,
   finalEndDate,
   finalPlace,
   showGoogleCalendar,
+  meetingType,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
-  const [newName, setName] = useState<string>('');
-  const [newDescription, setDescription] = useState<string>('');
+  const [newLink, setNewLink] = useState<string | undefined>();
+  const [newPassword, setNewPassword] = useState<string | undefined>();
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [newBeginDate, setNewBeginDate] = useState<Date | null>(null);
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
-  const [invalidNameDesc, setInvalidNameDesc] = useState(false);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
   const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
@@ -74,30 +68,31 @@ const MeetingDetailsInfo = ({
   const history = useHistory();
 
   const updateDetails = () => {
-    if (
-      name !== newName ||
-      description !== newDescription ||
-      (newBeginDate &&
-        newEndDate &&
-        (finalBeginDate !== newBeginDate || finalEndDate !== newEndDate))
-    ) {
-      updateMeetingNameAndDescription(
-        newName,
-        newDescription,
+    if (meetingType === MeetingType.ONLINE) {
+      updateOnlineMeetingDetails(
         newBeginDate && newEndDate
           ? {
               timeStart: newBeginDate,
               timeEnd: newEndDate,
             }
-          : null,
+          : undefined,
+        newLink,
+        newPassword,
         meetingId,
         () => {},
-        () => {
-          setName(newName);
-          setDescription(newDescription);
-          refreshNameAndDescription(newName, newDescription);
-          refreshMeeting();
-        }
+        () => refreshMeeting()
+      );
+    } else {
+      updateRealMeetingDetails(
+        newBeginDate && newEndDate
+          ? {
+              timeStart: newBeginDate,
+              timeEnd: newEndDate,
+            }
+          : undefined,
+        meetingId,
+        () => {},
+        () => refreshMeeting()
       );
     }
   };
@@ -115,11 +110,6 @@ const MeetingDetailsInfo = ({
   }, [location]);
 
   useEffect(() => {
-    setName(name);
-    setDescription(description);
-  }, [name, description]);
-
-  useEffect(() => {
     setNewBeginDate(finalBeginDate);
     setNewEndDate(finalEndDate);
   }, [finalBeginDate, finalEndDate]);
@@ -134,23 +124,24 @@ const MeetingDetailsInfo = ({
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
+  useEffect(() => {
+    setNewLink(meetingLink);
+    setNewPassword(meetingPassword);
+  }, [meetingLink, meetingPassword]);
+
   return (
     <Card
       title={'Details'}
       onEdit={
         isOrganizer && state === MeetingState.OPEN
           ? () => {
-              setEditNameAndDescription(!editNameAndDescription);
+              setEditMode(!editMode);
             }
           : undefined
       }
       footer={
         state === MeetingState.OPEN ? (
-          <div
-            className={
-              showGoogleCalendar ? styles.flexButtonsContainer : styles.blockButtonsContainer
-            }
-          >
+          <div className={styles.flexButtonsContainer}>
             {showGoogleCalendar && (
               <GoogleButton
                 redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
@@ -162,19 +153,18 @@ const MeetingDetailsInfo = ({
                 className={styles.googleCalendarButton}
               />
             )}
-            {isOrganizer ? (
+            <div>
+              <ActionButton
+                onclick={() => setLeaveMeetingModal(true)}
+                text={'Leave the meeting'}
+                className={styles.actionButton}
+              />
+            </div>
+            {isOrganizer && (
               <div>
                 <ActionButton
                   onclick={() => setCancelMeetingModal(true)}
                   text={'Cancel the meeting'}
-                  className={styles.actionButton}
-                />
-              </div>
-            ) : (
-              <div>
-                <ActionButton
-                  onclick={() => setLeaveMeetingModal(true)}
-                  text={'Leave the meeting'}
                   className={styles.actionButton}
                 />
               </div>
@@ -193,7 +183,7 @@ const MeetingDetailsInfo = ({
           onCalendarChosen={() => setGoogleCalendarPickerModalShow(false)}
         />
       </Popup>
-      {!editNameAndDescription ? (
+      {!editMode ? (
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
             <BiCalendarEvent className={styles.moduleIcon} />{' '}
@@ -217,7 +207,7 @@ const MeetingDetailsInfo = ({
           </p>
           <p className={styles.moduleContainer}>
             <BiWorld className={styles.moduleIcon} />{' '}
-            {meetingLink ? (
+            {meetingType === MeetingType.ONLINE && meetingLink ? (
               <>
                 <a href={meetingLink} className={styles.onlineMeetingLink}>
                   {meetingLink}
@@ -226,8 +216,7 @@ const MeetingDetailsInfo = ({
                   <>
                     <RiLockPasswordFill
                       className={cx(styles.moduleIcon, styles.passwordIcon)}
-                      onMouseEnter={() => setShowPassword(true)}
-                      onMouseLeave={() => setShowPassword(false)}
+                      onClick={() => setShowPassword(!showPassword)}
                     />
                     {showPassword && meetingPassword}
                   </>
@@ -250,26 +239,22 @@ const MeetingDetailsInfo = ({
         </div>
       ) : (
         <>
-          <p className={styles.editLabel}>Meeting name</p>
-          <SingleValueInput
-            value={newName}
-            valueHandler={setName}
-            setInvalid={setInvalidNameDesc}
-            validation={[
-              { validation: required, message: 'This field is required' },
-              { validation: minSings(5), message: 'Min 5 signs' },
-              { validation: maxSings(255), message: 'Max 255 signs' },
-            ]}
-            placeholder="Please type meeting name ..."
-          />
-          <p className={styles.editLabel}>Meeting description</p>
-          <TextArea
-            defaultValue={newDescription}
-            valueHandler={setDescription}
-            setInvalid={setInvalidNameDesc}
-            validation={[{ validation: maxSings(500), message: 'Max 500 signs' }]}
-            placeholder="Please type meeting description ..."
-          />
+          {meetingType === MeetingType.ONLINE && (
+            <>
+              <p className={styles.editLabel}>Meeting link</p>
+              <SingleValueInput
+                placeholder="Please type meeting link ..."
+                value={newLink}
+                valueHandler={setNewLink}
+              />
+              <p className={styles.editLabel}>Meeting password</p>
+              <SingleValueInput
+                placeholder="Please type meeting password ..."
+                value={newPassword}
+                valueHandler={setNewPassword}
+              />
+            </>
+          )}
           <p className={styles.editLabel}>Final date</p>
           <FinalDateForm
             finalBeginDate={newBeginDate}
@@ -283,13 +268,13 @@ const MeetingDetailsInfo = ({
                 updateDetails();
               }}
               disabled={
-                invalidNameDesc ||
-                (newName === name &&
-                  description === newDescription &&
-                  finalBeginDate === newBeginDate &&
-                  finalEndDate === newEndDate)
+                finalBeginDate === newBeginDate &&
+                finalEndDate === newEndDate &&
+                meetingLink === newLink &&
+                meetingPassword === newPassword
               }
               text="Edit"
+              className={styles.updateButton}
             />
           </div>
         </>
