@@ -21,6 +21,7 @@ export type MapWithPlacesProps = {
   disabledFinalPlaceButtonMapper?: Function;
   finalPlaceAction?: Function;
   finalPlaceId?: number;
+  mapHeight?: number;
 };
 
 interface Colors {
@@ -45,6 +46,7 @@ const MapWithPlaces = ({
   finalPlaceAction = () => {},
   finalPlaceId,
   showLegend = false,
+  mapHeight = 500,
 }: MapWithPlacesProps) => {
   const [center, setCenter] = useState<[number, number]>([50.068074402115116, 19.912639700937756]);
   const [zoom, setZoom] = useState(11);
@@ -161,7 +163,7 @@ const MapWithPlaces = ({
         }}
       >
         <Map
-          height={500}
+          height={mapHeight}
           center={center}
           zoom={zoom}
           onBoundsChanged={({ center, zoom }) => {

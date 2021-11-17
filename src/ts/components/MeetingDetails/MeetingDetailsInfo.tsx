@@ -23,6 +23,8 @@ import Popup from '../common/Popup/Popup';
 import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
 import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
+import { PlaceDetails } from '../../model/geo/Geo';
+import MapWithPlaces from '../common/Map/MapWithPlaces/MapWithPlaces';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
@@ -35,7 +37,7 @@ export type MeetingDetailsInfoProps = {
   refreshMeeting: Function;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
-  finalPlace?: string;
+  finalPlace?: PlaceDetails;
   showGoogleCalendar: boolean;
   meetingType: MeetingType;
 };
@@ -223,11 +225,28 @@ const MeetingDetailsInfo = ({
                 )}
               </>
             ) : finalPlace ? (
-              finalPlace
+              finalPlace.name
             ) : (
               'Final place has not been specified yet'
             )}
           </p>
+          {meetingType === MeetingType.REAL && finalPlace && (
+            <div className="mx-1 mb-3">
+              <MapWithPlaces
+                placesToDisplay={[finalPlace]}
+                disabled={true}
+                mainButtonTooltipNameMapper={() => {}}
+                displayRemoveButton={false}
+                displayMainButton={false}
+                mainButtonAction={() => {}}
+                allowAdding={false}
+                addPlaceAction={() => {}}
+                removeButtonAction={() => {}}
+                finalPlaceId={finalPlace.id}
+                mapHeight={240}
+              />
+            </div>
+          )}
           <p className={styles.moduleContainer}>
             <FaRegClipboard className={styles.moduleIcon} />{' '}
             {surveyModule ? 'Survey available' : 'Survey not available'}

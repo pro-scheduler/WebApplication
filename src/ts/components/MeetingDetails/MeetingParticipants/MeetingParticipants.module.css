@@ -19,7 +19,7 @@
 .selectedParticipants {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100px;
+    height: 326px;
 }
 
 .participantRow {
