@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Navbar from './components/Navbar/Navbar';
-import SignIn from './views/Auth/SignIn';
 import CreateMeeting from './views/CreateMeeting/CreateMeeting';
 import LandingPage from './views/LandingPage/LandingPage';
 import Meetings from './views/Meetings/Meetings';
@@ -61,9 +60,6 @@ const Routes = () => {
         pauseOnHover
       />
       <Switch>
-        <Route path="/signin">
-          <SignIn />
-        </Route>
         <ProtectedRoute path="/create" isNotLoggedIn={response.isFailed}>
           {generateNavbar()}
           <div style={{ marginLeft: width > 500 ? marginLeft : 0 }}>

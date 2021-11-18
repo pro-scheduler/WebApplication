@@ -15,7 +15,7 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteType> = ({
   useEffect(() => {
     if (isNotLoggedIn) {
       history.push({
-        pathname: '/signin',
+        pathname: '/',
         state: { from: path },
       });
     }
