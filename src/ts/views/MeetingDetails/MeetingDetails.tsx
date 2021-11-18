@@ -15,7 +15,6 @@ import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { getMeetingPlaces } from '../../API/geo/geo';
 import { PlaceDetails } from '../../model/geo/Geo';
 import {
   createNewMeetingChatMessage,
@@ -44,7 +43,6 @@ export enum MeetingDetailsSection {
 export type MeetingDetailsSectionChoiceFunction = (chosenSection: MeetingDetailsSection) => void;
 
 export type MeetingChangeFunction = (updatedMeeting: any) => void;
-export type MeetingPlacesChangeFunction = (updatedPlaces: PlaceDetails[]) => void;
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
@@ -54,7 +52,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
-  const [places, setPlaces] = useState<PlaceDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     participantsCanInvitePeople: false,
     participantsCanSeeResults: false,
@@ -108,9 +105,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   useEffect(() => {
     if (meeting && meeting.availableModules.includes(MeetingModuleType.SURVEY)) {
       reloadSurvey();
-    }
-    if (meeting && meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)) {
-      getMeetingPlaces(id, setPlaces);
     }
     // eslint-disable-next-line
   }, [meeting]);
@@ -166,8 +160,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meeting={meeting}
           isOrganizer={isOrganizer}
           user={user}
-          places={places}
-          onPlacesChange={(updatedPlaces) => setPlaces(updatedPlaces)}
           finalPlaceId={meeting.finalPlace ? meeting.finalPlace.id : -1}
           setFinalPlace={setFinalPlace}
           canSeeVotingResults={isOrganizer || meetingSettings.participantsCanSeeResults}
