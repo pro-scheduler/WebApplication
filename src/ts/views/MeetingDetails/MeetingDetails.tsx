@@ -5,6 +5,7 @@ import { getMeetingSettings, loadMeeting } from '../../API/meeting/meetingServic
 import { UserSummary } from '../../model/user/ProUser';
 import {
   MeetingAttendeeDetails,
+  MeetingModuleType,
   MeetingRole,
   MeetingSettings as MeetingGeneralSettings,
 } from '../../model/meeting/Meeting';
@@ -30,8 +31,6 @@ import MeetingDetailsSectionPlace from '../../components/MeetingDetails/MeetingD
 import MeetingDetailsSectionSurvey from '../../components/MeetingDetails/MeetingDetailsSectionSurvey/MeetingDetailsSectionSurvey';
 import MeetingDetailsSectionDeclarations from '../../components/MeetingDetails/MeetingDetailsSectionDeclarations/MeetingDetailsSectionDeclarations';
 import MeetingDetailsSectionSettings from '../../components/MeetingDetails/MeetingDetailsSectionSettings/MeetingDetailsSectionSettings';
-import { DeclarationDetails } from '../../model/declaration/Declaration';
-import { loadMeetingDeclarations } from '../../API/declarations/declarationsService';
 
 export enum MeetingDetailsSection {
   About,
@@ -56,7 +55,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
-  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     participantsCanInvitePeople: false,
     participantsCanSeeResults: false,
@@ -108,10 +106,14 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, []);
 
   useEffect(() => {
-    reloadSurvey();
-    getMeetingPlaces(id, setPlaces);
+    if (meeting && meeting.availableModules.includes(MeetingModuleType.SURVEY)) {
+      reloadSurvey();
+    }
+    if (meeting && meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)) {
+      getMeetingPlaces(id, setPlaces);
+    }
     // eslint-disable-next-line
-  }, [id]);
+  }, [meeting]);
 
   useEffect(() => {
     if (meeting)
@@ -123,17 +125,15 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, [meeting, user.id]);
 
   useEffect(() => {
-    if (isOrganizer || meetingSettings.participantsCanSeeResults) {
+    if (
+      meeting &&
+      meeting.availableModules.includes(MeetingModuleType.SURVEY) &&
+      (isOrganizer || meetingSettings.participantsCanSeeResults)
+    ) {
       reloadSurveySummary();
     }
     // eslint-disable-next-line
   }, [survey, isOrganizer, meetingSettings.participantsCanSeeResults]);
-
-  useEffect(() => {
-    if (id) {
-      loadMeetingDeclarations(id, setDeclarations, () => {});
-    }
-  }, [id]);
 
   return meeting ? (
     <Container fluid>
@@ -188,12 +188,10 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meeting={meeting}
           user={user}
           isOrganizer={isOrganizer}
-          declarations={declarations}
-          setDeclarations={setDeclarations}
         />
       )}
       {chosenSection === MeetingDetailsSection.Settings && (
-        <MeetingDetailsSectionSettings meeting={meeting} survey={survey} places={places} />
+        <MeetingDetailsSectionSettings meeting={meeting} survey={survey} />
       )}
       <MeetingChat
         messages={meetingChatMessages}
