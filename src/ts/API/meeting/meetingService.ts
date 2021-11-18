@@ -142,14 +142,21 @@ export const updateMeetingNameAndDescription = (
   name: string,
   description: string,
   meetingId: number,
+  finalMeetingPlaceId?: number,
   setResponse?: Function,
   onSuccess?: Function
 ) =>
   put(
-    {
-      name: name,
-      description: description,
-    },
+    finalMeetingPlaceId
+      ? {
+          name: name,
+          description: description,
+          finalMeetingPlaceId: finalMeetingPlaceId,
+        }
+      : {
+          name: name,
+          description: description,
+        },
     getMeetingUrl(meetingId),
     () => {},
     setResponse,
