@@ -5,14 +5,11 @@ import { getMeetingSettings, loadMeeting } from '../../API/meeting/meetingServic
 import { UserSummary } from '../../model/user/ProUser';
 import {
   MeetingAttendeeDetails,
-  MeetingModuleType,
   MeetingRole,
   MeetingSettings as MeetingGeneralSettings,
 } from '../../model/meeting/Meeting';
-import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { PlaceDetails } from '../../model/geo/Geo';
@@ -49,8 +46,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
-  const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
-  const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     participantsCanInvitePeople: false,
@@ -71,14 +66,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
     loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
     getMeetingSettings(id, setMeetingSettings);
-  };
-
-  const reloadSurvey = () => {
-    getSurveyForMeeting(id, setSurvey);
-  };
-
-  const reloadSurveySummary = () => {
-    getSurveySummary(id, setSurveySummary);
   };
 
   const sendNewMeetingChatMessage = (message: string) => {
@@ -103,13 +90,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, []);
 
   useEffect(() => {
-    if (meeting && meeting.availableModules.includes(MeetingModuleType.SURVEY)) {
-      reloadSurvey();
-    }
-    // eslint-disable-next-line
-  }, [meeting]);
-
-  useEffect(() => {
     if (meeting)
       setIsOrganizer(
         meeting.attendees.some(
@@ -117,17 +97,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         )
       );
   }, [meeting, user.id]);
-
-  useEffect(() => {
-    if (
-      meeting &&
-      meeting.availableModules.includes(MeetingModuleType.SURVEY) &&
-      (isOrganizer || meetingSettings.participantsCanSeeResults)
-    ) {
-      reloadSurveySummary();
-    }
-    // eslint-disable-next-line
-  }, [survey, isOrganizer, meetingSettings.participantsCanSeeResults]);
 
   return meeting ? (
     <Container fluid>
@@ -165,14 +134,11 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           canSeeVotingResults={isOrganizer || meetingSettings.participantsCanSeeResults}
         />
       )}
-      {survey && chosenSection === MeetingDetailsSection.Survey && (
+      {chosenSection === MeetingDetailsSection.Survey && (
         <MeetingDetailsSectionSurvey
           meeting={meeting}
           isOrganizer={isOrganizer}
-          survey={survey}
-          surveySummary={surveySummary}
-          onSurveyReload={reloadSurvey}
-          onSurveySummaryReload={reloadSurveySummary}
+          participantsCanSeeResults={meetingSettings.participantsCanSeeResults}
         />
       )}
       {chosenSection === MeetingDetailsSection.Declarations && (
@@ -183,7 +149,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         />
       )}
       {chosenSection === MeetingDetailsSection.Settings && (
-        <MeetingDetailsSectionSettings meeting={meeting} survey={survey} />
+        <MeetingDetailsSectionSettings meeting={meeting} />
       )}
       <MeetingChat
         messages={meetingChatMessages}

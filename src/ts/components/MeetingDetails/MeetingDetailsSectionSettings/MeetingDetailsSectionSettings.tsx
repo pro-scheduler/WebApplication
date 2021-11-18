@@ -1,16 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MeetingDetails, MeetingModuleType } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingSettings from '../MeetingSettings/MeetingSettings';
 import { UserSurvey } from '../../../model/survey/Survey';
+import { getSurveyForMeeting } from '../../../API/survey/surveyService';
 
 export type MeetingDetailsSectionSettingsProps = {
   meeting: MeetingDetails;
-  survey: UserSurvey | undefined;
 };
 
-const MeetingDetailsSectionSettings = ({ meeting, survey }: MeetingDetailsSectionSettingsProps) => {
-  useEffect(() => {}, []);
+const MeetingDetailsSectionSettings = ({ meeting }: MeetingDetailsSectionSettingsProps) => {
+  const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
+
+  useEffect(() => {
+    if (meeting.availableModules.includes(MeetingModuleType.SURVEY)) {
+      getSurveyForMeeting(meeting.id, setSurvey);
+    }
+  }, [meeting]);
 
   return (
     <Row className="justify-content mx-3 mb-5">
