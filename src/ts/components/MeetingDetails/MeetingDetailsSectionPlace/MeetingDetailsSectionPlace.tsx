@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MeetingDetails, MeetingModuleType, MeetingState } from '../../../model/meeting/Meeting';
+import { MeetingDetails, MeetingState } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingPlaces from '../MeetingPlaces/MeetingPlaces';
 import { UserSummary } from '../../../model/user/ProUser';
@@ -26,9 +26,7 @@ const MeetingDetailsSectionPlace = ({
   const [places, setPlaces] = useState<PlaceDetails[]>([]);
 
   useEffect(() => {
-    if (meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)) {
-      getMeetingPlaces(meeting.id, setPlaces);
-    }
+    getMeetingPlaces(meeting.id, setPlaces);
   }, [meeting]);
 
   return (

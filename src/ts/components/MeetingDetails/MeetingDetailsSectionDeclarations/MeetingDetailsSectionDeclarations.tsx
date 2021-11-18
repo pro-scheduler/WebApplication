@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MeetingDetails, MeetingModuleType, MeetingState } from '../../../model/meeting/Meeting';
+import { MeetingDetails, MeetingState } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingDeclarations from '../MeetingDeclarations/MeetingDeclarations';
 import { UserSummary } from '../../../model/user/ProUser';
@@ -20,9 +20,7 @@ const MeetingDetailsSectionDeclarations = ({
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
 
   useEffect(() => {
-    if (meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)) {
-      loadMeetingDeclarations(meeting.id, setDeclarations);
-    }
+    loadMeetingDeclarations(meeting.id, setDeclarations);
     // eslint-disable-next-line
   }, [meeting]);
 

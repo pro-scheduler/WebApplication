@@ -18,8 +18,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     overflow-x: scroll;
-    margin-right: 25px;
-    margin-left: 25px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .modulesContainer::-webkit-scrollbar {
@@ -29,7 +29,6 @@
 .modulesContainer > div {
     display: flex;
     flex-display: row;
-
 }
 
 .modulesContainer > div > div {

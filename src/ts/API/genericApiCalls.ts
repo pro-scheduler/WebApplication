@@ -82,7 +82,7 @@ export const post = (
     body: JSON.stringify(data),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage);
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -91,7 +91,6 @@ export const post = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -116,7 +115,7 @@ export const put = (
     body: JSON.stringify(data),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage);
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -125,7 +124,6 @@ export const put = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -148,7 +146,7 @@ export const del = (
     headers,
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage);
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -157,7 +155,6 @@ export const del = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -181,7 +178,7 @@ export const get = (
     headers: Object.assign({}, headers, additionalHeaders),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage);
+      return handleResponse(response, setResponse, successMessage, onSuccess);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -191,7 +188,6 @@ export const get = (
       } else {
         setResponseData(result);
         if (successMessage) toastSuccess(successMessage);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
