@@ -103,6 +103,7 @@ export const updateOnlineMeetingDetails = (
 
 export const updateRealMeetingDetails = (
   finalDate: TimeRangeDTO | undefined,
+  finalMeetingPlaceId: number | undefined,
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
@@ -111,6 +112,7 @@ export const updateRealMeetingDetails = (
   put(
     {
       finalDate: finalDate,
+      finalMeetingPlaceId: finalMeetingPlaceId,
     },
     getMeetingUrl(meetingId),
     setData,
