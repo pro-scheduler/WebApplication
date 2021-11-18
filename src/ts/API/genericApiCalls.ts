@@ -82,7 +82,7 @@ export const post = (
     body: JSON.stringify(data),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage, onSuccess);
+      return handleResponse(response, setResponse, successMessage);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -116,7 +116,7 @@ export const put = (
     body: JSON.stringify(data),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage, onSuccess);
+      return handleResponse(response, setResponse, successMessage);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -148,7 +148,7 @@ export const del = (
     headers,
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage, onSuccess);
+      return handleResponse(response, setResponse, successMessage);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
@@ -181,7 +181,7 @@ export const get = (
     headers: Object.assign({}, headers, additionalHeaders),
   })
     .then((response: Response) => {
-      return handleResponse(response, setResponse, successMessage, onSuccess);
+      return handleResponse(response, setResponse, successMessage);
     })
     .then((result) => {
       if (result.status !== undefined && (result.status < 200 || result.status >= 300)) {
