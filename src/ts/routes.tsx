@@ -49,10 +49,10 @@ const Routes = () => {
   return (
     <Router>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position="bottom-right"
+        autoClose={4000}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop={true}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
