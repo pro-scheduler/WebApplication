@@ -9,6 +9,7 @@ import Card from '../../../common/Card/Card';
 import { MeetingSettings } from '../../../../model/meeting/Meeting';
 import { getMeetingSettings, saveMeetingSettings } from '../../../../API/meeting/meetingService';
 import RemoveMeeting from '../RemoveMeeting/RemoveMeeting';
+import styles from './GeneralSettings.module.css';
 
 export type GeneralSettingsProps = {
   meetingId: number;
@@ -71,6 +72,7 @@ const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
                 onclick={saveSettings}
                 text={'Modify general settings'}
                 disabled={JSON.stringify(settings) === JSON.stringify(newSettings)}
+                className={styles.editButton}
               />
             </Card>
             <RemoveMeeting meetingName={meetingName} meetingId={meetingId} />

@@ -8,13 +8,10 @@ import {
   MeetingRole,
   MeetingSettings as MeetingGeneralSettings,
 } from '../../model/meeting/Meeting';
-import { SurveySummary, UserSurvey } from '../../model/survey/Survey';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
-import { getSurveyForMeeting, getSurveySummary } from '../../API/survey/surveyService';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { getMeetingPlaces } from '../../API/geo/geo';
 import { PlaceDetails } from '../../model/geo/Geo';
 import {
   createNewMeetingChatMessage,
@@ -30,8 +27,6 @@ import MeetingDetailsSectionPlace from '../../components/MeetingDetails/MeetingD
 import MeetingDetailsSectionSurvey from '../../components/MeetingDetails/MeetingDetailsSectionSurvey/MeetingDetailsSectionSurvey';
 import MeetingDetailsSectionDeclarations from '../../components/MeetingDetails/MeetingDetailsSectionDeclarations/MeetingDetailsSectionDeclarations';
 import MeetingDetailsSectionSettings from '../../components/MeetingDetails/MeetingDetailsSectionSettings/MeetingDetailsSectionSettings';
-import { DeclarationDetails } from '../../model/declaration/Declaration';
-import { loadMeetingDeclarations } from '../../API/declarations/declarationsService';
 
 export enum MeetingDetailsSection {
   About,
@@ -45,18 +40,13 @@ export enum MeetingDetailsSection {
 export type MeetingDetailsSectionChoiceFunction = (chosenSection: MeetingDetailsSection) => void;
 
 export type MeetingChangeFunction = (updatedMeeting: any) => void;
-export type MeetingPlacesChangeFunction = (updatedPlaces: PlaceDetails[]) => void;
 
 const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
   const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
-  const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
-  const [surveySummary, setSurveySummary] = useState<SurveySummary | undefined>(undefined);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
-  const [places, setPlaces] = useState<PlaceDetails[]>([]);
-  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     participantsCanInvitePeople: false,
     participantsCanSeeResults: false,
@@ -76,14 +66,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
     loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
     getMeetingSettings(id, setMeetingSettings);
-  };
-
-  const reloadSurvey = () => {
-    getSurveyForMeeting(id, setSurvey);
-  };
-
-  const reloadSurveySummary = () => {
-    getSurveySummary(id, setSurveySummary);
   };
 
   const sendNewMeetingChatMessage = (message: string) => {
@@ -108,12 +90,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, []);
 
   useEffect(() => {
-    reloadSurvey();
-    getMeetingPlaces(id, setPlaces);
-    // eslint-disable-next-line
-  }, [id]);
-
-  useEffect(() => {
     if (meeting)
       setIsOrganizer(
         meeting.attendees.some(
@@ -122,25 +98,17 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
       );
   }, [meeting, user.id]);
 
-  useEffect(() => {
-    if (isOrganizer || meetingSettings.participantsCanSeeResults) {
-      reloadSurveySummary();
-    }
-    // eslint-disable-next-line
-  }, [survey, isOrganizer, meetingSettings.participantsCanSeeResults]);
-
-  useEffect(() => {
-    if (id) {
-      loadMeetingDeclarations(id, setDeclarations, () => {});
-    }
-  }, [id]);
-
   return meeting ? (
     <Container fluid>
       <MeetingDetailsHeader
         meeting={meeting}
         chosenSection={chosenSection}
-        onMeetingSectionChosen={(chosenSection) => setChosenSection(chosenSection)}
+        onMeetingSectionChosen={(chosenSection) => {
+          if (chosenSection === MeetingDetailsSection.About) {
+            reloadMeeting();
+          }
+          setChosenSection(chosenSection);
+        }}
         isOrganizer={isOrganizer}
       />
       {chosenSection === MeetingDetailsSection.About && (
@@ -166,21 +134,16 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meeting={meeting}
           isOrganizer={isOrganizer}
           user={user}
-          places={places}
-          onPlacesChange={(updatedPlaces) => setPlaces(updatedPlaces)}
           finalPlaceId={meeting.finalPlace ? meeting.finalPlace.id : -1}
           setFinalPlace={setFinalPlace}
           canSeeVotingResults={isOrganizer || meetingSettings.participantsCanSeeResults}
         />
       )}
-      {survey && chosenSection === MeetingDetailsSection.Survey && (
+      {chosenSection === MeetingDetailsSection.Survey && (
         <MeetingDetailsSectionSurvey
           meeting={meeting}
           isOrganizer={isOrganizer}
-          survey={survey}
-          surveySummary={surveySummary}
-          onSurveyReload={reloadSurvey}
-          onSurveySummaryReload={reloadSurveySummary}
+          participantsCanSeeResults={meetingSettings.participantsCanSeeResults}
         />
       )}
       {chosenSection === MeetingDetailsSection.Declarations && (
@@ -188,12 +151,10 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
           meeting={meeting}
           user={user}
           isOrganizer={isOrganizer}
-          declarations={declarations}
-          setDeclarations={setDeclarations}
         />
       )}
       {chosenSection === MeetingDetailsSection.Settings && (
-        <MeetingDetailsSectionSettings meeting={meeting} survey={survey} places={places} />
+        <MeetingDetailsSectionSettings meeting={meeting} />
       )}
       <MeetingChat
         messages={meetingChatMessages}

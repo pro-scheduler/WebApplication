@@ -23,6 +23,9 @@ import Popup from '../common/Popup/Popup';
 import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
 import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
 import SingleValueInput from '../common/forms/Input/SingleValueInput';
+import { PlaceDetails } from '../../model/geo/Geo';
+import MapWithPlaces from '../common/Map/MapWithPlaces/MapWithPlaces';
+import { changeFinalPlace } from '../../API/geo/geo';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
@@ -35,7 +38,7 @@ export type MeetingDetailsInfoProps = {
   refreshMeeting: Function;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
-  finalPlace?: string;
+  finalPlace?: PlaceDetails;
   showGoogleCalendar: boolean;
   meetingType: MeetingType;
 };
@@ -58,6 +61,7 @@ const MeetingDetailsInfo = ({
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
   const [newPassword, setNewPassword] = useState<string | undefined>();
+  const [newFinalPlace, setNewFinalPlace] = useState<PlaceDetails | undefined>();
   const [editMode, setEditMode] = useState<boolean>(false);
   const [newBeginDate, setNewBeginDate] = useState<Date | null>(null);
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
@@ -66,6 +70,22 @@ const MeetingDetailsInfo = ({
   const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
   const location = useLocation();
   const history = useHistory();
+
+  const updateFinalPlace = () => {
+    if (newFinalPlace && finalPlace !== newFinalPlace) {
+      changeFinalPlace(
+        {
+          latitude: newFinalPlace.latitude,
+          longitude: newFinalPlace.longitude,
+          name: newFinalPlace.name,
+          description: newFinalPlace.description,
+          address: newFinalPlace.description,
+        },
+        meetingId,
+        () => refreshMeeting()
+      );
+    }
+  };
 
   const updateDetails = () => {
     if (meetingType === MeetingType.ONLINE) {
@@ -83,17 +103,33 @@ const MeetingDetailsInfo = ({
         () => refreshMeeting()
       );
     } else {
-      updateRealMeetingDetails(
-        newBeginDate && newEndDate
-          ? {
-              timeStart: newBeginDate,
-              timeEnd: newEndDate,
+      if (
+        newBeginDate &&
+        newEndDate &&
+        (newBeginDate !== finalBeginDate || newEndDate !== finalEndDate)
+      ) {
+        updateRealMeetingDetails(
+          newBeginDate && newEndDate
+            ? {
+                timeStart: newBeginDate,
+                timeEnd: newEndDate,
+              }
+            : undefined,
+          finalPlace ? finalPlace.id : undefined,
+          meetingId,
+          () => {},
+          () => {},
+          () => {
+            if (newFinalPlace && finalPlace !== newFinalPlace) {
+              updateFinalPlace();
+            } else {
+              refreshMeeting();
             }
-          : undefined,
-        meetingId,
-        () => {},
-        () => refreshMeeting()
-      );
+          }
+        );
+      } else {
+        updateFinalPlace();
+      }
     }
   };
 
@@ -114,6 +150,17 @@ const MeetingDetailsInfo = ({
     setNewEndDate(finalEndDate);
   }, [finalBeginDate, finalEndDate]);
 
+  useEffect(() => {
+    setNewLink(meetingLink);
+    setNewPassword(meetingPassword);
+  }, [meetingLink, meetingPassword]);
+
+  useEffect(() => {
+    if (finalPlace) {
+      setNewFinalPlace(finalPlace);
+    }
+  }, [finalPlace]);
+
   const cancelTheMeeting = () => {
     setCancelMeetingModal(false);
     cancelMeeting(meetingId, refreshMeeting);
@@ -124,10 +171,29 @@ const MeetingDetailsInfo = ({
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
-  useEffect(() => {
-    setNewLink(meetingLink);
-    setNewPassword(meetingPassword);
-  }, [meetingLink, meetingPassword]);
+  const generateEditButtonText = (
+    finalDateChanged: boolean,
+    placeChanged: boolean,
+    linkChanged: boolean
+  ) => {
+    let buttonName = 'Edit meeting details';
+    let changes = 0;
+
+    if (finalDateChanged) {
+      buttonName = 'Edit final date';
+      changes++;
+    }
+    if (placeChanged) {
+      buttonName = 'Edit final place';
+      changes++;
+    }
+    if (linkChanged) {
+      buttonName = 'Edit meeting details';
+      changes++;
+    }
+    if (changes > 1) buttonName = 'Edit meeting details';
+    return buttonName;
+  };
 
   return (
     <Card
@@ -223,11 +289,27 @@ const MeetingDetailsInfo = ({
                 )}
               </>
             ) : finalPlace ? (
-              finalPlace
+              finalPlace.name
             ) : (
               'Final place has not been specified yet'
             )}
           </p>
+          {meetingType === MeetingType.REAL && finalPlace && (
+            <div className="mx-1 mb-3">
+              <MapWithPlaces
+                placesToDisplay={[finalPlace]}
+                disabled={true}
+                mainButtonTooltipNameMapper={() => {}}
+                displayRemoveButton={false}
+                displayMainButton={false}
+                mainButtonAction={() => {}}
+                allowAdding={false}
+                addPlaceAction={() => {}}
+                removeButtonAction={() => {}}
+                mapHeight={240}
+              />
+            </div>
+          )}
           <p className={styles.moduleContainer}>
             <FaRegClipboard className={styles.moduleIcon} />{' '}
             {surveyModule ? 'Survey available' : 'Survey not available'}
@@ -239,7 +321,14 @@ const MeetingDetailsInfo = ({
         </div>
       ) : (
         <>
-          {meetingType === MeetingType.ONLINE && (
+          <p className={styles.editLabel}>Final date</p>
+          <FinalDateForm
+            finalBeginDate={newBeginDate}
+            finalEndDate={newEndDate}
+            setFinalBeginDate={setNewBeginDate}
+            setFinalEndDate={setNewEndDate}
+          />
+          {meetingType === MeetingType.ONLINE ? (
             <>
               <p className={styles.editLabel}>Meeting link</p>
               <SingleValueInput
@@ -254,14 +343,25 @@ const MeetingDetailsInfo = ({
                 valueHandler={setNewPassword}
               />
             </>
+          ) : (
+            <>
+              <p className={styles.editLabel}>Final place</p>
+              <div className="mx-1 my-3">
+                <MapWithPlaces
+                  placesToDisplay={newFinalPlace ? [newFinalPlace] : []}
+                  disabled={false}
+                  mainButtonTooltipNameMapper={() => {}}
+                  displayRemoveButton={false}
+                  displayMainButton={false}
+                  mainButtonAction={() => {}}
+                  allowAdding={true}
+                  addPlaceAction={(newPlace: PlaceDetails) => setNewFinalPlace(newPlace)}
+                  removeButtonAction={() => {}}
+                  mapHeight={240}
+                />
+              </div>
+            </>
           )}
-          <p className={styles.editLabel}>Final date</p>
-          <FinalDateForm
-            finalBeginDate={newBeginDate}
-            finalEndDate={newEndDate}
-            setFinalBeginDate={setNewBeginDate}
-            setFinalEndDate={setNewEndDate}
-          />
           <div className={styles.buttonContainer}>
             <ActionButton
               onclick={() => {
@@ -271,9 +371,16 @@ const MeetingDetailsInfo = ({
                 finalBeginDate === newBeginDate &&
                 finalEndDate === newEndDate &&
                 meetingLink === newLink &&
-                meetingPassword === newPassword
+                meetingPassword === newPassword &&
+                finalPlace === newFinalPlace
               }
-              text="Edit"
+              text={generateEditButtonText(
+                finalBeginDate !== newBeginDate || finalEndDate !== newEndDate,
+                finalPlace !== newFinalPlace &&
+                  newFinalPlace !== undefined &&
+                  newFinalPlace !== null,
+                meetingLink !== newLink || meetingPassword !== newPassword
+              )}
               className={styles.updateButton}
             />
           </div>

@@ -2,7 +2,7 @@ import MeetingNotifications from '../MeetingNotifications/MeetingNotifications';
 import { UserSurvey } from '../../../model/survey/Survey';
 import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
 import PlaceSettings from './PlaceSettings/PlaceSettings';
-import GeneralSettings from './GeneraSettings/GeneralSettings';
+import GeneralSettings from './GeneralSettings/GeneralSettings';
 export type MeetingSettingsProps = {
   survey: UserSurvey | undefined;
   meetingId: number;

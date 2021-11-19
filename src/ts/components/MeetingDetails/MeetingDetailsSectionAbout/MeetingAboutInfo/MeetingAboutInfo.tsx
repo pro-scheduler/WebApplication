@@ -3,6 +3,8 @@ import {
   MeetingDetails,
   MeetingRole,
   MeetingState,
+  MeetingType,
+  RealMeetingDetails,
 } from '../../../../model/meeting/Meeting';
 import Card from '../../../common/Card/Card';
 import styles from './MeetingAboutInfo.module.css';
@@ -98,6 +100,9 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
         newName,
         newDescription,
         meeting.id,
+        meeting.type === MeetingType.REAL
+          ? (meeting as RealMeetingDetails).finalPlace?.id
+          : undefined,
         () => {},
         () => {
           setName(newName);
