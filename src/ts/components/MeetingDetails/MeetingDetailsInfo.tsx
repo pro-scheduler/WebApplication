@@ -179,8 +179,6 @@ const MeetingDetailsInfo = ({
     let buttonName = 'Edit meeting details';
     let changes = 0;
 
-    console.log(finalDateChanged, placeChanged, linkChanged);
-    console.log(finalPlace, newFinalPlace);
     if (finalDateChanged) {
       buttonName = 'Edit final date';
       changes++;
@@ -194,7 +192,6 @@ const MeetingDetailsInfo = ({
       changes++;
     }
     if (changes > 1) buttonName = 'Edit meeting details';
-    console.log(changes);
     return buttonName;
   };
 
