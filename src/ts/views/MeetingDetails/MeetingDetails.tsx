@@ -104,7 +104,10 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         meeting={meeting}
         chosenSection={chosenSection}
         onMeetingSectionChosen={(chosenSection) => {
-          if (chosenSection === MeetingDetailsSection.About) {
+          if (
+            chosenSection === MeetingDetailsSection.About ||
+            chosenSection === MeetingDetailsSection.Time
+          ) {
             reloadMeeting();
           }
           setChosenSection(chosenSection);

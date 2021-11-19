@@ -65,7 +65,7 @@ const Navbar = ({
             <Menu iconShape="circle">
               <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
                 ProScheduler
-                <Link to="/home" />
+                <Link to="/" />
               </MenuItem>
             </Menu>
           </SidebarHeader>

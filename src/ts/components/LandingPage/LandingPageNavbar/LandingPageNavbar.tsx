@@ -2,7 +2,6 @@ import { Nav, Navbar } from 'react-bootstrap';
 import logo from '../../../../images/logo.svg';
 import React from 'react';
 import styles from './LandingPageNavbar.module.css';
-import RedirectButton from '../../common/SubmitButton/RedirectButton/RedirectButton';
 import { UserSummary } from '../../../model/user/ProUser';
 import UserIcon from '../../common/Icons/UserIcon';
 
@@ -22,10 +21,8 @@ const LandingPageNavbar = ({
         </div>
       </Navbar.Brand>
       <Nav className="ml-auto">
-        {user && user.username && showUserIcon ? (
+        {user && user.username && showUserIcon && (
           <UserIcon user={user} backgroundColor="var(--light-red)" />
-        ) : (
-          <RedirectButton text="Sign In" redirectTO="/signin" className={styles.signInButton} />
         )}
       </Nav>
     </Navbar>
