@@ -103,7 +103,12 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
       <MeetingDetailsHeader
         meeting={meeting}
         chosenSection={chosenSection}
-        onMeetingSectionChosen={(chosenSection) => setChosenSection(chosenSection)}
+        onMeetingSectionChosen={(chosenSection) => {
+          if (chosenSection === MeetingDetailsSection.About) {
+            reloadMeeting();
+          }
+          setChosenSection(chosenSection);
+        }}
         isOrganizer={isOrganizer}
       />
       {chosenSection === MeetingDetailsSection.About && (

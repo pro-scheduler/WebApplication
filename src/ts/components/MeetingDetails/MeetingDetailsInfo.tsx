@@ -171,6 +171,30 @@ const MeetingDetailsInfo = ({
     leaveMeeting(meetingId, () => history.push('/meetings'));
   };
 
+  const generateEditButtonText = (
+    finalDateChanged: boolean,
+    placeChanged: boolean,
+    linkChanged: boolean
+  ) => {
+    let buttonName = 'Edit meeting details';
+    let changes = 0;
+
+    if (finalDateChanged) {
+      buttonName = 'Edit final date';
+      changes++;
+    }
+    if (placeChanged) {
+      buttonName = 'Edit final place';
+      changes++;
+    }
+    if (linkChanged) {
+      buttonName = 'Edit meeting details';
+      changes++;
+    }
+    if (changes > 1) buttonName = 'Edit meeting details';
+    return buttonName;
+  };
+
   return (
     <Card
       title={'Details'}
@@ -350,7 +374,13 @@ const MeetingDetailsInfo = ({
                 meetingPassword === newPassword &&
                 finalPlace === newFinalPlace
               }
-              text="Edit"
+              text={generateEditButtonText(
+                finalBeginDate !== newBeginDate || finalEndDate !== newEndDate,
+                finalPlace !== newFinalPlace &&
+                  newFinalPlace !== undefined &&
+                  newFinalPlace !== null,
+                meetingLink !== newLink || meetingPassword !== newPassword
+              )}
               className={styles.updateButton}
             />
           </div>
