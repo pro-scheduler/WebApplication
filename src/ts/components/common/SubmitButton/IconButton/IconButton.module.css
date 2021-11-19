@@ -44,6 +44,15 @@
 
 @media only screen and (max-width: 600px) {
     .button {
-        width: 270px;
+        width: 238px;
+        padding-left: 8px;
+    }
+}
+
+
+@media only screen and (max-width: 330px) {
+    .button {
+        width: auto;
+        height: auto;
     }
 }
