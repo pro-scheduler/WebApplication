@@ -18,6 +18,7 @@ function useOnClickOutside<T extends HTMLElement = HTMLElement>(
     }
 
     // Explicit type for "mousedown" event.
+    // eslint-disable-next-line
     handler((event as unknown) as MouseEvent);
   });
 }
