@@ -151,6 +151,7 @@ const MeetingPlaces = ({
                   newVotes.every((p) => myVotes.includes(p)) &&
                   myVotes.every((p) => newVotes.includes(p))
                 }
+                className={styles.editButton}
               />
             </div>
           }

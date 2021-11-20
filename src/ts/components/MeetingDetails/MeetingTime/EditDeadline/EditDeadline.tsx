@@ -45,15 +45,17 @@ const EditDeadline = ({
     <div>
       <Card title="Details" onEdit={isOrganizer ? () => setEditMode(!editMode) : undefined}>
         {editMode ? (
-          <>
-            <DateTimePicker
-              setDate={(date: Date) => {
-                setNewDeadline(date);
-              }}
-              timeLabel="Select time"
-              dateLabel="Select date"
-              defaultDate={newDeadline}
-            />
+          <div>
+            <div className={styles.editMode}>
+              <DateTimePicker
+                setDate={(date: Date) => {
+                  setNewDeadline(date);
+                }}
+                timeLabel="Select time"
+                dateLabel="Select date"
+                defaultDate={newDeadline}
+              />
+            </div>
             <div className={styles.buttonContainer}>
               <ActionButton
                 onclick={saveNewDeadline}
@@ -62,7 +64,7 @@ const EditDeadline = ({
                 className={styles.buttonAction}
               />
             </div>
-          </>
+          </div>
         ) : (
           <>
             {isMeetingOpen ? (

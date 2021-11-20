@@ -1,9 +1,16 @@
 .buttonContainer {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: left;
 }
+
 .placesTable {
     overflow-y: auto;
     overflow-x: hidden;
-  }
+}
+
+.editButton {
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
   
