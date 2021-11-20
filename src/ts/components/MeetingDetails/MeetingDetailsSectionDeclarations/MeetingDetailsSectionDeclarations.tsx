@@ -1,27 +1,28 @@
-import { useEffect } from 'react';
-import styles from './MeetingDetailsSectionDeclarations.module.css';
+import { useEffect, useState } from 'react';
 import { MeetingDetails, MeetingState } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingDeclarations from '../MeetingDeclarations/MeetingDeclarations';
 import { UserSummary } from '../../../model/user/ProUser';
 import { DeclarationDetails } from '../../../model/declaration/Declaration';
+import { loadMeetingDeclarations } from '../../../API/declarations/declarationsService';
 
 export type MeetingDetailsSectionDeclarationsProps = {
   meeting: MeetingDetails;
   user: UserSummary;
   isOrganizer: boolean;
-  declarations: DeclarationDetails[];
-  setDeclarations: Function;
 };
 
 const MeetingDetailsSectionDeclarations = ({
   meeting,
   user,
   isOrganizer,
-  declarations,
-  setDeclarations,
 }: MeetingDetailsSectionDeclarationsProps) => {
-  useEffect(() => {}, []);
+  const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
+
+  useEffect(() => {
+    loadMeetingDeclarations(meeting.id, setDeclarations);
+    // eslint-disable-next-line
+  }, [meeting]);
 
   return (
     <Row className="justify-content mb-5">

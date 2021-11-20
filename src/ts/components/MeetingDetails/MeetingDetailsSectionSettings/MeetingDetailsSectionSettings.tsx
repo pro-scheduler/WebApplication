@@ -1,26 +1,25 @@
-import { useEffect } from 'react';
-import styles from './MeetingDetailsSectionSettings.module.css';
-import { MeetingDetails } from '../../../model/meeting/Meeting';
+import { useEffect, useState } from 'react';
+import { MeetingDetails, MeetingModuleType } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingSettings from '../MeetingSettings/MeetingSettings';
 import { UserSurvey } from '../../../model/survey/Survey';
-import { PlaceDetails } from '../../../model/geo/Geo';
+import { getSurveyForMeeting } from '../../../API/survey/surveyService';
 
 export type MeetingDetailsSectionSettingsProps = {
   meeting: MeetingDetails;
-  survey: UserSurvey | undefined;
-  places: PlaceDetails[];
 };
 
-const MeetingDetailsSectionSettings = ({
-  meeting,
-  survey,
-  places,
-}: MeetingDetailsSectionSettingsProps) => {
-  useEffect(() => {}, []);
+const MeetingDetailsSectionSettings = ({ meeting }: MeetingDetailsSectionSettingsProps) => {
+  const [survey, setSurvey] = useState<UserSurvey | undefined>(undefined);
+
+  useEffect(() => {
+    if (meeting.availableModules.includes(MeetingModuleType.SURVEY)) {
+      getSurveyForMeeting(meeting.id, setSurvey);
+    }
+  }, [meeting]);
 
   return (
-    <Row className="justify-content mt-5 ml-3 mb-5">
+    <Row className="justify-content mx-3 mb-5">
       <Col lg={12}>
         <MeetingSettings
           survey={survey}
@@ -28,7 +27,7 @@ const MeetingDetailsSectionSettings = ({
           meetingName={meeting.name}
           markTimeRangeDeadline={meeting.markTimeRangeDeadline}
           meetingFinalDate={meeting.finalDate}
-          showPlacesSettings={places.length > 0}
+          showPlacesSettings={meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)}
         />
       </Col>
     </Row>

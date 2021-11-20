@@ -22,3 +22,6 @@ export const getPlacesSettingsUrl = (meetingId: number) =>
   getMeetingPlacesUrl(meetingId) + '/settings';
 
 export const getFinalPlaceUrl = (meetingId: number) => getMeetingUrl(meetingId);
+
+export const getChangeFinalPlaceUrl = (meetingId: number) =>
+  getMeetingUrl(meetingId) + '/finalPlace';

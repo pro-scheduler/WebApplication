@@ -32,7 +32,7 @@ import ScrollUpIcon from '../../components/common/Icons/ScrollUpIcon';
 import {
   CreateInvitationsResponse,
   FailedInvitationDetails,
-  InvitationDetails,
+  InvitationDetails
 } from '../../model/invitation/Invitation';
 import { toastError, toastSuccess } from '../../tools/messagesInvocator';
 
@@ -114,9 +114,6 @@ const CreateMeeting = () => {
   );
   const container = useRef<HTMLDivElement>(null);
   const navbar = useRef<HTMLDivElement>(null);
-  const getCreatedMeetingType = () => {
-    return onlineLink === '' ? MeetingType.REAL : MeetingType.ONLINE;
-  };
 
   const switchChosenMeetingType = (meetingType: MeetingType) => {
     setChosenMeetingType(meetingType);
@@ -144,7 +141,7 @@ const CreateMeeting = () => {
     const createRequest: CreateMeetingRequest = {
       name: name,
       description: description,
-      type: getCreatedMeetingType(),
+      type: chosenMeetingType,
       availableTimeRanges: timeRanges,
       markTimeRangeDeadline: deadlineDate,
       link: onlineLink,
@@ -172,7 +169,7 @@ const CreateMeeting = () => {
       availableSections.push(MeetingConfigurationSection.TIME);
     }
 
-    if (chosenModules.includes(MeetingModuleType.PLACE_VOTING)) {
+    if (chosenModules.includes(MeetingModuleType.PLACE_VOTING) || chosenMeetingType === MeetingType.ONLINE) {
       availableSections.push(MeetingConfigurationSection.PLACE);
     }
 
@@ -197,7 +194,7 @@ const CreateMeeting = () => {
       (emails.length === 0 ||
         saveInvitationsResponse.isSuccess ||
         saveInvitationsResponse.isFailed) &&
-      (survey.questions.length === 0 ||
+      (!chosenModules.includes(MeetingModuleType.SURVEY) ||
         saveSurveyResponse.isSuccess ||
         saveSurveyResponse.isFailed) &&
       (chosenMeetingType === MeetingType.ONLINE ||
@@ -224,7 +221,7 @@ const CreateMeeting = () => {
           setInvitationsResponse
         );
       }
-      if (survey.questions.length > 0) {
+      if (chosenModules.includes(MeetingModuleType.SURVEY)) {
         createSurvey(meetingId.id, survey, setSaveSurveyResponse);
       }
       if (chosenMeetingType === MeetingType.REAL && selectedPlaces.length > 0) {

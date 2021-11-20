@@ -28,7 +28,7 @@ const ChooseRealOnlinePlace = ({
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <div className={styles.modulesHeader}>Choose kind of meeting place</div>
+        <div className={styles.modulesHeader}>Choose kind of the meeting</div>
       </Row>
       <Row className="justify-content-center mt-5">
         <Col md={6} lg={4} className="text-center ml-auto mt-4">

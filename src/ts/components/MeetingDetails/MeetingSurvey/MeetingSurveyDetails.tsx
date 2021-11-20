@@ -13,6 +13,8 @@ export type MeetingSurveyDetailsProps = {
   surveyToEdit: SurveyWithQuestionsDTO;
   setSurveyToEdit: (editedSurvey: SurveyWithQuestionsDTO) => void;
   state: MeetingState;
+  isOrganizer: boolean;
+  setEditSurveyMode: Function;
 };
 
 const MeetingSurveyDetails = ({
@@ -22,6 +24,8 @@ const MeetingSurveyDetails = ({
   surveyToEdit,
   setSurveyToEdit,
   state,
+  isOrganizer,
+  setEditSurveyMode,
 }: MeetingSurveyDetailsProps) => {
   const setEndDate = (newDate: Date) => {
     if (surveyToEdit) setSurveyToEdit({ ...surveyToEdit, surveyEndDate: newDate });
@@ -32,7 +36,7 @@ const MeetingSurveyDetails = ({
   };
 
   return (
-    <Card title={'Details'}>
+    <Card title={'Details'} onEdit={isOrganizer ? setEditSurveyMode : undefined}>
       <div className={styles.container}>
         {!editSurvey ? (
           <>

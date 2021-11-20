@@ -26,7 +26,7 @@
 .container {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 193px;
+    height: 420px;
 }
 
 .editLabel {
@@ -45,11 +45,8 @@
 .flexButtonsContainer {
     display: flex;
     justify-items: flex-end;
+    justify-content: flex-end;
     gap: 10px;
-}
-
-.blockButtonsContainer {
-    text-align: right;
 }
 
 .actionButton {
@@ -68,13 +65,18 @@
     padding-right: 12px;
 }
 
-@media only screen and (max-width: 1200px) {
+.updateButton {
+    width: auto;
+    padding: 10px 40px;
+}
+
+@media only screen and (max-width: 1500px) {
     .flexButtonsContainer {
         display: block;
         text-align: right;
     }
 
-    .googleCalendarButtonContainer {
-        margin-bottom: 10px;
+    .actionButton {
+        margin-top: 10px;
     }
 }

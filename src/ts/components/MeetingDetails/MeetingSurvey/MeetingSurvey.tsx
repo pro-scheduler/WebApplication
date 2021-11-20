@@ -33,7 +33,7 @@ const MeetingSurvey = ({
   reloadSurvey,
   state,
 }: MeetingSurveyProps) => {
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
+  const [displayQuestions, setDisplayQuestions] = useState<Boolean>(true);
   const [surveyToEdit, setSurveyToEdit] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: 0,
@@ -41,7 +41,6 @@ const MeetingSurvey = ({
     surveyEndDate: undefined,
   });
   const [questions, setQuestions] = useState<Question[]>();
-  // TODO add button to edit survey
   const [editSurveyMode, setEditSurveyMode] = useState<boolean>(false);
   const [questionsToAdd, setQuestionsToAdd] = useState<Question[]>([]);
 
@@ -83,30 +82,38 @@ const MeetingSurvey = ({
           surveyToEdit={surveyToEdit}
           setSurveyToEdit={setSurveyToEdit}
           state={state}
+          isOrganizer={isOrganizer}
+          setEditSurveyMode={() => setEditSurveyMode(!editSurveyMode)}
         />
       </Col>
       {!editSurveyMode ? (
         <>
-          <Col lg={6}>
-            <MeetingSurveyResults
-              numberOfParticipants={numberOfParticipants}
-              numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
-              users={surveySummary?.users ?? []}
-              isOrganizer={isOrganizer}
-            />
-          </Col>
+          {surveySummary && (
+            <Col lg={6}>
+              <MeetingSurveyResults
+                numberOfParticipants={numberOfParticipants}
+                numberOfFilledSurveys={surveySummary ? surveySummary.finishedParticipantsCount : 0}
+                users={surveySummary?.users ?? []}
+                isOrganizer={isOrganizer}
+              />
+            </Col>
+          )}
 
           <Col lg={12} className="text-center mx-auto">
-            <div className={styles.switchTime}>
-              <SwitchButton
-                onChange={() => setDisplayAnswers(!displayAnswers)}
-                checkedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                unCheckedIcon={<RiPencilFill className={styles.switchIcon} />}
-              />
-            </div>
+            {surveySummary && (
+              <div className={styles.switchTime}>
+                <SwitchButton
+                  onChange={() => setDisplayQuestions(!displayQuestions)}
+                  checkedIcon={<RiPencilFill className={styles.switchIcon} />}
+                  unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
+                  labels={['show others answers', 'show your answers']}
+                />
+              </div>
+            )}
           </Col>
+
           <Col className="mt-3">
-            {displayAnswers ? (
+            {displayQuestions ? (
               <MeetingSurveyQuestions
                 survey={survey}
                 reloadSurveySummary={reloadSurveySummary}

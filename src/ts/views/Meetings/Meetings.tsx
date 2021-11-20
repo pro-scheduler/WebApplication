@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { UserSummary } from '../../model/user/ProUser';
 import MeetingList from '../../components/Meetings/MeetingList';
-import { useState } from 'react';
-import { MeetingSummary } from '../../model/meeting/Meeting';
+import { MeetingState, MeetingSummary } from '../../model/meeting/Meeting';
 import { ApiCall } from '../../API/genericApiCalls';
 import LoadingSpinner from '../../components/common/Spinner/LoadingSpinner';
 import Col from 'react-bootstrap/Col';
@@ -21,21 +20,24 @@ const Meetings = ({ user }: { user: UserSummary }) => {
     setPastMeetings(
       meetings.filter(
         (meeting: MeetingSummary) =>
-          meeting.finalDate && new Date(meeting.finalDate.timeEnd) < new Date()
+          (meeting.finalDate && new Date(meeting.finalDate.timeEnd) < new Date()) ||
+          meeting.state === MeetingState.CANCELLED
       )
     );
     setOrganizedMeetings(
       meetings.filter(
         (meeting: MeetingSummary) =>
           meeting.organizers.find((organizer: UserSummary) => organizer.id === user.id) &&
-          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
+          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date()) &&
+          meeting.state !== MeetingState.CANCELLED
       )
     );
     setParticipatedMeetings(
       meetings.filter(
         (meeting: MeetingSummary) =>
           meeting.organizers.find((organizer: UserSummary) => organizer.id !== user.id) &&
-          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date())
+          (!meeting.finalDate || new Date(meeting.finalDate.timeEnd) >= new Date()) &&
+          meeting.state !== MeetingState.CANCELLED
       )
     );
   };

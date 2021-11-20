@@ -10,6 +10,7 @@ import {
   getVotePlaceUrl,
   getPlacesSettingsUrl,
   getFinalPlaceUrl,
+  getChangeFinalPlaceUrl,
 } from './urls';
 
 export const savePlaces = (
@@ -209,7 +210,7 @@ export const savePlacesSettings = (
     () => {},
     setResponse,
     true,
-    'You have successfully changed settings.',
+    'You have successfully changed settings',
     onSuccess
   );
 
@@ -227,6 +228,24 @@ export const saveFinalPlace = (
     () => {},
     setResponse,
     true,
-    'You have successfully changed final place.',
+    'You have successfully changed final place',
     onSuccess
   );
+
+export const changeFinalPlace = (
+  place: PlaceDTO,
+  meetingId: number,
+  onSuccess?: Function,
+  setPlace?: Function,
+  setResponse?: Function
+) => {
+  post(
+    place,
+    getChangeFinalPlaceUrl(meetingId),
+    setPlace,
+    setResponse,
+    true,
+    'You have successfully changed final place',
+    onSuccess
+  );
+};

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   MeetingDetails,
   MeetingModuleType,
@@ -16,6 +15,7 @@ export type MeetingDetailsSectionAboutProps = {
   isOrganizer: boolean;
   meetingSettings: MeetingGeneralSettings;
   onMeetingChange: Function;
+  currentUserId: number;
 };
 
 const MeetingDetailsSectionAbout = ({
@@ -23,15 +23,8 @@ const MeetingDetailsSectionAbout = ({
   isOrganizer,
   meetingSettings,
   onMeetingChange,
+  currentUserId,
 }: MeetingDetailsSectionAboutProps) => {
-  const [meetingName, setMeetingName] = useState<string>(meeting.name);
-  const [meetingDescription, setMeetingDescription] = useState<string>(meeting.description);
-  const setMeetingNameAndDescription = (name: string, description: string) => {
-    setMeetingName(name);
-    setMeetingDescription(description);
-    onMeetingChange();
-  };
-
   return (
     <>
       <Row className="justify-content">
@@ -46,21 +39,19 @@ const MeetingDetailsSectionAbout = ({
       <Row className="justify-content mb-5">
         <Col lg={6}>
           <MeetingDetailsInfo
-            hasSurvey={meeting.availableModules.includes(MeetingModuleType.SURVEY)}
+            surveyModule={meeting.availableModules.includes(MeetingModuleType.SURVEY)}
             meetingLink={(meeting as OnlineMeetingDetails)?.link}
             meetingPassword={(meeting as OnlineMeetingDetails)?.password}
-            finalPlace={(meeting as RealMeetingDetails)?.finalPlace?.name}
-            name={meetingName}
-            description={meetingDescription}
+            finalPlace={(meeting as RealMeetingDetails)?.finalPlace}
             isOrganizer={isOrganizer}
             meetingId={meeting.id}
             state={meeting.state}
             refreshMeeting={onMeetingChange}
-            refreshNameAndDescription={setMeetingNameAndDescription}
             finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
             finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
-            declarationsNumber={0}
+            declarationsModule={meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)}
             showGoogleCalendar={meeting.finalDate !== null}
+            meetingType={meeting.type}
           />
         </Col>
         <Col lg={6}>
@@ -70,7 +61,8 @@ const MeetingDetailsSectionAbout = ({
             refreshParticipants={onMeetingChange}
             participants={meeting.attendees}
             state={meeting.state}
-            everybodyCanInvite={!meetingSettings.onlyOrganizerCanInviteNewPeople}
+            everybodyCanInvite={meetingSettings.participantsCanInvitePeople}
+            currentUserId={currentUserId}
           />
         </Col>
       </Row>

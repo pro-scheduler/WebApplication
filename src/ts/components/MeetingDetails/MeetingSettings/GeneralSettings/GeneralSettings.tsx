@@ -9,6 +9,7 @@ import Card from '../../../common/Card/Card';
 import { MeetingSettings } from '../../../../model/meeting/Meeting';
 import { getMeetingSettings, saveMeetingSettings } from '../../../../API/meeting/meetingService';
 import RemoveMeeting from '../RemoveMeeting/RemoveMeeting';
+import styles from './GeneralSettings.module.css';
 
 export type GeneralSettingsProps = {
   meetingId: number;
@@ -17,11 +18,10 @@ export type GeneralSettingsProps = {
 
 const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
   const [settings, setSettings] = useState<MeetingSettings>({
-    onlyOrganizerCanInviteNewPeople: true,
+    participantsCanInvitePeople: false,
+    participantsCanSeeResults: false,
   });
-  const [newSettings, setNewSettings] = useState<MeetingSettings>({
-    onlyOrganizerCanInviteNewPeople: true,
-  });
+  const [newSettings, setNewSettings] = useState<MeetingSettings>(settings);
 
   const [opened, setOpened] = useState<boolean>(true);
 
@@ -49,19 +49,30 @@ const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
           <Collapse isOpened={opened}>
             <Card title={'General meeting settings'}>
               <Checkbox
-                checked={newSettings.onlyOrganizerCanInviteNewPeople}
+                checked={newSettings.participantsCanInvitePeople}
                 setChecked={(value: boolean) => {
                   setNewSettings({
                     ...newSettings,
-                    onlyOrganizerCanInviteNewPeople: value,
+                    participantsCanInvitePeople: value,
                   });
                 }}
-                label={'Only organizer can invite new people'}
+                label={'Participants can invite new people'}
+              />
+              <Checkbox
+                checked={newSettings.participantsCanSeeResults}
+                setChecked={(value: boolean) => {
+                  setNewSettings({
+                    ...newSettings,
+                    participantsCanSeeResults: value,
+                  });
+                }}
+                label={'Participants can see voting results'}
               />
               <ActionButton
                 onclick={saveSettings}
                 text={'Modify general settings'}
                 disabled={JSON.stringify(settings) === JSON.stringify(newSettings)}
+                className={styles.editButton}
               />
             </Card>
             <RemoveMeeting meetingName={meetingName} meetingId={meetingId} />

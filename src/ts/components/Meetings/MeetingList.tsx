@@ -58,10 +58,25 @@ const MeetingList = ({
           </div>
         </td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
-          {meeting.finalDate
-            ? new Date(meeting.finalDate.timeStart).toLocaleString() +
+          {meeting.finalDate?.timeStart && meeting.finalDate.timeEnd
+            ? new Date(meeting.finalDate.timeStart).toLocaleString('en-US', {
+                hour: 'numeric',
+                hour12: true,
+                minute: 'numeric',
+              }) +
               ' - ' +
-              new Date(meeting.finalDate.timeEnd).toLocaleString()
+              new Date(meeting.finalDate.timeEnd).toLocaleString('en-US', {
+                hour: 'numeric',
+                hour12: true,
+                minute: 'numeric',
+              }) +
+              ', ' +
+              (new Date(meeting.finalDate.timeStart).toLocaleDateString() ===
+              new Date(meeting.finalDate.timeEnd).toLocaleDateString()
+                ? new Date(meeting.finalDate.timeStart).toLocaleDateString()
+                : new Date(meeting.finalDate.timeStart).toLocaleDateString() +
+                  ' - ' +
+                  new Date(meeting.finalDate.timeEnd).toLocaleDateString())
             : '-'}
         </td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.state}</td>

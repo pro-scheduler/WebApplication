@@ -78,8 +78,10 @@ export const leaveMeeting = (
     onSuccess
   );
 
-export const updateFinalDate = (
-  finalDate: TimeRangeDTO,
+export const updateOnlineMeetingDetails = (
+  finalDate: TimeRangeDTO | undefined,
+  link: string | undefined,
+  password: string | undefined,
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
@@ -87,13 +89,36 @@ export const updateFinalDate = (
 ) =>
   put(
     {
-      finalDate,
+      finalDate: finalDate,
+      link: link,
+      password: password,
     },
     getMeetingUrl(meetingId),
     setData,
     setResponse,
     true,
-    'Final date saved',
+    'Meeting details have been updated successfully',
+    onSuccess
+  );
+
+export const updateRealMeetingDetails = (
+  finalDate: TimeRangeDTO | undefined,
+  finalMeetingPlaceId: number | undefined,
+  meetingId: number,
+  setData?: Function,
+  setResponse?: Function,
+  onSuccess?: Function
+) =>
+  put(
+    {
+      finalDate: finalDate,
+      finalMeetingPlaceId: finalMeetingPlaceId,
+    },
+    getMeetingUrl(meetingId),
+    setData,
+    setResponse,
+    true,
+    'Meeting details have been updated successfully',
     onSuccess
   );
 
@@ -116,22 +141,27 @@ export const cancelMeeting = (
 export const updateMeetingNameAndDescription = (
   name: string,
   description: string,
-  finalDate: TimeRangeDTO | null,
   meetingId: number,
+  finalMeetingPlaceId?: number,
   setResponse?: Function,
   onSuccess?: Function
 ) =>
   put(
-    {
-      name: name,
-      description: description,
-      finalDate: finalDate,
-    },
+    finalMeetingPlaceId
+      ? {
+          name: name,
+          description: description,
+          finalMeetingPlaceId: finalMeetingPlaceId,
+        }
+      : {
+          name: name,
+          description: description,
+        },
     getMeetingUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully updated meeting details',
+    'You have successfully updated meeting name and description',
     onSuccess
   );
 
@@ -222,30 +252,21 @@ export const saveMeetingSettings = (
   newSettings: MeetingSettings,
   onSuccess?: Function,
   setResponse?: Function
-) => {
-  if (onSuccess) onSuccess();
-  return; // TODO connect with backend
-  // eslint-disable-next-line
-  put(
+) =>
+  post(
     newSettings,
     getMeetingSettingsUrl(meetingId),
     () => {},
     setResponse,
     true,
-    'You have successfully changed general settings.',
+    'You have successfully modified general meeting settings',
     onSuccess
   );
-};
 export const getMeetingSettings = (
   meetingId: number,
   setSettings: Function,
   setResponse?: Function
-) => {
-  setSettings({ onlyOrganizerCanInviteNewPeople: false });
-  return; // TODO connect with backend
-  // eslint-disable-next-line
-  get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, true);
-};
+) => get(getMeetingSettingsUrl(meetingId), setSettings, setResponse, false);
 
 export const deleteMeeting = (
   meetingId: number,

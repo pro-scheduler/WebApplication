@@ -91,7 +91,6 @@ export const post = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -125,7 +124,6 @@ export const put = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -157,7 +155,6 @@ export const del = (
         else if (showFailed) toastError(result.title + ' ' + result.detail);
       } else {
         if (setData) setData(result);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {
@@ -191,7 +188,6 @@ export const get = (
       } else {
         setResponseData(result);
         if (successMessage) toastSuccess(successMessage);
-        if (onSuccess) onSuccess();
       }
     })
     .catch((error) => {

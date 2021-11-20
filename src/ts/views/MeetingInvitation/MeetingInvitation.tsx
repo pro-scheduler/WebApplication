@@ -112,9 +112,6 @@ const MeetingInvitation = () => {
                 className={styles.signInButton}
               />
             )}
-            {/*{userResponse.isFailed && (*/}
-            {/*  <div className={styles.signInInfo}>Please, sign in first</div>*/}
-            {/*)}*/}
           </Col>
         </Row>
       ) : (
