@@ -23,8 +23,7 @@ import useWindowDimensions from './components/common/window/WindowDimension';
 const Routes = () => {
   const [user, setUser] = useState<UserDetails>(defaultUser);
   const [response, setResponse] = useState<any>({ isFailed: false });
-  // eslint-disable-next-line
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const marginLeft: number = 80;
   const [invitationsCount, setInvitationsCount] = useState<number>(0);
   const [surveyCount, setSurveyCount] = useState<number>(0);

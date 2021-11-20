@@ -33,8 +33,7 @@ const HomePage = ({
   const [homeInfo, setHomeInfo] = useState<UserHomePageDetails>();
   const [surveys, setSurveys] = useState<BasicUserSurveyInfo[]>([]);
   const [declarations, setDeclarations] = useState<DeclarationDetails[]>([]);
-  // eslint-disable-next-line
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   useEffect(() => {
     getUserHomePageDetails(setHomeInfo);
