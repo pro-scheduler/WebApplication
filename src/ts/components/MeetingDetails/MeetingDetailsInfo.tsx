@@ -82,7 +82,10 @@ const MeetingDetailsInfo = ({
           address: newFinalPlace.description,
         },
         meetingId,
-        () => refreshMeeting()
+        () => {
+          refreshMeeting();
+          setEditMode(false);
+        }
       );
     }
   };
@@ -100,7 +103,11 @@ const MeetingDetailsInfo = ({
         newPassword,
         meetingId,
         () => {},
-        () => refreshMeeting()
+        () => {},
+        () => {
+          refreshMeeting();
+          setEditMode(false);
+        }
       );
     } else {
       if (
@@ -124,6 +131,7 @@ const MeetingDetailsInfo = ({
               updateFinalPlace();
             } else {
               refreshMeeting();
+              setEditMode(false);
             }
           }
         );
