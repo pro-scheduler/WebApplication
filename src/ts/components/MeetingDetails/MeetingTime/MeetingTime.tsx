@@ -11,7 +11,6 @@ import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { RiPencilFill } from 'react-icons/ri';
 import { BsFillPieChartFill } from 'react-icons/bs';
-import Timer from '../../common/Timer/Timer';
 import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
 import EditDeadline from './EditDeadline/EditDeadline';
 
@@ -171,14 +170,13 @@ const MeetingTime = ({
   return (
     <Row className="justify-content">
       <Col>
-        {isOrganizer && (
-          <EditDeadline
-            isOpened={true} //TODO: move to settings
-            timeDeadline={timeDeadline}
-            meetingId={meetingId}
-            setDeadline={setNewDeadline}
-          />
-        )}
+        <EditDeadline
+          timeDeadline={timeDeadline}
+          meetingId={meetingId}
+          setDeadline={setNewDeadline}
+          isOrganizer={isOrganizer}
+          isMeetingOpen={state === MeetingState.OPEN}
+        />
         <Col lg={12} className="text-center mx-auto">
           {canSeeVotingResults && (
             <div className={styles.switchTime}>
@@ -187,16 +185,6 @@ const MeetingTime = ({
                 checkedIcon={<RiPencilFill className={styles.switchIcon} />}
                 unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
                 labels={['show others votes', 'show your votes']}
-              />
-            </div>
-          )}
-          {!displayAnswers && state === MeetingState.OPEN && (
-            <div className="my-5">
-              <Timer
-                date={timeDeadline}
-                completedMessage={'Voting is ended'}
-                nonCompletedMessage={'Voting ends in:'}
-                noEndDateMessage={'Voting has no time limit'}
               />
             </div>
           )}
