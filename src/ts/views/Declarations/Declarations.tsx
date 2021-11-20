@@ -18,7 +18,7 @@ const Declarations = () => {
   }, []);
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-4">
       {response.isSuccess ? (
         <Row className="justify-content-center mt-4">
           <Col>

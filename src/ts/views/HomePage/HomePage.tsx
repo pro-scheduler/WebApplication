@@ -72,7 +72,7 @@ const HomePage = ({
     : [];
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-4">
       <Row className="justify-content mt-5 ml-3">
         <Col lg={12} className={styles.welcomeHeader}>
           Welcome back, {' ' + user.username}!

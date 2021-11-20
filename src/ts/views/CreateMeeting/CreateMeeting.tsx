@@ -275,7 +275,7 @@ const CreateMeeting = () => {
   };
 
   return (
-    <Container>
+    <Container className="mb-4">
       {currentCreateMeetingState === CreateMeetingState.CHOOSE_MEETING_TYPE && (
         <ChooseRealOnlinePlace
           onNavigateToNextSection={() =>
