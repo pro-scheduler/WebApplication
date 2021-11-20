@@ -37,7 +37,7 @@ const MeetingSurveyDetails = ({
 
   return (
     <Card title={'Details'} onEdit={isOrganizer ? setEditSurveyMode : undefined}>
-      <div className={styles.container}>
+      <div className={editSurvey ? styles.editModeContainer : styles.container}>
         {!editSurvey ? (
           <>
             {state === MeetingState.OPEN ? (

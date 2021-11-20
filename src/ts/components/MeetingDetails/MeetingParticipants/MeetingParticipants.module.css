@@ -14,6 +14,9 @@
 
 .inviteButton {
     margin-top: 20px;
+    width: auto;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .selectedParticipants {
@@ -75,10 +78,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .inviteButton {
-        width: 210px;
-    }
-
     .copiedToClipboardMessage {
         right: 5px;
         bottom: -15px;

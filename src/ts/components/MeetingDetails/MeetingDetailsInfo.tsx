@@ -214,7 +214,7 @@ const MeetingDetailsInfo = ({
           : undefined
       }
       footer={
-        state === MeetingState.OPEN ? (
+        state === MeetingState.OPEN && !editMode ? (
           <div className={styles.flexButtonsContainer}>
             {showGoogleCalendar && (
               <GoogleButton
