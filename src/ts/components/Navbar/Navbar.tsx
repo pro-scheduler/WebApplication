@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ProSidebar,
@@ -9,10 +9,10 @@ import {
   SidebarContent,
 } from 'react-pro-sidebar';
 
-import { FaList, FaRegClipboard } from 'react-icons/fa';
+import { FaRegClipboard } from 'react-icons/fa';
 import { FiLogOut, FiFolder, FiMonitor } from 'react-icons/fi';
 import { BsEnvelope, BsPencil } from 'react-icons/bs';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import './Navbar.css';
@@ -23,6 +23,7 @@ import UserIcon from '../common/Icons/UserIcon';
 import { getSignOutUrl } from '../../API/user/urls';
 import HamburgerMenuIcon from '../common/Icons/HamburgerMenuIcon';
 import CountDot from '../common/CountDot/CountDot';
+import useOnClickOutside from '../../tools/useOnClickOutside';
 
 const Navbar = ({
   user,
@@ -35,11 +36,24 @@ const Navbar = ({
   invitationCount: number;
   surveyCount: number;
 }) => {
-  const [menuCollapse, setMenuCollapse] = useState(true);
+  const [menuCollapse, setMenuCollapse] = useState(false);
   const [activeIcon, setActiveIcon] = useState('');
   const [showNavbar, setShowNavbar] = useState<boolean>(false);
+  const ref = useRef(null);
+
+  const hideNavbar = () => {
+    setMenuCollapse(true);
+    setShowNavbar(false);
+  };
+
+  const handleClickOutside = () => {
+    hideNavbar();
+  };
+
+  useOnClickOutside(ref, handleClickOutside);
+
   return (
-    <div>
+    <div ref={ref}>
       {width <= 500 && (
         <HamburgerMenuIcon
           onClick={() => {
@@ -79,7 +93,7 @@ const Navbar = ({
                 onClick={() => setActiveIcon('Schedule')}
               >
                 New meeting
-                <Link to="/create" />
+                <Link to="/create" onClick={hideNavbar} />
               </MenuItem>
               <hr className="newMeetingLine" />
 
@@ -89,7 +103,7 @@ const Navbar = ({
                 onClick={() => setActiveIcon('Home')}
               >
                 Home
-                <Link to="/home" />
+                <Link to="/home" onClick={hideNavbar} />
               </MenuItem>
 
               <MenuItem
@@ -98,7 +112,7 @@ const Navbar = ({
                 onClick={() => setActiveIcon('Meetings')}
               >
                 Meetings
-                <Link to="/meetings" />
+                <Link to="/meetings" onClick={hideNavbar} />
               </MenuItem>
 
               <MenuItem
@@ -108,7 +122,7 @@ const Navbar = ({
               >
                 <CountDot count={surveyCount} display={surveyCount > 0} />
                 Surveys
-                <Link to="/surveys" />
+                <Link to="/surveys" onClick={hideNavbar} />
               </MenuItem>
 
               <MenuItem
@@ -117,7 +131,7 @@ const Navbar = ({
                 onClick={() => setActiveIcon('Declarations')}
               >
                 Declarations
-                <Link to="/declarations" />
+                <Link to="/declarations" onClick={hideNavbar} />
               </MenuItem>
 
               <MenuItem
@@ -127,18 +141,23 @@ const Navbar = ({
               >
                 <CountDot count={invitationCount} display={invitationCount > 0} />
                 Invitations
-                <Link to="/invitations" />
+                <Link to="/invitations" onClick={hideNavbar} />
               </MenuItem>
             </Menu>
           </SidebarContent>
 
           <SidebarFooter>
             <Menu iconShape="circle">
-              <MenuItem icon={<FaList />} onClick={() => setMenuCollapse(!menuCollapse)} />
+              <MenuItem
+                icon={menuCollapse ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
+                onClick={() => setMenuCollapse(!menuCollapse)}
+              >
+                {!menuCollapse && 'Hide'}
+              </MenuItem>
               {user && user.username && (
                 <MenuItem icon={<UserIcon user={user} backgroundColor="var(--light-red)" />}>
                   {user.username}
-                  <Link to="/profile" />
+                  <Link to="/profile" onClick={hideNavbar} />
                 </MenuItem>
               )}
               <MenuItem icon={<FiLogOut />}>

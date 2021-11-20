@@ -23,8 +23,7 @@ export type ChooseTimeProps = {
 const ChooseTime = ({ visible, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
-  // eslint-disable-next-line
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
     const days = selectedDays.concat();
     if (selected) {
