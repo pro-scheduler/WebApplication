@@ -64,6 +64,7 @@ const PlacesTable = ({
             }}
             text={'Remove places'}
             disabled={checkedPlaces.length === 0}
+            className={styles.editButton}
           />
           {displayFinalPlaceButton && (
             <div style={{ marginLeft: 10 }}>
@@ -75,6 +76,7 @@ const PlacesTable = ({
                 disabled={
                   checkedPlaces.length !== 1 || disabledFinalPlaceButtonMapper(getCheckedPlaceId())
                 }
+                className={styles.editButton}
               />
             </div>
           )}

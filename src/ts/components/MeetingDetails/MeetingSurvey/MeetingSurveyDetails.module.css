@@ -14,3 +14,7 @@
     overflow-x: hidden;
     height: 182px;
 }
+
+.editModeContainer {
+    height: auto;
+}

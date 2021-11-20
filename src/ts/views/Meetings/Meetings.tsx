@@ -52,7 +52,7 @@ const Meetings = ({ user }: { user: UserSummary }) => {
   }, [user.id]);
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-4">
       {meetingsResponse.isSuccess ? (
         <Row className="justify-content-center mt-4">
           <Col lg={12}>

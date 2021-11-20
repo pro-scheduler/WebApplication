@@ -99,7 +99,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   }, [meeting, user.id]);
 
   return meeting ? (
-    <Container fluid>
+    <Container fluid className="mb-4">
       <MeetingDetailsHeader
         meeting={meeting}
         chosenSection={chosenSection}

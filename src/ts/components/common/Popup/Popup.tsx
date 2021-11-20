@@ -24,7 +24,9 @@ const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }
           {title}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="text-center">{children}</Modal.Body>
+      <Modal.Body className="text-center">
+        <div className="mt-2 mb-5">{children}</div>
+      </Modal.Body>
     </Modal>
   );
 };

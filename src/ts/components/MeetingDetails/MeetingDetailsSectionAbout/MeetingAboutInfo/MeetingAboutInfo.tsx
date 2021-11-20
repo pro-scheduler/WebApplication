@@ -108,6 +108,7 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
           setName(newName);
           setDescription(newDescription);
           onMeetingChange();
+          setEditNameAndDescription(false);
         }
       );
     }

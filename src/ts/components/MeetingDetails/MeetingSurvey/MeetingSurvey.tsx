@@ -69,7 +69,10 @@ const MeetingSurvey = ({
 
       surveyToEdit.questions = [...surveyToEdit.questions, ...questionsToAdd];
     }
-    editSurvey(survey.id, surveyToEdit, refreshSurvey);
+    editSurvey(survey.id, surveyToEdit, () => {
+      refreshSurvey();
+      setEditSurveyMode(false);
+    });
   };
 
   return (
