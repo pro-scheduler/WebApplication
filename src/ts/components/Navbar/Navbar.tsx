@@ -36,7 +36,7 @@ const Navbar = ({
   invitationCount: number;
   surveyCount: number;
 }) => {
-  const [menuCollapse, setMenuCollapse] = useState(false);
+  const [menuCollapse, setMenuCollapse] = useState(width < 550);
   const [activeIcon, setActiveIcon] = useState('');
   const [showNavbar, setShowNavbar] = useState<boolean>(false);
   const ref = useRef(null);
