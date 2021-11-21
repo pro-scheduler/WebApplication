@@ -104,6 +104,7 @@
 .singleMessageContainer {
   display: flex;
   width: 70%;
+  padding-right: 8px;
 }
 
 .messageContentContainer {

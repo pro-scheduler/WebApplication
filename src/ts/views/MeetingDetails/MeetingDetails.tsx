@@ -129,6 +129,7 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
       50,
       MeetingChatDirection.BEFORE,
       (messages: MeetingChatMessageDetails[]) => {
+        console.log(`messages: ${JSON.stringify(messages)}`);
         setMeetingChatMessages(messages);
         lastMessage.current = messages[messages.length - 1];
         setOldestChatMessage(messages[0]);

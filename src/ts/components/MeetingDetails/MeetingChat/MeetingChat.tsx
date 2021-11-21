@@ -41,9 +41,9 @@ const MeetingChat = ({
     return (
       <div className={`${styles.singleMessageContainer} ${styles.messageRight}`} key={index}>
         <div className={`${styles.messageContentContainer} ${styles.messageOwn}`}>
-          <div className={styles.messageText}>{message.id}</div>
+          <div className={styles.messageText}>{message.message}</div>
           <div className={styles.messageDateTime}>
-            {moment(message.creationDateTime).format('d MMM HH:mm')}
+            {moment(message.creationDateTime).format('DD MMM HH:mm')}
           </div>
         </div>
         <UserIcon user={message.sendBy} className={styles.messageSenderIcon} />
@@ -56,7 +56,7 @@ const MeetingChat = ({
       <div className={`${styles.singleMessageContainer} ${styles.messageLeft}`} key={index}>
         <UserIcon user={message.sendBy} className={styles.messageSenderIcon} />
         <div className={`${styles.messageContentContainer} ${styles.messageOther}`}>
-          <div className={styles.messageText}>{message.id}</div>
+          <div className={styles.messageText}>{message.message}</div>
           <div className={styles.messageDateTime}>
             {moment(message.creationDateTime).format('d MMM HH:mm')}
           </div>
