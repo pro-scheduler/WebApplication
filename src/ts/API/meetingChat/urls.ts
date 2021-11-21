@@ -1,5 +1,12 @@
-export const getMeetingChatMessagesUrl = (meetingId: number, page: number, size: number) =>
-  `${process.env.REACT_APP_CHAT_SERVICE_URL}chat/meeting/${meetingId}?page=${page}&size=${size}`;
+import { MeetingChatDirection } from './meetingChatService';
+
+export const getMeetingChatMessagesUrl = (
+  meetingId: number,
+  messageTime: any,
+  messageCount: number,
+  direction: MeetingChatDirection
+) =>
+  `${process.env.REACT_APP_CHAT_SERVICE_URL}chat/meeting/${meetingId}?message-time=${messageTime}&message-count=${messageCount}&direction=${direction}`;
 
 export const getCreateMeetingChatMessageUrl = (meetingId: number) =>
   `${process.env.REACT_APP_CHAT_SERVICE_URL}chat/meeting/${meetingId}`;

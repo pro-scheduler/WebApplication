@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import { getMeetingSettings, loadMeeting } from '../../API/meeting/meetingService';
@@ -16,7 +16,8 @@ import { PlaceDetails } from '../../model/geo/Geo';
 import {
   createNewMeetingChatMessage,
   loadMeetingChatMessages,
-  subscribeToChat,
+  loadNewMeetingChatMessages,
+  MeetingChatDirection,
 } from '../../API/meetingChat/meetingChatService';
 import { MeetingChatMessageDetails } from '../../model/meetingChat/MeetingChatMessage';
 import MeetingChat from '../../components/MeetingDetails/MeetingChat/MeetingChat';
@@ -45,7 +46,6 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const { id }: any = useParams();
   const [meetingResponse, setMeetingResponse] = useState<ApiCall>(new ApiCall());
   const [meeting, setMeeting] = useState<any>();
-  const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
   const [isOrganizer, setIsOrganizer] = useState<boolean>(false);
   const [meetingSettings, setMeetingSettings] = useState<MeetingGeneralSettings>({
     participantsCanInvitePeople: false,
@@ -54,6 +54,14 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
   const [chosenSection, setChosenSection] = useState<MeetingDetailsSection>(
     MeetingDetailsSection.About
   );
+
+  const [meetingChatMessages, setMeetingChatMessages] = useState<MeetingChatMessageDetails[]>([]);
+  const [oldestChatMessage, setOldestChatMessage] = useState<MeetingChatMessageDetails>();
+  const [loadingOlderMessages, setLoadingOlderMessages] = useState<boolean>(false);
+  const [noMoreOlderMessages, setNoMoreOlderMessages] = useState<boolean>(false);
+  const loadingOlderMessagesFlag = useRef<boolean>(false);
+
+  const lastMessage = useRef<MeetingChatMessageDetails | null>(null);
 
   const setFinalPlace = (place: PlaceDetails) => {
     setMeeting({ ...meeting, finalPlace: place });
@@ -64,27 +72,90 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
 
   const reloadMeeting = () => {
     loadMeeting(id, setMeetingDetails, setMeetingResponse);
-    loadMeetingChatMessages(id, 0, 50, setMeetingChatMessages);
     getMeetingSettings(id, setMeetingSettings);
   };
 
   const sendNewMeetingChatMessage = (message: string) => {
-    createNewMeetingChatMessage(id, { message: message });
+    createNewMeetingChatMessage(id, { message: message }, () => {
+      loadNewMeetingChatMessages(
+        id,
+        lastMessage.current?.creationDateTime ?? new Date().toISOString(),
+        (messages: MeetingChatMessageDetails[]) => {
+          if (messages.length > 0) {
+            setMeetingChatMessages((prevState: MeetingChatMessageDetails[]) =>
+              prevState.concat(messages)
+            );
+            lastMessage.current = messages[messages.length - 1];
+          }
+        }
+      );
+    });
   };
 
-  const addMessageToChat = (newMessage: MeetingChatMessageDetails) => {
-    setMeetingChatMessages((prevMeetingChatMessages) => prevMeetingChatMessages.concat(newMessage));
+  const loadOlderMessages = () => {
+    if (!loadingOlderMessagesFlag.current) {
+      loadingOlderMessagesFlag.current = true;
+      setLoadingOlderMessages(true);
+      setTimeout(() => {
+        loadMeetingChatMessages(
+          id,
+          oldestChatMessage?.creationDateTime ?? new Date().toISOString(),
+          50,
+          MeetingChatDirection.BEFORE,
+          (messages: MeetingChatMessageDetails[]) => {
+            if (messages.length > 0) {
+              setOldestChatMessage(messages[0]);
+              setMeetingChatMessages((prev) => messages.concat(prev));
+            } else {
+              setNoMoreOlderMessages(true);
+            }
+            loadingOlderMessagesFlag.current = false;
+            setLoadingOlderMessages(false);
+          }
+        );
+      }, 2000);
+    }
   };
 
   useEffect(() => {
     reloadMeeting();
 
-    const chatWebSocket = subscribeToChat(id, (newMessage: MeetingChatMessageDetails) =>
-      addMessageToChat(newMessage)
+    let mounted = true;
+    let chatLoaded = false;
+
+    loadMeetingChatMessages(
+      id,
+      new Date().toISOString(),
+      50,
+      MeetingChatDirection.BEFORE,
+      (messages: MeetingChatMessageDetails[]) => {
+        setMeetingChatMessages(messages);
+        lastMessage.current = messages[messages.length - 1];
+        setOldestChatMessage(messages[0]);
+        chatLoaded = true;
+      }
     );
 
+    const intervalId = setInterval(() => {
+      if (mounted && chatLoaded) {
+        loadNewMeetingChatMessages(
+          id,
+          lastMessage.current?.creationDateTime ?? new Date().toISOString(),
+          (messages: MeetingChatMessageDetails[]) => {
+            if (messages.length > 0) {
+              setMeetingChatMessages((prevState: MeetingChatMessageDetails[]) =>
+                prevState.concat(messages)
+              );
+              lastMessage.current = messages[messages.length - 1];
+            }
+          }
+        );
+      }
+    }, 1000);
+
     return () => {
-      chatWebSocket.close();
+      mounted = false;
+      clearInterval(intervalId);
     };
     // eslint-disable-next-line
   }, []);
@@ -163,6 +234,9 @@ const MeetingDetails = ({ user }: { user: UserSummary }) => {
         messages={meetingChatMessages}
         onSendNewMessage={sendNewMeetingChatMessage}
         userId={user.id}
+        isLoadingOlderMessages={loadingOlderMessages}
+        noMoreOldMessages={noMoreOlderMessages}
+        onLoadOlderMessages={loadOlderMessages}
       />
     </Container>
   ) : (

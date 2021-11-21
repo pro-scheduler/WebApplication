@@ -1,35 +1,44 @@
-import Stomp from 'stompjs';
-import { CreateMeetingChatMessageRequest } from '../../model/meetingChat/MeetingChatMessage';
-import { get, post } from '../genericApiCalls';
 import {
-  getCreateMeetingChatMessageUrl,
-  getMeetingChatMessagesUrl,
-  getChatSocketEndpoint,
-} from './urls';
+  CreateMeetingChatMessageRequest,
+  MeetingChatMessageDetails,
+} from '../../model/meetingChat/MeetingChatMessage';
+import { get, post } from '../genericApiCalls';
+import { getCreateMeetingChatMessageUrl, getMeetingChatMessagesUrl } from './urls';
 
-export const subscribeToChat = (meetingId: number, onNewMessageEvent: Function) => {
-  let chatSocket = new WebSocket(getChatSocketEndpoint());
+export enum MeetingChatDirection {
+  BEFORE = 'BEFORE',
+  AFTER = 'AFTER',
+}
 
-  let ws = Stomp.over(chatSocket);
-  ws.connect(
-    {},
-    (frame: any) =>
-      ws.subscribe(`/api/chat/topic/${meetingId}/push`, (message: any) =>
-        onNewMessageEvent(JSON.parse(message.body))
-      ),
-    (error: any) => console.log(`STOMP error: ${error}`)
+export const loadNewMeetingChatMessages = (
+  meetingId: number,
+  lastMessageTime: any,
+  setMeetingChatMessages: (messages: MeetingChatMessageDetails[]) => void,
+  setResponse?: Function
+) =>
+  loadMeetingChatMessages(
+    meetingId,
+    lastMessageTime,
+    10000,
+    MeetingChatDirection.AFTER,
+    setMeetingChatMessages,
+    setResponse
   );
-
-  return chatSocket;
-};
 
 export const loadMeetingChatMessages = (
   meetingId: number,
-  page: number,
-  size: number,
-  setMeetingChatMessages: Function,
+  messageTime: any,
+  messageCount: number,
+  direction: MeetingChatDirection,
+  setMeetingChatMessages: (messages: MeetingChatMessageDetails[]) => void,
   setResponse?: Function
-) => get(getMeetingChatMessagesUrl(meetingId, page, size), setMeetingChatMessages, setResponse);
+) => {
+  get(
+    getMeetingChatMessagesUrl(meetingId, messageTime, messageCount, direction),
+    setMeetingChatMessages,
+    setResponse
+  );
+};
 
 export const createNewMeetingChatMessage = (
   meetingId: number,
