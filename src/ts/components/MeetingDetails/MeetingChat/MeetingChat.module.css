@@ -98,6 +98,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .singleMessageContainer {
@@ -110,6 +111,7 @@
   margin: 5px;
   border-radius: 10px;
   padding: 10px;
+  word-break: break-all;
 }
 
 .messageSenderIcon {
@@ -117,11 +119,11 @@
 }
 
 .messageOwn {
-  background-color: lightgoldenrodyellow;
+  background-color: #b9edcd;
 }
 
 .messageOther {
-  background-color: lightskyblue;
+  background-color: #d0cdf5;
 }
 
 .messageLeft {
@@ -135,4 +137,18 @@
 .messageDateTime {
   font-size: 0.75em;
   text-align: right;
+}
+
+.loadingInfoIcon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: auto auto 20px;
+  color: gray;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg)}
+  100% { transform: rotate(360deg)}
 }
