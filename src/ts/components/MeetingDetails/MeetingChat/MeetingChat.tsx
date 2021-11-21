@@ -58,7 +58,7 @@ const MeetingChat = ({
         <div className={`${styles.messageContentContainer} ${styles.messageOther}`}>
           <div className={styles.messageText}>{message.message}</div>
           <div className={styles.messageDateTime}>
-            {moment(message.creationDateTime).format('d MMM HH:mm')}
+            {moment(message.creationDateTime).format('DD MMM HH:mm')}
           </div>
         </div>
       </div>
