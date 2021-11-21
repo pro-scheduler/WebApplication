@@ -103,18 +103,30 @@ const MeetingSurveyQuestions = ({
     setNewQuestions(newQuestions.filter((id: number) => idToDelete !== id));
   };
 
-  const questions = questionsAndAnswers.map((value, index: number) => {
-    return (
-      <MeetingQuestion
-        key={value.question.id}
-        question={value.question}
-        answer={value.answer}
-        setAnswer={setAnswer}
-        questionNumber={index + 1}
-        onDelete={surveyToEdit ? () => deleteQuestion(value.question.id) : undefined}
-      />
-    );
-  });
+  const questions = questionsAndAnswers
+    .filter(
+      (value: { answer: Answer | null; question: Question }) =>
+        value !== null && value.question !== null
+    )
+    .sort(
+      (
+        a: { answer: Answer | null; question: Question },
+        b: { answer: Answer | null; question: Question }
+      ) =>
+        a.question.id !== null && b.question.id != null && a.question.id > b.question.id ? 1 : -1
+    )
+    .map((value, index: number) => {
+      return (
+        <MeetingQuestion
+          key={value.question.id}
+          question={value.question}
+          answer={value.answer}
+          setAnswer={setAnswer}
+          questionNumber={index + 1}
+          onDelete={surveyToEdit ? () => deleteQuestion(value.question.id) : undefined}
+        />
+      );
+    });
 
   const saveSurvey = () => {
     fillSurvey(survey.id, questionsAndAnswers, setSaveResponse);

@@ -46,6 +46,7 @@ export type SurveySummary = {
   finishedParticipantsCount: number;
   questionSummaries: {
     question: string;
+    questionId: number;
     type: QuestionType;
     entries?: ChoiceInfo[];
     answers?: Entry[];
