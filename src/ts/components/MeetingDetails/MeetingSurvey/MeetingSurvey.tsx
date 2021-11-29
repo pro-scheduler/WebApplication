@@ -1,8 +1,7 @@
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import styles from './MeetingSurvey.module.css';
-import SwitchButton from '../../common/SwitchButton/SwitchButton';
-import { RiPencilFill } from 'react-icons/ri';
+import { AiOutlineForm } from 'react-icons/ai';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import MeetingSurveyQuestions from './MeetingSurveyQuestions';
@@ -33,7 +32,7 @@ const MeetingSurvey = ({
   reloadSurvey,
   state,
 }: MeetingSurveyProps) => {
-  const [displayQuestions, setDisplayQuestions] = useState<Boolean>(true);
+  const [showYourVotes, setShowYourVotes] = useState<boolean>(true);
   const [surveyToEdit, setSurveyToEdit] = useState<SurveyWithQuestionsDTO>({
     description: '',
     meetingId: 0,
@@ -104,19 +103,33 @@ const MeetingSurvey = ({
 
           <Col lg={12} className="text-center mx-auto">
             {surveySummary && (
-              <div className={styles.switchTime}>
-                <SwitchButton
-                  onChange={() => setDisplayQuestions(!displayQuestions)}
-                  checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-                  unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                  labels={['show others answers', 'show your answers']}
-                />
+              <div className={styles.sectionsContainer}>
+                <div
+                  className={`${styles.sectionIconContainer} ${showYourVotes ? styles.chosen : ''}`}
+                  onClick={() => setShowYourVotes(true)}
+                >
+                  <AiOutlineForm />
+                  <div>
+                    <span className={!showYourVotes ? styles.hidden : ''}>Your votes</span>
+                  </div>
+                </div>
+                <div
+                  className={`${styles.sectionIconContainer} ${
+                    !showYourVotes ? styles.chosen : ''
+                  }`}
+                  onClick={() => setShowYourVotes(false)}
+                >
+                  <BsFillPieChartFill />
+                  <div>
+                    <span className={showYourVotes ? styles.hidden : ''}>Voting results</span>
+                  </div>
+                </div>
               </div>
             )}
           </Col>
 
           <Col className="mt-3">
-            {displayQuestions ? (
+            {showYourVotes ? (
               <MeetingSurveyQuestions
                 survey={survey}
                 reloadSurveySummary={reloadSurveySummary}
