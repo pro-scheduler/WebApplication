@@ -52,6 +52,9 @@ const MeetingDetailsSectionAbout = ({
             declarationsModule={meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)}
             showGoogleCalendar={meeting.finalDate !== null}
             meetingType={meeting.type}
+            markTimeRangeDeadline={
+              meeting.markTimeRangeDeadline ? new Date(meeting.markTimeRangeDeadline) : null
+            }
           />
         </Col>
         <Col lg={6}>

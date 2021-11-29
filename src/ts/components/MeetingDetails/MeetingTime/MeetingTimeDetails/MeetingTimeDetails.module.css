@@ -1,0 +1,35 @@
+.editMode {
+    display: flex;
+    justify-content: left;
+}
+
+.editLabel {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.buttonAction {
+    width: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.finalDateIcon {
+    color: var(--purple);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.finalDateContainer {
+    display: flex;
+    align-items: center;
+}
