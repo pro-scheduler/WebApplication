@@ -4,7 +4,7 @@ import CalendarIcon from '../common/Icons/CalendarIcon';
 import styles from './ChooseTime.module.css';
 import DayPicker, { DateUtils, DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TimePicker from '../TimeGrid/TimePicker';
 import useWindowDimensions from '../common/window/WindowDimension';
 import { TimeRangeDTO } from '../../model/TimeRangeDTO';
@@ -23,6 +23,7 @@ export type ChooseTimeProps = {
 const ChooseTime = ({ visible, setSelectedRanges, setDeadlineDate }: ChooseTimeProps) => {
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
   const [timeRanges, setTimeRanges] = useState<RangesWithDay>({});
+  const timeComponents = useRef<HTMLDivElement>(null);
   const { width } = useWindowDimensions();
   const handleDayClick = (day: Date, { selected }: DayModifiers) => {
     const days = selectedDays.concat();
@@ -34,6 +35,11 @@ const ChooseTime = ({ visible, setSelectedRanges, setDeadlineDate }: ChooseTimeP
     }
     days.sort((day1: Date, day2: Date) => day1.getTime() - day2.getTime());
     setSelectedDays(days);
+    if (!selected && selectedDays.length === 0) {
+      if (timeComponents && timeComponents.current) {
+        timeComponents.current.scrollIntoView();
+      }
+    }
   };
 
   useEffect(() => {
@@ -133,7 +139,15 @@ const ChooseTime = ({ visible, setSelectedRanges, setDeadlineDate }: ChooseTimeP
           </Card>
         </Col>
       </Row>
-      <div className="mt-5">
+      <div className="mt-2">
+        <div
+          className={styles.createHeader}
+          style={{ textAlign: 'center', marginBottom: '30px' }}
+          ref={timeComponents}
+        >
+          Mark hours below
+        </div>
+
         <TimePicker
           days={selectedDays}
           count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
