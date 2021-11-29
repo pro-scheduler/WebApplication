@@ -10,7 +10,7 @@ import {
 } from 'react-pro-sidebar';
 
 import { FaRegClipboard } from 'react-icons/fa';
-import { FiLogOut, FiFolder, FiMonitor } from 'react-icons/fi';
+import { FiLogOut, FiFolder } from 'react-icons/fi';
 import { BsEnvelope, BsPencil } from 'react-icons/bs';
 import { AiOutlinePlus, AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 
@@ -79,7 +79,7 @@ const Navbar = ({
             <Menu iconShape="circle">
               <MenuItem icon={<img src={logo} alt="logo" />} id="logotext">
                 ProScheduler
-                <Link to="/" />
+                <Link to="/home" />
               </MenuItem>
             </Menu>
           </SidebarHeader>
@@ -96,15 +96,6 @@ const Navbar = ({
                 <Link to="/create" onClick={hideNavbar} />
               </MenuItem>
               <hr className="newMeetingLine" />
-
-              <MenuItem
-                icon={<FiMonitor />}
-                active={activeIcon === 'Home'}
-                onClick={() => setActiveIcon('Home')}
-              >
-                Home
-                <Link to="/home" onClick={hideNavbar} />
-              </MenuItem>
 
               <MenuItem
                 icon={<FiFolder />}
