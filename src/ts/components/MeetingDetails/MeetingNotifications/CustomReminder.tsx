@@ -9,9 +9,10 @@ import { sendCustomNotification } from '../../../API/notification/notificationSe
 export type CustomReminderProps = {
   meetingId: number;
   meetingName: string;
+  isMeetingOpen: boolean;
 };
 
-const CustomReminder = ({ meetingId, meetingName }: CustomReminderProps) => {
+const CustomReminder = ({ meetingId, meetingName, isMeetingOpen }: CustomReminderProps) => {
   const [customMessage, setCustomMessage] = useState<CustomMessage>({
     meetingId: meetingId,
     meetingName: meetingName,
@@ -28,7 +29,7 @@ const CustomReminder = ({ meetingId, meetingName }: CustomReminderProps) => {
 
   return (
     <Card title={'Custom notification'}>
-      <TextArea valueHandler={setMessage} value={customMessage.message} />
+      <TextArea valueHandler={setMessage} value={customMessage.message} disabled={!isMeetingOpen} />
       <ActionButton
         onclick={sendReminders}
         text={'Send notification'}

@@ -14,6 +14,10 @@
     cursor: pointer;
 }
 
+.disabled {
+    cursor: not-allowed;
+}
+
 .tick {
     width: 25px;
     height: 25px;

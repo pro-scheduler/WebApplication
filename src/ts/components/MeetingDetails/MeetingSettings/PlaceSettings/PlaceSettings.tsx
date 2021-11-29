@@ -11,9 +11,10 @@ import Card from '../../../common/Card/Card';
 
 export type PlaceSettingsProps = {
   meetingId: number;
+  isMeetingOpen: boolean;
 };
 
-const PlaceSettings = ({ meetingId }: PlaceSettingsProps) => {
+const PlaceSettings = ({ meetingId, isMeetingOpen }: PlaceSettingsProps) => {
   const [settings, setSettings] = useState<PlacesSettings>({
     onlyOrganizerCanAddPlaceToMeeting: true,
   });
@@ -55,6 +56,7 @@ const PlaceSettings = ({ meetingId }: PlaceSettingsProps) => {
                   });
                 }}
                 label={'Only organizer can add new place to the meetings'}
+                disabled={!isMeetingOpen}
               />
               <ActionButton
                 onclick={saveSettings}

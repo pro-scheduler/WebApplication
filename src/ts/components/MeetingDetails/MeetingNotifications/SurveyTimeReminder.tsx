@@ -15,9 +15,15 @@ export type SurveyTimeReminderProps = {
   meetingId: number;
   surveyId: number;
   surveyEndDate: Date;
+  isMeetingOpen: boolean;
 };
 
-const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeReminderProps) => {
+const SurveyTimeReminder = ({
+  meetingId,
+  surveyId,
+  surveyEndDate,
+  isMeetingOpen,
+}: SurveyTimeReminderProps) => {
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>();
   const [reminderInfo, setReminderInfo] = useState<ReminderInfo>({
     timeUnit: TimeUnit.MINUTES,
@@ -61,6 +67,7 @@ const SurveyTimeReminder = ({ meetingId, surveyId, surveyEndDate }: SurveyTimeRe
       beforeLabel={'before the survey closes'}
       reminderInfo={reminderInfo}
       setReminderInfo={setReminderInfo}
+      isMeetingOpen={isMeetingOpen}
     />
   );
 };

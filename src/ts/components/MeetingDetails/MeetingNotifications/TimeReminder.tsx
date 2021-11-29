@@ -15,6 +15,7 @@ export type TimeReminderProps = {
   beforeLabel: string;
   reminderInfo: ReminderInfo;
   setReminderInfo: (value: ReminderInfo) => void;
+  isMeetingOpen: boolean;
 };
 
 const TimeReminder = ({
@@ -24,6 +25,7 @@ const TimeReminder = ({
   beforeLabel,
   reminderInfo,
   setReminderInfo,
+  isMeetingOpen,
 }: TimeReminderProps) => {
   const options: ValueLabelPair[] = [TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS].map(
     (option: string) => new ValueLabelPair(option, option)
@@ -47,6 +49,7 @@ const TimeReminder = ({
         checked={reminderInfo.sendReminder}
         setChecked={setSendReminder}
         label={checkboxLabel}
+        disabled={!isMeetingOpen}
       />
       <div className={styles.timePickerContainer}>
         <div className={styles.amountInput}>
@@ -55,6 +58,7 @@ const TimeReminder = ({
             value={reminderInfo.value}
             type={'number'}
             minValue={0}
+            disabled={!isMeetingOpen}
           />
         </div>
         <SingleDropdownButton
@@ -62,6 +66,7 @@ const TimeReminder = ({
           onChange={handleNewTimeUnit}
           value={new ValueLabelPair(reminderInfo.timeUnit, reminderInfo.timeUnit)}
           className={styles.dropdownButton}
+          disabled={!isMeetingOpen}
         />
         <div>{beforeLabel}</div>
       </div>

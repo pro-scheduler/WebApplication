@@ -14,9 +14,10 @@ import styles from './GeneralSettings.module.css';
 export type GeneralSettingsProps = {
   meetingId: number;
   meetingName: string;
+  isMeetingOpen: boolean;
 };
 
-const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
+const GeneralSettings = ({ meetingId, meetingName, isMeetingOpen }: GeneralSettingsProps) => {
   const [settings, setSettings] = useState<MeetingSettings>({
     participantsCanInvitePeople: false,
     participantsCanSeeResults: false,
@@ -57,6 +58,7 @@ const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
                   });
                 }}
                 label={'Participants can invite new people'}
+                disabled={!isMeetingOpen}
               />
               <Checkbox
                 checked={newSettings.participantsCanSeeResults}
@@ -67,6 +69,7 @@ const GeneralSettings = ({ meetingId, meetingName }: GeneralSettingsProps) => {
                   });
                 }}
                 label={'Participants can see voting results'}
+                disabled={!isMeetingOpen}
               />
               <ActionButton
                 onclick={saveSettings}

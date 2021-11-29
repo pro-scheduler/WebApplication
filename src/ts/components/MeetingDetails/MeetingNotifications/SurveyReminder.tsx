@@ -9,8 +9,14 @@ export type SurveyReminderProps = {
   meetingId: number;
   surveyId: number;
   meetingName: string;
+  isMeetingOpen: boolean;
 };
-const SurveyReminder = ({ meetingId, surveyId, meetingName }: SurveyReminderProps) => {
+const SurveyReminder = ({
+  meetingId,
+  surveyId,
+  meetingName,
+  isMeetingOpen,
+}: SurveyReminderProps) => {
   const [allParticipants, setAllParticipants] = useState<boolean>(true);
   const [someParticipants, setSomeParticipants] = useState<boolean>(false);
 
@@ -40,16 +46,19 @@ const SurveyReminder = ({ meetingId, surveyId, meetingName }: SurveyReminderProp
         checked={allParticipants}
         onChange={handleAllParticipantsClicked}
         label={'To all participants'}
+        disabled={!isMeetingOpen}
       />
       <RadioButton
         checked={someParticipants}
         onChange={handleSomeParticipantsClicked}
         label={'To participants who have not filled the survey yet'}
+        disabled={!isMeetingOpen}
       />
       <ActionButton
         onclick={sendReminders}
         text={'Send reminder'}
         className={styles.sendReminderButton}
+        disabled={!isMeetingOpen}
       />
     </Card>
   );

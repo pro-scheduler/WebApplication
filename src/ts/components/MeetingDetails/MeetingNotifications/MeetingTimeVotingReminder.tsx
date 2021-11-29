@@ -15,11 +15,13 @@ export type MeetingTimeVotingReminderProps = {
   meetingName: string;
   deadline: Date;
   meetingId: number;
+  isMeetingOpen: boolean;
 };
 const MeetingTimeVotingReminder = ({
   meetingName,
   deadline,
   meetingId,
+  isMeetingOpen,
 }: MeetingTimeVotingReminderProps) => {
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>();
   const [reminderInfo, setReminderInfo] = useState<ReminderInfo>({
@@ -64,6 +66,7 @@ const MeetingTimeVotingReminder = ({
       beforeLabel={'before the time voting ends'}
       reminderInfo={reminderInfo}
       setReminderInfo={setReminderInfo}
+      isMeetingOpen={isMeetingOpen}
     />
   );
 };

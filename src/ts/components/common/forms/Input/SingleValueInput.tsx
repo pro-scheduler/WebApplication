@@ -16,6 +16,7 @@ export type SingleValueInputProps = {
   handleKeyDown?: KeyboardEventHandler;
   type?: 'text' | 'number';
   minValue?: number;
+  disabled?: boolean;
 };
 
 const SingleValueInput = ({
@@ -30,6 +31,7 @@ const SingleValueInput = ({
   handleKeyDown,
   type = 'text',
   minValue,
+  disabled = false,
 }: SingleValueInputProps) => {
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
@@ -62,6 +64,7 @@ const SingleValueInput = ({
         style={{ width: '100%' }}
         onKeyDown={handleKeyDown}
         min={minValue}
+        disabled={disabled}
       />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>
