@@ -14,6 +14,7 @@ export type TextAreaProps = {
   value?: string;
   defaultValue?: string;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 const TextArea = ({
@@ -27,6 +28,7 @@ const TextArea = ({
   value,
   defaultValue,
   placeholder,
+  disabled,
 }: TextAreaProps) => {
   const [invalidInner, setInvalidInner] = useState<boolean | undefined>(initialInvalidState);
   const [invalidMessage, setInvalidMessage] = useState<string>('');
@@ -57,6 +59,7 @@ const TextArea = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         style={{ width: '100%' }}
+        disabled={disabled}
       />
       {invalidMessage && invalidInner && (
         <div className={styles.invalid_text}>{invalidMessage}</div>

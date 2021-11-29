@@ -36,7 +36,10 @@ const MeetingSurveyDetails = ({
   };
 
   return (
-    <Card title={'Details'} onEdit={isOrganizer ? setEditSurveyMode : undefined}>
+    <Card
+      title={'Details'}
+      onEdit={isOrganizer && state === MeetingState.OPEN ? setEditSurveyMode : undefined}
+    >
       <div className={editSurvey ? styles.editModeContainer : styles.container}>
         {!editSurvey ? (
           <>

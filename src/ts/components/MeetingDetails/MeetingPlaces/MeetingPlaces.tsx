@@ -36,6 +36,7 @@ const MeetingPlaces = ({
   meetingId,
   user,
   isOrganizer,
+  open,
   places,
   setPlaces,
   finalPlaceId,
@@ -99,11 +100,13 @@ const MeetingPlaces = ({
       <Col lg={12}>
         <div className={styles.mapContainer}>
           <MapWithPlaces
-            disabled={!isOrganizer && placesSettings.onlyOrganizerCanAddPlaceToMeeting}
+            disabled={(!isOrganizer && placesSettings.onlyOrganizerCanAddPlaceToMeeting) || !open}
             placesToDisplay={places}
             mainButtonTooltipNameMapper={tooltipMapping}
-            displayMainButton={true}
-            displayRemoveButton={isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting}
+            displayMainButton={open}
+            displayRemoveButton={
+              (isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && open
+            }
             mainButtonAction={(placeId: number) => {
               toggleVote(placeId);
             }}
@@ -112,7 +115,7 @@ const MeetingPlaces = ({
                 setPlaces(places.filter((place: PlaceDetails) => place.id !== placeId));
               });
             }}
-            allowAdding={isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting}
+            allowAdding={(isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && open}
             addPlaceAction={(place: PlaceDetails) => {
               addNewPlace(
                 {
@@ -126,7 +129,7 @@ const MeetingPlaces = ({
                 meetingId
               );
             }}
-            displayFinalPlaceButton={isOrganizer}
+            displayFinalPlaceButton={isOrganizer && open}
             disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
             finalPlaceAction={(placeId: number) => {
               saveFinalPlace(meetingId, placeId, () => {
@@ -143,17 +146,19 @@ const MeetingPlaces = ({
           title="Your votes"
           miniCard={false}
           footer={
-            <div className={styles.buttonContainer}>
-              <ActionButton
-                onclick={sendNewVotes}
-                text={'Edit my votes'}
-                disabled={
-                  newVotes.every((p) => myVotes.includes(p)) &&
-                  myVotes.every((p) => newVotes.includes(p))
-                }
-                className={styles.editButton}
-              />
-            </div>
+            open ? (
+              <div className={styles.buttonContainer}>
+                <ActionButton
+                  onclick={sendNewVotes}
+                  text={'Edit my votes'}
+                  disabled={
+                    newVotes.every((p) => myVotes.includes(p)) &&
+                    myVotes.every((p) => newVotes.includes(p))
+                  }
+                  className={styles.editButton}
+                />
+              </div>
+            ) : undefined
           }
         >
           <div
@@ -167,10 +172,14 @@ const MeetingPlaces = ({
                 <div className={styles.checkboxInline}>
                   <SquareCheckbox
                     checked={newVotes.includes(place.id)}
-                    setChecked={(check) => {
-                      if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
-                      else setNewVotes([...newVotes, place.id]);
-                    }}
+                    setChecked={
+                      open
+                        ? (check) => {
+                            if (!check) setNewVotes(newVotes.filter((id) => id !== place.id));
+                            else setNewVotes([...newVotes, place.id]);
+                          }
+                        : () => {}
+                    }
                   />
                 </div>
                 {place.name}
@@ -188,7 +197,7 @@ const MeetingPlaces = ({
           </Card>
         </Col>
       )}
-      {(isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && (
+      {(isOrganizer || !placesSettings.onlyOrganizerCanAddPlaceToMeeting) && open && (
         <Col>
           <PlacesTable
             places={places}
@@ -196,7 +205,7 @@ const MeetingPlaces = ({
               updatePlaces(newPlaces, meetingId, setPlaces);
             }}
             emptyText={'Meeting has no places'}
-            displayFinalPlaceButton={true}
+            displayFinalPlaceButton={false}
             disabledFinalPlaceButtonMapper={disabledFinalPlaceButtonMapper}
             finalPlaceAction={(placeId: number) => {
               saveFinalPlace(meetingId, placeId, () => {

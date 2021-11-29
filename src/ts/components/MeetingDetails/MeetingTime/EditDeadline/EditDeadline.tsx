@@ -43,7 +43,10 @@ const EditDeadline = ({
   }, [timeDeadline]);
   return (
     <div>
-      <Card title="Details" onEdit={isOrganizer ? () => setEditMode(!editMode) : undefined}>
+      <Card
+        title="Details"
+        onEdit={isOrganizer && isMeetingOpen ? () => setEditMode(!editMode) : undefined}
+      >
         {editMode ? (
           <div>
             <div className={styles.editMode}>
