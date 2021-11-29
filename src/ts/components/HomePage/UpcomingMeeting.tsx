@@ -26,13 +26,13 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
           <div className={styles.meetingTime}>
             {startTime.toLocaleString('en-US', {
               hour: 'numeric',
-              hour12: true,
+              hour12: false,
               minute: 'numeric',
             })}{' '}
             -{' '}
             {endTime.toLocaleString('en-US', {
               hour: 'numeric',
-              hour12: true,
+              hour12: false,
               minute: 'numeric',
             })}
           </div>

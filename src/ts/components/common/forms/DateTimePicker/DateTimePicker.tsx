@@ -73,6 +73,7 @@ const DateTimePicker = ({
                 'aria-label': 'change time',
               }}
               disabled={disabled}
+              ampm={false}
             />
           </div>
         </div>

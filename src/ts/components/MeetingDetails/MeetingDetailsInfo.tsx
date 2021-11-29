@@ -264,13 +264,13 @@ const MeetingDetailsInfo = ({
             {finalBeginDate && finalEndDate
               ? finalBeginDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 }) +
                 ' - ' +
                 finalEndDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 }) +
                 ', ' +
