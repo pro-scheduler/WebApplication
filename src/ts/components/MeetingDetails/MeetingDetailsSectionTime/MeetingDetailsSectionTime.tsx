@@ -82,6 +82,8 @@ const MeetingDetailsSectionTime = ({
           state={meeting.state}
           setNewDeadline={setMarkTimeRangeDeadline}
           canSeeVotingResults={canSeeVotingResults}
+          finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
+          finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
         />
       </Col>
     </Row>

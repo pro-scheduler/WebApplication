@@ -11,7 +11,7 @@ import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { AiOutlineForm } from 'react-icons/ai';
 import { BsFillPieChartFill } from 'react-icons/bs';
 import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
-import EditDeadline from './EditDeadline/EditDeadline';
+import MeetingTimeDetails from './MeetingTimeDetails/MeetingTimeDetails';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -26,6 +26,8 @@ export type MeetingTimeProps = {
   state: MeetingState;
   setNewDeadline: Function;
   canSeeVotingResults?: boolean;
+  finalBeginDate: Date | null;
+  finalEndDate: Date | null;
 };
 
 interface RangesWithDay {
@@ -45,6 +47,8 @@ const MeetingTime = ({
   state,
   setNewDeadline,
   canSeeVotingResults = false,
+  finalBeginDate,
+  finalEndDate,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -166,12 +170,14 @@ const MeetingTime = ({
   return (
     <Row className="justify-content">
       <Col>
-        <EditDeadline
+        <MeetingTimeDetails
           timeDeadline={timeDeadline}
           meetingId={meetingId}
           setDeadline={setNewDeadline}
           isOrganizer={isOrganizer}
           isMeetingOpen={state === MeetingState.OPEN}
+          finalBeginDate={finalBeginDate}
+          finalEndDate={finalEndDate}
         />
         <Col lg={12} className="text-center mx-auto">
           {canSeeVotingResults && (

@@ -1,27 +1,32 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { updateMeetingTimeDeadline } from '../../../../API/meeting/meetingService';
 import Card from '../../../common/Card/Card';
 import DateTimePicker from '../../../common/forms/DateTimePicker/DateTimePicker';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
-import styles from './EditDeadline.module.css';
+import styles from './MeetingTimeDetails.module.css';
 import Timer from '../../../common/Timer/Timer';
+import { BiCalendarEvent } from 'react-icons/bi';
 
-export type EditDeadlineProps = {
+export type MeetingTimeDetailsProps = {
   meetingId: number;
   setDeadline: Function;
   timeDeadline?: Date;
   isOrganizer: boolean;
   isMeetingOpen: boolean;
+  finalBeginDate: Date | null;
+  finalEndDate: Date | null;
 };
 
-const EditDeadline = ({
+const MeetingTimeDetails = ({
   timeDeadline,
   meetingId,
   setDeadline,
   isOrganizer,
   isMeetingOpen,
-}: EditDeadlineProps) => {
+  finalBeginDate,
+  finalEndDate,
+}: MeetingTimeDetailsProps) => {
   const [newDeadline, setNewDeadline] = useState<Date | null>(timeDeadline ? timeDeadline : null);
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -70,6 +75,28 @@ const EditDeadline = ({
           </div>
         ) : (
           <>
+            <p className={styles.finalDateContainer}>
+              <BiCalendarEvent className={styles.finalDateIcon} />{' '}
+              {finalBeginDate && finalEndDate
+                ? finalBeginDate.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    hour12: false,
+                    minute: 'numeric',
+                  }) +
+                  ' - ' +
+                  finalEndDate.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    hour12: false,
+                    minute: 'numeric',
+                  }) +
+                  ', ' +
+                  (finalBeginDate.toLocaleDateString() === finalEndDate.toLocaleDateString()
+                    ? finalBeginDate.toLocaleDateString()
+                    : finalBeginDate.toLocaleDateString() +
+                      ' - ' +
+                      finalEndDate.toLocaleDateString())
+                : 'Time has not been specified yet'}
+            </p>
             {isMeetingOpen ? (
               <Timer
                 date={timeDeadline}
@@ -86,4 +113,4 @@ const EditDeadline = ({
     </div>
   );
 };
-export default EditDeadline;
+export default MeetingTimeDetails;
