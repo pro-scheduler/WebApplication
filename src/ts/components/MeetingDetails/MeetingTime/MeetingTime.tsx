@@ -4,15 +4,15 @@ import { TimeRangeDTO } from '../../../model/TimeRangeDTO';
 import UserTimePicker from '../../UserTimeGrid/UserTimePicker';
 import { useEffect, useState } from 'react';
 import useWindowDimensions from '../../common/window/WindowDimension';
-import SwitchButton from '../../common/SwitchButton/SwitchButton';
 import AnswersTimePicker from '../../UserTimeGrid/AnswersTimePicker';
 import styles from './MeetingTime.module.css';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
-import { RiPencilFill } from 'react-icons/ri';
+import { AiOutlineForm } from 'react-icons/ai';
 import { BsFillPieChartFill } from 'react-icons/bs';
-import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
-import EditDeadline from './EditDeadline/EditDeadline';
+import { MeetingAttendeeDetails, MeetingState, MeetingType } from '../../../model/meeting/Meeting';
+import MeetingTimeDetails from './MeetingTimeDetails/MeetingTimeDetails';
+import { PlaceDetails } from '../../../model/geo/Geo';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -27,6 +27,14 @@ export type MeetingTimeProps = {
   state: MeetingState;
   setNewDeadline: Function;
   canSeeVotingResults?: boolean;
+  finalBeginDate: Date | null;
+  finalEndDate: Date | null;
+  setFinalBeginDate: Function;
+  setFinalEndDate: Function;
+  meetingType: MeetingType;
+  meetingLink: string | undefined;
+  meetingPassword: string | undefined;
+  finalPlace?: PlaceDetails;
 };
 
 interface RangesWithDay {
@@ -46,6 +54,14 @@ const MeetingTime = ({
   state,
   setNewDeadline,
   canSeeVotingResults = false,
+  finalBeginDate,
+  finalEndDate,
+  setFinalBeginDate,
+  setFinalEndDate,
+  meetingType,
+  meetingLink,
+  meetingPassword,
+  finalPlace,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -53,10 +69,8 @@ const MeetingTime = ({
   const [userAnswers, setUserAnswers] = useState<RangesWithDay>({});
   const [preferencesChanged, setPreferencesChanged] = useState<Boolean>(false);
   const [deadlineExceeded, setDeadlineExceeded] = useState<Boolean>(true);
-  // eslint-disable-next-line
-  const [openedDeadlineEditing, setOpenedDeadlineEditing] = useState<boolean>(false);
   const { width } = useWindowDimensions();
-  const [displayAnswers, setDisplayAnswers] = useState<Boolean>(false);
+  const [showYourVotes, setShowYourVotes] = useState<Boolean>(true);
   const setRanges = (date: string, ranges: Array<{ from: string; to: string }>, day: Date) => {
     let ran: RangesWithDay = {
       ...selectedRanges,
@@ -169,27 +183,47 @@ const MeetingTime = ({
   return (
     <Row className="justify-content">
       <Col>
-        <EditDeadline
+        <MeetingTimeDetails
           timeDeadline={timeDeadline}
           meetingId={meetingId}
           setDeadline={setNewDeadline}
           isOrganizer={isOrganizer}
           isMeetingOpen={state === MeetingState.OPEN}
+          finalBeginDate={finalBeginDate}
+          finalEndDate={finalEndDate}
+          setFinalBeginDate={setFinalBeginDate}
+          setFinalEndDate={setFinalEndDate}
+          meetingLink={meetingLink}
+          meetingPassword={meetingPassword}
+          meetingType={meetingType}
+          finalPlace={finalPlace}
         />
         <Col lg={12} className="text-center mx-auto">
           {canSeeVotingResults && (
-            <div className={styles.switchTime}>
-              <SwitchButton
-                onChange={() => setDisplayAnswers(!displayAnswers)}
-                checkedIcon={<RiPencilFill className={styles.switchIcon} />}
-                unCheckedIcon={<BsFillPieChartFill className={styles.switchIcon} />}
-                labels={['show others votes', 'show your votes']}
-              />
+            <div className={styles.sectionsContainer}>
+              <div
+                className={`${styles.sectionIconContainer} ${showYourVotes ? styles.chosen : ''}`}
+                onClick={() => setShowYourVotes(true)}
+              >
+                <AiOutlineForm />
+                <div>
+                  <span className={!showYourVotes ? styles.hidden : ''}>Your votes</span>
+                </div>
+              </div>
+              <div
+                className={`${styles.sectionIconContainer} ${!showYourVotes ? styles.chosen : ''}`}
+                onClick={() => setShowYourVotes(false)}
+              >
+                <BsFillPieChartFill />
+                <div>
+                  <span className={showYourVotes ? styles.hidden : ''}>Voting results</span>
+                </div>
+              </div>
             </div>
           )}
         </Col>
         <div style={{ marginRight: width < 576 ? 45 : 0 }}>
-          {displayAnswers ? (
+          {!showYourVotes ? (
             <AnswersTimePicker
               availableRanges={availableRanges}
               count={width > 1290 ? 4 : width > 991 ? 3 : width > 768 ? 2 : 1}
@@ -210,14 +244,10 @@ const MeetingTime = ({
           )}
         </div>
       </Col>
-      {!displayAnswers && !deadlineExceeded && state === MeetingState.OPEN && (
+      {showYourVotes && !deadlineExceeded && state === MeetingState.OPEN && (
         <Col lg={12} className="text-center mx-auto">
           <ActionButton
-            text={
-              userRanges && userRanges.length === 0
-                ? 'Save my time preferences'
-                : 'Edit my time preferences'
-            }
+            text={'Save my time preferences'}
             onclick={saveTime}
             className={styles.saveButton}
             disabled={!preferencesChanged}

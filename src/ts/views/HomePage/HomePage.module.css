@@ -5,15 +5,12 @@
   color: var(--medium-grey);
 }
 
-.noMeetingsInfoContainer {
-  padding-right: 30px;
-}
 .noMeetingsInfo {
   grid-area: upcomingMeetings;
   font-size: var(--s-font-size);
-  margin: auto auto 50px 20px;
-  width: 100%;
-  text-align: left;
+  margin: auto auto 50px auto;
+  width: 80%;
+  text-align: center;
   background-color: white;
   padding: 20px;
   border-radius: var(--border-radius);
@@ -86,12 +83,18 @@
     font-size: var(--xs-font-size);
   }
 
+  .addNewMeetingButton {
+    width: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .homePageContainer {
     display: block;
   }
 
   .noMeetingsInfo {
-    display: none;
+    width: 280px;
   }
 
   .todayMeetings {

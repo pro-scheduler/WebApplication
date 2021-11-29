@@ -124,6 +124,10 @@ const MeetingSurveyQuestions = ({
           setAnswer={setAnswer}
           questionNumber={index + 1}
           onDelete={surveyToEdit ? () => deleteQuestion(value.question.id) : undefined}
+          disabled={
+            state === MeetingState.CANCELLED ||
+            (survey.surveyEndDate !== undefined && new Date(survey.surveyEndDate) < new Date())
+          }
         />
       );
     });

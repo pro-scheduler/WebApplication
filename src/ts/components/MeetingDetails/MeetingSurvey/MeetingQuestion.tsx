@@ -19,6 +19,7 @@ export type MeetingQuestionProps = {
   setAnswer: (questionId: number | null, newAnswer: Answer) => void;
   questionNumber: number;
   onDelete?: Function;
+  disabled?: boolean;
 };
 
 const MeetingQuestion = ({
@@ -27,6 +28,7 @@ const MeetingQuestion = ({
   setAnswer,
   questionNumber,
   onDelete,
+  disabled = false,
 }: MeetingQuestionProps) => {
   const yesOrNoOptions = [
     { value: true, label: 'Yes' },
@@ -62,6 +64,7 @@ const MeetingQuestion = ({
               setAnswer(question.id, answer);
             }}
             className={styles.textArea}
+            disabled={disabled}
           />
         </div>
       )}
@@ -84,6 +87,7 @@ const MeetingQuestion = ({
               setAnswer(question.id, answer);
             }}
             className={styles.dropdown}
+            disabled={disabled}
           />
         </div>
       )}
@@ -110,6 +114,7 @@ const MeetingQuestion = ({
               setAnswer(question.id, answer);
             }}
             className={styles.dropdown}
+            disabled={disabled}
           />
         </div>
       )}
@@ -139,6 +144,7 @@ const MeetingQuestion = ({
               setAnswer(question.id, answer);
             }}
             className={styles.dropdown}
+            disabled={disabled}
           />
         </div>
       )}
@@ -162,6 +168,7 @@ const MeetingQuestion = ({
               }
               setAnswer(question.id, answer);
             }}
+            disabled={disabled}
           />
         </div>
       )}

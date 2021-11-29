@@ -1,9 +1,55 @@
-.switchIcon {
-    color: white;
+.sectionsContainer {
     display: flex;
-    justify-content:center;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.sectionIconContainer {
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: column;
     align-items: center;
-    height: 100%;
-    margin: auto;
-    text-align: center;
+    color: #848484;
+}
+
+.sectionIconContainer > svg {
+    width: 35px;
+    height: 35px;
+}
+
+.hidden {
+    display: none;
+}
+
+.chosen {
+    color: #7cdf84;
+}
+
+.sectionIconContainer:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.sectionIconContainer > div {
+    position: relative;
+    width: 35px;
+}
+
+.sectionIconContainer > div > span {
+    font-size: 0.9em;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    margin-top: 5px;
+    z-index: -1;
+}
+
+.sectionIconContainer:hover > div > span {
+    position: absolute;
+    display: block;
+    background: var(--background-color);
+    z-index: 9999;
+    padding-left: 5px;
+    padding-right: 5px;
 }

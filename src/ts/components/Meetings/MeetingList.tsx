@@ -61,13 +61,13 @@ const MeetingList = ({
           {meeting.finalDate?.timeStart && meeting.finalDate.timeEnd
             ? new Date(meeting.finalDate.timeStart).toLocaleString('en-US', {
                 hour: 'numeric',
-                hour12: true,
+                hour12: false,
                 minute: 'numeric',
               }) +
               ' - ' +
               new Date(meeting.finalDate.timeEnd).toLocaleString('en-US', {
                 hour: 'numeric',
-                hour12: true,
+                hour12: false,
                 minute: 'numeric',
               }) +
               ', ' +

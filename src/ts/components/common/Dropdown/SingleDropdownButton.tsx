@@ -13,6 +13,7 @@ const SingleDropdownButton = ({
   invalid,
   invalidText,
   label,
+  disabled,
 }: DropdownButtonProps) => {
   const dropdownStyles = cx(invalid ? styles.dropdown_invalid : styles.dropdown, className);
 
@@ -34,6 +35,7 @@ const SingleDropdownButton = ({
             primary: invalid ? 'var(--medium-red)' : 'var(--very-light-grey)',
           },
         })}
+        isDisabled={disabled}
       />
       {invalid && invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </>

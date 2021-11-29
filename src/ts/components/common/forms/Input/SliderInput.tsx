@@ -7,9 +7,10 @@ export type SliderProps = {
   min?: number;
   max?: number;
   onChange: (event: ChangeEvent<HTMLInputElement>, value: number) => void;
+  disabled?: boolean;
 };
 
-const SliderInput = ({ value, min = 0, max = 10, onChange }: SliderProps) => {
+const SliderInput = ({ value, min = 0, max = 10, onChange, disabled = false }: SliderProps) => {
   return (
     <Form>
       <Form.Group>
@@ -20,6 +21,7 @@ const SliderInput = ({ value, min = 0, max = 10, onChange }: SliderProps) => {
           min={min}
           max={max}
           tooltip={'auto'}
+          disabled={disabled}
         />
       </Form.Group>
     </Form>

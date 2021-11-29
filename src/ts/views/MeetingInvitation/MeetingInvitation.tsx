@@ -75,13 +75,13 @@ const MeetingInvitation = () => {
               <div className={styles.greyFont}>
                 {meetingStartDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 })}{' '}
                 -{' '}
                 {meetingEndDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 })}
               </div>

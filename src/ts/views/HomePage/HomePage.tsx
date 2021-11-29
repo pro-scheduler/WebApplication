@@ -19,6 +19,7 @@ import { BasicUserSurveyInfo } from '../../model/survey/Survey';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { loadUserDeclarations } from '../../API/declarations/declarationsService';
 import UserTimeGrid from '../../components/UserTimeGrid/UserTimeGrid';
+import RedirectButton from '../../components/common/SubmitButton/RedirectButton/RedirectButton';
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const HomePage = ({
@@ -95,8 +96,12 @@ const HomePage = ({
                 ))}
               </Carousel>
             ) : (
-              <div className={styles.noMeetingsInfoContainer}>
-                <div className={styles.noMeetingsInfo}>You don't have any upcoming meetings</div>
+              <div className={styles.noMeetingsInfo}>
+                <RedirectButton
+                  redirectTO={'/create'}
+                  text={'Add new meeting'}
+                  className={styles.addNewMeetingButton}
+                />
               </div>
             )}
             {homeInfo && (

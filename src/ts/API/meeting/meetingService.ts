@@ -82,6 +82,7 @@ export const updateOnlineMeetingDetails = (
   finalDate: TimeRangeDTO | undefined,
   link: string | undefined,
   password: string | undefined,
+  markTimeRangeDeadline: Date | null,
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
@@ -92,6 +93,7 @@ export const updateOnlineMeetingDetails = (
       finalDate: finalDate,
       link: link,
       password: password,
+      markTimeRangeDeadline: markTimeRangeDeadline,
     },
     getMeetingUrl(meetingId),
     setData,
@@ -104,6 +106,7 @@ export const updateOnlineMeetingDetails = (
 export const updateRealMeetingDetails = (
   finalDate: TimeRangeDTO | undefined,
   finalMeetingPlaceId: number | undefined,
+  markTimeRangeDeadline: Date | null,
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
@@ -113,6 +116,7 @@ export const updateRealMeetingDetails = (
     {
       finalDate: finalDate,
       finalMeetingPlaceId: finalMeetingPlaceId,
+      markTimeRangeDeadline: markTimeRangeDeadline,
     },
     getMeetingUrl(meetingId),
     setData,
@@ -162,24 +166,6 @@ export const updateMeetingNameAndDescription = (
     setResponse,
     true,
     'You have successfully updated meeting name and description',
-    onSuccess
-  );
-
-export const updateMeetingTimeDeadline = (
-  deadline: Date,
-  meetingId: number,
-  setResponse?: Function,
-  onSuccess?: Function
-) =>
-  put(
-    {
-      markTimeRangeDeadline: deadline,
-    },
-    getMeetingUrl(meetingId),
-    () => {},
-    setResponse,
-    true,
-    'You have successfully updated time voting deadline',
     onSuccess
   );
 

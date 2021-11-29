@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MeetingDetails, MeetingModuleType } from '../../../model/meeting/Meeting';
+import { MeetingDetails, MeetingModuleType, MeetingState } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingSettings from '../MeetingSettings/MeetingSettings';
 import { UserSurvey } from '../../../model/survey/Survey';
@@ -25,6 +25,7 @@ const MeetingDetailsSectionSettings = ({ meeting }: MeetingDetailsSectionSetting
           survey={survey}
           meetingId={meeting.id}
           meetingName={meeting.name}
+          isMeetingOpen={meeting.state === MeetingState.OPEN}
           markTimeRangeDeadline={meeting.markTimeRangeDeadline}
           meetingFinalDate={meeting.finalDate}
           showPlacesSettings={meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)}

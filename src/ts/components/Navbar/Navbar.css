@@ -1,7 +1,7 @@
 #navbar {
     position: fixed;
     height: 100%;
-    z-index: 2;
+    z-index: 1000;
 }
 
 #navbar .pro-sidebar {
@@ -41,7 +41,7 @@
 #navbar .pro-sidebar-inner .pro-sidebar-layout .active {
     background-color: none;
     font-weight: bold;
-    z-index: 3;
+    z-index: 1000;
 }
 
 #navbar .newMeetingLine {

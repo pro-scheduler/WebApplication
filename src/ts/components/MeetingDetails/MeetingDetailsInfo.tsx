@@ -41,6 +41,7 @@ export type MeetingDetailsInfoProps = {
   finalPlace?: PlaceDetails;
   showGoogleCalendar: boolean;
   meetingType: MeetingType;
+  markTimeRangeDeadline: Date | null;
 };
 
 const MeetingDetailsInfo = ({
@@ -57,6 +58,7 @@ const MeetingDetailsInfo = ({
   finalPlace,
   showGoogleCalendar,
   meetingType,
+  markTimeRangeDeadline,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
@@ -101,6 +103,7 @@ const MeetingDetailsInfo = ({
           : undefined,
         newLink,
         newPassword,
+        markTimeRangeDeadline,
         meetingId,
         () => {},
         () => {},
@@ -123,6 +126,7 @@ const MeetingDetailsInfo = ({
               }
             : undefined,
           finalPlace ? finalPlace.id : undefined,
+          markTimeRangeDeadline,
           meetingId,
           () => {},
           () => {},
@@ -157,6 +161,13 @@ const MeetingDetailsInfo = ({
     setNewBeginDate(finalBeginDate);
     setNewEndDate(finalEndDate);
   }, [finalBeginDate, finalEndDate]);
+
+  useEffect(() => {
+    if (newBeginDate && !newEndDate) {
+      setNewEndDate(new Date(newBeginDate.getTime() + 60 * 60 * 1000));
+    }
+    // eslint-disable-next-line
+  }, [newBeginDate]);
 
   useEffect(() => {
     setNewLink(meetingLink);
@@ -264,13 +275,13 @@ const MeetingDetailsInfo = ({
             {finalBeginDate && finalEndDate
               ? finalBeginDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 }) +
                 ' - ' +
                 finalEndDate.toLocaleString('en-US', {
                   hour: 'numeric',
-                  hour12: true,
+                  hour12: false,
                   minute: 'numeric',
                 }) +
                 ', ' +

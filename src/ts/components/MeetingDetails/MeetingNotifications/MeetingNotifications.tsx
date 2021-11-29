@@ -17,6 +17,7 @@ export type MeetingNotificationsProps = {
   surveyEndDate?: string;
   markTimeRangeDeadline?: string;
   meetingFinalDate?: TimeRangeDTO;
+  isMeetingOpen: boolean;
 };
 
 const MeetingNotifications = ({
@@ -26,6 +27,7 @@ const MeetingNotifications = ({
   surveyEndDate,
   markTimeRangeDeadline,
   meetingFinalDate,
+  isMeetingOpen,
 }: MeetingNotificationsProps) => {
   const [opened, setOpened] = useState<boolean>(true);
 
@@ -37,7 +39,11 @@ const MeetingNotifications = ({
       <Row className="justify-content-center">
         <Col sm={12}>
           <Collapse isOpened={opened}>
-            <CustomReminder meetingId={meetingId} meetingName={meetingName} />
+            <CustomReminder
+              meetingId={meetingId}
+              meetingName={meetingName}
+              isMeetingOpen={isMeetingOpen}
+            />
           </Collapse>
         </Col>
       </Row>
@@ -49,6 +55,7 @@ const MeetingNotifications = ({
                 meetingId={meetingId}
                 meetingName={meetingName}
                 deadline={new Date(markTimeRangeDeadline)}
+                isMeetingOpen={isMeetingOpen}
               />
             </Collapse>
           </Col>
@@ -60,6 +67,7 @@ const MeetingNotifications = ({
                 meetingId={meetingId}
                 meetingName={meetingName}
                 finalDate={new Date(meetingFinalDate.timeStart)}
+                isMeetingOpen={isMeetingOpen}
               />
             </Collapse>
           </Col>
@@ -69,7 +77,12 @@ const MeetingNotifications = ({
         <Row className="justify-content-center">
           <Col sm={12}>
             <Collapse isOpened={opened}>
-              <SurveyReminder meetingId={meetingId} surveyId={surveyId} meetingName={meetingName} />
+              <SurveyReminder
+                meetingId={meetingId}
+                surveyId={surveyId}
+                meetingName={meetingName}
+                isMeetingOpen={isMeetingOpen}
+              />
             </Collapse>
           </Col>
           {surveyEndDate && (
@@ -79,6 +92,7 @@ const MeetingNotifications = ({
                   meetingId={meetingId}
                   surveyId={surveyId}
                   surveyEndDate={new Date(surveyEndDate)}
+                  isMeetingOpen={isMeetingOpen}
                 />
               </Collapse>
             </Col>

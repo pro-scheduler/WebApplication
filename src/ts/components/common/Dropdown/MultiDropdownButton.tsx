@@ -12,6 +12,7 @@ export type DropdownButtonProps = {
   invalid?: boolean;
   invalidText?: string;
   label?: string;
+  disabled?: boolean;
 };
 
 const MultiDropdownButton = ({
@@ -22,6 +23,7 @@ const MultiDropdownButton = ({
   invalid,
   invalidText,
   label,
+  disabled = false,
 }: DropdownButtonProps) => {
   const dropdownStyles = cx(invalid ? styles.dropdown_invalid : styles.dropdown, className);
 
@@ -50,6 +52,7 @@ const MultiDropdownButton = ({
             color: 'white',
           }),
         }}
+        isDisabled={disabled}
       />
       {invalid && invalidText && <div className={styles.invalid_text}>{invalidText}</div>}
     </>

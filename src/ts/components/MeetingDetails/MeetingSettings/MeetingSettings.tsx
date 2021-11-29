@@ -7,6 +7,7 @@ export type MeetingSettingsProps = {
   survey: UserSurvey | undefined;
   meetingId: number;
   meetingName: string;
+  isMeetingOpen: boolean;
   showPlacesSettings: boolean;
   markTimeRangeDeadline?: string;
   meetingFinalDate?: TimeRangeDTO;
@@ -16,13 +17,18 @@ const MeetingSettings = ({
   survey,
   meetingId,
   meetingName,
+  isMeetingOpen,
   showPlacesSettings,
   markTimeRangeDeadline,
   meetingFinalDate,
 }: MeetingSettingsProps) => {
   return (
     <>
-      <GeneralSettings meetingId={meetingId} meetingName={meetingName} />
+      <GeneralSettings
+        meetingId={meetingId}
+        meetingName={meetingName}
+        isMeetingOpen={isMeetingOpen}
+      />
       <MeetingNotifications
         meetingId={meetingId}
         meetingName={meetingName}
@@ -30,8 +36,9 @@ const MeetingSettings = ({
         surveyEndDate={survey?.surveyEndDate}
         markTimeRangeDeadline={markTimeRangeDeadline}
         meetingFinalDate={meetingFinalDate}
+        isMeetingOpen={isMeetingOpen}
       />
-      {showPlacesSettings && <PlaceSettings meetingId={meetingId} />}
+      {showPlacesSettings && <PlaceSettings meetingId={meetingId} isMeetingOpen={isMeetingOpen} />}
     </>
   );
 };
