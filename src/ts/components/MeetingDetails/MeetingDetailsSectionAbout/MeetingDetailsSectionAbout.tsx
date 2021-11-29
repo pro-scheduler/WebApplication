@@ -6,7 +6,7 @@ import {
   RealMeetingDetails,
 } from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
-import MeetingDetailsInfo from '../MeetingDetailsInfo';
+import MeetingDetailsInfo from '../MeetingDetailsInfo/MeetingDetailsInfo';
 import MeetingParticipants from '../MeetingParticipants/MeetingParticipants';
 import MeetingAboutInfo from './MeetingAboutInfo/MeetingAboutInfo';
 

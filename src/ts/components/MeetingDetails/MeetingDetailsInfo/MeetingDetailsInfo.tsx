@@ -1,31 +1,32 @@
-import Card from '../common/Card/Card';
+import Card from '../../common/Card/Card';
 import { BiCalendarEvent, BiWorld } from 'react-icons/bi';
 import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cx from 'classnames';
-import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import YesNoPopup from '../common/Popup/YesNoPopup';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import YesNoPopup from '../../common/Popup/YesNoPopup';
 import { useHistory, useLocation } from 'react-router';
 import {
   cancelMeeting,
   leaveMeeting,
   updateOnlineMeetingDetails,
   updateRealMeetingDetails,
-} from '../../API/meeting/meetingService';
-import { MeetingState, MeetingType } from '../../model/meeting/Meeting';
-import FinalDateForm from './FinalDateForm/FinalDateForm';
-import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
-import { googleCalendarUrl } from '../../auth/AuthCredentials';
-import Popup from '../common/Popup/Popup';
-import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
-import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
-import SingleValueInput from '../common/forms/Input/SingleValueInput';
-import { PlaceDetails } from '../../model/geo/Geo';
-import MapWithPlaces from '../common/Map/MapWithPlaces/MapWithPlaces';
-import { changeFinalPlace } from '../../API/geo/geo';
+} from '../../../API/meeting/meetingService';
+import { MeetingState, MeetingType } from '../../../model/meeting/Meeting';
+import FinalDateForm from '../FinalDateForm/FinalDateForm';
+import GoogleButton from '../../common/SubmitButton/IconButton/GoogleButton';
+import { googleCalendarUrl } from '../../../auth/AuthCredentials';
+import Popup from '../../common/Popup/Popup';
+import { googleCalendarTokenExists } from '../../../API/googlecalendar/googleCalendarService';
+import GoogleCalendarPicker from '../GoogleCalendarPicker/GoogleCalendarPicker';
+import SingleValueInput from '../../common/forms/Input/SingleValueInput';
+import { PlaceDetails } from '../../../model/geo/Geo';
+import MapWithPlaces from '../../common/Map/MapWithPlaces/MapWithPlaces';
+import { changeFinalPlace } from '../../../API/geo/geo';
+import CloseVotingModal from './CloseVotingModal/CloseVotingModal';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
@@ -69,6 +70,7 @@ const MeetingDetailsInfo = ({
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
+  const [closeVotingModal, setCloseVotingModal] = useState(false);
   const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
   const location = useLocation();
   const history = useHistory();
@@ -237,6 +239,15 @@ const MeetingDetailsInfo = ({
                 containerClassName={styles.googleCalendarButtonContainer}
                 className={styles.googleCalendarButton}
               />
+            )}
+            {isOrganizer && (
+              <div>
+                <ActionButton
+                  onclick={() => setCloseVotingModal(true)}
+                  text={'Close voting'}
+                  className={styles.actionButton}
+                />
+              </div>
             )}
             <div>
               <ActionButton
@@ -416,6 +427,13 @@ const MeetingDetailsInfo = ({
         title={'Do you want to leave the meeting?'}
         onDecline={() => setLeaveMeetingModal(false)}
         onAccept={leaveTheMeeting}
+      />
+      <CloseVotingModal
+        show={closeVotingModal}
+        setShow={setCloseVotingModal}
+        hasPlaceVoting={true}
+        hasSurevyVoting={true}
+        hasTimeVoting={true}
       />
     </Card>
   );
