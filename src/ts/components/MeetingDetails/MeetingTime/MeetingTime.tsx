@@ -10,8 +10,9 @@ import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 import { saveUserTimeRanges } from '../../../API/meeting/meetingService';
 import { AiOutlineForm } from 'react-icons/ai';
 import { BsFillPieChartFill } from 'react-icons/bs';
-import { MeetingAttendeeDetails, MeetingState } from '../../../model/meeting/Meeting';
+import { MeetingAttendeeDetails, MeetingState, MeetingType } from '../../../model/meeting/Meeting';
 import MeetingTimeDetails from './MeetingTimeDetails/MeetingTimeDetails';
+import { PlaceDetails } from '../../../model/geo/Geo';
 
 export type MeetingTimeProps = {
   meetingId: number;
@@ -28,6 +29,12 @@ export type MeetingTimeProps = {
   canSeeVotingResults?: boolean;
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
+  setFinalBeginDate: Function;
+  setFinalEndDate: Function;
+  meetingType: MeetingType;
+  meetingLink: string | undefined;
+  meetingPassword: string | undefined;
+  finalPlace?: PlaceDetails;
 };
 
 interface RangesWithDay {
@@ -49,6 +56,12 @@ const MeetingTime = ({
   canSeeVotingResults = false,
   finalBeginDate,
   finalEndDate,
+  setFinalBeginDate,
+  setFinalEndDate,
+  meetingType,
+  meetingLink,
+  meetingPassword,
+  finalPlace,
 }: MeetingTimeProps) => {
   const [selectedRanges, setSelectedRanges] = useState<RangesWithDay>({});
   const [userDefaultAnswers, setUserDefaultAnswers] = useState<RangesWithDay>({});
@@ -178,6 +191,12 @@ const MeetingTime = ({
           isMeetingOpen={state === MeetingState.OPEN}
           finalBeginDate={finalBeginDate}
           finalEndDate={finalEndDate}
+          setFinalBeginDate={setFinalBeginDate}
+          setFinalEndDate={setFinalEndDate}
+          meetingLink={meetingLink}
+          meetingPassword={meetingPassword}
+          meetingType={meetingType}
+          finalPlace={finalPlace}
         />
         <Col lg={12} className="text-center mx-auto">
           {canSeeVotingResults && (

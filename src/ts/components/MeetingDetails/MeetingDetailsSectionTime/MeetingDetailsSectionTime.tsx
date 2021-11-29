@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { MeetingAttendeeDetails } from '../../../model/meeting/Meeting';
+import {
+  MeetingAttendeeDetails,
+  OnlineMeetingDetails,
+  RealMeetingDetails,
+} from '../../../model/meeting/Meeting';
 import { Col, Row } from 'react-bootstrap';
 import MeetingTime from '../MeetingTime/MeetingTime';
 import { UserSummary } from '../../../model/user/ProUser';
@@ -25,6 +29,12 @@ const MeetingDetailsSectionTime = ({
   const [allUsersAnswers, setAllUsersAnswers] = useState<TimeRangeDTO[]>([]);
   const [userTimeAnswers, setUserTimeAnswers] = useState<TimeRangeDTO[]>([]);
   const [markTimeRangeDeadline, setMarkTimeRangeDeadline] = useState(meeting.markTimeRangeDeadline);
+  const [finalBeginDate, setFinalBeginDate] = useState(
+    meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null
+  );
+  const [finalEndDate, setFinalEndDate] = useState(
+    meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null
+  );
 
   const setUser = (attendeeDetails: MeetingAttendeeDetails) => {
     const currentUser = meeting.attendees.find(
@@ -82,8 +92,14 @@ const MeetingDetailsSectionTime = ({
           state={meeting.state}
           setNewDeadline={setMarkTimeRangeDeadline}
           canSeeVotingResults={canSeeVotingResults}
-          finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
-          finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
+          finalBeginDate={finalBeginDate}
+          finalEndDate={finalEndDate}
+          setFinalBeginDate={setFinalBeginDate}
+          setFinalEndDate={setFinalEndDate}
+          meetingLink={(meeting as OnlineMeetingDetails)?.link}
+          meetingPassword={(meeting as OnlineMeetingDetails)?.password}
+          meetingType={meeting.type}
+          finalPlace={(meeting as RealMeetingDetails)?.finalPlace}
         />
       </Col>
     </Row>

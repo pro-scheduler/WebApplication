@@ -3,6 +3,13 @@
     justify-content: left;
 }
 
+.editLabel {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
 .buttonAction {
     width: auto;
     padding-left: 15px;
