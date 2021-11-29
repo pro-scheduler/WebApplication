@@ -121,7 +121,7 @@ const Declaration = ({
       <hr className={styles.hrLine} />
       <div className="mt-3"> {declaration.description}</div>
       <div className={styles.footer}>
-        <div title={user.email}>
+        <div title={declaration.createdBy.username}>
           <UserIcon user={declaration.createdBy} />
         </div>
         <div className={styles.assignedContainer}>
@@ -130,7 +130,7 @@ const Declaration = ({
               key={i}
               className={styles.userIcon}
               style={{ right: i * 20 }}
-              title={assigned.email}
+              title={assigned.username}
             >
               <UserIcon user={assigned} />
             </div>
