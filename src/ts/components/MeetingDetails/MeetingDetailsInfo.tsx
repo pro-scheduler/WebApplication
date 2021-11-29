@@ -195,22 +195,22 @@ const MeetingDetailsInfo = ({
     placeChanged: boolean,
     linkChanged: boolean
   ) => {
-    let buttonName = 'Edit meeting details';
+    let buttonName = 'Save meeting details';
     let changes = 0;
 
     if (finalDateChanged) {
-      buttonName = 'Edit final date';
+      buttonName = 'Save final date';
       changes++;
     }
     if (placeChanged) {
-      buttonName = 'Edit final place';
+      buttonName = 'Save final place';
       changes++;
     }
     if (linkChanged) {
-      buttonName = 'Edit meeting details';
+      buttonName = 'Save meeting details';
       changes++;
     }
-    if (changes > 1) buttonName = 'Edit meeting details';
+    if (changes > 1) buttonName = 'Save meeting details';
     return buttonName;
   };
 
