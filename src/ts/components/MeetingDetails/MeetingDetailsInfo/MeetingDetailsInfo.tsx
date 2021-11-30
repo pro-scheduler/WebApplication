@@ -406,6 +406,9 @@ const MeetingDetailsInfo = ({
         meetingId={meetingId}
         meetingType={meetingType}
         meetingName={meetingName}
+        meetingLink={meetingLink}
+        meetingPassword={meetingPassword}
+        finalPlace={finalPlace}
       />
     </Card>
   );

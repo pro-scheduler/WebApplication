@@ -17,6 +17,7 @@ import TextArea from '../../../common/forms/TextArea/TextArea';
 import Popup from '../../../common/Popup/Popup';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
 import styles from './CloseVotingModal.module.css';
+import { PlaceDetails } from '../../../../model/geo/Geo';
 export type CloseVotingModalProps = {
   show: boolean;
   setShow: Function;
@@ -28,6 +29,9 @@ export type CloseVotingModalProps = {
   meetingId: number;
   meetingType: MeetingType;
   meetingName: string;
+  meetingLink: string | undefined;
+  meetingPassword: string | undefined;
+  finalPlace?: PlaceDetails;
 };
 
 const CloseVotingModal = ({
@@ -41,6 +45,9 @@ const CloseVotingModal = ({
   meetingId,
   meetingType,
   meetingName,
+  meetingLink,
+  meetingPassword,
+  finalPlace,
 }: CloseVotingModalProps) => {
   const [closeSurveyVoting, setCloseSurveyVoting] = useState<boolean>(true);
   const [closePlaceAndTimeVoting, setClosePlaceAndTimeVoting] = useState<boolean>(true);
@@ -88,12 +95,14 @@ const CloseVotingModal = ({
       if (meetingType === MeetingType.REAL)
         updateRealMeetingDetails(
           undefined,
-          undefined,
+          finalPlace ? finalPlace.id : undefined,
           generatePastDate(),
           meetingId,
           () => {},
           () => {},
-          () => {},
+          () => {
+            setShow(false);
+          },
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'
             : hasTimeVoting
@@ -103,13 +112,15 @@ const CloseVotingModal = ({
       if (meetingType === MeetingType.ONLINE)
         updateOnlineMeetingDetails(
           undefined,
-          undefined,
-          undefined,
+          meetingLink,
+          meetingPassword,
           generatePastDate(),
           meetingId,
           () => {},
           () => {},
-          () => {},
+          () => {
+            setShow(false);
+          },
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'
             : hasTimeVoting
