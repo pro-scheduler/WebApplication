@@ -158,7 +158,7 @@ const MeetingSurvey = ({
           <Col lg={12} className="text-center">
             <ActionButton
               onclick={updateSurvey}
-              text={'Edit the survey'}
+              text={'Save changes'}
               disabled={
                 survey.description === surveyToEdit.description &&
                 survey.surveyEndDate === surveyToEdit.surveyEndDate &&

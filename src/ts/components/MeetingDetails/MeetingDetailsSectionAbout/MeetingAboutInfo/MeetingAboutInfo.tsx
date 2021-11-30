@@ -161,7 +161,7 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
                 invalidNameDesc ||
                 (meeting.name === newName && meeting.description === newDescription)
               }
-              text="Edit"
+              text="Save changes"
               className={styles.updateButton}
             />
           </div>

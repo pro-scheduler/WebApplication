@@ -187,7 +187,7 @@ const Declaration = ({
                 (defaultDeclaration.title === newTitle &&
                   defaultDeclaration.description === newDescription)
               }
-              text="Edit declaration"
+              text="Save changes"
             />
           </div>
         </div>
