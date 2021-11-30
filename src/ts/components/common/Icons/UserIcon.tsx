@@ -4,7 +4,7 @@ import styles from './UserIcon.module.css';
 
 const UserIcon = ({
   user,
-  backgroundColor = 'var(--purple)',
+  backgroundColor = 'var(--primary)',
   className = '',
 }: {
   user: UserSummary | UserDetails;

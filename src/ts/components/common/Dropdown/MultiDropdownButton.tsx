@@ -48,7 +48,7 @@ const MultiDropdownButton = ({
         styles={{
           multiValueLabel: (base) => ({
             ...base,
-            backgroundColor: 'var(--purple)',
+            backgroundColor: 'var(--primary)',
             color: 'white',
           }),
         }}

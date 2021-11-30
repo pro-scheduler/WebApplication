@@ -135,7 +135,7 @@ const UserTimeGrid = ({
           key={tmp.top + ' ' + tmp.height}
           label={key.label}
           secondLabel={key.label ? key.from + ' - ' + key.to : undefined}
-          color={key.label && 'var(--bright-green)'}
+          color={key.label && 'var(--secondary)'}
           meetingId={key.meetingId}
           borderRadius={key.label !== undefined && key.label !== ''}
         />

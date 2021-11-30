@@ -6,7 +6,7 @@
 }
 
 .button {
-    background-color: var(--bright-green);
+    background-color: var(--secondary);
     margin-left: 20px;
     width: 50px;
     height: 50px;

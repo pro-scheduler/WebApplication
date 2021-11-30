@@ -49,7 +49,7 @@ const MultiValueInput = ({
         styles={{
           multiValueLabel: (base) => ({
             ...base,
-            backgroundColor: invalid ? 'var(--medium-red)' : 'var(--purple)',
+            backgroundColor: invalid ? 'var(--medium-red)' : 'var(--primary)',
             color: 'white',
             padding: '4px',
           }),
@@ -59,7 +59,7 @@ const MultiValueInput = ({
           borderRadius: 10,
           colors: {
             ...theme.colors,
-            primary: 'var(--purple)',
+            primary: 'var(--primary)',
           },
         })}
       />

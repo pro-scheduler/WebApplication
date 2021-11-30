@@ -25,7 +25,7 @@
 }
 
 .checkedTick {
-    color: var(--bright-green);
+    color: var(--secondary);
 }
 
 .checkboxLabel {

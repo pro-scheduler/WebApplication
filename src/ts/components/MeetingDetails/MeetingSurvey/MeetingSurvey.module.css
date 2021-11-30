@@ -23,7 +23,7 @@
 }
 
 .chosen {
-    color: var(--bright-green);
+    color: var(--secondary);
 }
 
 .sectionIconContainer:hover {

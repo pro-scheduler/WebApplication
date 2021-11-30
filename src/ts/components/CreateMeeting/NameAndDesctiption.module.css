@@ -3,7 +3,7 @@
 }
 
 .messageSuccess {
-    color: var(--bright-green);
+    color: var(--secondary);
     font-size: medium;
 }
 

@@ -4,7 +4,7 @@
     border: none;
     text-align: center;
     color: white;
-    background-color: var(--purple);
+    background-color: var(--primary);
     font-size: var(--s-font-size);
     cursor: pointer;
     border-radius: var(--circle-border-radius);

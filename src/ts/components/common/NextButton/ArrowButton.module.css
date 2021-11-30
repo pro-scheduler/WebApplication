@@ -2,7 +2,7 @@
     text-decoration: none;
     background-color: var(--background-color);
     border: none;
-    color: var(--purple);
+    color: var(--primary);
 }
 
 .arrowButton:focus {

@@ -5,7 +5,7 @@ export type LoadingSpinnerProps = {
 };
 const LoadingSpinner = ({ active }: LoadingSpinnerProps) => {
   return active ? (
-    <Spinner animation="border" role="status" style={{ color: 'var(--purple)' }} />
+    <Spinner animation="border" role="status" style={{ color: 'var(--primary)' }} />
   ) : (
     <></>
   );

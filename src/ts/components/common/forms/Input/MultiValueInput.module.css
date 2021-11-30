@@ -2,7 +2,7 @@
     font-size: var(--button-font-size);
     box-shadow: var(--shadow);
     text-align: left;
-    color: var(--purple);
+    color: var(--primary);
     margin: auto;
     border-radius: var(--border-radius);
     border: 1px solid var(--very-light-grey);

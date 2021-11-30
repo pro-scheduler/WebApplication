@@ -27,7 +27,7 @@
 }
 
 .checkedTick {
-    background-color: var(--bright-green);
+    background-color: var(--secondary);
 }
 
 .radioButtonLabel {

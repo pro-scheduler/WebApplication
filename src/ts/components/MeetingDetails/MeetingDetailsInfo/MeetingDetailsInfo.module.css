@@ -1,5 +1,5 @@
 .moduleIcon {
-    color: var(--purple);
+    color: var(--primary);
     width: 20px;
     height: 20px;
     margin-right: 10px;
@@ -16,11 +16,11 @@
 }
 
 .onlineMeetingLink {
-    color: var(--purple);
+    color: var(--primary);
 }
 
 .onlineMeetingLink:hover {
-    color: var(--purple);
+    color: var(--primary);
 }
 
 .container {
