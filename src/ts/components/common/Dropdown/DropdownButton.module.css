@@ -1,7 +1,6 @@
 .dropdown {
     width: 320px;
     font-size: var(--button-font-size);
-    box-shadow: var(--shadow);
     padding: 1px;
     border-radius: var(--border-radius);
 }
