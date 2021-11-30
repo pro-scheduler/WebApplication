@@ -58,6 +58,7 @@ const MeetingDetailsSectionAbout = ({
               meeting.markTimeRangeDeadline ? new Date(meeting.markTimeRangeDeadline) : null
             }
             meetingName={meeting.name}
+            reloadMeeting={onMeetingChange}
           />
         </Col>
         <Col lg={6}>

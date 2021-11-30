@@ -32,6 +32,7 @@ export type CloseVotingModalProps = {
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
   finalPlace?: PlaceDetails;
+  reloadMeeting: Function;
 };
 
 const CloseVotingModal = ({
@@ -48,6 +49,7 @@ const CloseVotingModal = ({
   meetingLink,
   meetingPassword,
   finalPlace,
+  reloadMeeting,
 }: CloseVotingModalProps) => {
   const [closeSurveyVoting, setCloseSurveyVoting] = useState<boolean>(true);
   const [closePlaceAndTimeVoting, setClosePlaceAndTimeVoting] = useState<boolean>(true);
@@ -102,6 +104,7 @@ const CloseVotingModal = ({
           () => {},
           () => {
             setShow(false);
+            reloadMeeting();
           },
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'
@@ -120,6 +123,7 @@ const CloseVotingModal = ({
           () => {},
           () => {
             setShow(false);
+            reloadMeeting();
           },
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'

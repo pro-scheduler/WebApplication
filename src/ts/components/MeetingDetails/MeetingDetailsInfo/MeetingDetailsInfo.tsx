@@ -41,6 +41,7 @@ export type MeetingDetailsInfoProps = {
   markTimeRangeDeadline: Date | null;
   surveyId?: number;
   meetingName: string;
+  reloadMeeting: Function;
 };
 
 const MeetingDetailsInfo = ({
@@ -60,6 +61,7 @@ const MeetingDetailsInfo = ({
   palceVotingModule,
   timeVotingModule,
   meetingName,
+  reloadMeeting,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
@@ -409,6 +411,7 @@ const MeetingDetailsInfo = ({
         meetingLink={meetingLink}
         meetingPassword={meetingPassword}
         finalPlace={finalPlace}
+        reloadMeeting={reloadMeeting}
       />
     </Card>
   );
