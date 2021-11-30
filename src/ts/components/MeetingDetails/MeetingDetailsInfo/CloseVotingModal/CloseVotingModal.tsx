@@ -42,13 +42,13 @@ const CloseVotingModal = ({
   meetingType,
   meetingName,
 }: CloseVotingModalProps) => {
-  const [closeSurveyVoting, setCloseSurveyVoting] = useState<boolean>(false);
+  const [closeSurveyVoting, setCloseSurveyVoting] = useState<boolean>(true);
   const [closePlaceAndTimeVoting, setClosePlaceAndTimeVoting] = useState<boolean>(true);
   const [sendNotification, setSendNotification] = useState<boolean>(true);
   const [customMessage, setCustomMessage] = useState<string>(
     'Hi everyone!\n\nI would like to inform you that the final date of our meeting has been set. \n\n Best regards.'
   );
-  const [surey, setSurvey] = useState<UserSurvey>();
+  const [survey, setSurvey] = useState<UserSurvey>();
   const [surveyToEdit, setSurveyToEdit] = useState<SurveyWithQuestionsDTO>();
 
   useEffect(() => {
@@ -57,23 +57,23 @@ const CloseVotingModal = ({
   }, [meetingId]);
 
   const generatePastDate = () => new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-  const clsoeVoting = () => {
+  const closeVoting = () => {
     if (hasTimeVoting && closePlaceAndTimeVoting && !hasFinalDate) {
       toastInfo(
-        'You have no specified final date. Please save a final date before cancel a voiting'
+        'You have not specified final date. Please save a final date before cancel a voting'
       );
       return;
     }
     if (hasPlaceVoting && closePlaceAndTimeVoting && !hasFinalPlace) {
       toastInfo(
-        'You have no specified final place. Please save a final palce before cancel a voiting'
+        'You have not specified final place. Please save a final place before cancel a voting'
       );
       return;
     }
     if (hasSurevyVoting && closeSurveyVoting) {
-      if (surey && surveyToEdit)
+      if (survey && surveyToEdit)
         editSurvey(
-          surey.id,
+          survey.id,
           {
             ...surveyToEdit,
             surveyEndDate: generatePastDate(),
@@ -97,7 +97,7 @@ const CloseVotingModal = ({
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'
             : hasTimeVoting
-            ? 'Tiem voting has been closed successfully'
+            ? 'Time voting has been closed successfully'
             : 'Place voting has been closed successfully'
         );
       if (meetingType === MeetingType.ONLINE)
@@ -113,7 +113,7 @@ const CloseVotingModal = ({
           hasTimeVoting && hasPlaceVoting
             ? 'Place and time voting has been closed successfully'
             : hasTimeVoting
-            ? 'Tiem voting has been closed successfully'
+            ? 'Time voting has been closed successfully'
             : 'Place voting has been closed successfully'
         );
     }
@@ -134,7 +134,7 @@ const CloseVotingModal = ({
   return (
     <Popup
       show={show}
-      title={'Are you sure to close the voting?'}
+      title={'Are you sure you want to close the voting?'}
       onClose={() => setShow(false)}
       className={styles.closeVotingPopup}
     >
@@ -163,7 +163,7 @@ const CloseVotingModal = ({
       <Checkbox
         checked={sendNotification}
         setChecked={setSendNotification}
-        label={'Send notification emails to atendees'}
+        label={'Send notification emails to attendees'}
         disabled={false}
       />
       <TextArea
@@ -175,7 +175,7 @@ const CloseVotingModal = ({
       />
       <ActionButton
         text={'Close voting'}
-        onclick={clsoeVoting}
+        onclick={closeVoting}
         disabled={
           (!closePlaceAndTimeVoting && !closeSurveyVoting) ||
           (sendNotification && customMessage === '')
