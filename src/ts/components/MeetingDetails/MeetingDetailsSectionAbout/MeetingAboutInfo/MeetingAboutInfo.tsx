@@ -22,18 +22,30 @@ import SingleValueInput from '../../../common/forms/Input/SingleValueInput';
 import { maxSings, minSings, required } from '../../../../tools/validator';
 import TextArea from '../../../common/forms/TextArea/TextArea';
 import ActionButton from '../../../common/SubmitButton/ActionButton/ActionButton';
+import GoogleButton from '../../../common/SubmitButton/IconButton/GoogleButton';
+import { googleCalendarTokenExists } from '../../../../API/googlecalendar/googleCalendarService';
+import { googleCalendarUrl } from '../../../../auth/AuthCredentials';
+import GoogleCalendarPicker from '../../GoogleCalendarPicker/GoogleCalendarPicker';
+import { useHistory, useLocation } from 'react-router';
 
 export type MeetingAboutInfoProps = {
   meeting: MeetingDetails;
   isOrganizer: boolean;
   onMeetingChange: Function;
+  showGoogleCalendar: boolean;
 };
 
 const filterAttendeesByRole = (meeting: MeetingDetails, role: MeetingRole) =>
   meeting.attendees.filter((attendee: MeetingAttendeeDetails) => attendee.role === role);
 
-const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAboutInfoProps) => {
+const MeetingAboutInfo = ({
+  meeting,
+  isOrganizer,
+  onMeetingChange,
+  showGoogleCalendar,
+}: MeetingAboutInfoProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);
+  const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
   const [editNameAndDescription, setEditNameAndDescription] = useState<boolean>(false);
   const [newName, setName] = useState<string>('');
   const [newDescription, setDescription] = useState<string>('');
@@ -42,6 +54,8 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
   const [searchResults, setSearchResults] = useState<MeetingAttendeeDetails[]>(
     filterAttendeesByRole(meeting, MeetingRole.ATTENDEE)
   );
+  const location = useLocation();
+  const history = useHistory();
   const handleChange = (event: any) => {
     setSearchTerm(event.target.value);
   };
@@ -94,6 +108,18 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
     // eslint-disable-next-line
   }, [searchTerm]);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('google-calendar-picker') === 'show') {
+      setGoogleCalendarPickerModalShow(true);
+      queryParams.delete('google-calendar-picker');
+      history.replace({
+        search: queryParams.toString(),
+      });
+    }
+    // eslint-disable-next-line
+  }, [location]);
+
   const updateDetails = () => {
     if (meeting.name !== newName || meeting.description !== newDescription) {
       updateMeetingNameAndDescription(
@@ -128,6 +154,19 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
               setEditNameAndDescription(!editNameAndDescription);
             }
           : undefined
+      }
+      footer={
+        showGoogleCalendar ? (
+          <div className={styles.googleContainer}>
+            <GoogleButton
+              redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meeting.id) : undefined}
+              text={'Add to calendar'}
+              onClick={() => googleCalendarTokenExists() && setGoogleCalendarPickerModalShow(true)}
+              containerClassName={styles.googleCalendarButtonContainer}
+              className={styles.googleCalendarButton}
+            />
+          </div>
+        ) : undefined
       }
     >
       {editNameAndDescription ? (
@@ -186,6 +225,16 @@ const MeetingAboutInfo = ({ meeting, isOrganizer, onMeetingChange }: MeetingAbou
           <Popup show={modalShow} title={'Add organizers'} onClose={() => setModalShow(false)}>
             <SearchBox value={searchTerm} onChange={handleChange} />
             <div className={styles.attendeesIcons}>{attendeesIcons}</div>
+          </Popup>
+          <Popup
+            show={googleCalendarPickerModalShow}
+            title={'Choose Google Calendar'}
+            onClose={() => setGoogleCalendarPickerModalShow(false)}
+          >
+            <GoogleCalendarPicker
+              meetingId={meeting.id}
+              onCalendarChosen={() => setGoogleCalendarPickerModalShow(false)}
+            />
           </Popup>
         </>
       )}

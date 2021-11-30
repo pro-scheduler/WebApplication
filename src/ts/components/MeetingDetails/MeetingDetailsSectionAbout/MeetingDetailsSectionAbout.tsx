@@ -33,6 +33,7 @@ const MeetingDetailsSectionAbout = ({
             meeting={meeting}
             isOrganizer={isOrganizer}
             onMeetingChange={onMeetingChange}
+            showGoogleCalendar={meeting.finalDate !== null}
           />
         </Col>
       </Row>
@@ -52,7 +53,6 @@ const MeetingDetailsSectionAbout = ({
             finalEndDate={meeting.finalDate ? new Date(meeting.finalDate.timeEnd) : null}
             finalBeginDate={meeting.finalDate ? new Date(meeting.finalDate.timeStart) : null}
             declarationsModule={meeting.availableModules.includes(MeetingModuleType.DECLARATIONS)}
-            showGoogleCalendar={meeting.finalDate !== null}
             meetingType={meeting.type}
             markTimeRangeDeadline={
               meeting.markTimeRangeDeadline ? new Date(meeting.markTimeRangeDeadline) : null
