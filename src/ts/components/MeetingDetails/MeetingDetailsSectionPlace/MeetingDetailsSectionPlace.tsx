@@ -36,7 +36,12 @@ const MeetingDetailsSectionPlace = ({
           meetingId={meeting.id}
           user={user}
           isOrganizer={isOrganizer}
-          open={meeting.state === MeetingState.OPEN}
+          open={
+            meeting.state === MeetingState.OPEN &&
+            (meeting.markTimeRangeDeadline
+              ? new Date(meeting.markTimeRangeDeadline) > new Date()
+              : true)
+          }
           places={places}
           setPlaces={(updatedPlaces: PlaceDetails[]) => setPlaces(updatedPlaces)}
           finalPlaceId={finalPlaceId}
