@@ -1,5 +1,5 @@
 .moduleIcon {
-    color: var(--purple);
+    color: var(--primary);
     width: 20px;
     height: 20px;
     margin-right: 10px;
@@ -16,11 +16,11 @@
 }
 
 .onlineMeetingLink {
-    color: var(--purple);
+    color: var(--primary);
 }
 
 .onlineMeetingLink:hover {
-    color: var(--purple);
+    color: var(--primary);
 }
 
 .container {
@@ -55,16 +55,6 @@
     margin-left: auto;
 }
 
-.googleCalendarButtonContainer {
-    margin-left: auto;
-}
-
-.googleCalendarButton {
-    width: auto;
-    padding-left: 10px;
-    padding-right: 12px;
-}
-
 .updateButton {
     width: auto;
     padding: 10px 40px;
@@ -80,3 +70,4 @@
         margin-top: 10px;
     }
 }
+

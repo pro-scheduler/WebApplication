@@ -10,7 +10,7 @@
 }
 
 .searchContainer {
-    border: var(--purple) 2px solid;
+    border: var(--primary) 2px solid;
     width: 250px;
     border-radius: 20px;
     display: flex;

@@ -86,7 +86,8 @@ export const updateOnlineMeetingDetails = (
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
-  onSuccess?: Function
+  onSuccess?: Function,
+  customSuccesMessage?: string
 ) =>
   put(
     {
@@ -99,7 +100,7 @@ export const updateOnlineMeetingDetails = (
     setData,
     setResponse,
     true,
-    'Meeting details have been updated successfully',
+    customSuccesMessage ? customSuccesMessage : 'Meeting details have been updated successfully',
     onSuccess
   );
 
@@ -110,7 +111,8 @@ export const updateRealMeetingDetails = (
   meetingId: number,
   setData?: Function,
   setResponse?: Function,
-  onSuccess?: Function
+  onSuccess?: Function,
+  customSuccesMessage?: string
 ) =>
   put(
     {
@@ -122,7 +124,7 @@ export const updateRealMeetingDetails = (
     setData,
     setResponse,
     true,
-    'Meeting details have been updated successfully',
+    customSuccesMessage ? customSuccesMessage : 'Meeting details have been updated successfully',
     onSuccess
   );
 

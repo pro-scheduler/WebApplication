@@ -15,7 +15,7 @@ const TotalPieChart = ({ filled, total }: TotalPieChartProps) => {
       {percentage > 0 && (
         <div className={styles.chartContainer}>
           <PieChart
-            data={[{ value: percentage, color: 'var(--bright-green)' }]}
+            data={[{ value: percentage, color: 'var(--secondary)' }]}
             totalValue={100}
             animate={true}
             label={({ dataEntry }) => dataEntry.value + '%'}

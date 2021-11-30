@@ -1,7 +1,6 @@
 .text_area_classic {
     background-color: white;
     font-size: var(--button-font-size);
-    box-shadow: var(--shadow);
     border: 1px solid var(--very-light-grey);
     text-align: left;
     color: var(--medium-grey);
@@ -26,7 +25,6 @@
 .text_area_classic_invalid {
     background-color: white;
     font-size: var(--button-font-size);
-    box-shadow: var(--shadow);
     border: 1px solid var(--medium-red);
     text-align: left;
     color: var(--medium-grey);

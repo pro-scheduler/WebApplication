@@ -69,7 +69,7 @@
   width: 30px;
   height: 30px;
   float: right;
-  color: var(--bright-green)
+  color: var(--secondary)
 }
 
 .sendIcon:hover {

@@ -27,7 +27,7 @@
 }
 
 .chosen {
-    color: #7cdf84;
+    color: var(--secondary);
 }
 
 .sectionIconContainer:hover {

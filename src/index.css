@@ -25,7 +25,7 @@ input[type='range'].range-slider.range-slider--secondary::-moz-range-thumb {
 }
 
 input[type='range'].range-slider::-moz-range-track {
-  background: var(--purple) !important;
+  background: var(--primary) !important;
 }
 
 /* for Chrome and Edge*/
@@ -34,7 +34,7 @@ input[type='range'].range-slider.range-slider--secondary::-webkit-slider-runnabl
 }
 
 input[type='range'].range-slider::-webkit-slider-thumb {
-  background: var(--purple) !important;
+  background: var(--primary) !important;
 }
 
 /* for Internet Explorer */
@@ -43,11 +43,11 @@ input[type='range'].range-slider.range-slider--secondary::-ms-thumb {
 }
 
 input[type='range'].range-slider::-ms-fill-lower {
-  background: var(--purple) !important;
+  background: var(--primary) !important;
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-  background-color: var(--bright-green) !important;
+  background-color: var(--secondary) !important;
 }
 
 .ReactCollapse--collapse {
@@ -55,7 +55,7 @@ input[type='range'].range-slider::-ms-fill-lower {
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-  background-color: var(--purple) !important;
+  background-color: var(--primary) !important;
 }
 
 html {

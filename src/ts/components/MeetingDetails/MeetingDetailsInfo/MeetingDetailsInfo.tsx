@@ -1,34 +1,32 @@
-import Card from '../common/Card/Card';
+import Card from '../../common/Card/Card';
 import { BiCalendarEvent, BiWorld } from 'react-icons/bi';
 import { FaRegClipboard } from 'react-icons/fa';
 import { BsPencil } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import styles from './MeetingDetailsInfo.module.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cx from 'classnames';
-import ActionButton from '../common/SubmitButton/ActionButton/ActionButton';
-import YesNoPopup from '../common/Popup/YesNoPopup';
-import { useHistory, useLocation } from 'react-router';
+import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
+import YesNoPopup from '../../common/Popup/YesNoPopup';
+import { useHistory } from 'react-router';
 import {
   cancelMeeting,
   leaveMeeting,
   updateOnlineMeetingDetails,
   updateRealMeetingDetails,
-} from '../../API/meeting/meetingService';
-import { MeetingState, MeetingType } from '../../model/meeting/Meeting';
-import FinalDateForm from './FinalDateForm/FinalDateForm';
-import GoogleButton from '../common/SubmitButton/IconButton/GoogleButton';
-import { googleCalendarUrl } from '../../auth/AuthCredentials';
-import Popup from '../common/Popup/Popup';
-import { googleCalendarTokenExists } from '../../API/googlecalendar/googleCalendarService';
-import GoogleCalendarPicker from './GoogleCalendarPicker/GoogleCalendarPicker';
-import SingleValueInput from '../common/forms/Input/SingleValueInput';
-import { PlaceDetails } from '../../model/geo/Geo';
-import MapWithPlaces from '../common/Map/MapWithPlaces/MapWithPlaces';
-import { changeFinalPlace } from '../../API/geo/geo';
+} from '../../../API/meeting/meetingService';
+import { MeetingState, MeetingType } from '../../../model/meeting/Meeting';
+import FinalDateForm from '../FinalDateForm/FinalDateForm';
+import SingleValueInput from '../../common/forms/Input/SingleValueInput';
+import { PlaceDetails } from '../../../model/geo/Geo';
+import MapWithPlaces from '../../common/Map/MapWithPlaces/MapWithPlaces';
+import { changeFinalPlace } from '../../../API/geo/geo';
+import CloseVotingModal from './CloseVotingModal/CloseVotingModal';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
+  palceVotingModule: boolean;
+  timeVotingModule: boolean;
   declarationsModule: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
@@ -39,9 +37,11 @@ export type MeetingDetailsInfoProps = {
   finalBeginDate: Date | null;
   finalEndDate: Date | null;
   finalPlace?: PlaceDetails;
-  showGoogleCalendar: boolean;
   meetingType: MeetingType;
   markTimeRangeDeadline: Date | null;
+  surveyId?: number;
+  meetingName: string;
+  reloadMeeting: Function;
 };
 
 const MeetingDetailsInfo = ({
@@ -56,9 +56,12 @@ const MeetingDetailsInfo = ({
   finalBeginDate,
   finalEndDate,
   finalPlace,
-  showGoogleCalendar,
   meetingType,
   markTimeRangeDeadline,
+  palceVotingModule,
+  timeVotingModule,
+  meetingName,
+  reloadMeeting,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
@@ -69,8 +72,7 @@ const MeetingDetailsInfo = ({
   const [newEndDate, setNewEndDate] = useState<Date | null>(null);
   const [cancelMeetingModal, setCancelMeetingModal] = useState(false);
   const [leaveMeetingModal, setLeaveMeetingModal] = useState(false);
-  const [googleCalendarPickerModalShow, setGoogleCalendarPickerModalShow] = useState(false);
-  const location = useLocation();
+  const [closeVotingModal, setCloseVotingModal] = useState(false);
   const history = useHistory();
 
   const updateFinalPlace = () => {
@@ -146,18 +148,6 @@ const MeetingDetailsInfo = ({
   };
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    if (queryParams.get('google-calendar-picker') === 'show') {
-      setGoogleCalendarPickerModalShow(true);
-      queryParams.delete('google-calendar-picker');
-      history.replace({
-        search: queryParams.toString(),
-      });
-    }
-    // eslint-disable-next-line
-  }, [location]);
-
-  useEffect(() => {
     setNewBeginDate(finalBeginDate);
     setNewEndDate(finalEndDate);
   }, [finalBeginDate, finalEndDate]);
@@ -195,22 +185,22 @@ const MeetingDetailsInfo = ({
     placeChanged: boolean,
     linkChanged: boolean
   ) => {
-    let buttonName = 'Edit meeting details';
+    let buttonName = 'Save meeting details';
     let changes = 0;
 
     if (finalDateChanged) {
-      buttonName = 'Edit final date';
+      buttonName = 'Save final date';
       changes++;
     }
     if (placeChanged) {
-      buttonName = 'Edit final place';
+      buttonName = 'Save final place';
       changes++;
     }
     if (linkChanged) {
-      buttonName = 'Edit meeting details';
+      buttonName = 'Save meeting details';
       changes++;
     }
-    if (changes > 1) buttonName = 'Edit meeting details';
+    if (changes > 1) buttonName = 'Save meeting details';
     return buttonName;
   };
 
@@ -227,16 +217,14 @@ const MeetingDetailsInfo = ({
       footer={
         state === MeetingState.OPEN && !editMode ? (
           <div className={styles.flexButtonsContainer}>
-            {showGoogleCalendar && (
-              <GoogleButton
-                redirectTo={!googleCalendarTokenExists() ? googleCalendarUrl(meetingId) : undefined}
-                text={'Add to calendar'}
-                onClick={() =>
-                  googleCalendarTokenExists() && setGoogleCalendarPickerModalShow(true)
-                }
-                containerClassName={styles.googleCalendarButtonContainer}
-                className={styles.googleCalendarButton}
-              />
+            {isOrganizer && (
+              <div>
+                <ActionButton
+                  onclick={() => setCloseVotingModal(true)}
+                  text={'Close voting'}
+                  className={styles.actionButton}
+                />
+              </div>
             )}
             <div>
               <ActionButton
@@ -258,16 +246,6 @@ const MeetingDetailsInfo = ({
         ) : undefined
       }
     >
-      <Popup
-        show={googleCalendarPickerModalShow}
-        title={'Choose Google Calendar'}
-        onClose={() => setGoogleCalendarPickerModalShow(false)}
-      >
-        <GoogleCalendarPicker
-          meetingId={meetingId}
-          onCalendarChosen={() => setGoogleCalendarPickerModalShow(false)}
-        />
-      </Popup>
       {!editMode ? (
         <div className={styles.container}>
           <p className={styles.moduleContainer}>
@@ -416,6 +394,24 @@ const MeetingDetailsInfo = ({
         title={'Do you want to leave the meeting?'}
         onDecline={() => setLeaveMeetingModal(false)}
         onAccept={leaveTheMeeting}
+      />
+      <CloseVotingModal
+        show={closeVotingModal}
+        setShow={setCloseVotingModal}
+        hasPlaceVoting={palceVotingModule}
+        hasSurevyVoting={surveyModule}
+        hasTimeVoting={timeVotingModule}
+        // == - check both null and undefined, === checks only specified
+        // https://stackoverflow.com/questions/28975896/is-there-a-way-to-check-for-both-null-and-undefined
+        hasFinalDate={finalBeginDate != null && finalEndDate != null}
+        hasFinalPlace={finalPlace != null}
+        meetingId={meetingId}
+        meetingType={meetingType}
+        meetingName={meetingName}
+        meetingLink={meetingLink}
+        meetingPassword={meetingPassword}
+        finalPlace={finalPlace}
+        reloadMeeting={reloadMeeting}
       />
     </Card>
   );

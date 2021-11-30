@@ -44,3 +44,17 @@
     width: auto;
     padding: 10px 40px;
 }
+
+.googleContainer {
+    text-align: right;
+}
+
+.googleCalendarButtonContainer {
+    margin-right: auto;
+}
+
+.googleCalendarButton {
+    width: auto;
+    padding-left: 10px;
+    padding-right: 12px;
+}

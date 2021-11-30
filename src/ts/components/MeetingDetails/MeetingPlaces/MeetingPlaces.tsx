@@ -150,7 +150,7 @@ const MeetingPlaces = ({
               <div className={styles.buttonContainer}>
                 <ActionButton
                   onclick={sendNewVotes}
-                  text={'Edit my votes'}
+                  text={myVotes.length === 0 ? 'Save my votes' : 'Edit my votes'}
                   disabled={
                     newVotes.every((p) => myVotes.includes(p)) &&
                     myVotes.every((p) => newVotes.includes(p))

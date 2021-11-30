@@ -25,7 +25,7 @@
 }
 
 .tick {
-    color: var(--bright-green);
+    color: var(--secondary);
     height: 30px;
     width: 30px;
     position: absolute;

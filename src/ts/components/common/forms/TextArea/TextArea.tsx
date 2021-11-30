@@ -58,7 +58,7 @@ const TextArea = ({
         value={value}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        style={{ width: '100%' }}
+        style={{ width: '100%', ...(disabled ? { color: 'gray' } : {}) }}
         disabled={disabled}
       />
       {invalidMessage && invalidInner && (

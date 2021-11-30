@@ -56,7 +56,7 @@ const MapWithPlaces = ({
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [insertingMode, setInsertingMode] = useState<boolean>(false);
 
-  const finalPlaceMarkerColor = 'var(--bright-green)';
+  const finalPlaceMarkerColor = 'var(--secondary)';
   const [proposalDetails, setProposalDetails] = useState<{
     address: string;
     description: string;
@@ -148,7 +148,7 @@ const MapWithPlaces = ({
   }, [placesToDisplay]);
 
   useEffect(() => {
-    resetProperties(setColors, 'var(--purple)', finalPlaceId, finalPlaceMarkerColor);
+    resetProperties(setColors, 'var(--primary)', finalPlaceId, finalPlaceMarkerColor);
     resetProperties(setHidden, true);
     // eslint-disable-next-line
   }, [placesToDisplay, finalPlaceId]);
@@ -192,7 +192,7 @@ const MapWithPlaces = ({
                 });
               });
             }
-            resetProperties(setColors, 'var(--purple)', finalPlaceId, finalPlaceMarkerColor);
+            resetProperties(setColors, 'var(--primary)', finalPlaceId, finalPlaceMarkerColor);
             resetProperties(setHidden, true);
           }}
         >
@@ -207,7 +207,7 @@ const MapWithPlaces = ({
                 onClick={() => {
                   let newColorProperties = resetProperties(
                     setColors,
-                    'var(--purple)',
+                    'var(--primary)',
                     finalPlaceId,
                     finalPlaceMarkerColor
                   );
@@ -222,7 +222,7 @@ const MapWithPlaces = ({
                     newColorProperties,
                     colors[place.id] === 'var(--red)'
                       ? place.id === finalPlaceId
-                        ? 'var(--purple)'
+                        ? 'var(--primary)'
                         : finalPlaceMarkerColor
                       : 'var(--red)'
                   );
@@ -249,7 +249,7 @@ const MapWithPlaces = ({
                         place.id,
                         setColors,
                         colors,
-                        'var(--purple)',
+                        'var(--primary)',
                         finalPlaceId,
                         finalPlaceMarkerColor
                       );
@@ -268,7 +268,7 @@ const MapWithPlaces = ({
                         place.id,
                         setColors,
                         colors,
-                        'var(--purple)',
+                        'var(--primary)',
                         finalPlaceId,
                         finalPlaceMarkerColor
                       );
@@ -292,7 +292,7 @@ const MapWithPlaces = ({
               />
               Final place
               <br />
-              <div className={styles.legendElement} style={{ backgroundColor: 'var(--purple)' }} />
+              <div className={styles.legendElement} style={{ backgroundColor: 'var(--primary)' }} />
               Place propositions
             </div>
           )}

@@ -1,0 +1,22 @@
+.colorPickersContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.primaryContainer {
+  margin: 20px;
+  display: flex;
+}
+
+.secondaryContainer {
+  margin: 20px;
+  display: flex;
+}
+.colorSkeleton {
+    background-color: red;
+    height: 120px;
+    width: 50px;
+    right: -50px;
+    top: 25px;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}

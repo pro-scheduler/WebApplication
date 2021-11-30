@@ -28,7 +28,7 @@ const UserDetailsView = ({ user, refreshUser }: { user: UserDetails; refreshUser
           <div className={styles.editButtonContainer}>
             <ActionButton
               onclick={editUserDetails}
-              text={'Edit'}
+              text={'Save changes'}
               disabled={username === user.username || username === ''}
               className={styles.editButton}
             />

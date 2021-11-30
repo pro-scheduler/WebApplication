@@ -2,7 +2,7 @@ import styles from './LetterIcon.module.css';
 
 const LetterIcon = ({
   firstLetter,
-  backgroundColor = 'var(--purple)',
+  backgroundColor = 'var(--primary)',
   className = '',
 }: {
   firstLetter: string;

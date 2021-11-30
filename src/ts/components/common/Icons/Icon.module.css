@@ -4,7 +4,7 @@
     border: none;
     display: inline-block;
     text-align: center;
-    color: var(--bright-green);
+    color: var(--secondary);
     background-color: white;
     font-size: var(--l-font-size);
     border-radius: var(--circle-border-radius);

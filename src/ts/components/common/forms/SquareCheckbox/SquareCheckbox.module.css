@@ -6,9 +6,8 @@
   width: 25px;
   height: 25px;
   border: 1px solid #e0dbdb;
-  box-shadow: var(--shadow);
   border-radius: 5px;
-  border-color: var(--purple);
+  border-color: var(--primary);
   text-align: center;
   display: flex;
   align-items: center;
@@ -24,7 +23,7 @@
 }
 
 .checkedSquare {
-  background-color: var(--purple);
+  background-color: var(--primary);
 }
 
 .checkboxLabel {

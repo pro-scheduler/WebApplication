@@ -6,9 +6,16 @@ export type PopupProps = {
   show: boolean;
   title: string;
   onClose: () => void;
+  className?: string;
 };
 
-const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }) => {
+const Popup: FunctionComponent<PopupProps> = ({
+  show,
+  title,
+  onClose,
+  children,
+  className = '',
+}) => {
   return (
     <Modal
       show={show}
@@ -19,13 +26,13 @@ const Popup: FunctionComponent<PopupProps> = ({ show, title, onClose, children }
       centered
       className={'popup' + (show ? ' showAnimation' : '')}
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton className={'popupHeader ' + className}>
         <Modal.Title id="contained-modal-title-vcenter" className={'popupTitle'}>
           {title}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="text-center">
-        <div className="mt-2 mb-5">{children}</div>
+      <Modal.Body className={'text-center popupBody ' + className}>
+        <div className="mt-2">{children}</div>
       </Modal.Body>
     </Modal>
   );

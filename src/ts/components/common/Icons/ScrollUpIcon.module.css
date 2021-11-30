@@ -2,7 +2,7 @@
     border: none;
     display: inline-block;
     border-radius: var(--circle-border-radius);
-    color: var(--purple);
+    color: var(--primary);
     font-size: 50px;
     box-shadow: var(--shadow);
 }

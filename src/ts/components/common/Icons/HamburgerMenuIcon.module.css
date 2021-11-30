@@ -28,7 +28,7 @@
 
 .hamburgerIcon {
   color: white;
-  background-color: var(--purple);
+  background-color: var(--primary);
   padding-left: 25px;
   box-shadow: none;
 }

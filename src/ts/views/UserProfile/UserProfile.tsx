@@ -6,6 +6,7 @@ import styles from './UserProfile.module.css';
 import UserDetailsView from '../../components/UserProfile/UserDetails/UserDetailsView';
 import NotificationSettings from '../../components/UserProfile/NotificationSettings/NotificationSettings';
 import RemoveAccount from '../../components/UserProfile/RemoveAccount/RemoveAccount';
+import ColorThemeSelector from '../../components/UserProfile/ColorThemeSelector/ColorThemeSelector';
 
 const UserProfile = ({ user, refreshUser }: { user: UserDetails; refreshUser: Function }) => {
   return (
@@ -22,6 +23,9 @@ const UserProfile = ({ user, refreshUser }: { user: UserDetails; refreshUser: Fu
         </Col>
         <Col lg={12}>
           <RemoveAccount user={user} />
+        </Col>
+        <Col lg={12}>
+          <ColorThemeSelector />
         </Col>
       </Row>
     </Container>

@@ -119,7 +119,7 @@ const Declaration = ({
         </div>
       </div>
       <hr className={styles.hrLine} />
-      <div className="mt-3"> {declaration.description}</div>
+      <div className={'mt-3 ' + styles.description}> {declaration.description}</div>
       <div className={styles.footer}>
         <div title={declaration.createdBy.username}>
           <UserIcon user={declaration.createdBy} />
@@ -187,7 +187,7 @@ const Declaration = ({
                 (defaultDeclaration.title === newTitle &&
                   defaultDeclaration.description === newDescription)
               }
-              text="Edit declaration"
+              text="Save changes"
             />
           </div>
         </div>

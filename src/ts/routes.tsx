@@ -19,6 +19,7 @@ import Surveys from './views/Surveys/Surveys';
 import HomePage from './views/HomePage/HomePage';
 import MeetingInvitation from './views/MeetingInvitation/MeetingInvitation';
 import useWindowDimensions from './components/common/window/WindowDimension';
+import { refreshTheme } from './components/UserProfile/ColorThemeSelector/ColorThemeSelector';
 
 const Routes = () => {
   const [user, setUser] = useState<UserDetails>(defaultUser);
@@ -34,6 +35,7 @@ const Routes = () => {
 
   useEffect(() => {
     refreshUser();
+    refreshTheme();
   }, []);
 
   const generateNavbar = () => (

@@ -14,8 +14,14 @@
   text-align: left !important;
   font-weight: 600;
   font-size: 18px;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
+.description {
+  word-wrap: break-word;
+  word-break: break-all
+}
 .containerHeader {
   display: flex;
   justify-content: space-between;

@@ -5,7 +5,7 @@
 
 .pendingStatus {
     font-size: var(--m-font-size);
-    color: var(--purple);
+    color: var(--primary);
     margin-left: 10px;
 }
 

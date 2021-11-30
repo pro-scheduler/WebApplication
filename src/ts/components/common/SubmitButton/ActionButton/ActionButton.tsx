@@ -16,7 +16,7 @@ const ActionButton = ({ onclick, text, className, disabled, color }: ActionButto
   return (
     <button
       className={buttonStyles}
-      style={{ backgroundColor: color ? color : 'var(--bright-green)' }}
+      style={{ backgroundColor: color ? color : 'var(--secondary)' }}
       type="submit"
       onClick={onclick}
       disabled={disabled}

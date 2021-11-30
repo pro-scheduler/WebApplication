@@ -15,7 +15,7 @@
 }
 
 #navbar .pro-sidebar-inner {
-    background-color: var(--purple);
+    background-color: var(--primary);
     box-shadow: 0.5px 0.866px 2px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -34,7 +34,7 @@
 }
 
 #navbar .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
-    background-color: var(--purple);
+    background-color: var(--primary);
     font-size: var(--xs-font-size);
 }
 

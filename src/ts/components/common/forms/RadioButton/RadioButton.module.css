@@ -6,7 +6,6 @@
     width: 25px;
     height: 25px;
     border: 1px solid #e0dbdb;
-    box-shadow: var(--shadow);
     border-radius: var(--circle-border-radius);
     text-align: center;
     display: flex;
@@ -28,7 +27,7 @@
 }
 
 .checkedTick {
-    background-color: var(--bright-green);
+    background-color: var(--secondary);
 }
 
 .radioButtonLabel {

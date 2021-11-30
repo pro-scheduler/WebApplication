@@ -19,7 +19,7 @@
 }
 
 .addOptionButton {
-    background-color: var(--bright-green);
+    background-color: var(--secondary);
     width: 34px;
     height: 34px;
     font-size: var(--xs-font-size);
