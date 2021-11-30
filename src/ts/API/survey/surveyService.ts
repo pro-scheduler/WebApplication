@@ -88,7 +88,8 @@ export const editSurvey = (
   survey: SurveyWithQuestionsDTO,
   onSuccess?: Function,
   setResponse?: Function,
-  setData?: Function
+  setData?: Function,
+  customMessage?: string
 ) => {
   put(
     survey,
@@ -96,7 +97,7 @@ export const editSurvey = (
     setData,
     setResponse,
     true,
-    'Survey has been updated successfully',
+    customMessage ? customMessage : 'Survey has been updated successfully',
     onSuccess
   );
 };

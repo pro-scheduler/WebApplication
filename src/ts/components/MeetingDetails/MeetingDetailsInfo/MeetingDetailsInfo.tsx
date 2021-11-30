@@ -30,6 +30,8 @@ import CloseVotingModal from './CloseVotingModal/CloseVotingModal';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
+  palceVotingModule: boolean;
+  timeVotingModule: boolean;
   declarationsModule: boolean;
   meetingLink: string | undefined;
   meetingPassword: string | undefined;
@@ -43,6 +45,8 @@ export type MeetingDetailsInfoProps = {
   showGoogleCalendar: boolean;
   meetingType: MeetingType;
   markTimeRangeDeadline: Date | null;
+  surveyId?: number;
+  meetingName: string;
 };
 
 const MeetingDetailsInfo = ({
@@ -60,6 +64,9 @@ const MeetingDetailsInfo = ({
   showGoogleCalendar,
   meetingType,
   markTimeRangeDeadline,
+  palceVotingModule,
+  timeVotingModule,
+  meetingName,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
@@ -431,9 +438,16 @@ const MeetingDetailsInfo = ({
       <CloseVotingModal
         show={closeVotingModal}
         setShow={setCloseVotingModal}
-        hasPlaceVoting={true}
-        hasSurevyVoting={true}
-        hasTimeVoting={true}
+        hasPlaceVoting={palceVotingModule}
+        hasSurevyVoting={surveyModule}
+        hasTimeVoting={timeVotingModule}
+        // == - check both null and undefined, === checks only specified
+        // https://stackoverflow.com/questions/28975896/is-there-a-way-to-check-for-both-null-and-undefined
+        hasFinalDate={finalBeginDate != null && finalEndDate != null}
+        hasFinalPlace={finalPlace != null}
+        meetingId={meetingId}
+        meetingType={meetingType}
+        meetingName={meetingName}
       />
     </Card>
   );

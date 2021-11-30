@@ -32,7 +32,7 @@ const Popup: FunctionComponent<PopupProps> = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className={'text-center popupBody ' + className}>
-        <div className="mt-2 mb-5">{children}</div>
+        <div className="mt-2">{children}</div>
       </Modal.Body>
     </Modal>
   );
