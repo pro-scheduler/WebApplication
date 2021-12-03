@@ -1,7 +1,7 @@
 .headerJumbotron {
     background-size: cover;
     background-position: left 25%;
-    height: 100vh;
+    height: 80vh;
     margin: 0;
     padding: 40px;
 }
@@ -9,7 +9,7 @@
 .headerMotto {
     font-size: var(--motto-font-size);
     font-weight: var(--bold-font-weight);
-    margin-top: 25vh;
+    margin-top: 20vh;
     margin-bottom: 20px;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .authView {
-    margin-top: 25vh;
+    margin-top: 20vh;
     margin-right: 150px;
 }
 
@@ -39,6 +39,10 @@
 }
 
 @media only screen and (max-width: 992px) {
+    .headerJumbotron {
+        height: 100vh;
+    }
+
     .jumbotron-fluid {
         background-position: left top;
     }
