@@ -352,6 +352,18 @@ const CreateMeeting = () => {
             survey={survey}
             setSurvey={setSurvey}
           />
+          {!isSectionChosen(MeetingConfigurationSection.SUMMARY) &&
+          <Row className="justify-content-center mt-5 mb-4">
+            <Col lg={12} className="text-center">
+              <div>
+                <ActionButton
+                  text="Next"
+                  onclick={setNextConfigurationSection}
+                  className={styles.saveMeetingButton}
+                />
+              </div>
+            </Col>
+          </Row>}
           {isSectionChosen(MeetingConfigurationSection.SUMMARY) && (
             <>
               <Row className="justify-content-center">
