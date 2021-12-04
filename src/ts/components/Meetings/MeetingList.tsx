@@ -47,7 +47,6 @@ const MeetingList = ({
     return (
       <tr key={index} className={styles.meetingRow}>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.name}</td>
-        <td onClick={() => history.push(`/meetings/${meeting.id}`)}>{meeting.description}</td>
         <td onClick={() => history.push(`/meetings/${meeting.id}`)}>
           <div style={{ position: 'relative' }}>
             {meeting.organizers.slice(0, 5).map((organizer: UserSummary, index: number) => (
@@ -98,7 +97,6 @@ const MeetingList = ({
             <thead>
               <tr>
                 <th>Meeting name</th>
-                <th>Description</th>
                 <th>Organizers</th>
                 <th>Date</th>
                 <th>State</th>

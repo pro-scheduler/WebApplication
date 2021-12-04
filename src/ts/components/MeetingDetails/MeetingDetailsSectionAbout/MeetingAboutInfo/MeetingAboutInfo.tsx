@@ -215,7 +215,7 @@ const MeetingAboutInfo = ({
               {isOrganizer && meeting.state === MeetingState.OPEN && (
                 <div
                   className={styles.buttonContainer}
-                  style={{ left: organizers.length * 25, position: 'absolute' }}
+                  style={{ left: organizers.length * 35, position: 'absolute' }}
                 >
                   <PlusButton onAdd={() => setModalShow(true)} />
                 </div>

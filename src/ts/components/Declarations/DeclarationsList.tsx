@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap';
 import { DeclarationDetails } from '../../model/declaration/Declaration';
 import { useHistory } from 'react-router';
 import UserNameIcon from '../common/Icons/UserNameIcon';
+import { UserSummary } from '../../model/user/ProUser';
 
 export type DeclarationsListProps = {
   declarations: DeclarationDetails[];
@@ -38,9 +39,21 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
       >
         <td>{declaration.meetingName}</td>
         <td>{declaration.title}</td>
-        <td>{declaration.description}</td>
         <td>
-          <UserNameIcon user={declaration.createdBy} email={declaration.createdBy.username} />
+          <UserNameIcon
+            user={declaration.createdBy}
+            email={declaration.createdBy.email}
+            showEmail={false}
+          />
+        </td>
+        <td>
+          <div style={{ position: 'relative' }}>
+            {declaration.assignees.slice(0, 5).map((assignee: UserSummary, index: number) => (
+              <div key={assignee.id} style={{ left: index * 25, position: 'absolute' }}>
+                <UserNameIcon user={assignee} email={assignee.email} showEmail={false} />
+              </div>
+            ))}
+          </div>
         </td>
       </tr>
     );
@@ -56,8 +69,8 @@ const DeclarationsList = ({ declarations }: DeclarationsListProps) => {
               <tr>
                 <th>Meeting name</th>
                 <th>Title</th>
-                <th>Description</th>
                 <th>Created by</th>
+                <th>People assigned</th>
               </tr>
             </thead>
             <tbody>{declarationsRows}</tbody>

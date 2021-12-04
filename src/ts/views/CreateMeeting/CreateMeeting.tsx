@@ -360,6 +360,7 @@ const CreateMeeting = () => {
                   text="Next"
                   onclick={setNextConfigurationSection}
                   className={styles.saveMeetingButton}
+                  disabled={invalidNameDesc || !required()(name)}
                 />
               </div>
             </Col>
