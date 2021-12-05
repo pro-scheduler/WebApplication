@@ -25,7 +25,7 @@ import CloseVotingModal from './CloseVotingModal/CloseVotingModal';
 
 export type MeetingDetailsInfoProps = {
   surveyModule: boolean;
-  palceVotingModule: boolean;
+  placeVotingModule: boolean;
   timeVotingModule: boolean;
   declarationsModule: boolean;
   meetingLink: string | undefined;
@@ -42,6 +42,7 @@ export type MeetingDetailsInfoProps = {
   surveyId?: number;
   meetingName: string;
   reloadMeeting: Function;
+  surveyState: any;
 };
 
 const MeetingDetailsInfo = ({
@@ -58,10 +59,11 @@ const MeetingDetailsInfo = ({
   finalPlace,
   meetingType,
   markTimeRangeDeadline,
-  palceVotingModule,
+  placeVotingModule,
   timeVotingModule,
   meetingName,
   reloadMeeting,
+  surveyState,
 }: MeetingDetailsInfoProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newLink, setNewLink] = useState<string | undefined>();
@@ -204,6 +206,15 @@ const MeetingDetailsInfo = ({
     return buttonName;
   };
 
+  const isVotingAvailable = () => {
+    const surveyVotingAvailable = surveyModule && surveyState === 'OPEN';
+    const placeVotingAvailable = placeVotingModule && finalPlace == null;
+    const timeVotingAvailable =
+      timeVotingModule && !(markTimeRangeDeadline != null && markTimeRangeDeadline <= new Date());
+
+    return surveyVotingAvailable || placeVotingAvailable || timeVotingAvailable;
+  };
+
   return (
     <Card
       title={'Details'}
@@ -217,7 +228,7 @@ const MeetingDetailsInfo = ({
       footer={
         state === MeetingState.OPEN && !editMode ? (
           <div className={styles.flexButtonsContainer}>
-            {isOrganizer && (
+            {isOrganizer && isVotingAvailable() && (
               <div>
                 <ActionButton
                   onclick={() => setCloseVotingModal(true)}
@@ -398,7 +409,7 @@ const MeetingDetailsInfo = ({
       <CloseVotingModal
         show={closeVotingModal}
         setShow={setCloseVotingModal}
-        hasPlaceVoting={palceVotingModule}
+        hasPlaceVoting={placeVotingModule}
         hasSurevyVoting={surveyModule}
         hasTimeVoting={timeVotingModule}
         // == - check both null and undefined, === checks only specified
