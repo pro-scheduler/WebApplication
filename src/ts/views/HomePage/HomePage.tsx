@@ -61,9 +61,11 @@ const HomePage = ({
               ':' +
               new Date(meeting.finalDate.timeStart).getMinutes(),
             to:
-              new Date(meeting.finalDate.timeEnd).getHours() +
-              ':' +
-              new Date(meeting.finalDate.timeEnd).getMinutes(),
+              new Date(meeting.finalDate.timeEnd).getDate() === new Date().getDate()
+                ? new Date(meeting.finalDate.timeEnd).getHours() +
+                  ':' +
+                  new Date(meeting.finalDate.timeEnd).getMinutes()
+                : '23:59',
             label: meeting.name,
             meetingId: meeting.id,
             key: meeting.id,
