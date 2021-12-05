@@ -9,6 +9,7 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
   const history = useHistory();
   const [startTime, setStartTime] = useState<Date | undefined>();
   const [endTime, setEndTime] = useState<Date | undefined>();
+  const [isInProgress, setIsInProgress] = useState<boolean>(false);
 
   useEffect(() => {
     if (meeting.finalDate) {
@@ -17,10 +18,18 @@ const UpcomingMeeting = ({ meeting }: { meeting: MeetingDetails }) => {
     }
   }, [meeting]);
 
+  useEffect(() => {
+    if (startTime && endTime && startTime <= new Date() && endTime >= new Date())
+      setIsInProgress(true);
+    else setIsInProgress(false);
+  }, [startTime, endTime]);
+
   return (
     <div className={styles.containerOfContainer}>
       <div className={styles.container}>
-        <div className={styles.upcomingMeetingHeader}>Upcoming meeting</div>
+        <div className={styles.upcomingMeetingHeader}>
+          {isInProgress ? 'Meeting in progress' : 'Upcoming meeting'}
+        </div>
         <div className={styles.meetingName}>{meeting.name}</div>
         {startTime && endTime && (
           <div className={styles.meetingTime}>
