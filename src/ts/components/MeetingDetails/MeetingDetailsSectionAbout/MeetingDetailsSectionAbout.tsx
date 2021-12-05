@@ -9,6 +9,9 @@ import { Col, Row } from 'react-bootstrap';
 import MeetingDetailsInfo from '../MeetingDetailsInfo/MeetingDetailsInfo';
 import MeetingParticipants from '../MeetingParticipants/MeetingParticipants';
 import MeetingAboutInfo from './MeetingAboutInfo/MeetingAboutInfo';
+import { useEffect, useState } from 'react';
+import { getSurveyForMeeting } from '../../../API/survey/surveyService';
+import { UserSurvey } from '../../../model/survey/Survey';
 
 export type MeetingDetailsSectionAboutProps = {
   meeting: MeetingDetails;
@@ -25,6 +28,12 @@ const MeetingDetailsSectionAbout = ({
   onMeetingChange,
   currentUserId,
 }: MeetingDetailsSectionAboutProps) => {
+  const [surveyState, setSurveyState] = useState('CLOSED');
+
+  useEffect(() => {
+    getSurveyForMeeting(meeting.id, (survey: UserSurvey) => setSurveyState(survey.state));
+  }, [meeting]);
+
   return (
     <>
       <Row className="justify-content">
@@ -41,7 +50,7 @@ const MeetingDetailsSectionAbout = ({
         <Col lg={6}>
           <MeetingDetailsInfo
             surveyModule={meeting.availableModules.includes(MeetingModuleType.SURVEY)}
-            palceVotingModule={meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)}
+            placeVotingModule={meeting.availableModules.includes(MeetingModuleType.PLACE_VOTING)}
             timeVotingModule={meeting.availableModules.includes(MeetingModuleType.TIME_VOTING)}
             meetingLink={(meeting as OnlineMeetingDetails)?.link}
             meetingPassword={(meeting as OnlineMeetingDetails)?.password}
@@ -59,6 +68,7 @@ const MeetingDetailsSectionAbout = ({
             }
             meetingName={meeting.name}
             reloadMeeting={onMeetingChange}
+            surveyState={surveyState}
           />
         </Col>
         <Col lg={6}>
