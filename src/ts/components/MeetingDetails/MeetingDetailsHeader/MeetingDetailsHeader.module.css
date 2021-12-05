@@ -1,17 +1,28 @@
-.headerContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+/*.headerContainer {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+.meetingDetailsHeader {
+    margin-top: 35px;
+    padding-left: 25px;
 }
 
-.headerContainer > h4 {
-    margin-top: 5px;
-    margin-right: 10px;
-}
+/*.headerContainer > h4 {*/
+/*    margin-top: 5px;*/
+/*    margin-right: 10px;*/
+/*}*/
 
 .sectionsContainer {
     display: flex;
     margin-right: 20px;
+    list-style-type: none;
+    float: right;
+}
+
+.sectionsDropdownButton {
+    display: none;
 }
 
 .sectionIconContainer {
@@ -62,4 +73,98 @@
     z-index: 9999;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+@media (max-width: 992px) {
+
+    .meetingDetailsHeader {
+        padding: 0px;
+    }
+
+    .sectionsDropdownContainer {
+        position: relative;
+        display: block;
+        height: 60px;
+        margin: 25px 20px 15px;
+    }
+
+    .sectionsDropdownButton {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition-duration: 0.5s;
+    }
+
+    .sectionsDropdownButton > svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    .sectionsDropdownOpenedButton {
+        transform: rotate(180deg);
+    }
+
+    .sectionsDropdownItemVisible {
+        display: block;
+    }
+
+    .sectionDropdownItemMargin {
+        margin-top: 15px;
+    }
+
+    .sectionsDropdownItemHidden {
+        display: none;
+    }
+
+    .sectionsContainer {
+        position: absolute;
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        float: left;
+        padding: 10px;
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        z-index: 999;
+        height: auto;
+    }
+
+    .sectionsContainer > li {
+        position: relative;
+        transition-duration: 1s;
+        transition-property: display;
+    }
+
+    .sectionIconContainer {
+        flex-direction: row;
+        margin-left: 0px;
+    }
+
+    .sectionIconContainer > div > span {
+        display: block;
+        position: relative;
+        padding-left: 10px;
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .sectionIconContainer:hover {
+        cursor: pointer;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .sectionsDropdownContainer {
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
