@@ -70,7 +70,7 @@ const ColorThemeSelector = () => {
 
   return (
     <Card
-      title="Change yout theme"
+      title="Change your theme"
       footer={<ActionButton text="Back to default" onclick={backToDefault} />}
     >
       <div className={styles.colorPickersContainer}>
