@@ -74,39 +74,43 @@ const ColorThemeSelector = () => {
       footer={<ActionButton text="Back to default" onclick={backToDefault} />}
     >
       <div className={styles.colorPickersContainer}>
-        Primary:
-        <div className={styles.primaryContainer}>
-          <TwitterPicker
-            colors={colorsToSelection}
-            color={selectedColros.primary}
-            onChange={(color: ColorResult) => {
-              refreshColors({
-                ...selectedColros,
-                primary: color.hex,
-              });
-            }}
-          />
-          <div
-            className={styles.colorSkeleton}
-            style={{ backgroundColor: selectedColros.primary }}
-          />
+        <div>
+          Primary:
+          <div className={styles.primaryContainer}>
+            <TwitterPicker
+              colors={colorsToSelection}
+              color={selectedColros.primary}
+              onChange={(color: ColorResult) => {
+                refreshColors({
+                  ...selectedColros,
+                  primary: color.hex,
+                });
+              }}
+            />
+            <div
+              className={styles.colorSkeleton}
+              style={{ backgroundColor: selectedColros.primary }}
+            />
+          </div>
         </div>
-        Secondary:
-        <div className={styles.secondaryContainer}>
-          <TwitterPicker
-            colors={colorsToSelection}
-            color={selectedColros.secondary}
-            onChange={(color: ColorResult) => {
-              refreshColors({
-                ...selectedColros,
-                secondary: color.hex,
-              });
-            }}
-          />
-          <div
-            className={styles.colorSkeleton}
-            style={{ backgroundColor: selectedColros.secondary }}
-          />
+        <div>
+          Secondary:
+          <div className={styles.secondaryContainer}>
+            <TwitterPicker
+              colors={colorsToSelection}
+              color={selectedColros.secondary}
+              onChange={(color: ColorResult) => {
+                refreshColors({
+                  ...selectedColros,
+                  secondary: color.hex,
+                });
+              }}
+            />
+            <div
+              className={styles.colorSkeleton}
+              style={{ backgroundColor: selectedColros.secondary }}
+            />
+          </div>
         </div>
       </div>
     </Card>
