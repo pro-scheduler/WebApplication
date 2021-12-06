@@ -12,11 +12,29 @@
   display: flex;
 }
 .colorSkeleton {
-    background-color: red;
-    height: 120px;
-    width: 50px;
-    right: -50px;
-    top: 25px;
-    border-top-right-radius: var(--border-radius);
+  height: 120px;
+  width: 50px;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+@media only screen and (max-width: 432px) {
+  .primaryContainer {
+    padding-bottom: 40px;
+  }
+
+  .secondaryContainer {
+    margin-bottom: 40px;
+  }
+  .colorSkeleton {
+    position: relative;
+    height: 30px;
+    width: 277px;
+    top: 96px;
+    left: -276px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
 }

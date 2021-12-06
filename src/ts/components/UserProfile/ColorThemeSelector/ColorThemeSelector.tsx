@@ -7,7 +7,7 @@ import { ColorResult, TwitterPicker } from 'react-color';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 
 const defaultColros = {
-  primary: '#6f42c1',
+  primary: '#7067cf',
   secondary: '#4FE379',
 };
 export type ColorPalete = {
@@ -38,7 +38,7 @@ const ColorThemeSelector = () => {
   // eslint-disable-next-line
   const [selectedColros, setSelectedColors] = useState<ColorPalete>(defaultColros);
   const colorsToSelection = [
-    '#6f42c1',
+    '#7067cf',
     '#4FE379',
     '#FF6900',
     '#FCB900',
@@ -70,43 +70,47 @@ const ColorThemeSelector = () => {
 
   return (
     <Card
-      title="Change yout theme"
+      title="Change your theme"
       footer={<ActionButton text="Back to default" onclick={backToDefault} />}
     >
       <div className={styles.colorPickersContainer}>
-        Primary:
-        <div className={styles.primaryContainer}>
-          <TwitterPicker
-            colors={colorsToSelection}
-            color={selectedColros.primary}
-            onChange={(color: ColorResult) => {
-              refreshColors({
-                ...selectedColros,
-                primary: color.hex,
-              });
-            }}
-          />
-          <div
-            className={styles.colorSkeleton}
-            style={{ backgroundColor: selectedColros.primary }}
-          />
+        <div>
+          Primary:
+          <div className={styles.primaryContainer}>
+            <TwitterPicker
+              colors={colorsToSelection}
+              color={selectedColros.primary}
+              onChange={(color: ColorResult) => {
+                refreshColors({
+                  ...selectedColros,
+                  primary: color.hex,
+                });
+              }}
+            />
+            <div
+              className={styles.colorSkeleton}
+              style={{ backgroundColor: selectedColros.primary }}
+            />
+          </div>
         </div>
-        Secondary:
-        <div className={styles.secondaryContainer}>
-          <TwitterPicker
-            colors={colorsToSelection}
-            color={selectedColros.secondary}
-            onChange={(color: ColorResult) => {
-              refreshColors({
-                ...selectedColros,
-                secondary: color.hex,
-              });
-            }}
-          />
-          <div
-            className={styles.colorSkeleton}
-            style={{ backgroundColor: selectedColros.secondary }}
-          />
+        <div>
+          Secondary:
+          <div className={styles.secondaryContainer}>
+            <TwitterPicker
+              colors={colorsToSelection}
+              color={selectedColros.secondary}
+              onChange={(color: ColorResult) => {
+                refreshColors({
+                  ...selectedColros,
+                  secondary: color.hex,
+                });
+              }}
+            />
+            <div
+              className={styles.colorSkeleton}
+              style={{ backgroundColor: selectedColros.secondary }}
+            />
+          </div>
         </div>
       </div>
     </Card>
