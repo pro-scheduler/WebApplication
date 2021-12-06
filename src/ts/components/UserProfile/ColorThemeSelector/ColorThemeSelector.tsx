@@ -7,7 +7,7 @@ import { ColorResult, TwitterPicker } from 'react-color';
 import ActionButton from '../../common/SubmitButton/ActionButton/ActionButton';
 
 const defaultColros = {
-  primary: '#6f42c1',
+  primary: '#7067cf',
   secondary: '#4FE379',
 };
 export type ColorPalete = {
@@ -38,7 +38,7 @@ const ColorThemeSelector = () => {
   // eslint-disable-next-line
   const [selectedColros, setSelectedColors] = useState<ColorPalete>(defaultColros);
   const colorsToSelection = [
-    '#6f42c1',
+    '#7067cf',
     '#4FE379',
     '#FF6900',
     '#FCB900',
